@@ -10,3 +10,6 @@ O SIPOS v0.9.7 é uma atualização importante para o software SIPOS, com melhor
 
 ## Optics
 O software está a ser desenvolvido em C# e está a ser construído com o objetivo de ser intuitivo e fácil de usar, mesmo para usuários que não possuam conhecimentos avançados em programação ou tecnologia. Além disso, estou a trabalhar de forma a que interface gráfica seja amigável, moderna e clean para facilitar ainda mais o uso do software.
+
+## Planos
+Adaptação e API para Python e uso de bibliotecas como TensorFlow para inteligência artificial estão nos planos futuros do SIPOS. Isto permitirá que o software integre recursos de Machine Learning, tornando-o ainda mais poderoso e versátil em análises e processamento de dados. Embora o código seja atualmente em C#, a adaptação para Python permitirá uma integração mais fácil com outras ferramentas e bibliotecas de IA.
