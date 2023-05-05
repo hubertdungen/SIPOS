@@ -5,7 +5,7 @@ O SIPOS é um software que visa automatizar o processo de criação das Ordens d
 O SIPOS utiliza técnicas de Inteligência Artificial para detectar e classificar documentos e, em seguida, inserir as informações em um formato reformulado, além de detectar informações específicas, como movimentos de militares e civis na unidade, transferências, escalas de serviço, louvores, punições, entre outros assuntos relacionados.
 
 
-## Overview / Status atual do software (Aplha 0.9.7)
+## Overview / Status atual do software (Alpha 0.9.7)
 O SIPOS v0.9.7 é uma atualização importante para o software SIPOS, com melhorias significativas na interface do usuário (UI) e adaptação de código. O objetivo desta atualização foi modernizar a UI e otimizar a experiência do usuário, ao mesmo tempo em que melhora a funcionalidade e confiabilidade geral do software.
 
 ## Optics
