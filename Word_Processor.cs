@@ -31,7 +31,7 @@ namespace SIPOS
         int plusDay = 0; //ir buscar ao form
 
 
-        // FIND AND REPLACE
+        // FIND AND REPLACE METHODS
         //
         //
         public static void FindAndReplace(Word.Application wordApp, object ToFindText, object replaceWithText)
@@ -61,6 +61,40 @@ namespace SIPOS
                 ref matchDiactitics, ref matchAlefHamza,
                 ref matchControl);
         }
+        public static void FindAndReplaceHeader(Word.Document osWordDoc, Word.Application wordApp, object ToFindText, object replaceWithText)
+        {
+
+            object matchCase = true;
+            object matchWholeWord = true;
+            object matchWildCards = false;
+            object matchSoundLike = false;
+            object nmatchAllforms = false;
+            object forward = true;
+            object format = false;
+            object matchKashida = false;
+            object matchDiactitics = false;
+            object matchAlefHamza = false;
+            object matchControl = false;
+            object read_only = false;
+            object visible = true;
+            object replace = 2;
+            object wrap = 1;
+            object replaceAll = Microsoft.Office.Interop.Word.WdReplace.wdReplaceAll;
+
+
+            foreach (Microsoft.Office.Interop.Word.Range rng in osWordDoc.StoryRanges)
+            {
+                rng.Find.Execute(ref ToFindText,
+                ref matchCase, ref matchWholeWord,
+                ref matchWildCards, ref matchSoundLike,
+                ref nmatchAllforms, ref forward,
+                ref wrap, ref format, ref replaceWithText,
+                ref replace, ref matchKashida,
+                ref matchDiactitics, ref matchAlefHamza,
+                ref matchControl);
+            }
+        }
+
 
 
 
@@ -105,10 +139,10 @@ namespace SIPOS
                         string osDateABVParse = (string)Mediator.returnOSDateABVParse();
 
 
-                        // Detalhes iniciais
-                        Word_Processor.FindAndReplace(wordApp, "<numOS>", Mediator.osNumber);
-                        Word_Processor.FindAndReplace(wordApp, "<dataOS>", osExtensiveDate);
-                        Word_Processor.FindAndReplace(wordApp, "<dataOS_abv>", osDateABVParse);
+                        // CABEÇALHOS
+                        Word_Processor.FindAndReplaceHeader(wordApp, "<numOS>", Mediator.osNumber);
+                        Word_Processor.FindAndReplaceHeader(wordApp, "<dataOS>", osExtensiveDate);
+                        Word_Processor.FindAndReplaceHeader(wordApp, "<dataOS_abv>", osDateABVParse);
                     }
 
                     string diaDeEscalaParsedExt = (string)Mediator.returnEscaladosDateParse();
