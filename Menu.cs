@@ -126,13 +126,13 @@ namespace SIPOS
         // -----------------------------
         // --------------------------------------------------------------------------
 
-        
+
 
 
         ////////////////////////////////////////////////////// BUTTONS 
         // -------
 
-
+        ///// A SER ELIMINADO 
         private void btn_searchFileFMemory_Click(object sender, EventArgs e)
         {
             try
@@ -151,35 +151,16 @@ namespace SIPOS
 
 
 
-        // BUTTONS: SAVE FILES
+        // BUTTONS: SAVE FILES ///// A SER ELIMINADO 
         private void btn_SaveFileLocPD_Click(object sender, EventArgs e)
         {
 
         }
 
 
-        // BUTTONS: EXPORT
+        // BUTTONS: EXPORT ///// A SER ELIMINADO 
         private void btn_ExportWord_Click(object sender, EventArgs e)
         {
-            try
-            {
-                if (Mediator.osDay.DayOfWeek == DayOfWeek.Tuesday)  // CASO A O.S. seja de TERÇA, ou seja, ESCALA DE SERVIÇO seja QUARTA-FEIRA
-                { 
-                    Word_Processor.CreateWordDocument(txtbox_FileDirectory_ModelQuarta.Text, txtbox_FolderDirectory_OSWord.Text + @"\" + txtBox_ExportDocName.Text + ".doc"); 
-                }
-                else                             // CASO A O.S. seja noutros dias de semana
-                {
-                    Word_Processor.CreateWordDocument(txtbox_FileDirectory_ModelSemana.Text, txtbox_FolderDirectory_OSWord.Text + @"\" + txtBox_ExportDocName.Text + ".doc");
-                }
-
-
-            }
-            catch
-            {
-                MessageBox.Show("Verifique se tem os modelos de Word completos (sem faltar nenhuma variável), se colocou correctamente os caminhos de cada modelo no campo: \"propriedades\", se colocou o caminho de exportação e por fim se gravou.", "ERRO AO EXPORTAR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            
-            //Word_Processor.CreateWordDocument("", "");
         }
         private void btn_SaveFolder_OSWord_Click(object sender, EventArgs e)
         {
@@ -188,7 +169,7 @@ namespace SIPOS
         }
 
 
-        // BUTTONS: OPEN FILE DIALOGS
+        // BUTTONS: OPEN FILE DIALOGS ///// A SER ELIMINADO 
         private void btn_searchFileODU_Click(object sender, EventArgs e)
         {
             //openFile();
@@ -231,7 +212,7 @@ namespace SIPOS
         }
 
 
-        // BUTTONS: DEBUGGERS
+        // BUTTONS: DEBUGGERS ///// A SER ELIMINADO 
         public void btn_VarTester_Click(object sender, EventArgs e)
         {
             MessageBox.Show(Mediator.filePath);

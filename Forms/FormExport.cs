@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -25,6 +26,7 @@ namespace SIPOS.Forms
             //txtboxsActualizer();
             txtBox_NumOS.Text = Mediator.osNumber;
             txtBox_ExportDocName.Text = Mediator.exportDocName;
+            doesExportFilesExist();
         }
 
 
@@ -54,7 +56,9 @@ namespace SIPOS.Forms
         }
 
 
+
         // PREDICT THE NEXT FOLDER NAME
+        // ----------
 
         public string GetNextFileNumber(string folderPath, string filePattern)
         {
@@ -75,6 +79,67 @@ namespace SIPOS.Forms
 
 
 
+        // EXPORT
+        // ----------
+
+        private void btn_ExportWord_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (Mediator.osDay.DayOfWeek == DayOfWeek.Tuesday)  // CASO A O.S. seja de TERÇA, ou seja, ESCALA DE SERVIÇO seja QUARTA-FEIRA
+                {
+                    Word_Processor.CreateWordDocument(Mediator.fPathModelQuarta, Mediator.fPathOSWord + @"\" + txtBox_ExportDocName.Text + ".doc");
+                }
+                else                             // CASO A O.S. seja noutros dias de semana
+                {
+                    Word_Processor.CreateWordDocument(Mediator.fPathModelSemana, Mediator.fPathOSWord + @"\" + txtBox_ExportDocName.Text + ".doc");
+                }
+
+
+                doesExportFilesExist();
+
+
+            }
+            catch
+            {
+                MessageBox.Show("Verifique se tem os modelos de Word completos (sem faltar nenhuma variável), se colocou correctamente os caminhos de cada modelo no campo: \"propriedades\", se colocou o caminho de exportação e por fim se gravou.", "ERRO AO EXPORTAR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            //Word_Processor.CreateWordDocument("", "");
+        }
+        public void doesExportFilesExist()
+        {
+            string filePath = Mediator.fPathOSWord + @"\" + Mediator.exportDocName + ".doc";
+
+            if (File.Exists(filePath))
+            {
+                // The Word document exists, so make the "btn_OpenWord" button visible
+                btn_OpenWord.Visible = true;
+            }
+            else
+            {
+                // The Word document does not exist, so hide the "btn_OpenWord" button
+                btn_OpenWord.Visible = false;
+            }
+        }
+        private void btn_OpenWord_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string filePath = Mediator.fPathOSWord + @"\" + Mediator.exportDocName + ".doc";
+                filePath = @"""{filePath}""";
+                Process.Start("WINWORD.EXE", filePath);
+            }
+            catch (Exception ex)
+            {
+                // Handle the exception with a pop-up message box in Portuguese
+                string message = "Ocorreu um erro ao abrir o arquivo: " + ex.Message;
+                string caption = "Erro ao abrir arquivo";
+                MessageBoxButtons buttons = MessageBoxButtons.OK;
+                MessageBoxIcon icon = MessageBoxIcon.Error;
+                MessageBox.Show(message, caption, buttons, icon);
+            }
+        }
 
 
         // DEBUG MODE
@@ -98,28 +163,7 @@ namespace SIPOS.Forms
             }
         }
 
-        private void btn_ExportWord_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (Mediator.osDay.DayOfWeek == DayOfWeek.Tuesday)  // CASO A O.S. seja de TERÇA, ou seja, ESCALA DE SERVIÇO seja QUARTA-FEIRA
-                {
-                    Word_Processor.CreateWordDocument(Mediator.fPathModelQuarta, Mediator.fPathOSWord + @"\" + txtBox_ExportDocName.Text + ".doc");
-                }
-                else                             // CASO A O.S. seja noutros dias de semana
-                {
-                    Word_Processor.CreateWordDocument(Mediator.fPathModelSemana, Mediator.fPathOSWord + @"\" + txtBox_ExportDocName.Text + ".doc");
-                }
 
-
-            }
-            catch
-            {
-                MessageBox.Show("Verifique se tem os modelos de Word completos (sem faltar nenhuma variável), se colocou correctamente os caminhos de cada modelo no campo: \"propriedades\", se colocou o caminho de exportação e por fim se gravou.", "ERRO AO EXPORTAR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-
-            //Word_Processor.CreateWordDocument("", "");
-        }
 
         private void FormExport_FormClosed(object sender, FormClosedEventArgs e)
         {
@@ -137,5 +181,7 @@ namespace SIPOS.Forms
         {
             Word_Processor.listToVarsEscalados(0);
         }
+
+
     }
 }

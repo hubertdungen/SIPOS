@@ -38,6 +38,7 @@
             this.lbl_NumOS = new System.Windows.Forms.Label();
             this.lbl_SaveFileName_OSWord = new System.Windows.Forms.Label();
             this.txtBox_ExportDocName = new System.Windows.Forms.TextBox();
+            this.btn_OpenWord = new System.Windows.Forms.Button();
             this.gbox_Export.SuspendLayout();
             this.gbox_ExportDetails.SuspendLayout();
             this.SuspendLayout();
@@ -49,7 +50,7 @@
             this.btn_Export_TestListReader.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_Export_TestListReader.Font = new System.Drawing.Font("Century Gothic", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btn_Export_TestListReader.ForeColor = System.Drawing.Color.IndianRed;
-            this.btn_Export_TestListReader.Location = new System.Drawing.Point(561, 355);
+            this.btn_Export_TestListReader.Location = new System.Drawing.Point(263, 355);
             this.btn_Export_TestListReader.Margin = new System.Windows.Forms.Padding(2);
             this.btn_Export_TestListReader.Name = "btn_Export_TestListReader";
             this.btn_Export_TestListReader.Size = new System.Drawing.Size(132, 49);
@@ -65,7 +66,7 @@
             this.btn_Export_testDaySelect_Var.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_Export_testDaySelect_Var.Font = new System.Drawing.Font("Century Gothic", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btn_Export_testDaySelect_Var.ForeColor = System.Drawing.Color.IndianRed;
-            this.btn_Export_testDaySelect_Var.Location = new System.Drawing.Point(425, 355);
+            this.btn_Export_testDaySelect_Var.Location = new System.Drawing.Point(119, 355);
             this.btn_Export_testDaySelect_Var.Margin = new System.Windows.Forms.Padding(2);
             this.btn_Export_testDaySelect_Var.Name = "btn_Export_testDaySelect_Var";
             this.btn_Export_testDaySelect_Var.Size = new System.Drawing.Size(132, 49);
@@ -76,6 +77,7 @@
             // 
             // gbox_Export
             // 
+            this.gbox_Export.Controls.Add(this.btn_OpenWord);
             this.gbox_Export.Controls.Add(this.btn_ExportPDF);
             this.gbox_Export.Controls.Add(this.btn_ExportWord);
             this.gbox_Export.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
@@ -183,6 +185,22 @@
             this.txtBox_ExportDocName.TabIndex = 30;
             this.txtBox_ExportDocName.TextChanged += new System.EventHandler(this.txtBox_ExportDocName_TextChanged);
             // 
+            // btn_OpenWord
+            // 
+            this.btn_OpenWord.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(25)))), ((int)(((byte)(51)))));
+            this.btn_OpenWord.FlatAppearance.BorderSize = 0;
+            this.btn_OpenWord.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_OpenWord.Font = new System.Drawing.Font("Century Gothic", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btn_OpenWord.ForeColor = System.Drawing.Color.IndianRed;
+            this.btn_OpenWord.Location = new System.Drawing.Point(228, 45);
+            this.btn_OpenWord.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_OpenWord.Name = "btn_OpenWord";
+            this.btn_OpenWord.Size = new System.Drawing.Size(57, 70);
+            this.btn_OpenWord.TabIndex = 4;
+            this.btn_OpenWord.Text = "📁";
+            this.btn_OpenWord.UseVisualStyleBackColor = false;
+            this.btn_OpenWord.Click += new System.EventHandler(this.btn_OpenWord_Click);
+            // 
             // FormExport
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -216,5 +234,6 @@
         private Label lbl_NumOS;
         private Label lbl_SaveFileName_OSWord;
         private TextBox txtBox_ExportDocName;
+        private Button btn_OpenWord;
     }
 }
