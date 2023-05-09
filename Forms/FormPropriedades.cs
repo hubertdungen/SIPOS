@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Printing;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -34,6 +35,10 @@ namespace SIPOS.Forms
             txtbox_FileDirectory_ModelSemana.Text = Mediator.fPathModelSemana;
             txtbox_FileDirectory_ModelQuarta.Text = Mediator.fPathModelQuarta;
             txtbox_FolderDirectory_OSWord.Text = Mediator.fPathOSWord;
+
+
+
+
 
 
         }
@@ -360,6 +365,7 @@ namespace SIPOS.Forms
                 gBox_FMemory.Visible = true;
                 gBox_DebugWindows.Visible = true;
                 chkBox_DebugerMode.Checked = true;
+                chkBox_VisibleWordExportProcess.Visible = true;
 
             }
             else
@@ -367,6 +373,7 @@ namespace SIPOS.Forms
                 gBox_FMemory.Visible = false;
                 gBox_DebugWindows.Visible = false;
                 chkBox_DebugerMode.Checked = false;
+                chkBox_VisibleWordExportProcess.Visible = false;
                 //if (tabControlOS.SelectedTab == tabControlOS.Controls[0]) { formSizeSwitch("NoDebug_OSMenu"); }
                 //if (tabControlOS.SelectedTab == Propriedades) { formSizeSwitch("NoDebug_Propriedades"); }
             }
@@ -375,6 +382,18 @@ namespace SIPOS.Forms
         private void tabControl_Exportar_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void chkBox_VisibleWordExportProcess_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkBox_VisibleWordExportProcess.Checked == true)
+            {
+                Mediator.isExportVisible = true;
+            }
+            else
+            {
+                Mediator.isExportVisible = false; 
+            }
         }
     }
 }

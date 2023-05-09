@@ -82,6 +82,7 @@
             this.prg_SaveButton = new System.Windows.Forms.ProgressBar();
             this.lbl_Gravar = new System.Windows.Forms.Label();
             this.btn_SaveFileLocPD = new System.Windows.Forms.Button();
+            this.chkBox_VisibleWordExportProcess = new System.Windows.Forms.CheckBox();
             this.gBox_FMemory.SuspendLayout();
             this.tabControl_Exportar.SuspendLayout();
             this.tpage_PrepararExportar.SuspendLayout();
@@ -521,7 +522,7 @@
             this.btn_Save_Folder_OSWord.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_Save_Folder_OSWord.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btn_Save_Folder_OSWord.ForeColor = System.Drawing.Color.Cyan;
-            this.btn_Save_Folder_OSWord.Location = new System.Drawing.Point(405, 239);
+            this.btn_Save_Folder_OSWord.Location = new System.Drawing.Point(504, 259);
             this.btn_Save_Folder_OSWord.Margin = new System.Windows.Forms.Padding(2);
             this.btn_Save_Folder_OSWord.Name = "btn_Save_Folder_OSWord";
             this.btn_Save_Folder_OSWord.Size = new System.Drawing.Size(130, 29);
@@ -536,7 +537,7 @@
             this.btn_search_File_Quarta.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_search_File_Quarta.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btn_search_File_Quarta.ForeColor = System.Drawing.Color.Cyan;
-            this.btn_search_File_Quarta.Location = new System.Drawing.Point(405, 148);
+            this.btn_search_File_Quarta.Location = new System.Drawing.Point(504, 168);
             this.btn_search_File_Quarta.Margin = new System.Windows.Forms.Padding(2);
             this.btn_search_File_Quarta.Name = "btn_search_File_Quarta";
             this.btn_search_File_Quarta.Size = new System.Drawing.Size(130, 29);
@@ -551,7 +552,7 @@
             this.btn_search_File_FDSemana.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_search_File_FDSemana.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btn_search_File_FDSemana.ForeColor = System.Drawing.Color.Cyan;
-            this.btn_search_File_FDSemana.Location = new System.Drawing.Point(405, 92);
+            this.btn_search_File_FDSemana.Location = new System.Drawing.Point(504, 112);
             this.btn_search_File_FDSemana.Margin = new System.Windows.Forms.Padding(2);
             this.btn_search_File_FDSemana.Name = "btn_search_File_FDSemana";
             this.btn_search_File_FDSemana.Size = new System.Drawing.Size(130, 29);
@@ -566,7 +567,7 @@
             this.btn_search_File_ModelSemana.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_search_File_ModelSemana.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btn_search_File_ModelSemana.ForeColor = System.Drawing.Color.Cyan;
-            this.btn_search_File_ModelSemana.Location = new System.Drawing.Point(405, 35);
+            this.btn_search_File_ModelSemana.Location = new System.Drawing.Point(504, 55);
             this.btn_search_File_ModelSemana.Margin = new System.Windows.Forms.Padding(2);
             this.btn_search_File_ModelSemana.Name = "btn_search_File_ModelSemana";
             this.btn_search_File_ModelSemana.Size = new System.Drawing.Size(130, 29);
@@ -579,7 +580,7 @@
             // 
             this.lbl_modelQuarta.AutoSize = true;
             this.lbl_modelQuarta.ForeColor = System.Drawing.Color.Cyan;
-            this.lbl_modelQuarta.Location = new System.Drawing.Point(11, 135);
+            this.lbl_modelQuarta.Location = new System.Drawing.Point(110, 155);
             this.lbl_modelQuarta.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbl_modelQuarta.Name = "lbl_modelQuarta";
             this.lbl_modelQuarta.Size = new System.Drawing.Size(151, 17);
@@ -592,7 +593,7 @@
             this.txtbox_FileDirectory_ModelQuarta.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtbox_FileDirectory_ModelQuarta.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txtbox_FileDirectory_ModelQuarta.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(168)))), ((int)(((byte)(115)))), ((int)(((byte)(168)))));
-            this.txtbox_FileDirectory_ModelQuarta.Location = new System.Drawing.Point(9, 152);
+            this.txtbox_FileDirectory_ModelQuarta.Location = new System.Drawing.Point(108, 172);
             this.txtbox_FileDirectory_ModelQuarta.Margin = new System.Windows.Forms.Padding(2);
             this.txtbox_FileDirectory_ModelQuarta.Name = "txtbox_FileDirectory_ModelQuarta";
             this.txtbox_FileDirectory_ModelQuarta.Size = new System.Drawing.Size(379, 22);
@@ -602,12 +603,12 @@
             // 
             this.lbl_SaveFolder_OSWord.AutoSize = true;
             this.lbl_SaveFolder_OSWord.ForeColor = System.Drawing.Color.Cyan;
-            this.lbl_SaveFolder_OSWord.Location = new System.Drawing.Point(11, 224);
+            this.lbl_SaveFolder_OSWord.Location = new System.Drawing.Point(110, 244);
             this.lbl_SaveFolder_OSWord.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbl_SaveFolder_OSWord.Name = "lbl_SaveFolder_OSWord";
-            this.lbl_SaveFolder_OSWord.Size = new System.Drawing.Size(272, 17);
+            this.lbl_SaveFolder_OSWord.Size = new System.Drawing.Size(262, 17);
             this.lbl_SaveFolder_OSWord.TabIndex = 31;
-            this.lbl_SaveFolder_OSWord.Text = "Directório pré-definido do documento Word";
+            this.lbl_SaveFolder_OSWord.Text = "Pasta de exportação do documento Word";
             // 
             // btn_SaveFolder_OSWord
             // 
@@ -627,7 +628,7 @@
             this.txtbox_FolderDirectory_OSWord.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtbox_FolderDirectory_OSWord.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txtbox_FolderDirectory_OSWord.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(168)))), ((int)(((byte)(115)))), ((int)(((byte)(168)))));
-            this.txtbox_FolderDirectory_OSWord.Location = new System.Drawing.Point(9, 243);
+            this.txtbox_FolderDirectory_OSWord.Location = new System.Drawing.Point(108, 263);
             this.txtbox_FolderDirectory_OSWord.Margin = new System.Windows.Forms.Padding(2);
             this.txtbox_FolderDirectory_OSWord.Name = "txtbox_FolderDirectory_OSWord";
             this.txtbox_FolderDirectory_OSWord.Size = new System.Drawing.Size(379, 22);
@@ -650,7 +651,7 @@
             // 
             this.lbl_modelFDSemana.AutoSize = true;
             this.lbl_modelFDSemana.ForeColor = System.Drawing.Color.Cyan;
-            this.lbl_modelFDSemana.Location = new System.Drawing.Point(11, 77);
+            this.lbl_modelFDSemana.Location = new System.Drawing.Point(110, 97);
             this.lbl_modelFDSemana.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbl_modelFDSemana.Name = "lbl_modelFDSemana";
             this.lbl_modelFDSemana.Size = new System.Drawing.Size(167, 17);
@@ -663,7 +664,7 @@
             this.txtbox_FileDirectory_ModelFDSemana.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtbox_FileDirectory_ModelFDSemana.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txtbox_FileDirectory_ModelFDSemana.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(168)))), ((int)(((byte)(115)))), ((int)(((byte)(168)))));
-            this.txtbox_FileDirectory_ModelFDSemana.Location = new System.Drawing.Point(9, 96);
+            this.txtbox_FileDirectory_ModelFDSemana.Location = new System.Drawing.Point(108, 116);
             this.txtbox_FileDirectory_ModelFDSemana.Margin = new System.Windows.Forms.Padding(2);
             this.txtbox_FileDirectory_ModelFDSemana.Name = "txtbox_FileDirectory_ModelFDSemana";
             this.txtbox_FileDirectory_ModelFDSemana.Size = new System.Drawing.Size(379, 22);
@@ -686,7 +687,7 @@
             // 
             this.lbl_modelSemana.AutoSize = true;
             this.lbl_modelSemana.ForeColor = System.Drawing.Color.Cyan;
-            this.lbl_modelSemana.Location = new System.Drawing.Point(11, 20);
+            this.lbl_modelSemana.Location = new System.Drawing.Point(110, 40);
             this.lbl_modelSemana.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbl_modelSemana.Name = "lbl_modelSemana";
             this.lbl_modelSemana.Size = new System.Drawing.Size(125, 17);
@@ -699,7 +700,7 @@
             this.txtbox_FileDirectory_ModelSemana.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtbox_FileDirectory_ModelSemana.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txtbox_FileDirectory_ModelSemana.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(168)))), ((int)(((byte)(115)))), ((int)(((byte)(168)))));
-            this.txtbox_FileDirectory_ModelSemana.Location = new System.Drawing.Point(9, 39);
+            this.txtbox_FileDirectory_ModelSemana.Location = new System.Drawing.Point(108, 59);
             this.txtbox_FileDirectory_ModelSemana.Margin = new System.Windows.Forms.Padding(2);
             this.txtbox_FileDirectory_ModelSemana.Name = "txtbox_FileDirectory_ModelSemana";
             this.txtbox_FileDirectory_ModelSemana.Size = new System.Drawing.Size(379, 22);
@@ -709,6 +710,7 @@
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(20)))), ((int)(((byte)(25)))));
+            this.tabPage1.Controls.Add(this.chkBox_VisibleWordExportProcess);
             this.tabPage1.Controls.Add(this.gBox_FMemory);
             this.tabPage1.ForeColor = System.Drawing.Color.Gainsboro;
             this.tabPage1.Location = new System.Drawing.Point(4, 26);
@@ -849,6 +851,19 @@
             this.btn_SaveFileLocPD.UseVisualStyleBackColor = false;
             this.btn_SaveFileLocPD.Click += new System.EventHandler(this.btn_SaveFileLocPD_Click);
             // 
+            // chkBox_VisibleWordExportProcess
+            // 
+            this.chkBox_VisibleWordExportProcess.AutoSize = true;
+            this.chkBox_VisibleWordExportProcess.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(168)))), ((int)(((byte)(115)))), ((int)(((byte)(168)))));
+            this.chkBox_VisibleWordExportProcess.Location = new System.Drawing.Point(120, 259);
+            this.chkBox_VisibleWordExportProcess.Margin = new System.Windows.Forms.Padding(2);
+            this.chkBox_VisibleWordExportProcess.Name = "chkBox_VisibleWordExportProcess";
+            this.chkBox_VisibleWordExportProcess.Size = new System.Drawing.Size(235, 21);
+            this.chkBox_VisibleWordExportProcess.TabIndex = 9;
+            this.chkBox_VisibleWordExportProcess.Text = "DEBUG: Visualizar o Word Processor";
+            this.chkBox_VisibleWordExportProcess.UseVisualStyleBackColor = true;
+            this.chkBox_VisibleWordExportProcess.CheckedChanged += new System.EventHandler(this.chkBox_VisibleWordExportProcess_CheckedChanged);
+            // 
             // FormPropriedades
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
@@ -871,6 +886,7 @@
             this.tpage_ModelosPreferencias.ResumeLayout(false);
             this.tpage_ModelosPreferencias.PerformLayout();
             this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
             this.Properties_savingPanel.ResumeLayout(false);
             this.Properties_savingPanel.PerformLayout();
             this.gBox_DebugWindows.ResumeLayout(false);
@@ -938,5 +954,6 @@
         private Button btn_search_File_FDSemana;
         private Button btn_search_File_Quarta;
         private Button btn_Save_Folder_OSWord;
+        private CheckBox chkBox_VisibleWordExportProcess;
     }
 }

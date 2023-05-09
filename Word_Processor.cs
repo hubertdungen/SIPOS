@@ -34,7 +34,7 @@ namespace SIPOS
         // FIND AND REPLACE METHODS
         //
         //
-        public static void FindAndReplace(Word.Application wordApp, object ToFindText, object replaceWithText)
+        public static void FindAndReplace(Word.Document osWordDoc, Word.Application wordApp, object ToFindText, object replaceWithText)
         {
             object matchCase = true;
             object matchWholeWord = true;
@@ -51,6 +51,7 @@ namespace SIPOS
             object visible = true;
             object replace = 2;
             object wrap = 1;
+            object replaceAll = Microsoft.Office.Interop.Word.WdReplace.wdReplaceAll;
 
             wordApp.Selection.Find.Execute(ref ToFindText,
                 ref matchCase, ref matchWholeWord,
@@ -110,8 +111,8 @@ namespace SIPOS
             if (File.Exists((string)filename))
             {
                 object readOnly = false;
-                object isVisible = true;
-                wordApp.Visible = true;
+                object isVisible = Mediator.isExportVisible;
+                wordApp.Visible = Mediator.isExportVisible;
 
                 osWordDoc = wordApp.Documents.Open(ref filename, ref missing, ref readOnly,
                     ref missing, ref missing, ref missing,
@@ -123,7 +124,7 @@ namespace SIPOS
 
 
                 //-----------------
-                // FIND AND REPLACE
+                // FIND AND REPLACE EXECUTERS
 
 
                 // Escalas de Serviço
@@ -140,47 +141,47 @@ namespace SIPOS
 
 
                         // CABEÇALHOS
-                        Word_Processor.FindAndReplaceHeader(wordApp, "<numOS>", Mediator.osNumber);
-                        Word_Processor.FindAndReplaceHeader(wordApp, "<dataOS>", osExtensiveDate);
-                        Word_Processor.FindAndReplaceHeader(wordApp, "<dataOS_abv>", osDateABVParse);
+                        Word_Processor.FindAndReplaceHeader(osWordDoc, wordApp, "<numOS>", Mediator.osNumber);
+                        Word_Processor.FindAndReplaceHeader(osWordDoc, wordApp, "<dataOS>", osExtensiveDate);
+                        Word_Processor.FindAndReplaceHeader(osWordDoc, wordApp, "<dataOS_abv>", osDateABVParse);
                     }
 
                     string diaDeEscalaParsedExt = (string)Mediator.returnEscaladosDateParse();
-                    Word_Processor.FindAndReplace(wordApp, "<dataEscalados>", diaDeEscalaParsedExt);
+                    Word_Processor.FindAndReplace(osWordDoc, wordApp, "<dataEscalados>", diaDeEscalaParsedExt);
 
-                    Word_Processor.FindAndReplace(wordApp, "<ODUefectivo>", efetivoODU); //listToVarsEscalados();)  // ODU
-                    Word_Processor.FindAndReplace(wordApp, "<ODUptpd>", ptpdODU);
-                    Word_Processor.FindAndReplace(wordApp, "<ODUadapt>", adaptODU);
-                    Word_Processor.FindAndReplace(wordApp, "<ODUstatus>", statusODU);
-                    Word_Processor.FindAndReplace(wordApp, "<ODUreserva>", resODU);
+                    Word_Processor.FindAndReplace(osWordDoc, wordApp, "<ODUefectivo>", efetivoODU); //listToVarsEscalados();)  // ODU
+                    Word_Processor.FindAndReplace(osWordDoc, wordApp, "<ODUptpd>", ptpdODU);
+                    Word_Processor.FindAndReplace(osWordDoc, wordApp, "<ODUadapt>", adaptODU);
+                    Word_Processor.FindAndReplace(osWordDoc, wordApp, "<ODUstatus>", statusODU);
+                    Word_Processor.FindAndReplace(osWordDoc, wordApp, "<ODUreserva>", resODU);
 
-                    Word_Processor.FindAndReplace(wordApp, "<CCSefectivo>", efetivoCCS);  // CCS
-                    Word_Processor.FindAndReplace(wordApp, "<CCSptpd>", ptpdCCS);
-                    Word_Processor.FindAndReplace(wordApp, "<CCSadapt>", adaptCCS);
-                    Word_Processor.FindAndReplace(wordApp, "<CCSstatus>", statusCCS);
-                    Word_Processor.FindAndReplace(wordApp, "<CCSreserva>", resCCS);
+                    Word_Processor.FindAndReplace(osWordDoc, wordApp, "<CCSefectivo>", efetivoCCS);  // CCS
+                    Word_Processor.FindAndReplace(osWordDoc, wordApp, "<CCSptpd>", ptpdCCS);
+                    Word_Processor.FindAndReplace(osWordDoc, wordApp, "<CCSadapt>", adaptCCS);
+                    Word_Processor.FindAndReplace(osWordDoc, wordApp, "<CCSstatus>", statusCCS);
+                    Word_Processor.FindAndReplace(osWordDoc, wordApp, "<CCSreserva>", resCCS);
 
-                    Word_Processor.FindAndReplace(wordApp, "<SDefectivo>", efetivoSD);  // SD
-                    Word_Processor.FindAndReplace(wordApp, "<SDptpd>", ptpdSD);
-                    Word_Processor.FindAndReplace(wordApp, "<SDadapt>", adaptSD);
-                    Word_Processor.FindAndReplace(wordApp, "<SDstatus>", statusSD);
-                    Word_Processor.FindAndReplace(wordApp, "<SDreserva>", resSD);
+                    Word_Processor.FindAndReplace(osWordDoc, wordApp, "<SDefectivo>", efetivoSD);  // SD
+                    Word_Processor.FindAndReplace(osWordDoc, wordApp, "<SDptpd>", ptpdSD);
+                    Word_Processor.FindAndReplace(osWordDoc, wordApp, "<SDadapt>", adaptSD);
+                    Word_Processor.FindAndReplace(osWordDoc, wordApp, "<SDstatus>", statusSD);
+                    Word_Processor.FindAndReplace(osWordDoc, wordApp, "<SDreserva>", resSD);
 
-                    Word_Processor.FindAndReplace(wordApp, "<PDefectivo>", efetivoPD);  // PD
-                    Word_Processor.FindAndReplace(wordApp, "<PDptpd>", ptpdPD);
-                    Word_Processor.FindAndReplace(wordApp, "<PDadapt>", adaptPD);
-                    Word_Processor.FindAndReplace(wordApp, "<PDstatus>", statusPD);
-                    Word_Processor.FindAndReplace(wordApp, "<PDreserva>", resPD);
+                    Word_Processor.FindAndReplace(osWordDoc, wordApp, "<PDefectivo>", efetivoPD);  // PD
+                    Word_Processor.FindAndReplace(osWordDoc, wordApp, "<PDptpd>", ptpdPD);
+                    Word_Processor.FindAndReplace(osWordDoc, wordApp, "<PDadapt>", adaptPD);
+                    Word_Processor.FindAndReplace(osWordDoc, wordApp, "<PDstatus>", statusPD);
+                    Word_Processor.FindAndReplace(osWordDoc, wordApp, "<PDreserva>", resPD);
 
 
                     if (Mediator.isItQuarta == true)
                     {
                         // find and replace OAF
-                        Word_Processor.FindAndReplace(wordApp, "<OAFefectivo>", efetivoFN);  // FN
-                        Word_Processor.FindAndReplace(wordApp, "<OAFptpd>", ptpdFN);
-                        Word_Processor.FindAndReplace(wordApp, "<OAFadapt>", adaptFN);
-                        Word_Processor.FindAndReplace(wordApp, "<OAFstatus>", statusFN);
-                        Word_Processor.FindAndReplace(wordApp, "<OAFreserva>", resFN);
+                        Word_Processor.FindAndReplace(osWordDoc, wordApp, "<OAFefectivo>", efetivoFN);  // FN
+                        Word_Processor.FindAndReplace(osWordDoc, wordApp, "<OAFptpd>", ptpdFN);
+                        Word_Processor.FindAndReplace(osWordDoc, wordApp, "<OAFadapt>", adaptFN);
+                        Word_Processor.FindAndReplace(osWordDoc, wordApp, "<OAFstatus>", statusFN);
+                        Word_Processor.FindAndReplace(osWordDoc, wordApp, "<OAFreserva>", resFN);
                     }
 
 

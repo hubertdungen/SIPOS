@@ -59,6 +59,7 @@ namespace SIPOS
         public static bool debugMode = false;
         public static int winMode = 0; // 0 = No Windows / 1 = Low Windows / 2 = All Windows
         public static int backgroundMode = 0; // 0 = No Backgrounds / 1 = Bkg Light / 2 = Bkg Dark
+        public static bool isExportVisible = false; // Visibilidade de processamento e exportador do Word 
 
         // Calendar VARS
         public static DateTime diaDeEscala = DateTime.Today;
