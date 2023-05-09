@@ -31,14 +31,16 @@
             this.btn_Export_TestListReader = new System.Windows.Forms.Button();
             this.btn_Export_testDaySelect_Var = new System.Windows.Forms.Button();
             this.gbox_Export = new System.Windows.Forms.GroupBox();
+            this.btn_OpenWord = new System.Windows.Forms.Button();
             this.btn_ExportPDF = new System.Windows.Forms.Button();
             this.btn_ExportWord = new System.Windows.Forms.Button();
             this.gbox_ExportDetails = new System.Windows.Forms.GroupBox();
+            this.btn_reportPDFFile = new System.Windows.Forms.Button();
+            this.btn_reportWordFile = new System.Windows.Forms.Button();
             this.txtBox_NumOS = new System.Windows.Forms.TextBox();
             this.lbl_NumOS = new System.Windows.Forms.Label();
             this.lbl_SaveFileName_OSWord = new System.Windows.Forms.Label();
             this.txtBox_ExportDocName = new System.Windows.Forms.TextBox();
-            this.btn_OpenWord = new System.Windows.Forms.Button();
             this.gbox_Export.SuspendLayout();
             this.gbox_ExportDetails.SuspendLayout();
             this.SuspendLayout();
@@ -57,6 +59,7 @@
             this.btn_Export_TestListReader.TabIndex = 3;
             this.btn_Export_TestListReader.Text = "Test List Reader";
             this.btn_Export_TestListReader.UseVisualStyleBackColor = false;
+            this.btn_Export_TestListReader.Visible = false;
             this.btn_Export_TestListReader.Click += new System.EventHandler(this.btn_Export_TestListReader_Click);
             // 
             // btn_Export_testDaySelect_Var
@@ -73,6 +76,7 @@
             this.btn_Export_testDaySelect_Var.TabIndex = 2;
             this.btn_Export_testDaySelect_Var.Text = "Test DaySelect Var";
             this.btn_Export_testDaySelect_Var.UseVisualStyleBackColor = false;
+            this.btn_Export_testDaySelect_Var.Visible = false;
             this.btn_Export_testDaySelect_Var.Click += new System.EventHandler(this.btn_Export_testDaySelect_Var_Click);
             // 
             // gbox_Export
@@ -90,6 +94,22 @@
             this.gbox_Export.TabIndex = 1;
             this.gbox_Export.TabStop = false;
             this.gbox_Export.Text = "Exportar";
+            // 
+            // btn_OpenWord
+            // 
+            this.btn_OpenWord.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(25)))), ((int)(((byte)(51)))));
+            this.btn_OpenWord.FlatAppearance.BorderSize = 0;
+            this.btn_OpenWord.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_OpenWord.Font = new System.Drawing.Font("Century Gothic", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btn_OpenWord.ForeColor = System.Drawing.Color.IndianRed;
+            this.btn_OpenWord.Location = new System.Drawing.Point(228, 45);
+            this.btn_OpenWord.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_OpenWord.Name = "btn_OpenWord";
+            this.btn_OpenWord.Size = new System.Drawing.Size(57, 70);
+            this.btn_OpenWord.TabIndex = 4;
+            this.btn_OpenWord.Text = "📁";
+            this.btn_OpenWord.UseVisualStyleBackColor = false;
+            this.btn_OpenWord.Click += new System.EventHandler(this.btn_OpenWord_Click);
             // 
             // btn_ExportPDF
             // 
@@ -124,6 +144,8 @@
             // 
             // gbox_ExportDetails
             // 
+            this.gbox_ExportDetails.Controls.Add(this.btn_reportPDFFile);
+            this.gbox_ExportDetails.Controls.Add(this.btn_reportWordFile);
             this.gbox_ExportDetails.Controls.Add(this.txtBox_NumOS);
             this.gbox_ExportDetails.Controls.Add(this.lbl_NumOS);
             this.gbox_ExportDetails.Controls.Add(this.lbl_SaveFileName_OSWord);
@@ -138,6 +160,38 @@
             this.gbox_ExportDetails.TabIndex = 0;
             this.gbox_ExportDetails.TabStop = false;
             this.gbox_ExportDetails.Text = "Especificações";
+            // 
+            // btn_reportPDFFile
+            // 
+            this.btn_reportPDFFile.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(25)))), ((int)(((byte)(51)))));
+            this.btn_reportPDFFile.FlatAppearance.BorderSize = 0;
+            this.btn_reportPDFFile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_reportPDFFile.Font = new System.Drawing.Font("Century Gothic", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btn_reportPDFFile.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(138)))), ((int)(((byte)(28)))));
+            this.btn_reportPDFFile.Location = new System.Drawing.Point(113, 52);
+            this.btn_reportPDFFile.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_reportPDFFile.Name = "btn_reportPDFFile";
+            this.btn_reportPDFFile.Size = new System.Drawing.Size(29, 24);
+            this.btn_reportPDFFile.TabIndex = 35;
+            this.btn_reportPDFFile.Text = "P";
+            this.btn_reportPDFFile.UseVisualStyleBackColor = false;
+            this.btn_reportPDFFile.Visible = false;
+            // 
+            // btn_reportWordFile
+            // 
+            this.btn_reportWordFile.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(25)))), ((int)(((byte)(51)))));
+            this.btn_reportWordFile.FlatAppearance.BorderSize = 0;
+            this.btn_reportWordFile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_reportWordFile.Font = new System.Drawing.Font("Century Gothic", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btn_reportWordFile.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(160)))), ((int)(((byte)(184)))), ((int)(((byte)(226)))));
+            this.btn_reportWordFile.Location = new System.Drawing.Point(77, 52);
+            this.btn_reportWordFile.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_reportWordFile.Name = "btn_reportWordFile";
+            this.btn_reportWordFile.Size = new System.Drawing.Size(29, 24);
+            this.btn_reportWordFile.TabIndex = 5;
+            this.btn_reportWordFile.Text = "W";
+            this.btn_reportWordFile.UseVisualStyleBackColor = false;
+            this.btn_reportWordFile.Visible = false;
             // 
             // txtBox_NumOS
             // 
@@ -185,22 +239,6 @@
             this.txtBox_ExportDocName.TabIndex = 30;
             this.txtBox_ExportDocName.TextChanged += new System.EventHandler(this.txtBox_ExportDocName_TextChanged);
             // 
-            // btn_OpenWord
-            // 
-            this.btn_OpenWord.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(25)))), ((int)(((byte)(51)))));
-            this.btn_OpenWord.FlatAppearance.BorderSize = 0;
-            this.btn_OpenWord.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_OpenWord.Font = new System.Drawing.Font("Century Gothic", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btn_OpenWord.ForeColor = System.Drawing.Color.IndianRed;
-            this.btn_OpenWord.Location = new System.Drawing.Point(228, 45);
-            this.btn_OpenWord.Margin = new System.Windows.Forms.Padding(2);
-            this.btn_OpenWord.Name = "btn_OpenWord";
-            this.btn_OpenWord.Size = new System.Drawing.Size(57, 70);
-            this.btn_OpenWord.TabIndex = 4;
-            this.btn_OpenWord.Text = "📁";
-            this.btn_OpenWord.UseVisualStyleBackColor = false;
-            this.btn_OpenWord.Click += new System.EventHandler(this.btn_OpenWord_Click);
-            // 
             // FormExport
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -235,5 +273,7 @@
         private Label lbl_SaveFileName_OSWord;
         private TextBox txtBox_ExportDocName;
         private Button btn_OpenWord;
+        private Button btn_reportPDFFile;
+        private Button btn_reportWordFile;
     }
 }

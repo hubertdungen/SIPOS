@@ -72,6 +72,11 @@
             this.lbl_modelSemana = new System.Windows.Forms.Label();
             this.txtbox_FileDirectory_ModelSemana = new System.Windows.Forms.TextBox();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btn_searchFile_WordApp = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.txtBox_WordAppPath = new System.Windows.Forms.TextBox();
+            this.chkBox_VisibleWordExportProcess = new System.Windows.Forms.CheckBox();
             this.Properties_savingPanel = new System.Windows.Forms.Panel();
             this.gBox_DebugWindows = new System.Windows.Forms.GroupBox();
             this.rbutton_AllDebugWindows = new System.Windows.Forms.RadioButton();
@@ -82,13 +87,13 @@
             this.prg_SaveButton = new System.Windows.Forms.ProgressBar();
             this.lbl_Gravar = new System.Windows.Forms.Label();
             this.btn_SaveFileLocPD = new System.Windows.Forms.Button();
-            this.chkBox_VisibleWordExportProcess = new System.Windows.Forms.CheckBox();
             this.gBox_FMemory.SuspendLayout();
             this.tabControl_Exportar.SuspendLayout();
             this.tpage_PrepararExportar.SuspendLayout();
             this.gBox_DirectorioFlhsExcel.SuspendLayout();
             this.tpage_ModelosPreferencias.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.Properties_savingPanel.SuspendLayout();
             this.gBox_DebugWindows.SuspendLayout();
             this.gBox_BackgroundMode.SuspendLayout();
@@ -101,11 +106,11 @@
             this.gBox_FMemory.Controls.Add(this.txtBox_FMemory);
             this.gBox_FMemory.Font = new System.Drawing.Font("Century Gothic", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.gBox_FMemory.ForeColor = System.Drawing.Color.Cyan;
-            this.gBox_FMemory.Location = new System.Drawing.Point(120, 113);
+            this.gBox_FMemory.Location = new System.Drawing.Point(120, 114);
             this.gBox_FMemory.Margin = new System.Windows.Forms.Padding(2);
             this.gBox_FMemory.Name = "gBox_FMemory";
             this.gBox_FMemory.Padding = new System.Windows.Forms.Padding(2);
-            this.gBox_FMemory.Size = new System.Drawing.Size(530, 84);
+            this.gBox_FMemory.Size = new System.Drawing.Size(554, 68);
             this.gBox_FMemory.TabIndex = 8;
             this.gBox_FMemory.TabStop = false;
             this.gBox_FMemory.Text = "Directório do Ficheiro de Memória";
@@ -115,7 +120,7 @@
             // 
             this.btn_openMemoryFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btn_openMemoryFolder.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btn_openMemoryFolder.Location = new System.Drawing.Point(720, 27);
+            this.btn_openMemoryFolder.Location = new System.Drawing.Point(744, 27);
             this.btn_openMemoryFolder.Margin = new System.Windows.Forms.Padding(2);
             this.btn_openMemoryFolder.Name = "btn_openMemoryFolder";
             this.btn_openMemoryFolder.Size = new System.Drawing.Size(130, 34);
@@ -129,7 +134,7 @@
             this.txtBox_FMemory.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtBox_FMemory.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txtBox_FMemory.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(168)))), ((int)(((byte)(115)))), ((int)(((byte)(168)))));
-            this.txtBox_FMemory.Location = new System.Drawing.Point(12, 36);
+            this.txtBox_FMemory.Location = new System.Drawing.Point(12, 30);
             this.txtBox_FMemory.Margin = new System.Windows.Forms.Padding(2);
             this.txtBox_FMemory.Name = "txtBox_FMemory";
             this.txtBox_FMemory.ReadOnly = true;
@@ -710,6 +715,7 @@
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(20)))), ((int)(((byte)(25)))));
+            this.tabPage1.Controls.Add(this.groupBox1);
             this.tabPage1.Controls.Add(this.chkBox_VisibleWordExportProcess);
             this.tabPage1.Controls.Add(this.gBox_FMemory);
             this.tabPage1.ForeColor = System.Drawing.Color.Gainsboro;
@@ -719,6 +725,78 @@
             this.tabPage1.Size = new System.Drawing.Size(763, 328);
             this.tabPage1.TabIndex = 2;
             this.tabPage1.Text = "Outros";
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.groupBox1.Controls.Add(this.btn_searchFile_WordApp);
+            this.groupBox1.Controls.Add(this.button1);
+            this.groupBox1.Controls.Add(this.txtBox_WordAppPath);
+            this.groupBox1.Font = new System.Drawing.Font("Century Gothic", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.groupBox1.ForeColor = System.Drawing.Color.Cyan;
+            this.groupBox1.Location = new System.Drawing.Point(120, 25);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
+            this.groupBox1.Size = new System.Drawing.Size(554, 66);
+            this.groupBox1.TabIndex = 9;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Directório da Aplicação Word";
+            // 
+            // btn_searchFile_WordApp
+            // 
+            this.btn_searchFile_WordApp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btn_searchFile_WordApp.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(30)))), ((int)(((byte)(51)))));
+            this.btn_searchFile_WordApp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_searchFile_WordApp.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btn_searchFile_WordApp.ForeColor = System.Drawing.Color.Cyan;
+            this.btn_searchFile_WordApp.Location = new System.Drawing.Point(400, 23);
+            this.btn_searchFile_WordApp.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_searchFile_WordApp.Name = "btn_searchFile_WordApp";
+            this.btn_searchFile_WordApp.Size = new System.Drawing.Size(134, 29);
+            this.btn_searchFile_WordApp.TabIndex = 24;
+            this.btn_searchFile_WordApp.Text = "📄 &Procurar Ficheiro";
+            this.btn_searchFile_WordApp.UseVisualStyleBackColor = false;
+            this.btn_searchFile_WordApp.Click += new System.EventHandler(this.btn_searchFile_WordApp_Click);
+            // 
+            // button1
+            // 
+            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.button1.Location = new System.Drawing.Point(1075, 26);
+            this.button1.Margin = new System.Windows.Forms.Padding(2);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(130, 34);
+            this.button1.TabIndex = 7;
+            this.button1.Text = "📂 &Abrir Pasta";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // txtBox_WordAppPath
+            // 
+            this.txtBox_WordAppPath.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(30)))), ((int)(((byte)(51)))));
+            this.txtBox_WordAppPath.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtBox_WordAppPath.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.txtBox_WordAppPath.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(168)))), ((int)(((byte)(115)))), ((int)(((byte)(168)))));
+            this.txtBox_WordAppPath.Location = new System.Drawing.Point(12, 28);
+            this.txtBox_WordAppPath.Margin = new System.Windows.Forms.Padding(2);
+            this.txtBox_WordAppPath.Name = "txtBox_WordAppPath";
+            this.txtBox_WordAppPath.ReadOnly = true;
+            this.txtBox_WordAppPath.Size = new System.Drawing.Size(369, 22);
+            this.txtBox_WordAppPath.TabIndex = 0;
+            this.txtBox_WordAppPath.TextChanged += new System.EventHandler(this.txtBox_WordAppPath_TextChanged);
+            // 
+            // chkBox_VisibleWordExportProcess
+            // 
+            this.chkBox_VisibleWordExportProcess.AutoSize = true;
+            this.chkBox_VisibleWordExportProcess.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(168)))), ((int)(((byte)(115)))), ((int)(((byte)(168)))));
+            this.chkBox_VisibleWordExportProcess.Location = new System.Drawing.Point(120, 259);
+            this.chkBox_VisibleWordExportProcess.Margin = new System.Windows.Forms.Padding(2);
+            this.chkBox_VisibleWordExportProcess.Name = "chkBox_VisibleWordExportProcess";
+            this.chkBox_VisibleWordExportProcess.Size = new System.Drawing.Size(235, 21);
+            this.chkBox_VisibleWordExportProcess.TabIndex = 9;
+            this.chkBox_VisibleWordExportProcess.Text = "DEBUG: Visualizar o Word Processor";
+            this.chkBox_VisibleWordExportProcess.UseVisualStyleBackColor = true;
+            this.chkBox_VisibleWordExportProcess.CheckedChanged += new System.EventHandler(this.chkBox_VisibleWordExportProcess_CheckedChanged);
             // 
             // Properties_savingPanel
             // 
@@ -851,19 +929,6 @@
             this.btn_SaveFileLocPD.UseVisualStyleBackColor = false;
             this.btn_SaveFileLocPD.Click += new System.EventHandler(this.btn_SaveFileLocPD_Click);
             // 
-            // chkBox_VisibleWordExportProcess
-            // 
-            this.chkBox_VisibleWordExportProcess.AutoSize = true;
-            this.chkBox_VisibleWordExportProcess.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(168)))), ((int)(((byte)(115)))), ((int)(((byte)(168)))));
-            this.chkBox_VisibleWordExportProcess.Location = new System.Drawing.Point(120, 259);
-            this.chkBox_VisibleWordExportProcess.Margin = new System.Windows.Forms.Padding(2);
-            this.chkBox_VisibleWordExportProcess.Name = "chkBox_VisibleWordExportProcess";
-            this.chkBox_VisibleWordExportProcess.Size = new System.Drawing.Size(235, 21);
-            this.chkBox_VisibleWordExportProcess.TabIndex = 9;
-            this.chkBox_VisibleWordExportProcess.Text = "DEBUG: Visualizar o Word Processor";
-            this.chkBox_VisibleWordExportProcess.UseVisualStyleBackColor = true;
-            this.chkBox_VisibleWordExportProcess.CheckedChanged += new System.EventHandler(this.chkBox_VisibleWordExportProcess_CheckedChanged);
-            // 
             // FormPropriedades
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
@@ -887,6 +952,8 @@
             this.tpage_ModelosPreferencias.PerformLayout();
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.Properties_savingPanel.ResumeLayout(false);
             this.Properties_savingPanel.PerformLayout();
             this.gBox_DebugWindows.ResumeLayout(false);
@@ -955,5 +1022,9 @@
         private Button btn_search_File_Quarta;
         private Button btn_Save_Folder_OSWord;
         private CheckBox chkBox_VisibleWordExportProcess;
+        private GroupBox groupBox1;
+        private Button btn_searchFile_WordApp;
+        private Button button1;
+        private TextBox txtBox_WordAppPath;
     }
 }

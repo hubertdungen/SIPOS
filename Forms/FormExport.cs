@@ -38,6 +38,9 @@ namespace SIPOS.Forms
         {
             txtBox_ExportDocName.Text = DateTime.Now.Year.ToString() + "-" + "002" + "-" + txtBox_NumOS.Text;
             Mediator.osNumber = txtBox_NumOS.Text;
+
+            doesExportFilesExist();
+
         }
 
         private void txtBox_ExportDocName_TextChanged(object sender, EventArgs e)
@@ -110,35 +113,72 @@ namespace SIPOS.Forms
         public void doesExportFilesExist()
         {
             string filePath = Mediator.fPathOSWord + @"\" + Mediator.exportDocName + ".doc";
+            string pdffilePath = Mediator.fPathOSWord + @"\" + Mediator.exportDocName + ".pdf";
 
             if (File.Exists(filePath))
             {
                 // The Word document exists, so make the "btn_OpenWord" button visible
                 btn_OpenWord.Visible = true;
+                btn_reportWordFile.Visible = true;
             }
             else
             {
                 // The Word document does not exist, so hide the "btn_OpenWord" button
                 btn_OpenWord.Visible = false;
+                btn_reportWordFile.Visible= false;
             }
+
+
+            if (File.Exists(pdffilePath))
+            {
+                // The PDF document exists
+                btn_reportPDFFile.Visible = true;
+            }
+            else
+            {
+                // The PDF document does not exists
+                btn_reportPDFFile.Visible = false;
+            }
+
+
+
         }
         private void btn_OpenWord_Click(object sender, EventArgs e)
         {
-            try
-            {
-                string filePath = Mediator.fPathOSWord + @"\" + Mediator.exportDocName + ".doc";
-                filePath = @"""{filePath}""";
-                Process.Start("WINWORD.EXE", filePath);
-            }
-            catch (Exception ex)
-            {
-                // Handle the exception with a pop-up message box in Portuguese
-                string message = "Ocorreu um erro ao abrir o arquivo: " + ex.Message;
-                string caption = "Erro ao abrir arquivo";
-                MessageBoxButtons buttons = MessageBoxButtons.OK;
-                MessageBoxIcon icon = MessageBoxIcon.Error;
-                MessageBox.Show(message, caption, buttons, icon);
-            }
+
+            string filePath = Mediator.fPathOSWord + @"\" + Mediator.exportDocName + ".doc";
+            string wordFilePath = "\"" + Mediator.wordAppFilePath + "\"";
+
+
+
+            //Process.Start("WORD.EXE", "C:\\Users\\huber\\source\\repos\\SIPOS\\SIPOS\\modelos_word\\exports\\2023-002-50.doc");
+
+
+            System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
+            //startInfo.FileName = "WINWORD.exe";
+            startInfo.FileName = Mediator.wordAppFilePath;
+            startInfo.Arguments = "\"" + filePath + "\"";
+            System.Diagnostics.Process.Start(startInfo);
+
+            //filePath = @"""{filePath}""";
+            //filePath = "\"" + filePath + "\"";
+            //Process.Start("WINWORD.EXE", filePath);
+
+            //try
+            //{
+            //    string filePath = Mediator.fPathOSWord + @"\" + Mediator.exportDocName + ".doc";
+            //    filePath = @"""{filePath}""";
+            //    Process.Start("WINWORD.EXE", filePath);
+            //}
+            //catch (Exception ex)
+            //{
+            //    // Handle the exception with a pop-up message box in Portuguese
+            //    string message = "Ocorreu um erro ao abrir o arquivo: " + ex.Message;
+            //    string caption = "Erro ao abrir arquivo";
+            //    MessageBoxButtons buttons = MessageBoxButtons.OK;
+            //    MessageBoxIcon icon = MessageBoxIcon.Error;
+            //    MessageBox.Show(message, caption, buttons, icon);
+            //}
         }
 
 

@@ -35,7 +35,7 @@ namespace SIPOS.Forms
             txtbox_FileDirectory_ModelSemana.Text = Mediator.fPathModelSemana;
             txtbox_FileDirectory_ModelQuarta.Text = Mediator.fPathModelQuarta;
             txtbox_FolderDirectory_OSWord.Text = Mediator.fPathOSWord;
-
+            txtBox_WordAppPath.Text = Mediator.wordAppFilePath;
 
 
 
@@ -126,50 +126,10 @@ namespace SIPOS.Forms
             Mediator.isPathSaved = false;
             
         }
-
-
-        // RETURN STRING DIRECTORIES
-
-        //public static void returnTxt_FMemory()
-        //{
-        //    return txtBox_FMemory.Text;
-        //}
-        //public static void returnTxt_FileDirectoryODU()
-        //{
-        //    return txtbox_FileDirectoryODU.Text;
-        //}
-        //public static void returnTxt_FileDirectoryCCS()
-        //{
-        //    return txtbox_FileDirectoryCCS.Text;
-        //}
-        //public static void returnTxt_FileDirectorySD()
-        //{
-        //    return txtbox_FileDirectorySD.Text;
-        //}
-        //public static void returnTxt_FileDirectoryPD()
-        //{
-        //    return txtbox_FileDirectoryPD.Text;
-        //}
-        //public static void returnTxt_FileDirectoryFunerais()
-        //{
-        //    return txtbox_FileDirectoryFunerais.Text;
-        //}
-        //public static void returnTxt_FileDirectory_ModelSemana()
-        //{
-        //    return txtbox_FileDirectory_ModelSemana.Text;
-        //}
-        //public static void returnTxt_FolderDirectory_OSWord()
-        //{
-        //    return txtbox_FolderDirectory_OSWord.Text;
-        //}
-        //public static void returnTxt_FileDirectory_ModelQuarta()
-        //{
-        //    return txtbox_FileDirectory_ModelQuarta.Text;
-        //}
-
-
-
-
+        private void txtBox_WordAppPath_TextChanged(object sender, EventArgs e)
+        {
+            Mediator.isPathSaved = false;
+        }
 
 
 
@@ -206,6 +166,8 @@ namespace SIPOS.Forms
             Mediator.fPathModelSemana = txtbox_FileDirectory_ModelSemana.Text;                      // Grava a PATH seleccionada do Modelo de Semana
             Mediator.fPathModelQuarta = txtbox_FileDirectory_ModelQuarta.Text;                      // Grava a PATH seleccionada do Modelo de Quarta
             Mediator.fPathOSWord = txtbox_FolderDirectory_OSWord.Text;
+
+            Mediator.wordAppFilePath = txtBox_WordAppPath.Text;
 
             //// ^^^^^ ATENÇÃO! NÃO ESQUECER DE CRIAR UM METODO QUE CHEQUE PELO PREENCHIMENTO CORRECTO DESTAS VARIAVEIS | TÊM DE SER SÓ ACEITES EM FORMATO WORD (.docx) !!!
 
@@ -277,11 +239,17 @@ namespace SIPOS.Forms
             Mediator.openFile();
             txtbox_FileDirectory_ModelQuarta.Text = Mediator.filePath;
         }
+        private void btn_searchFile_WordApp_Click(object sender, EventArgs e)
+        {
+            Mediator.openFile();
+            txtBox_WordAppPath.Text = Mediator.filePath;
+        }
         private void btn_Save_Folder_OSWord_Click(object sender, EventArgs e)
         {
             Mediator.openFolder();
             txtbox_FolderDirectory_OSWord.Text = Mediator.selectedFolder;
         }
+
 
 
         // WINDOWS MODE
@@ -332,7 +300,6 @@ namespace SIPOS.Forms
                 prg_SaveButton.Value = prg_SaveButton.Maximum;
             }
         }
-        
         public void prg_SaveButton_Minimum()
         {
             prg_SaveButton.Value = 0;
@@ -395,5 +362,7 @@ namespace SIPOS.Forms
                 Mediator.isExportVisible = false; 
             }
         }
+
+
     }
 }
