@@ -43,6 +43,7 @@ namespace SIPOS
         public static string osNumber = "";
         public static string exportDocName = DateTime.Now.Year.ToString() + "-" + "002" + "-";
         public static string wordAppFilePath = "";
+        public static string pdfAppFilePath = "";
         public static string inspFilePath = "";
 
         // Memory VARS
@@ -231,6 +232,7 @@ namespace SIPOS
                 tw.WriteLine(fPathModelQuarta);   //tw.WriteLine(txtbox_FileDirectory_ModelQuarta.Text);
                 tw.WriteLine(fPathOSWord);
                 tw.WriteLine(wordAppFilePath);
+                tw.WriteLine(pdfAppFilePath);
                 tw.WriteLine(inspFilePath);
 
 
@@ -358,6 +360,7 @@ namespace SIPOS
                     fPathModelQuarta = tr.ReadLine();
                     fPathOSWord = tr.ReadLine();
                     wordAppFilePath = tr.ReadLine();
+                    pdfAppFilePath = tr.ReadLine();
                     inspFilePath = tr.ReadLine();
 
 
@@ -492,13 +495,6 @@ namespace SIPOS
             }
         }
 
-        // INSTANCE CALLERS
-        
-        //public static void instpathErrorCheck(string filePath)
-        //{
-        //    var instfOS = new frm_OS_system();
-        //    instfOS.pathErrorCheck(filePath);
-        //}
 
 
         // -----------------------------
@@ -628,14 +624,6 @@ namespace SIPOS
         // -----------------------------
         // --------------------------------------------------------------------------
         // --------------------------------------------------------------------------
-
-
-
-
-
-
-
-
 
 
 

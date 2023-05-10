@@ -243,6 +243,7 @@
             this.toolTip1.SetToolTip(this.btn_reportPDFFile_onInspect, "Já existe um ficheiro PDF com este nome na pasta de Inspeção.");
             this.btn_reportPDFFile_onInspect.UseVisualStyleBackColor = false;
             this.btn_reportPDFFile_onInspect.Visible = false;
+            this.btn_reportPDFFile_onInspect.Click += new System.EventHandler(this.btn_reportPDFFile_onInspect_Click);
             // 
             // btn_reportWordFile_onInspect
             // 
@@ -260,6 +261,7 @@
             this.toolTip1.SetToolTip(this.btn_reportWordFile_onInspect, "Já existe um ficheiro WORD com este nome na pasta de Inspeção.");
             this.btn_reportWordFile_onInspect.UseVisualStyleBackColor = false;
             this.btn_reportWordFile_onInspect.Visible = false;
+            this.btn_reportWordFile_onInspect.Click += new System.EventHandler(this.btn_reportWordFile_onInspect_Click);
             // 
             // txtBox_NumOS
             // 

@@ -55,7 +55,7 @@ namespace SIPOS
         // ------------
 
         // Details VARS
-        public static string version = "v A-0.9.13";
+        public static string version = "v A-0.9.14";
 
 
 

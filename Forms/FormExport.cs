@@ -196,6 +196,7 @@ namespace SIPOS.Forms
         {
 
             string filePath = Mediator.fPathOSWord + @"\" + Mediator.exportDocName + ".doc";
+
             string wordFilePath = "\"" + Mediator.wordAppFilePath + "\"";
 
 
@@ -205,7 +206,8 @@ namespace SIPOS.Forms
 
             System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
             //startInfo.FileName = "WINWORD.exe";
-            startInfo.FileName = Mediator.wordAppFilePath;
+            startInfo.FileName = wordFilePath;
+            //startInfo.Arguments = wordFilePath;
             startInfo.Arguments = "\"" + filePath + "\"";
             System.Diagnostics.Process.Start(startInfo);
 
@@ -231,10 +233,62 @@ namespace SIPOS.Forms
         }
         private void btn_OpenPDF_Click(object sender, EventArgs e)
         {
-            string filePath = Mediator.fPathOSWord + @"\" + Mediator.exportDocName + ".pdf";
-            //string pdfFilePath = "\"" + Mediator.wordAppFilePath + "\"";
 
-            Process.Start(filePath);
+            string filePath = Mediator.fPathOSWord + @"\" + Mediator.exportDocName + ".pdf";
+            string pdfFilePath = "\"" + Mediator.pdfAppFilePath + "\"";
+
+
+
+            //Process.Start("WORD.EXE", "C:\\Users\\huber\\source\\repos\\SIPOS\\SIPOS\\modelos_word\\exports\\2023-002-50.doc");
+
+
+            System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
+            //startInfo.FileName = "WINWORD.exe";
+            startInfo.FileName = pdfFilePath;
+            startInfo.Arguments = "\"" + filePath + "\"";
+            System.Diagnostics.Process.Start(startInfo);
+
+        }
+        private void btn_reportPDFFile_onInspect_Click(object sender, EventArgs e)
+        {
+
+            string pdfFilePath = "\"" + Mediator.pdfAppFilePath + "\"";
+            string inspPDFfilePath = Mediator.inspFilePath + @"\" + Mediator.exportDocName + ".pdf";
+            string inspPDFsignedFilePath = Mediator.inspFilePath + @"\" + Mediator.exportDocName + "_signed.pdf";
+
+            // ABRIR O PDF QUE ESTÁ NA PASTA DE INSPEÇÃO
+
+            System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
+
+            if (File.Exists(inspPDFsignedFilePath))
+            {
+                startInfo.FileName = pdfFilePath;
+                startInfo.Arguments = "\"" + inspPDFsignedFilePath + "\"";
+                System.Diagnostics.Process.Start(startInfo);
+
+            }
+            else if (File.Exists(inspPDFfilePath))
+            {
+                startInfo.FileName = pdfFilePath;
+                startInfo.Arguments = "\"" + inspPDFfilePath + "\"";
+                System.Diagnostics.Process.Start(startInfo);
+
+            }
+
+        }
+        private void btn_reportWordFile_onInspect_Click(object sender, EventArgs e)
+        {
+            string inspWordfilePath = Mediator.inspFilePath + @"\" + Mediator.exportDocName + ".doc";
+            inspWordfilePath = "\"" + inspWordfilePath + "\"";
+            string wordFilePath = "\"" + Mediator.wordAppFilePath + "\"";
+
+            // ABRIR O WORD QUE ESTÁ NA PASTA DE INSPEÇÃO
+
+            System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
+            startInfo.FileName = wordFilePath;
+            startInfo.Arguments = inspWordfilePath;
+            System.Diagnostics.Process.Start(startInfo);
+
         }
 
 

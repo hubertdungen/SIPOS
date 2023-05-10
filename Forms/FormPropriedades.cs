@@ -36,10 +36,8 @@ namespace SIPOS.Forms
             txtbox_FileDirectory_ModelQuarta.Text = Mediator.fPathModelQuarta;
             txtbox_FolderDirectory_OSWord.Text = Mediator.fPathOSWord;
             txtBox_WordAppPath.Text = Mediator.wordAppFilePath;
+            txtBox_PDFAppPath.Text = Mediator.pdfAppFilePath;
             txtBox_InspFilePath.Text = Mediator.inspFilePath;
-
-
-
 
         }
 
@@ -168,6 +166,7 @@ namespace SIPOS.Forms
             Mediator.fPathOSWord = txtbox_FolderDirectory_OSWord.Text;
 
             Mediator.wordAppFilePath = txtBox_WordAppPath.Text;
+            Mediator.pdfAppFilePath = txtBox_PDFAppPath.Text;
             Mediator.inspFilePath = txtBox_InspFilePath.Text;
 
             //// ^^^^^ ATENÇÃO! NÃO ESQUECER DE CRIAR UM METODO QUE CHEQUE PELO PREENCHIMENTO CORRECTO DESTAS VARIAVEIS | TÊM DE SER SÓ ACEITES EM FORMATO WORD (.docx) !!!
@@ -199,6 +198,7 @@ namespace SIPOS.Forms
             }
 
         }
+
         // BUTTONS: OPEN FILE DIALOGS
         private void btn_searchFile_ODU_Click(object sender, EventArgs e)
         {
@@ -244,6 +244,11 @@ namespace SIPOS.Forms
         {
             Mediator.openFile();
             txtBox_WordAppPath.Text = Mediator.filePath;
+        }
+        private void btn_searchFile_PDFApp_Click(object sender, EventArgs e)
+        {
+            Mediator.openFile();
+            txtBox_PDFAppPath.Text = Mediator.filePath;
         }
         private void btn_searchFolder_InspFiles_Click(object sender, EventArgs e)
         {
