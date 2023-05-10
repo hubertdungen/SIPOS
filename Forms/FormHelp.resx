@@ -57,4 +57,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="txtBox_IntroSIPOS.Text" xml:space="preserve">
+    <value>O SIPOS é um software que visa automatizar o processo de criação das Ordens de Serviço (O.S.) diárias para cada unidade militar, a fim de otimizar recursos humanos e reduzir a necessidade de trabalho manual repetitivo. 
+Atualmente, as O.S. são feitas de forma manual por 1 ou 2 militares de cada unidade, que precisam juntar a informação por meio de documentos correspondidos e publicá-los na O.S. após despacho e indicação do comandante da unidade.
+
+O SIPOS utiliza técnicas de Inteligência Artificial para detectar e classificar documentos e, em seguida, inserir as informações em um formato reformulado, além de detectar informações específicas, como movimentos de militares e civis na unidade, transferências, escalas de serviço, louvores, punições, entre outros assuntos relacionados.
+
+O SIPOS veio substituir o processo manual de criação de Ordens de Serviço (OS) realizado pelos militares, que exigia muito tempo e esforço. Graças à automação fornecida pelo SIPOS, o trabalho repetitivo de coleta e publicação de informações no O.S. é reduzido, o que permite a otimização dos recursos humanos, maior precisão na organização da informação e redução da possibilidade de erros. 
+Além disso, o uso de inteligência artificial possibilita a detecção de informações específicas, o que melhora ainda mais o processo de desenvolvimento do SO.</value>
+  </data>
 </root>
