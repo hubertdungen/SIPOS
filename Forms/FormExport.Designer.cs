@@ -187,6 +187,7 @@
             this.btn_ExportPDF.Size = new System.Drawing.Size(268, 70);
             this.btn_ExportPDF.TabIndex = 1;
             this.btn_ExportPDF.Text = "PDF";
+            this.toolTip1.SetToolTip(this.btn_ExportPDF, "Exportar o Documento PDF.");
             this.btn_ExportPDF.UseVisualStyleBackColor = false;
             // 
             // btn_ExportWord
@@ -202,6 +203,7 @@
             this.btn_ExportWord.Size = new System.Drawing.Size(268, 70);
             this.btn_ExportWord.TabIndex = 0;
             this.btn_ExportWord.Text = "WORD";
+            this.toolTip1.SetToolTip(this.btn_ExportWord, "Exportar o Documento Word.");
             this.btn_ExportWord.UseVisualStyleBackColor = false;
             this.btn_ExportWord.Click += new System.EventHandler(this.btn_ExportWord_Click);
             // 
@@ -282,6 +284,7 @@
             this.lbl_NumOS.Size = new System.Drawing.Size(55, 19);
             this.lbl_NumOS.TabIndex = 33;
             this.lbl_NumOS.Text = "N.º OS:";
+            this.toolTip1.SetToolTip(this.lbl_NumOS, "Número da Ordem de Serviço");
             // 
             // lbl_SaveFileName_OSWord
             // 
@@ -293,6 +296,7 @@
             this.lbl_SaveFileName_OSWord.Size = new System.Drawing.Size(163, 19);
             this.lbl_SaveFileName_OSWord.TabIndex = 32;
             this.lbl_SaveFileName_OSWord.Text = "Nome do Documento:";
+            this.toolTip1.SetToolTip(this.lbl_SaveFileName_OSWord, "Nome do documento a ser exportado.");
             // 
             // txtBox_ExportDocName
             // 

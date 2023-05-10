@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.gBox_FMemory = new System.Windows.Forms.GroupBox();
             this.btn_openMemoryFolder = new System.Windows.Forms.Button();
             this.txtBox_FMemory = new System.Windows.Forms.TextBox();
@@ -115,6 +116,7 @@
             this.prg_SaveButton = new System.Windows.Forms.ProgressBar();
             this.lbl_Gravar = new System.Windows.Forms.Label();
             this.btn_SaveFileLocPD = new System.Windows.Forms.Button();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.gBox_FMemory.SuspendLayout();
             this.tabControl_Propriedades.SuspendLayout();
             this.tpage_PrepararExportar.SuspendLayout();
@@ -1521,5 +1523,6 @@
         private Button button16;
         private TextBox txtBox_InspFilePath;
         private Button btn_searchFolder_InspFiles;
+        private ToolTip toolTip1;
     }
 }
