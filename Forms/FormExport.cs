@@ -20,12 +20,29 @@ namespace SIPOS.Forms
             FormExport formExport = Mediator.formExport;
             Mediator.formExport = this;
         }
+        
 
+        // FORM CONTROL
+        // ----------
         private void FormExport_Load(object sender, EventArgs e)
         {
             //txtboxsActualizer();
             txtBox_NumOS.Text = Mediator.osNumber;
             txtBox_ExportDocName.Text = Mediator.exportDocName;
+            doesExportFilesExist();
+        }
+        private void FormExport_FormClosed(object sender, FormClosedEventArgs e)
+        {
+
+            //Mediator.osNumber = txtBox_NumOS.Text;
+            //Mediator.exportDocName = txtBox_ExportDocName.Text;
+        }
+        private void FormExport_Enter(object sender, EventArgs e)
+        {
+            doesExportFilesExist();
+        }
+        private void FormExport_MouseDown(object sender, MouseEventArgs e)
+        {
             doesExportFilesExist();
         }
 
@@ -149,6 +166,7 @@ namespace SIPOS.Forms
 
             string inspFilePath = Mediator.inspFilePath + @"\" + Mediator.exportDocName + ".doc";
             string inspPDFfilePath = Mediator.inspFilePath + @"\" + Mediator.exportDocName + ".pdf";
+            string inspPDFsignedFilePath = Mediator.inspFilePath + @"\" + Mediator.exportDocName + "_signed.pdf";
 
             if (File.Exists(inspFilePath))
             {
@@ -162,7 +180,7 @@ namespace SIPOS.Forms
             }
 
 
-            if (File.Exists(inspPDFfilePath))
+            if (File.Exists(inspPDFfilePath) || File.Exists(inspPDFsignedFilePath))
             {
                 // The PDF document exists
                 btn_reportPDFFile_onInspect.Visible = true;
@@ -243,12 +261,7 @@ namespace SIPOS.Forms
 
 
 
-        private void FormExport_FormClosed(object sender, FormClosedEventArgs e)
-        {
 
-            //Mediator.osNumber = txtBox_NumOS.Text;
-            //Mediator.exportDocName = txtBox_ExportDocName.Text;
-        }
 
         private void btn_Export_testDaySelect_Var_Click(object sender, EventArgs e)
         {

@@ -325,6 +325,8 @@
             this.Text = "FormExport";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormExport_FormClosed);
             this.Load += new System.EventHandler(this.FormExport_Load);
+            this.Enter += new System.EventHandler(this.FormExport_Enter);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.FormExport_MouseDown);
             this.gbox_Export.ResumeLayout(false);
             this.gbox_ExportDetails.ResumeLayout(false);
             this.gbox_ExportDetails.PerformLayout();
