@@ -43,6 +43,7 @@ namespace SIPOS
         public static string osNumber = "";
         public static string exportDocName = DateTime.Now.Year.ToString() + "-" + "002" + "-";
         public static string wordAppFilePath = "";
+        public static string inspFilePath = "";
 
         // Memory VARS
         public static string fPathODU = "";
@@ -230,6 +231,7 @@ namespace SIPOS
                 tw.WriteLine(fPathModelQuarta);   //tw.WriteLine(txtbox_FileDirectory_ModelQuarta.Text);
                 tw.WriteLine(fPathOSWord);
                 tw.WriteLine(wordAppFilePath);
+                tw.WriteLine(inspFilePath);
 
 
                 // close the stream     
@@ -356,6 +358,7 @@ namespace SIPOS
                     fPathModelQuarta = tr.ReadLine();
                     fPathOSWord = tr.ReadLine();
                     wordAppFilePath = tr.ReadLine();
+                    inspFilePath = tr.ReadLine();
 
 
 

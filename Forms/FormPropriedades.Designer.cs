@@ -32,7 +32,7 @@
             this.btn_openMemoryFolder = new System.Windows.Forms.Button();
             this.txtBox_FMemory = new System.Windows.Forms.TextBox();
             this.chkBox_DebugerMode = new System.Windows.Forms.CheckBox();
-            this.tabControl_Exportar = new System.Windows.Forms.TabControl();
+            this.tabControl_Propriedades = new System.Windows.Forms.TabControl();
             this.tpage_PrepararExportar = new System.Windows.Forms.TabPage();
             this.gBox_DirectorioFlhsExcel = new System.Windows.Forms.GroupBox();
             this.btn_searchFile_Funerais = new System.Windows.Forms.Button();
@@ -56,26 +56,54 @@
             this.lbl_FEscPD = new System.Windows.Forms.Label();
             this.txtbox_FileDirectoryPD = new System.Windows.Forms.TextBox();
             this.tpage_ModelosPreferencias = new System.Windows.Forms.TabPage();
-            this.btn_Save_Folder_OSWord = new System.Windows.Forms.Button();
-            this.btn_search_File_Quarta = new System.Windows.Forms.Button();
-            this.btn_search_File_FDSemana = new System.Windows.Forms.Button();
-            this.btn_search_File_ModelSemana = new System.Windows.Forms.Button();
-            this.lbl_modelQuarta = new System.Windows.Forms.Label();
-            this.txtbox_FileDirectory_ModelQuarta = new System.Windows.Forms.TextBox();
+            this.gBox_DirectorioExports = new System.Windows.Forms.GroupBox();
+            this.button12 = new System.Windows.Forms.Button();
+            this.button13 = new System.Windows.Forms.Button();
+            this.btn_searchFolder_OSWord = new System.Windows.Forms.Button();
             this.lbl_SaveFolder_OSWord = new System.Windows.Forms.Label();
-            this.btn_SaveFolder_OSWord = new System.Windows.Forms.Button();
+            this.button15 = new System.Windows.Forms.Button();
+            this.button17 = new System.Windows.Forms.Button();
             this.txtbox_FolderDirectory_OSWord = new System.Windows.Forms.TextBox();
-            this.btn_searchFile_FDSemana = new System.Windows.Forms.Button();
-            this.lbl_modelFDSemana = new System.Windows.Forms.Label();
-            this.txtbox_FileDirectory_ModelFDSemana = new System.Windows.Forms.TextBox();
-            this.btn_searchFile_ModelSemana = new System.Windows.Forms.Button();
+            this.button19 = new System.Windows.Forms.Button();
+            this.button20 = new System.Windows.Forms.Button();
+            this.button21 = new System.Windows.Forms.Button();
+            this.button22 = new System.Windows.Forms.Button();
+            this.button23 = new System.Windows.Forms.Button();
+            this.button24 = new System.Windows.Forms.Button();
+            this.gBox_DirectoriosModelos = new System.Windows.Forms.GroupBox();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.btn_search_File_Quarta = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
+            this.btn_search_File_FDSemana = new System.Windows.Forms.Button();
+            this.button5 = new System.Windows.Forms.Button();
+            this.btn_search_File_ModelSemana = new System.Windows.Forms.Button();
+            this.button6 = new System.Windows.Forms.Button();
+            this.lbl_modelQuarta = new System.Windows.Forms.Label();
+            this.button7 = new System.Windows.Forms.Button();
+            this.txtbox_FileDirectory_ModelQuarta = new System.Windows.Forms.TextBox();
+            this.button8 = new System.Windows.Forms.Button();
+            this.button9 = new System.Windows.Forms.Button();
+            this.button10 = new System.Windows.Forms.Button();
+            this.button11 = new System.Windows.Forms.Button();
             this.lbl_modelSemana = new System.Windows.Forms.Label();
+            this.lbl_modelFDSemana = new System.Windows.Forms.Label();
             this.txtbox_FileDirectory_ModelSemana = new System.Windows.Forms.TextBox();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.txtbox_FileDirectory_ModelFDSemana = new System.Windows.Forms.TextBox();
+            this.btn_SaveFolder_OSWord = new System.Windows.Forms.Button();
+            this.btn_searchFile_FDSemana = new System.Windows.Forms.Button();
+            this.btn_searchFile_ModelSemana = new System.Windows.Forms.Button();
+            this.tpage_Outros = new System.Windows.Forms.TabPage();
+            this.gBox_DirectoriosInspFilesExported = new System.Windows.Forms.GroupBox();
+            this.btn_searchFolder_InspFiles = new System.Windows.Forms.Button();
+            this.button14 = new System.Windows.Forms.Button();
+            this.button16 = new System.Windows.Forms.Button();
+            this.txtBox_InspFilePath = new System.Windows.Forms.TextBox();
+            this.gBox_DirectoriosApps = new System.Windows.Forms.GroupBox();
             this.btn_searchFile_WordApp = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.txtBox_WordAppPath = new System.Windows.Forms.TextBox();
+            this.tpage_Debug = new System.Windows.Forms.TabPage();
             this.chkBox_VisibleWordExportProcess = new System.Windows.Forms.CheckBox();
             this.Properties_savingPanel = new System.Windows.Forms.Panel();
             this.gBox_DebugWindows = new System.Windows.Forms.GroupBox();
@@ -88,12 +116,16 @@
             this.lbl_Gravar = new System.Windows.Forms.Label();
             this.btn_SaveFileLocPD = new System.Windows.Forms.Button();
             this.gBox_FMemory.SuspendLayout();
-            this.tabControl_Exportar.SuspendLayout();
+            this.tabControl_Propriedades.SuspendLayout();
             this.tpage_PrepararExportar.SuspendLayout();
             this.gBox_DirectorioFlhsExcel.SuspendLayout();
             this.tpage_ModelosPreferencias.SuspendLayout();
-            this.tabPage1.SuspendLayout();
-            this.groupBox1.SuspendLayout();
+            this.gBox_DirectorioExports.SuspendLayout();
+            this.gBox_DirectoriosModelos.SuspendLayout();
+            this.tpage_Outros.SuspendLayout();
+            this.gBox_DirectoriosInspFilesExported.SuspendLayout();
+            this.gBox_DirectoriosApps.SuspendLayout();
+            this.tpage_Debug.SuspendLayout();
             this.Properties_savingPanel.SuspendLayout();
             this.gBox_DebugWindows.SuspendLayout();
             this.gBox_BackgroundMode.SuspendLayout();
@@ -106,7 +138,7 @@
             this.gBox_FMemory.Controls.Add(this.txtBox_FMemory);
             this.gBox_FMemory.Font = new System.Drawing.Font("Century Gothic", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.gBox_FMemory.ForeColor = System.Drawing.Color.Cyan;
-            this.gBox_FMemory.Location = new System.Drawing.Point(120, 114);
+            this.gBox_FMemory.Location = new System.Drawing.Point(96, 46);
             this.gBox_FMemory.Margin = new System.Windows.Forms.Padding(2);
             this.gBox_FMemory.Name = "gBox_FMemory";
             this.gBox_FMemory.Padding = new System.Windows.Forms.Padding(2);
@@ -157,24 +189,25 @@
             this.chkBox_DebugerMode.UseVisualStyleBackColor = true;
             this.chkBox_DebugerMode.CheckedChanged += new System.EventHandler(this.chkBox_DebugerMode_CheckedChanged);
             // 
-            // tabControl_Exportar
+            // tabControl_Propriedades
             // 
-            this.tabControl_Exportar.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.tabControl_Propriedades.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tabControl_Exportar.Controls.Add(this.tpage_PrepararExportar);
-            this.tabControl_Exportar.Controls.Add(this.tpage_ModelosPreferencias);
-            this.tabControl_Exportar.Controls.Add(this.tabPage1);
-            this.tabControl_Exportar.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.tabControl_Exportar.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.tabControl_Exportar.Location = new System.Drawing.Point(39, 31);
-            this.tabControl_Exportar.Margin = new System.Windows.Forms.Padding(2);
-            this.tabControl_Exportar.Multiline = true;
-            this.tabControl_Exportar.Name = "tabControl_Exportar";
-            this.tabControl_Exportar.SelectedIndex = 0;
-            this.tabControl_Exportar.Size = new System.Drawing.Size(771, 358);
-            this.tabControl_Exportar.TabIndex = 25;
-            this.tabControl_Exportar.SelectedIndexChanged += new System.EventHandler(this.tabControl_Exportar_SelectedIndexChanged);
+            this.tabControl_Propriedades.Controls.Add(this.tpage_PrepararExportar);
+            this.tabControl_Propriedades.Controls.Add(this.tpage_ModelosPreferencias);
+            this.tabControl_Propriedades.Controls.Add(this.tpage_Outros);
+            this.tabControl_Propriedades.Controls.Add(this.tpage_Debug);
+            this.tabControl_Propriedades.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.tabControl_Propriedades.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.tabControl_Propriedades.Location = new System.Drawing.Point(39, 31);
+            this.tabControl_Propriedades.Margin = new System.Windows.Forms.Padding(2);
+            this.tabControl_Propriedades.Multiline = true;
+            this.tabControl_Propriedades.Name = "tabControl_Propriedades";
+            this.tabControl_Propriedades.SelectedIndex = 0;
+            this.tabControl_Propriedades.Size = new System.Drawing.Size(771, 358);
+            this.tabControl_Propriedades.TabIndex = 25;
+            this.tabControl_Propriedades.SelectedIndexChanged += new System.EventHandler(this.tabControl_Exportar_SelectedIndexChanged);
             // 
             // tpage_PrepararExportar
             // 
@@ -215,11 +248,11 @@
             this.gBox_DirectorioFlhsExcel.Controls.Add(this.txtbox_FileDirectoryPD);
             this.gBox_DirectorioFlhsExcel.Font = new System.Drawing.Font("Century Gothic", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.gBox_DirectorioFlhsExcel.ForeColor = System.Drawing.Color.Cyan;
-            this.gBox_DirectorioFlhsExcel.Location = new System.Drawing.Point(113, 11);
+            this.gBox_DirectorioFlhsExcel.Location = new System.Drawing.Point(100, 11);
             this.gBox_DirectorioFlhsExcel.Margin = new System.Windows.Forms.Padding(2);
             this.gBox_DirectorioFlhsExcel.Name = "gBox_DirectorioFlhsExcel";
             this.gBox_DirectorioFlhsExcel.Padding = new System.Windows.Forms.Padding(2);
-            this.gBox_DirectorioFlhsExcel.Size = new System.Drawing.Size(538, 302);
+            this.gBox_DirectorioFlhsExcel.Size = new System.Drawing.Size(563, 302);
             this.gBox_DirectorioFlhsExcel.TabIndex = 7;
             this.gBox_DirectorioFlhsExcel.TabStop = false;
             this.gBox_DirectorioFlhsExcel.Text = "Directório para as folhas excel";
@@ -231,7 +264,7 @@
             this.btn_searchFile_Funerais.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_searchFile_Funerais.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btn_searchFile_Funerais.ForeColor = System.Drawing.Color.Cyan;
-            this.btn_searchFile_Funerais.Location = new System.Drawing.Point(385, 249);
+            this.btn_searchFile_Funerais.Location = new System.Drawing.Point(405, 249);
             this.btn_searchFile_Funerais.Margin = new System.Windows.Forms.Padding(2);
             this.btn_searchFile_Funerais.Name = "btn_searchFile_Funerais";
             this.btn_searchFile_Funerais.Size = new System.Drawing.Size(134, 29);
@@ -247,7 +280,7 @@
             this.btn_searchFile_PD.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_searchFile_PD.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btn_searchFile_PD.ForeColor = System.Drawing.Color.Cyan;
-            this.btn_searchFile_PD.Location = new System.Drawing.Point(385, 199);
+            this.btn_searchFile_PD.Location = new System.Drawing.Point(405, 199);
             this.btn_searchFile_PD.Margin = new System.Windows.Forms.Padding(2);
             this.btn_searchFile_PD.Name = "btn_searchFile_PD";
             this.btn_searchFile_PD.Size = new System.Drawing.Size(134, 29);
@@ -263,7 +296,7 @@
             this.btn_searchFile_SD.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_searchFile_SD.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btn_searchFile_SD.ForeColor = System.Drawing.Color.Cyan;
-            this.btn_searchFile_SD.Location = new System.Drawing.Point(385, 148);
+            this.btn_searchFile_SD.Location = new System.Drawing.Point(405, 148);
             this.btn_searchFile_SD.Margin = new System.Windows.Forms.Padding(2);
             this.btn_searchFile_SD.Name = "btn_searchFile_SD";
             this.btn_searchFile_SD.Size = new System.Drawing.Size(134, 29);
@@ -279,7 +312,7 @@
             this.btn_searchFile_CCS.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_searchFile_CCS.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btn_searchFile_CCS.ForeColor = System.Drawing.Color.Cyan;
-            this.btn_searchFile_CCS.Location = new System.Drawing.Point(385, 97);
+            this.btn_searchFile_CCS.Location = new System.Drawing.Point(405, 97);
             this.btn_searchFile_CCS.Margin = new System.Windows.Forms.Padding(2);
             this.btn_searchFile_CCS.Name = "btn_searchFile_CCS";
             this.btn_searchFile_CCS.Size = new System.Drawing.Size(134, 29);
@@ -295,7 +328,7 @@
             this.btn_searchFile_ODU.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_searchFile_ODU.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btn_searchFile_ODU.ForeColor = System.Drawing.Color.Cyan;
-            this.btn_searchFile_ODU.Location = new System.Drawing.Point(385, 47);
+            this.btn_searchFile_ODU.Location = new System.Drawing.Point(405, 47);
             this.btn_searchFile_ODU.Margin = new System.Windows.Forms.Padding(2);
             this.btn_searchFile_ODU.Name = "btn_searchFile_ODU";
             this.btn_searchFile_ODU.Size = new System.Drawing.Size(134, 29);
@@ -309,7 +342,7 @@
             this.btn_searchFileFunerais.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btn_searchFileFunerais.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btn_searchFileFunerais.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.btn_searchFileFunerais.Location = new System.Drawing.Point(721, 245);
+            this.btn_searchFileFunerais.Location = new System.Drawing.Point(746, 245);
             this.btn_searchFileFunerais.Margin = new System.Windows.Forms.Padding(2);
             this.btn_searchFileFunerais.Name = "btn_searchFileFunerais";
             this.btn_searchFileFunerais.Size = new System.Drawing.Size(130, 33);
@@ -323,7 +356,7 @@
             this.txtbox_FileDirectoryFunerais.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtbox_FileDirectoryFunerais.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txtbox_FileDirectoryFunerais.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(168)))), ((int)(((byte)(115)))), ((int)(((byte)(168)))));
-            this.txtbox_FileDirectoryFunerais.Location = new System.Drawing.Point(9, 253);
+            this.txtbox_FileDirectoryFunerais.Location = new System.Drawing.Point(22, 253);
             this.txtbox_FileDirectoryFunerais.Margin = new System.Windows.Forms.Padding(2);
             this.txtbox_FileDirectoryFunerais.Name = "txtbox_FileDirectoryFunerais";
             this.txtbox_FileDirectoryFunerais.Size = new System.Drawing.Size(362, 22);
@@ -335,7 +368,7 @@
             this.lbl_FEscFunerais.AutoSize = true;
             this.lbl_FEscFunerais.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.lbl_FEscFunerais.ForeColor = System.Drawing.Color.Cyan;
-            this.lbl_FEscFunerais.Location = new System.Drawing.Point(8, 231);
+            this.lbl_FEscFunerais.Location = new System.Drawing.Point(21, 231);
             this.lbl_FEscFunerais.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbl_FEscFunerais.Name = "lbl_FEscFunerais";
             this.lbl_FEscFunerais.Size = new System.Drawing.Size(116, 17);
@@ -347,7 +380,7 @@
             this.btn_searchFileODU.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btn_searchFileODU.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btn_searchFileODU.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.btn_searchFileODU.Location = new System.Drawing.Point(721, 42);
+            this.btn_searchFileODU.Location = new System.Drawing.Point(746, 42);
             this.btn_searchFileODU.Margin = new System.Windows.Forms.Padding(2);
             this.btn_searchFileODU.Name = "btn_searchFileODU";
             this.btn_searchFileODU.Size = new System.Drawing.Size(130, 33);
@@ -361,7 +394,7 @@
             this.txtbox_FileDirectoryODU.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtbox_FileDirectoryODU.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txtbox_FileDirectoryODU.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(168)))), ((int)(((byte)(115)))), ((int)(((byte)(168)))));
-            this.txtbox_FileDirectoryODU.Location = new System.Drawing.Point(9, 51);
+            this.txtbox_FileDirectoryODU.Location = new System.Drawing.Point(22, 51);
             this.txtbox_FileDirectoryODU.Margin = new System.Windows.Forms.Padding(2);
             this.txtbox_FileDirectoryODU.Name = "txtbox_FileDirectoryODU";
             this.txtbox_FileDirectoryODU.Size = new System.Drawing.Size(362, 22);
@@ -373,7 +406,7 @@
             this.btn_searchFileCCS.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btn_searchFileCCS.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btn_searchFileCCS.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.btn_searchFileCCS.Location = new System.Drawing.Point(721, 92);
+            this.btn_searchFileCCS.Location = new System.Drawing.Point(746, 92);
             this.btn_searchFileCCS.Margin = new System.Windows.Forms.Padding(2);
             this.btn_searchFileCCS.Name = "btn_searchFileCCS";
             this.btn_searchFileCCS.Size = new System.Drawing.Size(130, 33);
@@ -387,7 +420,7 @@
             this.txtbox_FileDirectoryCCS.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtbox_FileDirectoryCCS.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txtbox_FileDirectoryCCS.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(168)))), ((int)(((byte)(115)))), ((int)(((byte)(168)))));
-            this.txtbox_FileDirectoryCCS.Location = new System.Drawing.Point(9, 101);
+            this.txtbox_FileDirectoryCCS.Location = new System.Drawing.Point(22, 101);
             this.txtbox_FileDirectoryCCS.Margin = new System.Windows.Forms.Padding(2);
             this.txtbox_FileDirectoryCCS.Name = "txtbox_FileDirectoryCCS";
             this.txtbox_FileDirectoryCCS.Size = new System.Drawing.Size(362, 22);
@@ -399,7 +432,7 @@
             this.btn_searchFileSD.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btn_searchFileSD.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btn_searchFileSD.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.btn_searchFileSD.Location = new System.Drawing.Point(721, 143);
+            this.btn_searchFileSD.Location = new System.Drawing.Point(746, 143);
             this.btn_searchFileSD.Margin = new System.Windows.Forms.Padding(2);
             this.btn_searchFileSD.Name = "btn_searchFileSD";
             this.btn_searchFileSD.Size = new System.Drawing.Size(130, 33);
@@ -413,7 +446,7 @@
             this.txtbox_FileDirectorySD.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtbox_FileDirectorySD.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txtbox_FileDirectorySD.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(168)))), ((int)(((byte)(115)))), ((int)(((byte)(168)))));
-            this.txtbox_FileDirectorySD.Location = new System.Drawing.Point(9, 152);
+            this.txtbox_FileDirectorySD.Location = new System.Drawing.Point(22, 152);
             this.txtbox_FileDirectorySD.Margin = new System.Windows.Forms.Padding(2);
             this.txtbox_FileDirectorySD.Name = "txtbox_FileDirectorySD";
             this.txtbox_FileDirectorySD.Size = new System.Drawing.Size(362, 22);
@@ -425,7 +458,7 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label1.ForeColor = System.Drawing.Color.Cyan;
-            this.label1.Location = new System.Drawing.Point(8, 129);
+            this.label1.Location = new System.Drawing.Point(21, 129);
             this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(165, 17);
@@ -437,7 +470,7 @@
             this.lbl_FEscCCS.AutoSize = true;
             this.lbl_FEscCCS.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.lbl_FEscCCS.ForeColor = System.Drawing.Color.Cyan;
-            this.lbl_FEscCCS.Location = new System.Drawing.Point(8, 78);
+            this.lbl_FEscCCS.Location = new System.Drawing.Point(21, 78);
             this.lbl_FEscCCS.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbl_FEscCCS.Name = "lbl_FEscCCS";
             this.lbl_FEscCCS.Size = new System.Drawing.Size(335, 17);
@@ -449,7 +482,7 @@
             this.lbl_FEscODU.AutoSize = true;
             this.lbl_FEscODU.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.lbl_FEscODU.ForeColor = System.Drawing.Color.Cyan;
-            this.lbl_FEscODU.Location = new System.Drawing.Point(8, 28);
+            this.lbl_FEscODU.Location = new System.Drawing.Point(21, 28);
             this.lbl_FEscODU.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbl_FEscODU.Name = "lbl_FEscODU";
             this.lbl_FEscODU.Size = new System.Drawing.Size(149, 17);
@@ -461,7 +494,7 @@
             this.btn_searchFilePD.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btn_searchFilePD.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btn_searchFilePD.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.btn_searchFilePD.Location = new System.Drawing.Point(721, 195);
+            this.btn_searchFilePD.Location = new System.Drawing.Point(746, 195);
             this.btn_searchFilePD.Margin = new System.Windows.Forms.Padding(2);
             this.btn_searchFilePD.Name = "btn_searchFilePD";
             this.btn_searchFilePD.Size = new System.Drawing.Size(130, 33);
@@ -474,7 +507,7 @@
             this.lbl_FEscPD.AutoSize = true;
             this.lbl_FEscPD.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.lbl_FEscPD.ForeColor = System.Drawing.Color.Cyan;
-            this.lbl_FEscPD.Location = new System.Drawing.Point(8, 180);
+            this.lbl_FEscPD.Location = new System.Drawing.Point(21, 180);
             this.lbl_FEscPD.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbl_FEscPD.Name = "lbl_FEscPD";
             this.lbl_FEscPD.Size = new System.Drawing.Size(145, 17);
@@ -487,7 +520,7 @@
             this.txtbox_FileDirectoryPD.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtbox_FileDirectoryPD.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txtbox_FileDirectoryPD.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(168)))), ((int)(((byte)(115)))), ((int)(((byte)(168)))));
-            this.txtbox_FileDirectoryPD.Location = new System.Drawing.Point(9, 202);
+            this.txtbox_FileDirectoryPD.Location = new System.Drawing.Point(22, 202);
             this.txtbox_FileDirectoryPD.Margin = new System.Windows.Forms.Padding(2);
             this.txtbox_FileDirectoryPD.Name = "txtbox_FileDirectoryPD";
             this.txtbox_FileDirectoryPD.Size = new System.Drawing.Size(362, 22);
@@ -497,21 +530,11 @@
             // tpage_ModelosPreferencias
             // 
             this.tpage_ModelosPreferencias.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(20)))), ((int)(((byte)(25)))));
-            this.tpage_ModelosPreferencias.Controls.Add(this.btn_Save_Folder_OSWord);
-            this.tpage_ModelosPreferencias.Controls.Add(this.btn_search_File_Quarta);
-            this.tpage_ModelosPreferencias.Controls.Add(this.btn_search_File_FDSemana);
-            this.tpage_ModelosPreferencias.Controls.Add(this.btn_search_File_ModelSemana);
-            this.tpage_ModelosPreferencias.Controls.Add(this.lbl_modelQuarta);
-            this.tpage_ModelosPreferencias.Controls.Add(this.txtbox_FileDirectory_ModelQuarta);
-            this.tpage_ModelosPreferencias.Controls.Add(this.lbl_SaveFolder_OSWord);
+            this.tpage_ModelosPreferencias.Controls.Add(this.gBox_DirectorioExports);
+            this.tpage_ModelosPreferencias.Controls.Add(this.gBox_DirectoriosModelos);
             this.tpage_ModelosPreferencias.Controls.Add(this.btn_SaveFolder_OSWord);
-            this.tpage_ModelosPreferencias.Controls.Add(this.txtbox_FolderDirectory_OSWord);
             this.tpage_ModelosPreferencias.Controls.Add(this.btn_searchFile_FDSemana);
-            this.tpage_ModelosPreferencias.Controls.Add(this.lbl_modelFDSemana);
-            this.tpage_ModelosPreferencias.Controls.Add(this.txtbox_FileDirectory_ModelFDSemana);
             this.tpage_ModelosPreferencias.Controls.Add(this.btn_searchFile_ModelSemana);
-            this.tpage_ModelosPreferencias.Controls.Add(this.lbl_modelSemana);
-            this.tpage_ModelosPreferencias.Controls.Add(this.txtbox_FileDirectory_ModelSemana);
             this.tpage_ModelosPreferencias.ForeColor = System.Drawing.Color.Gainsboro;
             this.tpage_ModelosPreferencias.Location = new System.Drawing.Point(4, 26);
             this.tpage_ModelosPreferencias.Margin = new System.Windows.Forms.Padding(2);
@@ -521,28 +544,288 @@
             this.tpage_ModelosPreferencias.TabIndex = 1;
             this.tpage_ModelosPreferencias.Text = "Ordem de Serviço";
             // 
-            // btn_Save_Folder_OSWord
+            // gBox_DirectorioExports
             // 
-            this.btn_Save_Folder_OSWord.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(30)))), ((int)(((byte)(51)))));
-            this.btn_Save_Folder_OSWord.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_Save_Folder_OSWord.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btn_Save_Folder_OSWord.ForeColor = System.Drawing.Color.Cyan;
-            this.btn_Save_Folder_OSWord.Location = new System.Drawing.Point(504, 259);
-            this.btn_Save_Folder_OSWord.Margin = new System.Windows.Forms.Padding(2);
-            this.btn_Save_Folder_OSWord.Name = "btn_Save_Folder_OSWord";
-            this.btn_Save_Folder_OSWord.Size = new System.Drawing.Size(130, 29);
-            this.btn_Save_Folder_OSWord.TabIndex = 37;
-            this.btn_Save_Folder_OSWord.Text = "📂 &Procurar Pasta";
-            this.btn_Save_Folder_OSWord.UseVisualStyleBackColor = false;
-            this.btn_Save_Folder_OSWord.Click += new System.EventHandler(this.btn_Save_Folder_OSWord_Click);
+            this.gBox_DirectorioExports.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.gBox_DirectorioExports.BackColor = System.Drawing.Color.Transparent;
+            this.gBox_DirectorioExports.Controls.Add(this.button12);
+            this.gBox_DirectorioExports.Controls.Add(this.button13);
+            this.gBox_DirectorioExports.Controls.Add(this.btn_searchFolder_OSWord);
+            this.gBox_DirectorioExports.Controls.Add(this.lbl_SaveFolder_OSWord);
+            this.gBox_DirectorioExports.Controls.Add(this.button15);
+            this.gBox_DirectorioExports.Controls.Add(this.button17);
+            this.gBox_DirectorioExports.Controls.Add(this.txtbox_FolderDirectory_OSWord);
+            this.gBox_DirectorioExports.Controls.Add(this.button19);
+            this.gBox_DirectorioExports.Controls.Add(this.button20);
+            this.gBox_DirectorioExports.Controls.Add(this.button21);
+            this.gBox_DirectorioExports.Controls.Add(this.button22);
+            this.gBox_DirectorioExports.Controls.Add(this.button23);
+            this.gBox_DirectorioExports.Controls.Add(this.button24);
+            this.gBox_DirectorioExports.Font = new System.Drawing.Font("Century Gothic", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.gBox_DirectorioExports.ForeColor = System.Drawing.Color.Cyan;
+            this.gBox_DirectorioExports.Location = new System.Drawing.Point(76, 226);
+            this.gBox_DirectorioExports.Margin = new System.Windows.Forms.Padding(2);
+            this.gBox_DirectorioExports.Name = "gBox_DirectorioExports";
+            this.gBox_DirectorioExports.Padding = new System.Windows.Forms.Padding(2);
+            this.gBox_DirectorioExports.Size = new System.Drawing.Size(592, 91);
+            this.gBox_DirectorioExports.TabIndex = 39;
+            this.gBox_DirectorioExports.TabStop = false;
+            this.gBox_DirectorioExports.Text = "Exportações";
+            // 
+            // button12
+            // 
+            this.button12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(30)))), ((int)(((byte)(51)))));
+            this.button12.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button12.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.button12.ForeColor = System.Drawing.Color.Cyan;
+            this.button12.Location = new System.Drawing.Point(1171, 247);
+            this.button12.Margin = new System.Windows.Forms.Padding(2);
+            this.button12.Name = "button12";
+            this.button12.Size = new System.Drawing.Size(134, 29);
+            this.button12.TabIndex = 27;
+            this.button12.Text = "📄 &Procurar Ficheiro";
+            this.button12.UseVisualStyleBackColor = false;
+            // 
+            // button13
+            // 
+            this.button13.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button13.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(30)))), ((int)(((byte)(51)))));
+            this.button13.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button13.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.button13.ForeColor = System.Drawing.Color.Cyan;
+            this.button13.Location = new System.Drawing.Point(1171, 197);
+            this.button13.Margin = new System.Windows.Forms.Padding(2);
+            this.button13.Name = "button13";
+            this.button13.Size = new System.Drawing.Size(134, 29);
+            this.button13.TabIndex = 26;
+            this.button13.Text = "📄 &Procurar Ficheiro";
+            this.button13.UseVisualStyleBackColor = false;
+            // 
+            // btn_searchFolder_OSWord
+            // 
+            this.btn_searchFolder_OSWord.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.btn_searchFolder_OSWord.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(30)))), ((int)(((byte)(51)))));
+            this.btn_searchFolder_OSWord.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_searchFolder_OSWord.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btn_searchFolder_OSWord.ForeColor = System.Drawing.Color.Cyan;
+            this.btn_searchFolder_OSWord.Location = new System.Drawing.Point(427, 43);
+            this.btn_searchFolder_OSWord.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_searchFolder_OSWord.Name = "btn_searchFolder_OSWord";
+            this.btn_searchFolder_OSWord.Size = new System.Drawing.Size(130, 29);
+            this.btn_searchFolder_OSWord.TabIndex = 37;
+            this.btn_searchFolder_OSWord.Text = "📂 &Procurar Pasta";
+            this.btn_searchFolder_OSWord.UseVisualStyleBackColor = false;
+            this.btn_searchFolder_OSWord.Click += new System.EventHandler(this.btn_Save_Folder_OSWord_Click);
+            // 
+            // lbl_SaveFolder_OSWord
+            // 
+            this.lbl_SaveFolder_OSWord.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.lbl_SaveFolder_OSWord.AutoSize = true;
+            this.lbl_SaveFolder_OSWord.ForeColor = System.Drawing.Color.Cyan;
+            this.lbl_SaveFolder_OSWord.Location = new System.Drawing.Point(33, 28);
+            this.lbl_SaveFolder_OSWord.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lbl_SaveFolder_OSWord.Name = "lbl_SaveFolder_OSWord";
+            this.lbl_SaveFolder_OSWord.Size = new System.Drawing.Size(293, 17);
+            this.lbl_SaveFolder_OSWord.TabIndex = 31;
+            this.lbl_SaveFolder_OSWord.Text = "Pasta de exportação do documento Word";
+            // 
+            // button15
+            // 
+            this.button15.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button15.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(30)))), ((int)(((byte)(51)))));
+            this.button15.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button15.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.button15.ForeColor = System.Drawing.Color.Cyan;
+            this.button15.Location = new System.Drawing.Point(1171, 146);
+            this.button15.Margin = new System.Windows.Forms.Padding(2);
+            this.button15.Name = "button15";
+            this.button15.Size = new System.Drawing.Size(134, 29);
+            this.button15.TabIndex = 25;
+            this.button15.Text = "📄 &Procurar Ficheiro";
+            this.button15.UseVisualStyleBackColor = false;
+            // 
+            // button17
+            // 
+            this.button17.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button17.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(30)))), ((int)(((byte)(51)))));
+            this.button17.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button17.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.button17.ForeColor = System.Drawing.Color.Cyan;
+            this.button17.Location = new System.Drawing.Point(1171, 95);
+            this.button17.Margin = new System.Windows.Forms.Padding(2);
+            this.button17.Name = "button17";
+            this.button17.Size = new System.Drawing.Size(134, 29);
+            this.button17.TabIndex = 24;
+            this.button17.Text = "📄 &Procurar Ficheiro";
+            this.button17.UseVisualStyleBackColor = false;
+            // 
+            // txtbox_FolderDirectory_OSWord
+            // 
+            this.txtbox_FolderDirectory_OSWord.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.txtbox_FolderDirectory_OSWord.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(30)))), ((int)(((byte)(51)))));
+            this.txtbox_FolderDirectory_OSWord.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtbox_FolderDirectory_OSWord.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.txtbox_FolderDirectory_OSWord.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(168)))), ((int)(((byte)(115)))), ((int)(((byte)(168)))));
+            this.txtbox_FolderDirectory_OSWord.Location = new System.Drawing.Point(31, 47);
+            this.txtbox_FolderDirectory_OSWord.Margin = new System.Windows.Forms.Padding(2);
+            this.txtbox_FolderDirectory_OSWord.Name = "txtbox_FolderDirectory_OSWord";
+            this.txtbox_FolderDirectory_OSWord.Size = new System.Drawing.Size(379, 22);
+            this.txtbox_FolderDirectory_OSWord.TabIndex = 28;
+            this.txtbox_FolderDirectory_OSWord.TextChanged += new System.EventHandler(this.txtbox_FolderDirectory_OSWord_TextChanged);
+            // 
+            // button19
+            // 
+            this.button19.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button19.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(30)))), ((int)(((byte)(51)))));
+            this.button19.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button19.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.button19.ForeColor = System.Drawing.Color.Cyan;
+            this.button19.Location = new System.Drawing.Point(1171, 45);
+            this.button19.Margin = new System.Windows.Forms.Padding(2);
+            this.button19.Name = "button19";
+            this.button19.Size = new System.Drawing.Size(134, 29);
+            this.button19.TabIndex = 23;
+            this.button19.Text = "📄 &Procurar Ficheiro";
+            this.button19.UseVisualStyleBackColor = false;
+            // 
+            // button20
+            // 
+            this.button20.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button20.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.button20.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.button20.Location = new System.Drawing.Point(1507, 243);
+            this.button20.Margin = new System.Windows.Forms.Padding(2);
+            this.button20.Name = "button20";
+            this.button20.Size = new System.Drawing.Size(130, 33);
+            this.button20.TabIndex = 22;
+            this.button20.Text = "📄 &Procurar Ficheiro";
+            this.button20.UseVisualStyleBackColor = true;
+            // 
+            // button21
+            // 
+            this.button21.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button21.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.button21.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.button21.Location = new System.Drawing.Point(1507, 40);
+            this.button21.Margin = new System.Windows.Forms.Padding(2);
+            this.button21.Name = "button21";
+            this.button21.Size = new System.Drawing.Size(130, 33);
+            this.button21.TabIndex = 18;
+            this.button21.Text = "📄 &Procurar Ficheiro";
+            this.button21.UseVisualStyleBackColor = true;
+            // 
+            // button22
+            // 
+            this.button22.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button22.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.button22.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.button22.Location = new System.Drawing.Point(1507, 90);
+            this.button22.Margin = new System.Windows.Forms.Padding(2);
+            this.button22.Name = "button22";
+            this.button22.Size = new System.Drawing.Size(130, 33);
+            this.button22.TabIndex = 15;
+            this.button22.Text = "📄 &Procurar Ficheiro";
+            this.button22.UseVisualStyleBackColor = true;
+            // 
+            // button23
+            // 
+            this.button23.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button23.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.button23.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.button23.Location = new System.Drawing.Point(1507, 141);
+            this.button23.Margin = new System.Windows.Forms.Padding(2);
+            this.button23.Name = "button23";
+            this.button23.Size = new System.Drawing.Size(130, 33);
+            this.button23.TabIndex = 12;
+            this.button23.Text = "📄 &Procurar Ficheiro";
+            this.button23.UseVisualStyleBackColor = true;
+            // 
+            // button24
+            // 
+            this.button24.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button24.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.button24.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.button24.Location = new System.Drawing.Point(1507, 193);
+            this.button24.Margin = new System.Windows.Forms.Padding(2);
+            this.button24.Name = "button24";
+            this.button24.Size = new System.Drawing.Size(130, 33);
+            this.button24.TabIndex = 1;
+            this.button24.Text = "📄 &Procurar Ficheiro";
+            this.button24.UseVisualStyleBackColor = true;
+            // 
+            // gBox_DirectoriosModelos
+            // 
+            this.gBox_DirectoriosModelos.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.gBox_DirectoriosModelos.BackColor = System.Drawing.Color.Transparent;
+            this.gBox_DirectoriosModelos.Controls.Add(this.button2);
+            this.gBox_DirectoriosModelos.Controls.Add(this.button3);
+            this.gBox_DirectoriosModelos.Controls.Add(this.btn_search_File_Quarta);
+            this.gBox_DirectoriosModelos.Controls.Add(this.button4);
+            this.gBox_DirectoriosModelos.Controls.Add(this.btn_search_File_FDSemana);
+            this.gBox_DirectoriosModelos.Controls.Add(this.button5);
+            this.gBox_DirectoriosModelos.Controls.Add(this.btn_search_File_ModelSemana);
+            this.gBox_DirectoriosModelos.Controls.Add(this.button6);
+            this.gBox_DirectoriosModelos.Controls.Add(this.lbl_modelQuarta);
+            this.gBox_DirectoriosModelos.Controls.Add(this.button7);
+            this.gBox_DirectoriosModelos.Controls.Add(this.txtbox_FileDirectory_ModelQuarta);
+            this.gBox_DirectoriosModelos.Controls.Add(this.button8);
+            this.gBox_DirectoriosModelos.Controls.Add(this.button9);
+            this.gBox_DirectoriosModelos.Controls.Add(this.button10);
+            this.gBox_DirectoriosModelos.Controls.Add(this.button11);
+            this.gBox_DirectoriosModelos.Controls.Add(this.lbl_modelSemana);
+            this.gBox_DirectoriosModelos.Controls.Add(this.lbl_modelFDSemana);
+            this.gBox_DirectoriosModelos.Controls.Add(this.txtbox_FileDirectory_ModelSemana);
+            this.gBox_DirectoriosModelos.Controls.Add(this.txtbox_FileDirectory_ModelFDSemana);
+            this.gBox_DirectoriosModelos.Font = new System.Drawing.Font("Century Gothic", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.gBox_DirectoriosModelos.ForeColor = System.Drawing.Color.Cyan;
+            this.gBox_DirectoriosModelos.Location = new System.Drawing.Point(76, 9);
+            this.gBox_DirectoriosModelos.Margin = new System.Windows.Forms.Padding(2);
+            this.gBox_DirectoriosModelos.Name = "gBox_DirectoriosModelos";
+            this.gBox_DirectoriosModelos.Padding = new System.Windows.Forms.Padding(2);
+            this.gBox_DirectoriosModelos.Size = new System.Drawing.Size(592, 211);
+            this.gBox_DirectoriosModelos.TabIndex = 38;
+            this.gBox_DirectoriosModelos.TabStop = false;
+            this.gBox_DirectoriosModelos.Text = "Modelos";
+            // 
+            // button2
+            // 
+            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(30)))), ((int)(((byte)(51)))));
+            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.button2.ForeColor = System.Drawing.Color.Cyan;
+            this.button2.Location = new System.Drawing.Point(778, 248);
+            this.button2.Margin = new System.Windows.Forms.Padding(2);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(134, 29);
+            this.button2.TabIndex = 27;
+            this.button2.Text = "📄 &Procurar Ficheiro";
+            this.button2.UseVisualStyleBackColor = false;
+            // 
+            // button3
+            // 
+            this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(30)))), ((int)(((byte)(51)))));
+            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.button3.ForeColor = System.Drawing.Color.Cyan;
+            this.button3.Location = new System.Drawing.Point(778, 198);
+            this.button3.Margin = new System.Windows.Forms.Padding(2);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(134, 29);
+            this.button3.TabIndex = 26;
+            this.button3.Text = "📄 &Procurar Ficheiro";
+            this.button3.UseVisualStyleBackColor = false;
             // 
             // btn_search_File_Quarta
             // 
+            this.btn_search_File_Quarta.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.btn_search_File_Quarta.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(30)))), ((int)(((byte)(51)))));
             this.btn_search_File_Quarta.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_search_File_Quarta.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btn_search_File_Quarta.ForeColor = System.Drawing.Color.Cyan;
-            this.btn_search_File_Quarta.Location = new System.Drawing.Point(504, 168);
+            this.btn_search_File_Quarta.Location = new System.Drawing.Point(422, 159);
             this.btn_search_File_Quarta.Margin = new System.Windows.Forms.Padding(2);
             this.btn_search_File_Quarta.Name = "btn_search_File_Quarta";
             this.btn_search_File_Quarta.Size = new System.Drawing.Size(130, 29);
@@ -551,13 +834,29 @@
             this.btn_search_File_Quarta.UseVisualStyleBackColor = false;
             this.btn_search_File_Quarta.Click += new System.EventHandler(this.btn_search_File_Quarta_Click);
             // 
+            // button4
+            // 
+            this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(30)))), ((int)(((byte)(51)))));
+            this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button4.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.button4.ForeColor = System.Drawing.Color.Cyan;
+            this.button4.Location = new System.Drawing.Point(778, 147);
+            this.button4.Margin = new System.Windows.Forms.Padding(2);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(134, 29);
+            this.button4.TabIndex = 25;
+            this.button4.Text = "📄 &Procurar Ficheiro";
+            this.button4.UseVisualStyleBackColor = false;
+            // 
             // btn_search_File_FDSemana
             // 
+            this.btn_search_File_FDSemana.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.btn_search_File_FDSemana.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(30)))), ((int)(((byte)(51)))));
             this.btn_search_File_FDSemana.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_search_File_FDSemana.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btn_search_File_FDSemana.ForeColor = System.Drawing.Color.Cyan;
-            this.btn_search_File_FDSemana.Location = new System.Drawing.Point(504, 112);
+            this.btn_search_File_FDSemana.Location = new System.Drawing.Point(422, 103);
             this.btn_search_File_FDSemana.Margin = new System.Windows.Forms.Padding(2);
             this.btn_search_File_FDSemana.Name = "btn_search_File_FDSemana";
             this.btn_search_File_FDSemana.Size = new System.Drawing.Size(130, 29);
@@ -566,13 +865,29 @@
             this.btn_search_File_FDSemana.UseVisualStyleBackColor = false;
             this.btn_search_File_FDSemana.Click += new System.EventHandler(this.btn_search_File_FDSemana_Click);
             // 
+            // button5
+            // 
+            this.button5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(30)))), ((int)(((byte)(51)))));
+            this.button5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button5.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.button5.ForeColor = System.Drawing.Color.Cyan;
+            this.button5.Location = new System.Drawing.Point(778, 96);
+            this.button5.Margin = new System.Windows.Forms.Padding(2);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(134, 29);
+            this.button5.TabIndex = 24;
+            this.button5.Text = "📄 &Procurar Ficheiro";
+            this.button5.UseVisualStyleBackColor = false;
+            // 
             // btn_search_File_ModelSemana
             // 
+            this.btn_search_File_ModelSemana.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.btn_search_File_ModelSemana.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(30)))), ((int)(((byte)(51)))));
             this.btn_search_File_ModelSemana.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_search_File_ModelSemana.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btn_search_File_ModelSemana.ForeColor = System.Drawing.Color.Cyan;
-            this.btn_search_File_ModelSemana.Location = new System.Drawing.Point(504, 55);
+            this.btn_search_File_ModelSemana.Location = new System.Drawing.Point(422, 46);
             this.btn_search_File_ModelSemana.Margin = new System.Windows.Forms.Padding(2);
             this.btn_search_File_ModelSemana.Name = "btn_search_File_ModelSemana";
             this.btn_search_File_ModelSemana.Size = new System.Drawing.Size(130, 29);
@@ -581,39 +896,162 @@
             this.btn_search_File_ModelSemana.UseVisualStyleBackColor = false;
             this.btn_search_File_ModelSemana.Click += new System.EventHandler(this.btn_search_File_ModelSemana_Click);
             // 
+            // button6
+            // 
+            this.button6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(30)))), ((int)(((byte)(51)))));
+            this.button6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button6.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.button6.ForeColor = System.Drawing.Color.Cyan;
+            this.button6.Location = new System.Drawing.Point(778, 46);
+            this.button6.Margin = new System.Windows.Forms.Padding(2);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(134, 29);
+            this.button6.TabIndex = 23;
+            this.button6.Text = "📄 &Procurar Ficheiro";
+            this.button6.UseVisualStyleBackColor = false;
+            // 
             // lbl_modelQuarta
             // 
+            this.lbl_modelQuarta.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lbl_modelQuarta.AutoSize = true;
             this.lbl_modelQuarta.ForeColor = System.Drawing.Color.Cyan;
-            this.lbl_modelQuarta.Location = new System.Drawing.Point(110, 155);
+            this.lbl_modelQuarta.Location = new System.Drawing.Point(28, 146);
             this.lbl_modelQuarta.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbl_modelQuarta.Name = "lbl_modelQuarta";
-            this.lbl_modelQuarta.Size = new System.Drawing.Size(151, 17);
+            this.lbl_modelQuarta.Size = new System.Drawing.Size(172, 17);
             this.lbl_modelQuarta.TabIndex = 33;
             this.lbl_modelQuarta.Text = "Modelo de Quarta-Feira";
             // 
+            // button7
+            // 
+            this.button7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button7.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.button7.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.button7.Location = new System.Drawing.Point(1114, 244);
+            this.button7.Margin = new System.Windows.Forms.Padding(2);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(130, 33);
+            this.button7.TabIndex = 22;
+            this.button7.Text = "📄 &Procurar Ficheiro";
+            this.button7.UseVisualStyleBackColor = true;
+            // 
             // txtbox_FileDirectory_ModelQuarta
             // 
+            this.txtbox_FileDirectory_ModelQuarta.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.txtbox_FileDirectory_ModelQuarta.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(30)))), ((int)(((byte)(51)))));
             this.txtbox_FileDirectory_ModelQuarta.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtbox_FileDirectory_ModelQuarta.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txtbox_FileDirectory_ModelQuarta.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(168)))), ((int)(((byte)(115)))), ((int)(((byte)(168)))));
-            this.txtbox_FileDirectory_ModelQuarta.Location = new System.Drawing.Point(108, 172);
+            this.txtbox_FileDirectory_ModelQuarta.Location = new System.Drawing.Point(26, 163);
             this.txtbox_FileDirectory_ModelQuarta.Margin = new System.Windows.Forms.Padding(2);
             this.txtbox_FileDirectory_ModelQuarta.Name = "txtbox_FileDirectory_ModelQuarta";
             this.txtbox_FileDirectory_ModelQuarta.Size = new System.Drawing.Size(379, 22);
             this.txtbox_FileDirectory_ModelQuarta.TabIndex = 32;
             // 
-            // lbl_SaveFolder_OSWord
+            // button8
             // 
-            this.lbl_SaveFolder_OSWord.AutoSize = true;
-            this.lbl_SaveFolder_OSWord.ForeColor = System.Drawing.Color.Cyan;
-            this.lbl_SaveFolder_OSWord.Location = new System.Drawing.Point(110, 244);
-            this.lbl_SaveFolder_OSWord.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lbl_SaveFolder_OSWord.Name = "lbl_SaveFolder_OSWord";
-            this.lbl_SaveFolder_OSWord.Size = new System.Drawing.Size(262, 17);
-            this.lbl_SaveFolder_OSWord.TabIndex = 31;
-            this.lbl_SaveFolder_OSWord.Text = "Pasta de exportação do documento Word";
+            this.button8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button8.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.button8.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.button8.Location = new System.Drawing.Point(1114, 41);
+            this.button8.Margin = new System.Windows.Forms.Padding(2);
+            this.button8.Name = "button8";
+            this.button8.Size = new System.Drawing.Size(130, 33);
+            this.button8.TabIndex = 18;
+            this.button8.Text = "📄 &Procurar Ficheiro";
+            this.button8.UseVisualStyleBackColor = true;
+            // 
+            // button9
+            // 
+            this.button9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button9.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.button9.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.button9.Location = new System.Drawing.Point(1114, 91);
+            this.button9.Margin = new System.Windows.Forms.Padding(2);
+            this.button9.Name = "button9";
+            this.button9.Size = new System.Drawing.Size(130, 33);
+            this.button9.TabIndex = 15;
+            this.button9.Text = "📄 &Procurar Ficheiro";
+            this.button9.UseVisualStyleBackColor = true;
+            // 
+            // button10
+            // 
+            this.button10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button10.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.button10.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.button10.Location = new System.Drawing.Point(1114, 142);
+            this.button10.Margin = new System.Windows.Forms.Padding(2);
+            this.button10.Name = "button10";
+            this.button10.Size = new System.Drawing.Size(130, 33);
+            this.button10.TabIndex = 12;
+            this.button10.Text = "📄 &Procurar Ficheiro";
+            this.button10.UseVisualStyleBackColor = true;
+            // 
+            // button11
+            // 
+            this.button11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button11.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.button11.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.button11.Location = new System.Drawing.Point(1114, 194);
+            this.button11.Margin = new System.Windows.Forms.Padding(2);
+            this.button11.Name = "button11";
+            this.button11.Size = new System.Drawing.Size(130, 33);
+            this.button11.TabIndex = 1;
+            this.button11.Text = "📄 &Procurar Ficheiro";
+            this.button11.UseVisualStyleBackColor = true;
+            // 
+            // lbl_modelSemana
+            // 
+            this.lbl_modelSemana.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.lbl_modelSemana.AutoSize = true;
+            this.lbl_modelSemana.ForeColor = System.Drawing.Color.Cyan;
+            this.lbl_modelSemana.Location = new System.Drawing.Point(28, 31);
+            this.lbl_modelSemana.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lbl_modelSemana.Name = "lbl_modelSemana";
+            this.lbl_modelSemana.Size = new System.Drawing.Size(143, 17);
+            this.lbl_modelSemana.TabIndex = 1;
+            this.lbl_modelSemana.Text = "Modelo de Semana";
+            // 
+            // lbl_modelFDSemana
+            // 
+            this.lbl_modelFDSemana.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.lbl_modelFDSemana.AutoSize = true;
+            this.lbl_modelFDSemana.ForeColor = System.Drawing.Color.Cyan;
+            this.lbl_modelFDSemana.Location = new System.Drawing.Point(28, 88);
+            this.lbl_modelFDSemana.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lbl_modelFDSemana.Name = "lbl_modelFDSemana";
+            this.lbl_modelFDSemana.Size = new System.Drawing.Size(194, 17);
+            this.lbl_modelFDSemana.TabIndex = 26;
+            this.lbl_modelFDSemana.Text = "Modelo de Fim de Semana";
+            // 
+            // txtbox_FileDirectory_ModelSemana
+            // 
+            this.txtbox_FileDirectory_ModelSemana.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.txtbox_FileDirectory_ModelSemana.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(30)))), ((int)(((byte)(51)))));
+            this.txtbox_FileDirectory_ModelSemana.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtbox_FileDirectory_ModelSemana.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.txtbox_FileDirectory_ModelSemana.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(168)))), ((int)(((byte)(115)))), ((int)(((byte)(168)))));
+            this.txtbox_FileDirectory_ModelSemana.Location = new System.Drawing.Point(26, 50);
+            this.txtbox_FileDirectory_ModelSemana.Margin = new System.Windows.Forms.Padding(2);
+            this.txtbox_FileDirectory_ModelSemana.Name = "txtbox_FileDirectory_ModelSemana";
+            this.txtbox_FileDirectory_ModelSemana.Size = new System.Drawing.Size(379, 22);
+            this.txtbox_FileDirectory_ModelSemana.TabIndex = 24;
+            this.txtbox_FileDirectory_ModelSemana.TextChanged += new System.EventHandler(this.txtbox_FileDirectory_ModelSemana_TextChanged);
+            // 
+            // txtbox_FileDirectory_ModelFDSemana
+            // 
+            this.txtbox_FileDirectory_ModelFDSemana.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.txtbox_FileDirectory_ModelFDSemana.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(30)))), ((int)(((byte)(51)))));
+            this.txtbox_FileDirectory_ModelFDSemana.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtbox_FileDirectory_ModelFDSemana.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.txtbox_FileDirectory_ModelFDSemana.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(168)))), ((int)(((byte)(115)))), ((int)(((byte)(168)))));
+            this.txtbox_FileDirectory_ModelFDSemana.Location = new System.Drawing.Point(26, 107);
+            this.txtbox_FileDirectory_ModelFDSemana.Margin = new System.Windows.Forms.Padding(2);
+            this.txtbox_FileDirectory_ModelFDSemana.Name = "txtbox_FileDirectory_ModelFDSemana";
+            this.txtbox_FileDirectory_ModelFDSemana.Size = new System.Drawing.Size(379, 22);
+            this.txtbox_FileDirectory_ModelFDSemana.TabIndex = 25;
+            this.txtbox_FileDirectory_ModelFDSemana.TextChanged += new System.EventHandler(this.txtbox_FileDirectory_ModelFDSemana_TextChanged);
             // 
             // btn_SaveFolder_OSWord
             // 
@@ -627,19 +1065,6 @@
             this.btn_SaveFolder_OSWord.Text = "📂 &Procurar Pasta";
             this.btn_SaveFolder_OSWord.UseVisualStyleBackColor = true;
             // 
-            // txtbox_FolderDirectory_OSWord
-            // 
-            this.txtbox_FolderDirectory_OSWord.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(30)))), ((int)(((byte)(51)))));
-            this.txtbox_FolderDirectory_OSWord.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtbox_FolderDirectory_OSWord.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.txtbox_FolderDirectory_OSWord.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(168)))), ((int)(((byte)(115)))), ((int)(((byte)(168)))));
-            this.txtbox_FolderDirectory_OSWord.Location = new System.Drawing.Point(108, 263);
-            this.txtbox_FolderDirectory_OSWord.Margin = new System.Windows.Forms.Padding(2);
-            this.txtbox_FolderDirectory_OSWord.Name = "txtbox_FolderDirectory_OSWord";
-            this.txtbox_FolderDirectory_OSWord.Size = new System.Drawing.Size(379, 22);
-            this.txtbox_FolderDirectory_OSWord.TabIndex = 28;
-            this.txtbox_FolderDirectory_OSWord.TextChanged += new System.EventHandler(this.txtbox_FolderDirectory_OSWord_TextChanged);
-            // 
             // btn_searchFile_FDSemana
             // 
             this.btn_searchFile_FDSemana.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -651,30 +1076,6 @@
             this.btn_searchFile_FDSemana.TabIndex = 27;
             this.btn_searchFile_FDSemana.Text = "📄 &Procurar Ficheiro";
             this.btn_searchFile_FDSemana.UseVisualStyleBackColor = true;
-            // 
-            // lbl_modelFDSemana
-            // 
-            this.lbl_modelFDSemana.AutoSize = true;
-            this.lbl_modelFDSemana.ForeColor = System.Drawing.Color.Cyan;
-            this.lbl_modelFDSemana.Location = new System.Drawing.Point(110, 97);
-            this.lbl_modelFDSemana.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lbl_modelFDSemana.Name = "lbl_modelFDSemana";
-            this.lbl_modelFDSemana.Size = new System.Drawing.Size(167, 17);
-            this.lbl_modelFDSemana.TabIndex = 26;
-            this.lbl_modelFDSemana.Text = "Modelo de Fim de Semana";
-            // 
-            // txtbox_FileDirectory_ModelFDSemana
-            // 
-            this.txtbox_FileDirectory_ModelFDSemana.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(30)))), ((int)(((byte)(51)))));
-            this.txtbox_FileDirectory_ModelFDSemana.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtbox_FileDirectory_ModelFDSemana.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.txtbox_FileDirectory_ModelFDSemana.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(168)))), ((int)(((byte)(115)))), ((int)(((byte)(168)))));
-            this.txtbox_FileDirectory_ModelFDSemana.Location = new System.Drawing.Point(108, 116);
-            this.txtbox_FileDirectory_ModelFDSemana.Margin = new System.Windows.Forms.Padding(2);
-            this.txtbox_FileDirectory_ModelFDSemana.Name = "txtbox_FileDirectory_ModelFDSemana";
-            this.txtbox_FileDirectory_ModelFDSemana.Size = new System.Drawing.Size(379, 22);
-            this.txtbox_FileDirectory_ModelFDSemana.TabIndex = 25;
-            this.txtbox_FileDirectory_ModelFDSemana.TextChanged += new System.EventHandler(this.txtbox_FileDirectory_ModelFDSemana_TextChanged);
             // 
             // btn_searchFile_ModelSemana
             // 
@@ -688,60 +1089,109 @@
             this.btn_searchFile_ModelSemana.Text = "📄 &Procurar Ficheiro";
             this.btn_searchFile_ModelSemana.UseVisualStyleBackColor = true;
             // 
-            // lbl_modelSemana
+            // tpage_Outros
             // 
-            this.lbl_modelSemana.AutoSize = true;
-            this.lbl_modelSemana.ForeColor = System.Drawing.Color.Cyan;
-            this.lbl_modelSemana.Location = new System.Drawing.Point(110, 40);
-            this.lbl_modelSemana.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lbl_modelSemana.Name = "lbl_modelSemana";
-            this.lbl_modelSemana.Size = new System.Drawing.Size(125, 17);
-            this.lbl_modelSemana.TabIndex = 1;
-            this.lbl_modelSemana.Text = "Modelo de Semana";
+            this.tpage_Outros.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(20)))), ((int)(((byte)(25)))));
+            this.tpage_Outros.Controls.Add(this.gBox_DirectoriosInspFilesExported);
+            this.tpage_Outros.Controls.Add(this.gBox_DirectoriosApps);
+            this.tpage_Outros.ForeColor = System.Drawing.Color.Gainsboro;
+            this.tpage_Outros.Location = new System.Drawing.Point(4, 26);
+            this.tpage_Outros.Name = "tpage_Outros";
+            this.tpage_Outros.Padding = new System.Windows.Forms.Padding(3);
+            this.tpage_Outros.Size = new System.Drawing.Size(763, 328);
+            this.tpage_Outros.TabIndex = 2;
+            this.tpage_Outros.Text = "Outros";
             // 
-            // txtbox_FileDirectory_ModelSemana
+            // gBox_DirectoriosInspFilesExported
             // 
-            this.txtbox_FileDirectory_ModelSemana.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(30)))), ((int)(((byte)(51)))));
-            this.txtbox_FileDirectory_ModelSemana.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtbox_FileDirectory_ModelSemana.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.txtbox_FileDirectory_ModelSemana.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(168)))), ((int)(((byte)(115)))), ((int)(((byte)(168)))));
-            this.txtbox_FileDirectory_ModelSemana.Location = new System.Drawing.Point(108, 59);
-            this.txtbox_FileDirectory_ModelSemana.Margin = new System.Windows.Forms.Padding(2);
-            this.txtbox_FileDirectory_ModelSemana.Name = "txtbox_FileDirectory_ModelSemana";
-            this.txtbox_FileDirectory_ModelSemana.Size = new System.Drawing.Size(379, 22);
-            this.txtbox_FileDirectory_ModelSemana.TabIndex = 24;
-            this.txtbox_FileDirectory_ModelSemana.TextChanged += new System.EventHandler(this.txtbox_FileDirectory_ModelSemana_TextChanged);
+            this.gBox_DirectoriosInspFilesExported.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.gBox_DirectoriosInspFilesExported.Controls.Add(this.btn_searchFolder_InspFiles);
+            this.gBox_DirectoriosInspFilesExported.Controls.Add(this.button14);
+            this.gBox_DirectoriosInspFilesExported.Controls.Add(this.button16);
+            this.gBox_DirectoriosInspFilesExported.Controls.Add(this.txtBox_InspFilePath);
+            this.gBox_DirectoriosInspFilesExported.Font = new System.Drawing.Font("Century Gothic", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.gBox_DirectoriosInspFilesExported.ForeColor = System.Drawing.Color.Cyan;
+            this.gBox_DirectoriosInspFilesExported.Location = new System.Drawing.Point(100, 131);
+            this.gBox_DirectoriosInspFilesExported.Margin = new System.Windows.Forms.Padding(2);
+            this.gBox_DirectoriosInspFilesExported.Name = "gBox_DirectoriosInspFilesExported";
+            this.gBox_DirectoriosInspFilesExported.Padding = new System.Windows.Forms.Padding(2);
+            this.gBox_DirectoriosInspFilesExported.Size = new System.Drawing.Size(554, 66);
+            this.gBox_DirectoriosInspFilesExported.TabIndex = 10;
+            this.gBox_DirectoriosInspFilesExported.TabStop = false;
+            this.gBox_DirectoriosInspFilesExported.Text = "Inspecção de Ficheiros Exportados";
             // 
-            // tabPage1
+            // btn_searchFolder_InspFiles
             // 
-            this.tabPage1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(20)))), ((int)(((byte)(25)))));
-            this.tabPage1.Controls.Add(this.groupBox1);
-            this.tabPage1.Controls.Add(this.chkBox_VisibleWordExportProcess);
-            this.tabPage1.Controls.Add(this.gBox_FMemory);
-            this.tabPage1.ForeColor = System.Drawing.Color.Gainsboro;
-            this.tabPage1.Location = new System.Drawing.Point(4, 26);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(763, 328);
-            this.tabPage1.TabIndex = 2;
-            this.tabPage1.Text = "Outros";
+            this.btn_searchFolder_InspFiles.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btn_searchFolder_InspFiles.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(30)))), ((int)(((byte)(51)))));
+            this.btn_searchFolder_InspFiles.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_searchFolder_InspFiles.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btn_searchFolder_InspFiles.ForeColor = System.Drawing.Color.Cyan;
+            this.btn_searchFolder_InspFiles.Location = new System.Drawing.Point(400, 23);
+            this.btn_searchFolder_InspFiles.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_searchFolder_InspFiles.Name = "btn_searchFolder_InspFiles";
+            this.btn_searchFolder_InspFiles.Size = new System.Drawing.Size(134, 29);
+            this.btn_searchFolder_InspFiles.TabIndex = 25;
+            this.btn_searchFolder_InspFiles.Text = "📄 &Procurar Ficheiro";
+            this.btn_searchFolder_InspFiles.UseVisualStyleBackColor = false;
+            this.btn_searchFolder_InspFiles.Click += new System.EventHandler(this.btn_searchFolder_InspFiles_Click);
             // 
-            // groupBox1
+            // button14
             // 
-            this.groupBox1.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.groupBox1.Controls.Add(this.btn_searchFile_WordApp);
-            this.groupBox1.Controls.Add(this.button1);
-            this.groupBox1.Controls.Add(this.txtBox_WordAppPath);
-            this.groupBox1.Font = new System.Drawing.Font("Century Gothic", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.groupBox1.ForeColor = System.Drawing.Color.Cyan;
-            this.groupBox1.Location = new System.Drawing.Point(120, 25);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox1.Size = new System.Drawing.Size(554, 66);
-            this.groupBox1.TabIndex = 9;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Directório da Aplicação Word";
+            this.button14.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button14.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(30)))), ((int)(((byte)(51)))));
+            this.button14.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button14.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.button14.ForeColor = System.Drawing.Color.Cyan;
+            this.button14.Location = new System.Drawing.Point(755, 22);
+            this.button14.Margin = new System.Windows.Forms.Padding(2);
+            this.button14.Name = "button14";
+            this.button14.Size = new System.Drawing.Size(134, 29);
+            this.button14.TabIndex = 24;
+            this.button14.Text = "📄 &Procurar Ficheiro";
+            this.button14.UseVisualStyleBackColor = false;
+            // 
+            // button16
+            // 
+            this.button16.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button16.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.button16.Location = new System.Drawing.Point(1430, 25);
+            this.button16.Margin = new System.Windows.Forms.Padding(2);
+            this.button16.Name = "button16";
+            this.button16.Size = new System.Drawing.Size(130, 34);
+            this.button16.TabIndex = 7;
+            this.button16.Text = "📂 &Abrir Pasta";
+            this.button16.UseVisualStyleBackColor = true;
+            // 
+            // txtBox_InspFilePath
+            // 
+            this.txtBox_InspFilePath.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(30)))), ((int)(((byte)(51)))));
+            this.txtBox_InspFilePath.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtBox_InspFilePath.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.txtBox_InspFilePath.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(168)))), ((int)(((byte)(115)))), ((int)(((byte)(168)))));
+            this.txtBox_InspFilePath.Location = new System.Drawing.Point(12, 28);
+            this.txtBox_InspFilePath.Margin = new System.Windows.Forms.Padding(2);
+            this.txtBox_InspFilePath.Name = "txtBox_InspFilePath";
+            this.txtBox_InspFilePath.ReadOnly = true;
+            this.txtBox_InspFilePath.Size = new System.Drawing.Size(369, 22);
+            this.txtBox_InspFilePath.TabIndex = 0;
+            // 
+            // gBox_DirectoriosApps
+            // 
+            this.gBox_DirectoriosApps.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.gBox_DirectoriosApps.Controls.Add(this.btn_searchFile_WordApp);
+            this.gBox_DirectoriosApps.Controls.Add(this.button1);
+            this.gBox_DirectoriosApps.Controls.Add(this.txtBox_WordAppPath);
+            this.gBox_DirectoriosApps.Font = new System.Drawing.Font("Century Gothic", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.gBox_DirectoriosApps.ForeColor = System.Drawing.Color.Cyan;
+            this.gBox_DirectoriosApps.Location = new System.Drawing.Point(100, 52);
+            this.gBox_DirectoriosApps.Margin = new System.Windows.Forms.Padding(2);
+            this.gBox_DirectoriosApps.Name = "gBox_DirectoriosApps";
+            this.gBox_DirectoriosApps.Padding = new System.Windows.Forms.Padding(2);
+            this.gBox_DirectoriosApps.Size = new System.Drawing.Size(554, 66);
+            this.gBox_DirectoriosApps.TabIndex = 9;
+            this.gBox_DirectoriosApps.TabStop = false;
+            this.gBox_DirectoriosApps.Text = "Directório da Aplicação Word";
             // 
             // btn_searchFile_WordApp
             // 
@@ -785,11 +1235,22 @@
             this.txtBox_WordAppPath.TabIndex = 0;
             this.txtBox_WordAppPath.TextChanged += new System.EventHandler(this.txtBox_WordAppPath_TextChanged);
             // 
+            // tpage_Debug
+            // 
+            this.tpage_Debug.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(20)))), ((int)(((byte)(25)))));
+            this.tpage_Debug.Controls.Add(this.gBox_FMemory);
+            this.tpage_Debug.Controls.Add(this.chkBox_VisibleWordExportProcess);
+            this.tpage_Debug.Location = new System.Drawing.Point(4, 26);
+            this.tpage_Debug.Name = "tpage_Debug";
+            this.tpage_Debug.Size = new System.Drawing.Size(763, 328);
+            this.tpage_Debug.TabIndex = 3;
+            this.tpage_Debug.Text = "Debug";
+            // 
             // chkBox_VisibleWordExportProcess
             // 
             this.chkBox_VisibleWordExportProcess.AutoSize = true;
             this.chkBox_VisibleWordExportProcess.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(168)))), ((int)(((byte)(115)))), ((int)(((byte)(168)))));
-            this.chkBox_VisibleWordExportProcess.Location = new System.Drawing.Point(120, 259);
+            this.chkBox_VisibleWordExportProcess.Location = new System.Drawing.Point(108, 133);
             this.chkBox_VisibleWordExportProcess.Margin = new System.Windows.Forms.Padding(2);
             this.chkBox_VisibleWordExportProcess.Name = "chkBox_VisibleWordExportProcess";
             this.chkBox_VisibleWordExportProcess.Size = new System.Drawing.Size(235, 21);
@@ -937,23 +1398,29 @@
             this.ClientSize = new System.Drawing.Size(853, 484);
             this.Controls.Add(this.Properties_savingPanel);
             this.Controls.Add(this.chkBox_DebugerMode);
-            this.Controls.Add(this.tabControl_Exportar);
+            this.Controls.Add(this.tabControl_Propriedades);
             this.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.Name = "FormPropriedades";
             this.Text = "FormPropriedades";
             this.Load += new System.EventHandler(this.FormPropriedades_Load);
             this.gBox_FMemory.ResumeLayout(false);
             this.gBox_FMemory.PerformLayout();
-            this.tabControl_Exportar.ResumeLayout(false);
+            this.tabControl_Propriedades.ResumeLayout(false);
             this.tpage_PrepararExportar.ResumeLayout(false);
             this.gBox_DirectorioFlhsExcel.ResumeLayout(false);
             this.gBox_DirectorioFlhsExcel.PerformLayout();
             this.tpage_ModelosPreferencias.ResumeLayout(false);
-            this.tpage_ModelosPreferencias.PerformLayout();
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage1.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.gBox_DirectorioExports.ResumeLayout(false);
+            this.gBox_DirectorioExports.PerformLayout();
+            this.gBox_DirectoriosModelos.ResumeLayout(false);
+            this.gBox_DirectoriosModelos.PerformLayout();
+            this.tpage_Outros.ResumeLayout(false);
+            this.gBox_DirectoriosInspFilesExported.ResumeLayout(false);
+            this.gBox_DirectoriosInspFilesExported.PerformLayout();
+            this.gBox_DirectoriosApps.ResumeLayout(false);
+            this.gBox_DirectoriosApps.PerformLayout();
+            this.tpage_Debug.ResumeLayout(false);
+            this.tpage_Debug.PerformLayout();
             this.Properties_savingPanel.ResumeLayout(false);
             this.Properties_savingPanel.PerformLayout();
             this.gBox_DebugWindows.ResumeLayout(false);
@@ -971,7 +1438,7 @@
         private Button btn_openMemoryFolder;
         private TextBox txtBox_FMemory;
         private CheckBox chkBox_DebugerMode;
-        private TabControl tabControl_Exportar;
+        private TabControl tabControl_Propriedades;
         private TabPage tpage_PrepararExportar;
         private GroupBox gBox_DirectorioFlhsExcel;
         private Button btn_searchFileFunerais;
@@ -1011,7 +1478,7 @@
         private ProgressBar prg_SaveButton;
         private Label lbl_Gravar;
         private Button btn_SaveFileLocPD;
-        private TabPage tabPage1;
+        private TabPage tpage_Outros;
         private Button btn_searchFile_ODU;
         private Button btn_searchFile_CCS;
         private Button btn_searchFile_SD;
@@ -1020,11 +1487,39 @@
         private Button btn_search_File_ModelSemana;
         private Button btn_search_File_FDSemana;
         private Button btn_search_File_Quarta;
-        private Button btn_Save_Folder_OSWord;
+        private Button btn_searchFolder_OSWord;
         private CheckBox chkBox_VisibleWordExportProcess;
-        private GroupBox groupBox1;
+        private GroupBox gBox_DirectoriosApps;
         private Button btn_searchFile_WordApp;
         private Button button1;
         private TextBox txtBox_WordAppPath;
+        private TabPage tpage_Debug;
+        private GroupBox gBox_DirectorioExports;
+        private Button button12;
+        private Button button13;
+        private Button button15;
+        private Button button17;
+        private Button button19;
+        private Button button20;
+        private Button button21;
+        private Button button22;
+        private Button button23;
+        private Button button24;
+        private GroupBox gBox_DirectoriosModelos;
+        private Button button2;
+        private Button button3;
+        private Button button4;
+        private Button button5;
+        private Button button6;
+        private Button button7;
+        private Button button8;
+        private Button button9;
+        private Button button10;
+        private Button button11;
+        private GroupBox gBox_DirectoriosInspFilesExported;
+        private Button button14;
+        private Button button16;
+        private TextBox txtBox_InspFilePath;
+        private Button btn_searchFolder_InspFiles;
     }
 }

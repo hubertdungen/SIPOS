@@ -36,7 +36,7 @@ namespace SIPOS.Forms
             txtbox_FileDirectory_ModelQuarta.Text = Mediator.fPathModelQuarta;
             txtbox_FolderDirectory_OSWord.Text = Mediator.fPathOSWord;
             txtBox_WordAppPath.Text = Mediator.wordAppFilePath;
-
+            txtBox_InspFilePath.Text = Mediator.inspFilePath;
 
 
 
@@ -168,6 +168,7 @@ namespace SIPOS.Forms
             Mediator.fPathOSWord = txtbox_FolderDirectory_OSWord.Text;
 
             Mediator.wordAppFilePath = txtBox_WordAppPath.Text;
+            Mediator.inspFilePath = txtBox_InspFilePath.Text;
 
             //// ^^^^^ ATENÇÃO! NÃO ESQUECER DE CRIAR UM METODO QUE CHEQUE PELO PREENCHIMENTO CORRECTO DESTAS VARIAVEIS | TÊM DE SER SÓ ACEITES EM FORMATO WORD (.docx) !!!
 
@@ -244,11 +245,17 @@ namespace SIPOS.Forms
             Mediator.openFile();
             txtBox_WordAppPath.Text = Mediator.filePath;
         }
+        private void btn_searchFolder_InspFiles_Click(object sender, EventArgs e)
+        {
+            Mediator.openFolder();
+            txtBox_InspFilePath.Text = Mediator.selectedFolder;
+        }
         private void btn_Save_Folder_OSWord_Click(object sender, EventArgs e)
         {
             Mediator.openFolder();
             txtbox_FolderDirectory_OSWord.Text = Mediator.selectedFolder;
         }
+
 
 
 
@@ -333,6 +340,10 @@ namespace SIPOS.Forms
                 gBox_DebugWindows.Visible = true;
                 chkBox_DebugerMode.Checked = true;
                 chkBox_VisibleWordExportProcess.Visible = true;
+                //tpage_Debug.Locked = false;
+                //tabControl_Propriedades.TabIndex(4).Locked = false;
+
+
 
             }
             else
@@ -341,6 +352,9 @@ namespace SIPOS.Forms
                 gBox_DebugWindows.Visible = false;
                 chkBox_DebugerMode.Checked = false;
                 chkBox_VisibleWordExportProcess.Visible = false;
+
+
+                //tabControl_Propriedades.TabIndex(4).Locked = true;
                 //if (tabControlOS.SelectedTab == tabControlOS.Controls[0]) { formSizeSwitch("NoDebug_OSMenu"); }
                 //if (tabControlOS.SelectedTab == Propriedades) { formSizeSwitch("NoDebug_Propriedades"); }
             }

@@ -28,25 +28,31 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.btn_Export_TestListReader = new System.Windows.Forms.Button();
             this.btn_Export_testDaySelect_Var = new System.Windows.Forms.Button();
             this.gbox_Export = new System.Windows.Forms.GroupBox();
+            this.btn_OpenPDF = new System.Windows.Forms.Button();
+            this.btn_reportPDFFile_onExportFolder = new System.Windows.Forms.Button();
+            this.btn_reportWordFile_onExportFolder = new System.Windows.Forms.Button();
             this.btn_OpenWord = new System.Windows.Forms.Button();
             this.btn_ExportPDF = new System.Windows.Forms.Button();
             this.btn_ExportWord = new System.Windows.Forms.Button();
             this.gbox_ExportDetails = new System.Windows.Forms.GroupBox();
-            this.btn_reportPDFFile = new System.Windows.Forms.Button();
-            this.btn_reportWordFile = new System.Windows.Forms.Button();
+            this.btn_reportPDFFile_onInspect = new System.Windows.Forms.Button();
+            this.btn_reportWordFile_onInspect = new System.Windows.Forms.Button();
             this.txtBox_NumOS = new System.Windows.Forms.TextBox();
             this.lbl_NumOS = new System.Windows.Forms.Label();
             this.lbl_SaveFileName_OSWord = new System.Windows.Forms.Label();
             this.txtBox_ExportDocName = new System.Windows.Forms.TextBox();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.gbox_Export.SuspendLayout();
             this.gbox_ExportDetails.SuspendLayout();
             this.SuspendLayout();
             // 
             // btn_Export_TestListReader
             // 
+            this.btn_Export_TestListReader.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.btn_Export_TestListReader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(30)))), ((int)(((byte)(51)))));
             this.btn_Export_TestListReader.FlatAppearance.BorderSize = 0;
             this.btn_Export_TestListReader.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -64,6 +70,7 @@
             // 
             // btn_Export_testDaySelect_Var
             // 
+            this.btn_Export_testDaySelect_Var.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.btn_Export_testDaySelect_Var.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(30)))), ((int)(((byte)(51)))));
             this.btn_Export_testDaySelect_Var.FlatAppearance.BorderSize = 0;
             this.btn_Export_testDaySelect_Var.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -81,6 +88,10 @@
             // 
             // gbox_Export
             // 
+            this.gbox_Export.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.gbox_Export.Controls.Add(this.btn_OpenPDF);
+            this.gbox_Export.Controls.Add(this.btn_reportPDFFile_onExportFolder);
+            this.gbox_Export.Controls.Add(this.btn_reportWordFile_onExportFolder);
             this.gbox_Export.Controls.Add(this.btn_OpenWord);
             this.gbox_Export.Controls.Add(this.btn_ExportPDF);
             this.gbox_Export.Controls.Add(this.btn_ExportWord);
@@ -95,6 +106,57 @@
             this.gbox_Export.TabStop = false;
             this.gbox_Export.Text = "Exportar";
             // 
+            // btn_OpenPDF
+            // 
+            this.btn_OpenPDF.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(25)))), ((int)(((byte)(51)))));
+            this.btn_OpenPDF.FlatAppearance.BorderSize = 0;
+            this.btn_OpenPDF.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_OpenPDF.Font = new System.Drawing.Font("Century Gothic", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btn_OpenPDF.ForeColor = System.Drawing.Color.IndianRed;
+            this.btn_OpenPDF.Location = new System.Drawing.Point(228, 134);
+            this.btn_OpenPDF.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_OpenPDF.Name = "btn_OpenPDF";
+            this.btn_OpenPDF.Size = new System.Drawing.Size(57, 70);
+            this.btn_OpenPDF.TabIndex = 38;
+            this.btn_OpenPDF.Text = "📁";
+            this.toolTip1.SetToolTip(this.btn_OpenPDF, "Abrir ficheiro exportado.");
+            this.btn_OpenPDF.UseVisualStyleBackColor = false;
+            this.btn_OpenPDF.Click += new System.EventHandler(this.btn_OpenPDF_Click);
+            // 
+            // btn_reportPDFFile_onExportFolder
+            // 
+            this.btn_reportPDFFile_onExportFolder.BackColor = System.Drawing.Color.IndianRed;
+            this.btn_reportPDFFile_onExportFolder.FlatAppearance.BorderSize = 0;
+            this.btn_reportPDFFile_onExportFolder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_reportPDFFile_onExportFolder.Font = new System.Drawing.Font("Century Gothic", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btn_reportPDFFile_onExportFolder.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(160)))), ((int)(((byte)(184)))), ((int)(((byte)(226)))));
+            this.btn_reportPDFFile_onExportFolder.Location = new System.Drawing.Point(216, 134);
+            this.btn_reportPDFFile_onExportFolder.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_reportPDFFile_onExportFolder.Name = "btn_reportPDFFile_onExportFolder";
+            this.btn_reportPDFFile_onExportFolder.Size = new System.Drawing.Size(10, 70);
+            this.btn_reportPDFFile_onExportFolder.TabIndex = 37;
+            this.toolTip1.SetToolTip(this.btn_reportPDFFile_onExportFolder, "ATENÇÃO: Já existe um ficheiro PDF com o mesmo nome na pasta destino de exportaçã" +
+        "o.");
+            this.btn_reportPDFFile_onExportFolder.UseVisualStyleBackColor = false;
+            this.btn_reportPDFFile_onExportFolder.Visible = false;
+            // 
+            // btn_reportWordFile_onExportFolder
+            // 
+            this.btn_reportWordFile_onExportFolder.BackColor = System.Drawing.Color.IndianRed;
+            this.btn_reportWordFile_onExportFolder.FlatAppearance.BorderSize = 0;
+            this.btn_reportWordFile_onExportFolder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_reportWordFile_onExportFolder.Font = new System.Drawing.Font("Century Gothic", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btn_reportWordFile_onExportFolder.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(160)))), ((int)(((byte)(184)))), ((int)(((byte)(226)))));
+            this.btn_reportWordFile_onExportFolder.Location = new System.Drawing.Point(216, 45);
+            this.btn_reportWordFile_onExportFolder.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_reportWordFile_onExportFolder.Name = "btn_reportWordFile_onExportFolder";
+            this.btn_reportWordFile_onExportFolder.Size = new System.Drawing.Size(10, 70);
+            this.btn_reportWordFile_onExportFolder.TabIndex = 36;
+            this.toolTip1.SetToolTip(this.btn_reportWordFile_onExportFolder, "ATENÇÃO: Já existe um ficheiro WORD com o mesmo nome na pasta destino de exportaç" +
+        "ão.");
+            this.btn_reportWordFile_onExportFolder.UseVisualStyleBackColor = false;
+            this.btn_reportWordFile_onExportFolder.Visible = false;
+            // 
             // btn_OpenWord
             // 
             this.btn_OpenWord.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(25)))), ((int)(((byte)(51)))));
@@ -108,6 +170,7 @@
             this.btn_OpenWord.Size = new System.Drawing.Size(57, 70);
             this.btn_OpenWord.TabIndex = 4;
             this.btn_OpenWord.Text = "📁";
+            this.toolTip1.SetToolTip(this.btn_OpenWord, "Abrir ficheiro exportado.");
             this.btn_OpenWord.UseVisualStyleBackColor = false;
             this.btn_OpenWord.Click += new System.EventHandler(this.btn_OpenWord_Click);
             // 
@@ -144,8 +207,9 @@
             // 
             // gbox_ExportDetails
             // 
-            this.gbox_ExportDetails.Controls.Add(this.btn_reportPDFFile);
-            this.gbox_ExportDetails.Controls.Add(this.btn_reportWordFile);
+            this.gbox_ExportDetails.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.gbox_ExportDetails.Controls.Add(this.btn_reportPDFFile_onInspect);
+            this.gbox_ExportDetails.Controls.Add(this.btn_reportWordFile_onInspect);
             this.gbox_ExportDetails.Controls.Add(this.txtBox_NumOS);
             this.gbox_ExportDetails.Controls.Add(this.lbl_NumOS);
             this.gbox_ExportDetails.Controls.Add(this.lbl_SaveFileName_OSWord);
@@ -161,37 +225,39 @@
             this.gbox_ExportDetails.TabStop = false;
             this.gbox_ExportDetails.Text = "Especificações";
             // 
-            // btn_reportPDFFile
+            // btn_reportPDFFile_onInspect
             // 
-            this.btn_reportPDFFile.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(25)))), ((int)(((byte)(51)))));
-            this.btn_reportPDFFile.FlatAppearance.BorderSize = 0;
-            this.btn_reportPDFFile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_reportPDFFile.Font = new System.Drawing.Font("Century Gothic", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btn_reportPDFFile.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(138)))), ((int)(((byte)(28)))));
-            this.btn_reportPDFFile.Location = new System.Drawing.Point(113, 52);
-            this.btn_reportPDFFile.Margin = new System.Windows.Forms.Padding(2);
-            this.btn_reportPDFFile.Name = "btn_reportPDFFile";
-            this.btn_reportPDFFile.Size = new System.Drawing.Size(29, 24);
-            this.btn_reportPDFFile.TabIndex = 35;
-            this.btn_reportPDFFile.Text = "P";
-            this.btn_reportPDFFile.UseVisualStyleBackColor = false;
-            this.btn_reportPDFFile.Visible = false;
+            this.btn_reportPDFFile_onInspect.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(25)))), ((int)(((byte)(51)))));
+            this.btn_reportPDFFile_onInspect.FlatAppearance.BorderSize = 0;
+            this.btn_reportPDFFile_onInspect.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_reportPDFFile_onInspect.Font = new System.Drawing.Font("Century Gothic", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btn_reportPDFFile_onInspect.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(138)))), ((int)(((byte)(28)))));
+            this.btn_reportPDFFile_onInspect.Location = new System.Drawing.Point(113, 52);
+            this.btn_reportPDFFile_onInspect.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_reportPDFFile_onInspect.Name = "btn_reportPDFFile_onInspect";
+            this.btn_reportPDFFile_onInspect.Size = new System.Drawing.Size(29, 24);
+            this.btn_reportPDFFile_onInspect.TabIndex = 35;
+            this.btn_reportPDFFile_onInspect.Text = "P";
+            this.toolTip1.SetToolTip(this.btn_reportPDFFile_onInspect, "Já existe um ficheiro PDF com este nome na pasta de Inspeção.");
+            this.btn_reportPDFFile_onInspect.UseVisualStyleBackColor = false;
+            this.btn_reportPDFFile_onInspect.Visible = false;
             // 
-            // btn_reportWordFile
+            // btn_reportWordFile_onInspect
             // 
-            this.btn_reportWordFile.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(25)))), ((int)(((byte)(51)))));
-            this.btn_reportWordFile.FlatAppearance.BorderSize = 0;
-            this.btn_reportWordFile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_reportWordFile.Font = new System.Drawing.Font("Century Gothic", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btn_reportWordFile.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(160)))), ((int)(((byte)(184)))), ((int)(((byte)(226)))));
-            this.btn_reportWordFile.Location = new System.Drawing.Point(77, 52);
-            this.btn_reportWordFile.Margin = new System.Windows.Forms.Padding(2);
-            this.btn_reportWordFile.Name = "btn_reportWordFile";
-            this.btn_reportWordFile.Size = new System.Drawing.Size(29, 24);
-            this.btn_reportWordFile.TabIndex = 5;
-            this.btn_reportWordFile.Text = "W";
-            this.btn_reportWordFile.UseVisualStyleBackColor = false;
-            this.btn_reportWordFile.Visible = false;
+            this.btn_reportWordFile_onInspect.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(25)))), ((int)(((byte)(51)))));
+            this.btn_reportWordFile_onInspect.FlatAppearance.BorderSize = 0;
+            this.btn_reportWordFile_onInspect.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_reportWordFile_onInspect.Font = new System.Drawing.Font("Century Gothic", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btn_reportWordFile_onInspect.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(160)))), ((int)(((byte)(184)))), ((int)(((byte)(226)))));
+            this.btn_reportWordFile_onInspect.Location = new System.Drawing.Point(77, 52);
+            this.btn_reportWordFile_onInspect.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_reportWordFile_onInspect.Name = "btn_reportWordFile_onInspect";
+            this.btn_reportWordFile_onInspect.Size = new System.Drawing.Size(29, 24);
+            this.btn_reportWordFile_onInspect.TabIndex = 5;
+            this.btn_reportWordFile_onInspect.Text = "W";
+            this.toolTip1.SetToolTip(this.btn_reportWordFile_onInspect, "Já existe um ficheiro WORD com este nome na pasta de Inspeção.");
+            this.btn_reportWordFile_onInspect.UseVisualStyleBackColor = false;
+            this.btn_reportWordFile_onInspect.Visible = false;
             // 
             // txtBox_NumOS
             // 
@@ -203,6 +269,7 @@
             this.txtBox_NumOS.Name = "txtBox_NumOS";
             this.txtBox_NumOS.Size = new System.Drawing.Size(54, 24);
             this.txtBox_NumOS.TabIndex = 34;
+            this.toolTip1.SetToolTip(this.txtBox_NumOS, "Número da Ordem de Serviço");
             this.txtBox_NumOS.TextChanged += new System.EventHandler(this.txtBox_NumOS_TextChanged);
             // 
             // lbl_NumOS
@@ -237,6 +304,7 @@
             this.txtBox_ExportDocName.Name = "txtBox_ExportDocName";
             this.txtBox_ExportDocName.Size = new System.Drawing.Size(127, 24);
             this.txtBox_ExportDocName.TabIndex = 30;
+            this.toolTip1.SetToolTip(this.txtBox_ExportDocName, "Nome do documento a ser exportado.");
             this.txtBox_ExportDocName.TextChanged += new System.EventHandler(this.txtBox_ExportDocName_TextChanged);
             // 
             // FormExport
@@ -273,7 +341,11 @@
         private Label lbl_SaveFileName_OSWord;
         private TextBox txtBox_ExportDocName;
         private Button btn_OpenWord;
-        private Button btn_reportPDFFile;
-        private Button btn_reportWordFile;
+        private Button btn_reportPDFFile_onInspect;
+        private Button btn_reportWordFile_onInspect;
+        private Button btn_reportWordFile_onExportFolder;
+        private ToolTip toolTip1;
+        private Button btn_reportPDFFile_onExportFolder;
+        private Button btn_OpenPDF;
     }
 }

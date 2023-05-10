@@ -32,7 +32,6 @@ namespace SIPOS.Forms
 
         // UI CONTROL
         // ----------
-       
 
         private void txtBox_NumOS_TextChanged(object sender, EventArgs e)
         {
@@ -42,12 +41,10 @@ namespace SIPOS.Forms
             doesExportFilesExist();
 
         }
-
         private void txtBox_ExportDocName_TextChanged(object sender, EventArgs e)
         {
             Mediator.exportDocName = txtBox_ExportDocName.Text;
         }
-
         public static void txtboxsActualizer()
         {
             FormExport frmExport = Mediator.formExport;
@@ -112,6 +109,9 @@ namespace SIPOS.Forms
         }
         public void doesExportFilesExist()
         {
+
+            // BOTÕES DO EXPORTADOR
+
             string filePath = Mediator.fPathOSWord + @"\" + Mediator.exportDocName + ".doc";
             string pdffilePath = Mediator.fPathOSWord + @"\" + Mediator.exportDocName + ".pdf";
 
@@ -119,28 +119,59 @@ namespace SIPOS.Forms
             {
                 // The Word document exists, so make the "btn_OpenWord" button visible
                 btn_OpenWord.Visible = true;
-                btn_reportWordFile.Visible = true;
+                btn_reportWordFile_onExportFolder.Visible = true;
             }
             else
             {
                 // The Word document does not exist, so hide the "btn_OpenWord" button
                 btn_OpenWord.Visible = false;
-                btn_reportWordFile.Visible= false;
+                btn_reportWordFile_onExportFolder.Visible= false;
             }
 
 
             if (File.Exists(pdffilePath))
             {
                 // The PDF document exists
-                btn_reportPDFFile.Visible = true;
+                btn_OpenPDF.Visible = true;
+                btn_reportPDFFile_onExportFolder.Visible = true;
             }
             else
             {
                 // The PDF document does not exists
-                btn_reportPDFFile.Visible = false;
+                btn_OpenPDF.Visible = false;
+                btn_reportPDFFile_onExportFolder.Visible = false;
             }
 
 
+
+            // BOTÕES DO INSPECTOR
+            
+
+            string inspFilePath = Mediator.inspFilePath + @"\" + Mediator.exportDocName + ".doc";
+            string inspPDFfilePath = Mediator.inspFilePath + @"\" + Mediator.exportDocName + ".pdf";
+
+            if (File.Exists(inspFilePath))
+            {
+                // The Word document exists, so make the "btn_OpenWord" button visible
+                btn_reportWordFile_onInspect.Visible = true;
+            }
+            else
+            {
+                // The Word document does not exist, so hide the "btn_OpenWord" button
+                btn_reportWordFile_onInspect.Visible = false;
+            }
+
+
+            if (File.Exists(inspPDFfilePath))
+            {
+                // The PDF document exists
+                btn_reportPDFFile_onInspect.Visible = true;
+            }
+            else
+            {
+                // The PDF document does not exists
+                btn_reportPDFFile_onInspect.Visible = false;
+            }
 
         }
         private void btn_OpenWord_Click(object sender, EventArgs e)
@@ -179,6 +210,13 @@ namespace SIPOS.Forms
             //    MessageBoxIcon icon = MessageBoxIcon.Error;
             //    MessageBox.Show(message, caption, buttons, icon);
             //}
+        }
+        private void btn_OpenPDF_Click(object sender, EventArgs e)
+        {
+            string filePath = Mediator.fPathOSWord + @"\" + Mediator.exportDocName + ".pdf";
+            //string pdfFilePath = "\"" + Mediator.wordAppFilePath + "\"";
+
+            Process.Start(filePath);
         }
 
 
