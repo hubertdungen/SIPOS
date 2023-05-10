@@ -57,7 +57,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="textBox1.Text" xml:space="preserve">
-    <value>O SIPOS veio substituir o processo manual de criação de Ordens de Serviço (O.S.) realizado por militares, que demandava tempo e esforço significativos. Com a automatização proporcionada pelo SIPOS, o trabalho repetitivo de coleta e publicação de informações em formato de O.S. é reduzido, permitindo uma otimização de recursos humanos, maior precisão na organização das informações e uma redução na possibilidade de erros. Além disso, o uso de inteligência artificial possibilita a detecção de informações específicas, agilizando ainda mais o processo de elaboração das O.S.</value>
-  </data>
 </root>
