@@ -61,6 +61,8 @@ namespace SIPOS.Forms
         private void txtBox_ExportDocName_TextChanged(object sender, EventArgs e)
         {
             Mediator.exportDocName = txtBox_ExportDocName.Text;
+
+            doesExportFilesExist();
         }
         public static void txtboxsActualizer()
         {

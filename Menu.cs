@@ -55,7 +55,7 @@ namespace SIPOS
         // ------------
 
         // Details VARS
-        public static string version = "v A-0.9.14";
+        public static string version = "v A-0.9.15";
 
 
 
@@ -471,7 +471,12 @@ namespace SIPOS
             //txtBox_ExportDocName.Text = DateTime.Now.Year.ToString() + "-" + "002" + "-" + txtBox_NumOS.Text;
             //Mediator.osNumber = txtBox_NumOS.Text;
         }
-        
+
+        private void basic_ToolTip_Popup(object sender, PopupEventArgs e)
+        {
+
+        }
+
 
 
 

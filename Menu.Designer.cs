@@ -104,6 +104,7 @@
             this.btn_Home = new System.Windows.Forms.PictureBox();
             this.lbl_DesignioSIPOS = new System.Windows.Forms.Label();
             this.basic_ToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.pBox_Designio = new System.Windows.Forms.PictureBox();
             this.panelMenu = new System.Windows.Forms.Panel();
             this.panelBottom = new System.Windows.Forms.Panel();
             this.btn_Help = new FontAwesome.Sharp.IconButton();
@@ -116,7 +117,6 @@
             this.pBox_SIPOS = new System.Windows.Forms.PictureBox();
             this.panel_TitleBar = new System.Windows.Forms.Panel();
             this.panel_Designio = new System.Windows.Forms.Panel();
-            this.pBox_Designio = new System.Windows.Forms.PictureBox();
             this.iconCurrentChildForm = new FontAwesome.Sharp.IconPictureBox();
             this.lblTitleChildForm = new System.Windows.Forms.Label();
             this.panelShadowEffect = new System.Windows.Forms.Panel();
@@ -139,12 +139,12 @@
             this.gBox_DebugWindows.SuspendLayout();
             this.gBox_BackgroundMode.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.btn_Home)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pBox_Designio)).BeginInit();
             this.panelMenu.SuspendLayout();
             this.panelLogo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pBox_SIPOS)).BeginInit();
             this.panel_TitleBar.SuspendLayout();
             this.panel_Designio.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pBox_Designio)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconCurrentChildForm)).BeginInit();
             this.panelDesktop.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -1061,12 +1061,12 @@
             // lbl_DesignioSIPOS
             // 
             this.lbl_DesignioSIPOS.AutoSize = true;
-            this.lbl_DesignioSIPOS.Font = new System.Drawing.Font("Agency FB", 10.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point);
+            this.lbl_DesignioSIPOS.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point);
             this.lbl_DesignioSIPOS.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(245)))), ((int)(((byte)(255)))));
             this.lbl_DesignioSIPOS.Location = new System.Drawing.Point(439, 25);
             this.lbl_DesignioSIPOS.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbl_DesignioSIPOS.Name = "lbl_DesignioSIPOS";
-            this.lbl_DesignioSIPOS.Size = new System.Drawing.Size(15, 18);
+            this.lbl_DesignioSIPOS.Size = new System.Drawing.Size(13, 18);
             this.lbl_DesignioSIPOS.TabIndex = 11;
             this.lbl_DesignioSIPOS.Text = "/";
             // 
@@ -1074,6 +1074,18 @@
             // 
             this.basic_ToolTip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(57)))), ((int)(((byte)(36)))), ((int)(((byte)(57)))));
             this.basic_ToolTip.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(57)))), ((int)(((byte)(235)))), ((int)(((byte)(255)))));
+            this.basic_ToolTip.Popup += new System.Windows.Forms.PopupEventHandler(this.basic_ToolTip_Popup);
+            // 
+            // pBox_Designio
+            // 
+            this.pBox_Designio.Image = ((System.Drawing.Image)(resources.GetObject("pBox_Designio.Image")));
+            this.pBox_Designio.Location = new System.Drawing.Point(57, 12);
+            this.pBox_Designio.Name = "pBox_Designio";
+            this.pBox_Designio.Size = new System.Drawing.Size(387, 26);
+            this.pBox_Designio.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pBox_Designio.TabIndex = 12;
+            this.pBox_Designio.TabStop = false;
+            this.basic_ToolTip.SetToolTip(this.pBox_Designio, resources.GetString("pBox_Designio.ToolTip"));
             // 
             // panelMenu
             // 
@@ -1284,16 +1296,6 @@
             this.panel_Designio.Size = new System.Drawing.Size(472, 51);
             this.panel_Designio.TabIndex = 15;
             // 
-            // pBox_Designio
-            // 
-            this.pBox_Designio.Image = ((System.Drawing.Image)(resources.GetObject("pBox_Designio.Image")));
-            this.pBox_Designio.Location = new System.Drawing.Point(57, 12);
-            this.pBox_Designio.Name = "pBox_Designio";
-            this.pBox_Designio.Size = new System.Drawing.Size(387, 26);
-            this.pBox_Designio.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pBox_Designio.TabIndex = 12;
-            this.pBox_Designio.TabStop = false;
-            // 
             // iconCurrentChildForm
             // 
             this.iconCurrentChildForm.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(30)))), ((int)(((byte)(51)))));
@@ -1392,6 +1394,7 @@
             this.gBox_BackgroundMode.ResumeLayout(false);
             this.gBox_BackgroundMode.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.btn_Home)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pBox_Designio)).EndInit();
             this.panelMenu.ResumeLayout(false);
             this.panelLogo.ResumeLayout(false);
             this.panelLogo.PerformLayout();
@@ -1400,7 +1403,6 @@
             this.panel_TitleBar.PerformLayout();
             this.panel_Designio.ResumeLayout(false);
             this.panel_Designio.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pBox_Designio)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconCurrentChildForm)).EndInit();
             this.panelDesktop.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
