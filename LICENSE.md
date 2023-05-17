@@ -1,0 +1,76 @@
+SIPOS Software License Agreement
+=================================
+
+Version 1.2
+Last Updated: May 17, 2023
+
+This Software License Agreement (the "Agreement") is entered into between you ("Licensee") and Hubert Pires van den Dungen, the owner and developer of SIPOS ("Licensor"), as of the date you agree to the terms of this Agreement.
+
+1. Definitions
+---------------
+1.1 "SIPOS" (Sistema Inteligente de Ordens de Serviço) is a software developed by Hubert Pires van den Dungen, designed to automate the process of creating daily military service orders and reducing the need for repetitive manual work.
+
+1.2 "Personal purposes" refer to non-commercial, non-profit activities, including personal learning, volunteering, or freelancing.
+
+1.3 "Non-commercial purposes" refer to activities that do not generate revenue, profit, or any other financial gain.
+
+1.4 "Monetized content" refers to content that generates revenue or financial gain through advertising, sponsorships, or other means.
+
+
+
+2. Grant of License
+-------------------
+Subject to the terms and conditions of this Agreement, Licensor hereby grants Licensee the following limited, non-exclusive, non-transferable rights:
+
+2.1 Individuals who are not companies may download, install, and use SIPOS for personal purposes, as defined in Section 1.2.
+
+2.2 Public or private organizations, companies, and other entities with organized accounting, open activity, or for-profit purposes may only download and install SIPOS after contacting the Licensor through www.hubertdungen.com/contact, negotiating, and obtaining proper authorization. In these cases, the price for using SIPOS can vary from $50 per month per copy to $1,500 per year per copy, depending on various factors and needs, including maintenance. The license granted to organizations under this section is also non-exclusive and non-transferable.
+
+2.3 Licensee is allowed to copy and sell up to 10% of the SIPOS code without any authorization from the Licensor.
+
+2.4 Licensee is allowed to copy, sell, and distribute up to 25% of the SIPOS code with further authorization by the Licensor. To obtain authorization, Licensee must contact Hubert Pires van den Dungen through www.hubertdungen.com/contact.
+
+2.5 Licensee is allowed to copy and use up to 49% of the SIPOS code for non-commercial purposes, as defined in Section 1.3, but not distribute or sell it, provided that Licensee credits Hubert Pires van den Dungen as the author of the software. Licensees are prohibited from combining their portions with others to create a derivative work.
+
+2.6 Licensee may display up to 15% of the SIPOS code on images, pictures, and videos (including monetized content, as defined in Section 1.4) without any request or authorization. However, if the display exceeds 15%, Licensee must obtain permission from the Licensor.
+
+2.7 Licensees who focus a significant portion of their video content on SIPOS (more than 50% of the total video content, or more than 4 hours of published and monetized video, whichever is greater) must contact the Licensor for further authorization and negotiations.
+
+
+
+3. Restrictions
+---------------
+3.1 Licensee shall not reverse engineer, decompile, or disassemble the SIPOS software, except and only to the extent that such activity is expressly permitted by applicable law, notwithstanding this limitation.
+
+
+
+4. Termination
+---------------
+4.1 This Agreement is effective until terminated. Licensor may terminate this Agreement at any time if Licensee breaches any term of this Agreement. Licensor shall provide written notice of the termination, and Licensee will have 30 days to remedy any breach before the termination becomes effective.
+
+
+
+5. Disclaimer of Warranties
+----------------------------
+5.1 SIPOS is provided "as is," without warranty of any kind. Licensor disclaims all warranties, express or implied, including but not limited to any warranties of merchantability, fitness for a particular purpose, and non-infringement.
+
+
+
+6. Limitation of Liability
+---------------------------
+6.1 In no event shall Licensor be liable for any indirect, incidental, special, consequential, or punitive damages, or any loss of profits, revenue, data, or data use, arising out of or related to this Agreement. Licensor's liability for direct damages resulting from the use of SIPOS shall not exceed the amount paid by Licensee for the software license.
+
+
+
+7. Governing Law and Jurisdiction
+----------------------------------
+7.1 This Agreement shall be governed by and construed in accordance with the laws of the country of the Licensor's residence. Any disputes arising from this Agreement shall be subject to the exclusive jurisdiction of the courts in the Licensor's country of residence.
+
+
+
+8. Entire Agreement
+-------------------
+8.1 This Agreement constitutes the entire agreement between the parties concerning the subject matter hereof, and supersedes all prior and contemporaneous agreements, proposals, oral or written, and all other communications between the parties relating to the subject matter hereof.
+
+
+By using the SIPOS software, you agree to be bound by the terms and conditions of this Agreement. If you do not agree to these terms, do not use the SIPOS software.
