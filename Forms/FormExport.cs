@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -27,6 +28,12 @@ namespace SIPOS.Forms
         private void FormExport_Load(object sender, EventArgs e)
         {
             //txtboxsActualizer();
+            
+            // Will update the boxes with the next OS number.
+            UpdateOSMediatorVars(Mediator.inspFilePath);
+
+
+
             txtBox_NumOS.Text = Mediator.osNumber;
             txtBox_ExportDocName.Text = Mediator.exportDocName;
             doesExportFilesExist();
@@ -79,21 +86,62 @@ namespace SIPOS.Forms
         // PREDICT THE NEXT FOLDER NAME
         // ----------
 
-        public string GetNextFileNumber(string folderPath, string filePattern)
+        public static int GetNextOSNumber(string folderPath)
         {
-            var files = Directory.GetFiles(folderPath, filePattern);
-            if (files.Any())
+            var docFiles = Directory.GetFiles(folderPath, "*.doc");
+
+            var regexPattern = new Regex(@"(\d{4})-(\d{3})-(\d+)\.doc");
+
+            var orderedFiles = docFiles
+                .Select(file => regexPattern.Match(file))
+                .Where(match => match.Success)
+                .Select(match => new
+                {
+                    FilePath = match.Value,
+                    Year = int.Parse(match.Groups[1].Value),
+                    Digits = int.Parse(match.Groups[3].Value)
+                })
+                .OrderByDescending(file => file.Year)
+                .ThenByDescending(file => file.Digits)
+                .ToList();
+
+            if (orderedFiles.Count > 0)
             {
-                var lastFile = files.OrderByDescending(f => f).First();
-                var lastNumber = int.Parse(Path.GetFileNameWithoutExtension(lastFile).Substring(9));
-                var nextNumber = lastNumber + 1;
-                return nextNumber.ToString();
+                var lastFile = orderedFiles.First();
+                return lastFile.Digits + 1;
             }
             else
             {
-                return "1";
+                return 1;
             }
         }
+        public static void UpdateOSMediatorVars(string folderPath)
+        {
+            int nextOSnumber = GetNextOSNumber(folderPath);
+            Mediator.osNumber = nextOSnumber.ToString();
+
+            int currentYear = DateTime.Now.Year;
+            Mediator.exportDocName = $"{currentYear}-002-{nextOSnumber}.doc";
+        }
+
+
+
+
+        //public string GetNextFileNumber(string folderPath, string filePattern)
+        //{
+        //    var files = Directory.GetFiles(folderPath, filePattern);
+        //    if (files.Any())
+        //    {
+        //        var lastFile = files.OrderByDescending(f => f).First();
+        //        var lastNumber = int.Parse(Path.GetFileNameWithoutExtension(lastFile).Substring(9));
+        //        var nextNumber = lastNumber + 1;
+        //        return nextNumber.ToString();
+        //    }
+        //    else
+        //    {
+        //        return "1";
+        //    }
+        //}
 
 
 
