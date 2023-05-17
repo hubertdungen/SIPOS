@@ -38,24 +38,11 @@ namespace SIPOS
         ////////////////////////////////////////////////////// --------------------- //
 
 
-        // --------------------- //
-        // ----- FONT INIT ----- //
-        // --------------------- //
-
-        //[System.Runtime.InteropServices.DllImport("gdi32.dll")]
-        //private static extern IntPtr AddFontMemResourceEx(IntPtr pbFont, uint cbFont,
-        //    IntPtr pdv, [System.Runtime.InteropServices.In] ref uint pcFonts);
-
-        //private PrivateFontCollection fonts = new PrivateFontCollection();
-
-        //Font myFont;
-
-
         // VARS -------
         // ------------
 
         // Details VARS
-        public static string version = "v A-0.9.15";
+        public static string version = "v A-0.10.5";
 
 
 

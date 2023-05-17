@@ -10,6 +10,7 @@ using Microsoft.Office.Interop.Word;
 using SIPOS;
 using Microsoft.Office.Interop.Excel;
 using Application = Microsoft.Office.Interop.Word.Application;
+using System.Text;
 
 namespace SIPOS
 {
@@ -19,7 +20,7 @@ namespace SIPOS
 
         // PUBLIC VARS
 
-        // VARS: PESSOAS/DETAILS
+        // VARS: PESSOAS / DETALHES
         //
         //
         static string efetivoODU = "", ptpdODU = "", adaptODU = "", resODU = "", statusODU = "";    //ODU
@@ -30,8 +31,16 @@ namespace SIPOS
 
         int plusDay = 0; //ir buscar ao form
 
+        // PARSING CHAR VARS
+        //
+        //
+        static string returnChar = "\v";
+        static string tabChar = "\t";
 
-        // FIND AND REPLACE METHODS
+
+
+        // ------------------------
+        // MÉTODOS FIND AND REPLACE
         //
         //
         public static void FindAndReplace(Word.Document osWordDoc, Word.Application wordApp, object ToFindText, object replaceWithText)
@@ -98,7 +107,6 @@ namespace SIPOS
 
 
 
-
         // CRIAR DOCUMENTO WORD DA OS
         //
         //
@@ -140,33 +148,55 @@ namespace SIPOS
                         string osDateABVParse = (string)Mediator.returnOSDateABVParse();
 
 
-                        // CABEÇALHOS
+                        // CABEÇALHOS E RODAPÉS
                         Word_Processor.FindAndReplaceHeader(osWordDoc, wordApp, "<numOS>", Mediator.osNumber);
                         Word_Processor.FindAndReplaceHeader(osWordDoc, wordApp, "<dataOS>", osExtensiveDate);
                         Word_Processor.FindAndReplaceHeader(osWordDoc, wordApp, "<dataOS_abv>", osDateABVParse);
+
+                        // ALTERAR A PAGINAÇÃO 
+
+                        string folderPath = Mediator.inspFilePath;
+                        string previousOSFileName = Mediator.GetPreviousOSFileName(folderPath);
+                        string lastDocPath = Path.Combine(folderPath, previousOSFileName + ".doc");
+                        if (File.Exists(lastDocPath))
+                        {
+                            int lastPageNumber = GetLastPageNumber(lastDocPath);
+                            int afterLastPageLastOS = lastPageNumber % 2 == 0 ? lastPageNumber + 1 : lastPageNumber + 2;
+
+                            // Set the starting page number
+                            osWordDoc.Sections[1].Footers[Word.WdHeaderFooterIndex.wdHeaderFooterPrimary].PageNumbers.StartingNumber = afterLastPageLastOS;
+                        
+                        
+                        
+                        }
+
                     }
 
                     string diaDeEscalaParsedExt = (string)Mediator.returnEscaladosDateParse();
                     Word_Processor.FindAndReplace(osWordDoc, wordApp, "<dataEscalados>", diaDeEscalaParsedExt);
 
+                    // ODU
                     Word_Processor.FindAndReplace(osWordDoc, wordApp, "<ODUefectivo>", efetivoODU); //listToVarsEscalados();)  // ODU
                     Word_Processor.FindAndReplace(osWordDoc, wordApp, "<ODUptpd>", ptpdODU);
                     Word_Processor.FindAndReplace(osWordDoc, wordApp, "<ODUadapt>", adaptODU);
                     Word_Processor.FindAndReplace(osWordDoc, wordApp, "<ODUstatus>", statusODU);
                     Word_Processor.FindAndReplace(osWordDoc, wordApp, "<ODUreserva>", resODU);
-
+                    
+                    // CCS
                     Word_Processor.FindAndReplace(osWordDoc, wordApp, "<CCSefectivo>", efetivoCCS);  // CCS
                     Word_Processor.FindAndReplace(osWordDoc, wordApp, "<CCSptpd>", ptpdCCS);
                     Word_Processor.FindAndReplace(osWordDoc, wordApp, "<CCSadapt>", adaptCCS);
                     Word_Processor.FindAndReplace(osWordDoc, wordApp, "<CCSstatus>", statusCCS);
                     Word_Processor.FindAndReplace(osWordDoc, wordApp, "<CCSreserva>", resCCS);
 
+                    // SD
                     Word_Processor.FindAndReplace(osWordDoc, wordApp, "<SDefectivo>", efetivoSD);  // SD
                     Word_Processor.FindAndReplace(osWordDoc, wordApp, "<SDptpd>", ptpdSD);
                     Word_Processor.FindAndReplace(osWordDoc, wordApp, "<SDadapt>", adaptSD);
                     Word_Processor.FindAndReplace(osWordDoc, wordApp, "<SDstatus>", statusSD);
                     Word_Processor.FindAndReplace(osWordDoc, wordApp, "<SDreserva>", resSD);
 
+                    // PD
                     Word_Processor.FindAndReplace(osWordDoc, wordApp, "<PDefectivo>", efetivoPD);  // PD
                     Word_Processor.FindAndReplace(osWordDoc, wordApp, "<PDptpd>", ptpdPD);
                     Word_Processor.FindAndReplace(osWordDoc, wordApp, "<PDadapt>", adaptPD);
@@ -243,14 +273,14 @@ namespace SIPOS
             nomeados = LinqList.ListaManagerEscalados.LoadList();
             nomeados = nomeados.Where(x => x.DataNomeado == currentDate && x.EscalaNomeado == "Oficial de Dia" && (x.EstadoNomeado == "PT" || x.EstadoNomeado == "PD")).ToList();
 
-            foreach (var nomeado in nomeados) { if (nomeado.NomeNomeado != "" && nomeado.NomeNomeado != null) { ptpdODU = "\r" + nomeado.NomeNomeado; } }
+            foreach (var nomeado in nomeados) { if (nomeado.NomeNomeado != "" && nomeado.NomeNomeado != null) { ptpdODU = returnChar + nomeado.NomeNomeado; } }
 
 
             // ODU ADAPT
             nomeados = LinqList.ListaManagerEscalados.LoadList();
             nomeados = nomeados.Where(x => x.DataNomeado == currentDate && x.EscalaNomeado == "Oficial de Dia" && x.EstadoNomeado == "Adaptação").ToList();
 
-            foreach (var nomeado in nomeados) { if (nomeado.NomeNomeado != "" && nomeado.NomeNomeado != null) { adaptODU = "\r" + nomeado.NomeNomeado; } }
+            foreach (var nomeado in nomeados) { if (nomeado.NomeNomeado != "" && nomeado.NomeNomeado != null) { adaptODU = returnChar + nomeado.NomeNomeado; } }
 
 
             // ODU RESERVA
@@ -266,14 +296,14 @@ namespace SIPOS
             nomeados = LinqList.ListaManagerEscalados.LoadList();
             nomeados = nomeados.Where(x => x.DataNomeado == currentDate && x.EscalaNomeado == "Oficial de Dia" && (x.EstadoNomeado == "PT" || x.EstadoNomeado == "PD")).ToList();
 
-            foreach (var nomeado in nomeados) { statusODU = "\r" + nomeado.EstadoNomeado; }
+            foreach (var nomeado in nomeados) { statusODU = returnChar + nomeado.EstadoNomeado; }
 
 
             // ODU Status - ADAPT
             nomeados = LinqList.ListaManagerEscalados.LoadList();
             nomeados = nomeados.Where(x => x.DataNomeado == currentDate && x.EscalaNomeado == "Oficial de Dia" && x.EstadoNomeado == "Adaptação").ToList();
 
-            foreach (var nomeado in nomeados) { if (statusODU != "" && statusODU != null) { statusODU += "\r" + nomeado.EstadoNomeado; } else { statusODU = "\r" + nomeado.EstadoNomeado; } }
+            foreach (var nomeado in nomeados) { if (statusODU != "" && statusODU != null) { statusODU += returnChar + nomeado.EstadoNomeado; } else { statusODU = returnChar + nomeado.EstadoNomeado; } }
 
             ///-------------------------------------------------
 
@@ -286,28 +316,28 @@ namespace SIPOS
             nomeados = LinqList.ListaManagerEscalados.LoadList();
             nomeados = nomeados.Where(x => x.DataNomeado == currentDate && x.EscalaNomeado == "CCS" && x.EstadoNomeado == "Efetivo").ToList();
 
-            foreach (var nomeado in nomeados) { efetivoCCS = nomeado.NomeNomeado; }
+            foreach (var nomeado in nomeados) { /*efetivoCCS = nomeado.NomeNomeado;*/ efetivoCCS = GetTextWithNoParagraphs(nomeado.NomeNomeado); }
 
 
             // CCS PTPD
             nomeados = LinqList.ListaManagerEscalados.LoadList();
             nomeados = nomeados.Where(x => x.DataNomeado == currentDate && x.EscalaNomeado == "CCS" && (x.EstadoNomeado == "PT" || x.EstadoNomeado == "PD")).ToList();
 
-            foreach (var nomeado in nomeados) { if (nomeado.NomeNomeado != "" && nomeado.NomeNomeado != null) { ptpdCCS = "\r" + nomeado.NomeNomeado; } }
+            foreach (var nomeado in nomeados) { if (nomeado.NomeNomeado != "" && nomeado.NomeNomeado != null) { ptpdCCS = returnChar + GetTextWithNoParagraphs(nomeado.NomeNomeado); } }
 
 
             // CCS ADAPT
             nomeados = LinqList.ListaManagerEscalados.LoadList();
             nomeados = nomeados.Where(x => x.DataNomeado == currentDate && x.EscalaNomeado == "CCS" && x.EstadoNomeado == "Adaptação").ToList();
 
-            foreach (var nomeado in nomeados) { if (nomeado.NomeNomeado != "" && nomeado.NomeNomeado != null) { adaptCCS = "\r" + nomeado.NomeNomeado; } }
+            foreach (var nomeado in nomeados) { if (nomeado.NomeNomeado != "" && nomeado.NomeNomeado != null) { adaptCCS = returnChar + GetTextWithNoParagraphs(nomeado.NomeNomeado); } }
 
 
             // CCS RESERVA
             nomeados = LinqList.ListaManagerEscalados.LoadList();
             nomeados = nomeados.Where(x => x.DataNomeado == currentDate && x.EscalaNomeado == "CCS" && x.EstadoNomeado == "Reserva").ToList();
 
-            foreach (var nomeado in nomeados) { resCCS = nomeado.NomeNomeado; }
+            foreach (var nomeado in nomeados) { resCCS = GetTextWithNoParagraphs(nomeado.NomeNomeado); }
 
 
             //// ------STATUS
@@ -316,14 +346,14 @@ namespace SIPOS
             nomeados = LinqList.ListaManagerEscalados.LoadList();
             nomeados = nomeados.Where(x => x.DataNomeado == currentDate && x.EscalaNomeado == "CCS" && (x.EstadoNomeado == "PT" || x.EstadoNomeado == "PD")).ToList();
 
-            foreach (var nomeado in nomeados) { statusCCS = "\r" + nomeado.EstadoNomeado; }
+            foreach (var nomeado in nomeados) { statusCCS = returnChar + GetTextWithNoParagraphs(nomeado.EstadoNomeado); }
 
 
             // CCS Status - ADAPT
             nomeados = LinqList.ListaManagerEscalados.LoadList();
             nomeados = nomeados.Where(x => x.DataNomeado == currentDate && x.EscalaNomeado == "CCS" && x.EstadoNomeado == "Adaptação").ToList();
 
-            foreach (var nomeado in nomeados) { if (statusCCS != "" && statusCCS != null) { statusCCS += "\r" + nomeado.EstadoNomeado; } else { statusCCS = "\r" + nomeado.EstadoNomeado; } }
+            foreach (var nomeado in nomeados) { if (statusCCS != "" && statusCCS != null) { statusCCS += returnChar + GetTextWithNoParagraphs(nomeado.EstadoNomeado); } else { statusCCS = returnChar + GetTextWithNoParagraphs(nomeado.EstadoNomeado); } }
 
             ///-------------------------------------------------
 
@@ -343,14 +373,14 @@ namespace SIPOS
             nomeados = LinqList.ListaManagerEscalados.LoadList();
             nomeados = nomeados.Where(x => x.DataNomeado == currentDate && x.EscalaNomeado == "Sargento de Dia" && (x.EstadoNomeado == "PT" || x.EstadoNomeado == "PD")).ToList();
 
-            foreach (var nomeado in nomeados) { if (nomeado.NomeNomeado != "" && nomeado.NomeNomeado != null) { ptpdSD = "\r" + nomeado.NomeNomeado; } }
+            foreach (var nomeado in nomeados) { if (nomeado.NomeNomeado != "" && nomeado.NomeNomeado != null) { ptpdSD = returnChar + nomeado.NomeNomeado; } }
 
 
             // SD ADAPT
             nomeados = LinqList.ListaManagerEscalados.LoadList();
             nomeados = nomeados.Where(x => x.DataNomeado == currentDate && x.EscalaNomeado == "Sargento de Dia" && x.EstadoNomeado == "Adaptação").ToList();
 
-            foreach (var nomeado in nomeados) { if (nomeado.NomeNomeado != "" && nomeado.NomeNomeado != null) { adaptSD = "\r" + nomeado.NomeNomeado; } }
+            foreach (var nomeado in nomeados) { if (nomeado.NomeNomeado != "" && nomeado.NomeNomeado != null) { adaptSD = returnChar + nomeado.NomeNomeado; } }
 
 
             // SD RESERVA
@@ -366,14 +396,14 @@ namespace SIPOS
             nomeados = LinqList.ListaManagerEscalados.LoadList();
             nomeados = nomeados.Where(x => x.DataNomeado == currentDate && x.EscalaNomeado == "Sargento de Dia" && (x.EstadoNomeado == "PT" || x.EstadoNomeado == "PD")).ToList();
 
-            foreach (var nomeado in nomeados) { statusSD = "\r" + nomeado.EstadoNomeado; }
+            foreach (var nomeado in nomeados) { statusSD = returnChar + nomeado.EstadoNomeado; }
 
 
             // SD Status - ADAPT
             nomeados = LinqList.ListaManagerEscalados.LoadList();
             nomeados = nomeados.Where(x => x.DataNomeado == currentDate && x.EscalaNomeado == "Sargento de Dia" && x.EstadoNomeado == "Adaptação").ToList();
 
-            foreach (var nomeado in nomeados) { if (statusSD != "" && statusSD != null) { statusSD += "\r" + nomeado.EstadoNomeado; } else { statusSD = "\r" + nomeado.EstadoNomeado; } }
+            foreach (var nomeado in nomeados) { if (statusSD != "" && statusSD != null) { statusSD += returnChar + nomeado.EstadoNomeado; } else { statusSD = returnChar + nomeado.EstadoNomeado; } }
 
             ///-------------------------------------------------
 
@@ -394,14 +424,14 @@ namespace SIPOS
             nomeados = LinqList.ListaManagerEscalados.LoadList();
             nomeados = nomeados.Where(x => x.DataNomeado == currentDate && x.EscalaNomeado == "Praça de Dia" && (x.EstadoNomeado == "PT" || x.EstadoNomeado == "PD")).ToList();
 
-            foreach (var nomeado in nomeados) { if (nomeado.NomeNomeado != "" && nomeado.NomeNomeado != null) { ptpdPD = "\r" + nomeado.NomeNomeado; } }
+            foreach (var nomeado in nomeados) { if (nomeado.NomeNomeado != "" && nomeado.NomeNomeado != null) { ptpdPD = returnChar + nomeado.NomeNomeado; } }
 
 
             // PD ADAPT
             nomeados = LinqList.ListaManagerEscalados.LoadList();
             nomeados = nomeados.Where(x => x.DataNomeado == currentDate && x.EscalaNomeado == "Praça de Dia" && x.EstadoNomeado == "Adaptação").ToList();
 
-            foreach (var nomeado in nomeados) { if (nomeado.NomeNomeado != "" && nomeado.NomeNomeado != null) { adaptPD = "\r" + nomeado.NomeNomeado; } }
+            foreach (var nomeado in nomeados) { if (nomeado.NomeNomeado != "" && nomeado.NomeNomeado != null) { adaptPD = returnChar + nomeado.NomeNomeado; } }
 
 
             // PD RESERVA
@@ -417,14 +447,14 @@ namespace SIPOS
             nomeados = LinqList.ListaManagerEscalados.LoadList();
             nomeados = nomeados.Where(x => x.DataNomeado == currentDate && x.EscalaNomeado == "Praça de Dia" && (x.EstadoNomeado == "PT" || x.EstadoNomeado == "PD")).ToList();
 
-            foreach (var nomeado in nomeados) { statusPD = "\r" + nomeado.EstadoNomeado; }
+            foreach (var nomeado in nomeados) { statusPD = returnChar + nomeado.EstadoNomeado; }
 
 
             // PD Status - ADAPT
             nomeados = LinqList.ListaManagerEscalados.LoadList();
             nomeados = nomeados.Where(x => x.DataNomeado == currentDate && x.EscalaNomeado == "Praça de Dia" && x.EstadoNomeado == "Adaptação").ToList();
 
-            foreach (var nomeado in nomeados) { if (statusPD != "" && statusPD != null) { statusPD += "\r" + nomeado.EstadoNomeado; } else { statusPD = "\r" + nomeado.EstadoNomeado; } }
+            foreach (var nomeado in nomeados) { if (statusPD != "" && statusPD != null) { statusPD += returnChar + nomeado.EstadoNomeado; } else { statusPD = returnChar + nomeado.EstadoNomeado; } }
 
             ///-------------------------------------------------
 
@@ -444,14 +474,14 @@ namespace SIPOS
             nomeados = LinqList.ListaManagerEscalados.LoadList();
             nomeados = nomeados.Where(x => x.DataNomeado == currentDate && x.EscalaNomeado == "Honras Fúnebres" && (x.EstadoNomeado == "PT" || x.EstadoNomeado == "PD")).ToList();
 
-            foreach (var nomeado in nomeados) { if (nomeado.NomeNomeado != "" && nomeado.NomeNomeado != null) { ptpdFN = "\r" + nomeado.NomeNomeado; } }
+            foreach (var nomeado in nomeados) { if (nomeado.NomeNomeado != "" && nomeado.NomeNomeado != null) { ptpdFN = returnChar + nomeado.NomeNomeado; } }
 
 
             // FN ADAPT
             nomeados = LinqList.ListaManagerEscalados.LoadList();
             nomeados = nomeados.Where(x => x.DataNomeado == currentDate && x.EscalaNomeado == "Honras Fúnebres" && x.EstadoNomeado == "Adaptação").ToList();
 
-            foreach (var nomeado in nomeados) { if (nomeado.NomeNomeado != "" && nomeado.NomeNomeado != null) { adaptFN = "\r" + nomeado.NomeNomeado; } }
+            foreach (var nomeado in nomeados) { if (nomeado.NomeNomeado != "" && nomeado.NomeNomeado != null) { adaptFN = returnChar + nomeado.NomeNomeado; } }
 
 
             // FN RESERVA
@@ -467,19 +497,36 @@ namespace SIPOS
             nomeados = LinqList.ListaManagerEscalados.LoadList();
             nomeados = nomeados.Where(x => x.DataNomeado == currentDate && x.EscalaNomeado == "Honras Fúnebres" && (x.EstadoNomeado == "PT" || x.EstadoNomeado == "PD")).ToList();
 
-            foreach (var nomeado in nomeados) { statusFN = "\r" + nomeado.EstadoNomeado; }
+            foreach (var nomeado in nomeados) { statusFN = returnChar + nomeado.EstadoNomeado; }
 
 
             // FN Status - ADAPT
             nomeados = LinqList.ListaManagerEscalados.LoadList();
             nomeados = nomeados.Where(x => x.DataNomeado == currentDate && x.EscalaNomeado == "Honras Fúnebres" && x.EstadoNomeado == "Adaptação").ToList();
 
-            foreach (var nomeado in nomeados) { if (statusFN != "" && statusFN != null) { statusFN += "\r" + nomeado.EstadoNomeado; } else { statusFN = "\r" + nomeado.EstadoNomeado; } }
+            foreach (var nomeado in nomeados) { if (statusFN != "" && statusFN != null) { statusFN += returnChar + nomeado.EstadoNomeado; } else { statusFN = returnChar + nomeado.EstadoNomeado; } }
 
             ///-------------------------------------------------
 
         }
 
+
+        // VERIFICADOR DE ESPAÇOS A MAIS
+        //
+        //
+        public static string GetTextWithNoParagraphs(string textToParse)
+        {
+            string parsedText = textToParse;
+
+            while (parsedText.Contains("\n") || parsedText.Contains("\r") || parsedText.Contains("\r\n") || parsedText.Contains("\v"))
+            {
+                parsedText = parsedText.Replace("\n", "")
+                                          .Replace("\r", "")
+                                          .Replace("\r\n", "")
+                                          .Replace("\v", "");
+            }
+            return parsedText;
+        }
 
 
         // LIMPAR VARIAVEIS
@@ -547,11 +594,47 @@ namespace SIPOS
 
 
 
+        // DETECTAR A ÚLTIMA PÁGINA
+        //
+        //
+        public static int GetLastPageNumber(string lastDocPath)
+        {
+            int lastPageNumber = 0;
+            Word.Application wordApp = new Word.Application();
+            object missing = Type.Missing;
+            object readOnly = true;
+            object isVisible = false;
+            wordApp.Visible = false;
+
+            object lastDocPathObj = lastDocPath;
+            Word.Document lastDoc = wordApp.Documents.Open(ref lastDocPathObj, ref missing, ref readOnly,
+                ref missing, ref missing, ref missing,
+                ref missing, ref missing, ref missing,
+                ref missing, ref missing, ref missing,
+                ref missing, ref missing, ref missing, ref missing);
+            lastDoc.Activate();
+
+            // Get the last page number from the footer
+            Word.Range lastPageRange = lastDoc.Range(lastDoc.Content.End - 1, lastDoc.Content.End);
+            lastPageRange.Select();
+            lastPageNumber = lastPageRange.Information[Word.WdInformation.wdActiveEndAdjustedPageNumber];
 
 
 
-        // DETECT LAST PAGE
+            //foreach (Word.Section section in lastDoc.Sections)
+            //{
+            //    Word.Range footerRange = section.Footers[Word.WdHeaderFooterIndex.wdHeaderFooterPrimary].Range;
+            //    lastPageNumber = Math.Max(lastPageNumber, footerRange.Information[Word.WdInformation.wdActiveEndAdjustedPageNumber]);
+            //}
 
+            lastDoc.Close(ref missing, ref missing, ref missing);
+            wordApp.Quit(ref missing, ref missing, ref missing);
+
+            return lastPageNumber;
+        }
+
+
+        // SEM USO POR ENQUANTO -> APAGAR ASSIM QUE FOR CONFIRMADO QUE NÃO TEM USO
         static void detectLastPageNumber(string[] args)
         {
             string directory = @"C:\Documents";
@@ -598,19 +681,3 @@ namespace SIPOS
 }
 
 
-// BACKUP
-
-////List<Pessoa> escaladosList = LinqList.ListaManagerEscalados.escaladosList;
-
-//List<Pessoa> pessoas = LinqList.ListaManagerEscalados.LoadList();
-//string currentDate = Convert.ToString(varsPublicAcess.returnSelectedDate());
-
-
-////string pessoa = Convert.ToString(pessoas.Where(x => x.DataNomeado == currentDate && x.EscalaNomeado == "Oficial de Dia" && x.EstadoNomeado == "Efetivo"));
-//pessoas = pessoas.Where(x => x.DataNomeado == currentDate && x.EscalaNomeado == "Oficial de Dia" && x.EstadoNomeado == "Efetivo").ToList();
-////escaladosList.Select(p => p.NomeNomeado);
-
-//foreach (var pessoa in pessoas)
-//{
-//    MessageBox.Show(pessoa.NomeNomeado + "\n");
-//}

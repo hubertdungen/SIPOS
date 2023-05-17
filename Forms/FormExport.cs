@@ -85,39 +85,9 @@ namespace SIPOS.Forms
 
         // PREDICT THE NEXT FOLDER NAME
         // ----------
-
-        public static int GetNextOSNumber(string folderPath)
-        {
-            var docFiles = Directory.GetFiles(folderPath, "*.doc");
-
-            var regexPattern = new Regex(@"(\d{4})-(\d{3})-(\d+)\.doc");
-
-            var orderedFiles = docFiles
-                .Select(file => regexPattern.Match(file))
-                .Where(match => match.Success)
-                .Select(match => new
-                {
-                    FilePath = match.Value,
-                    Year = int.Parse(match.Groups[1].Value),
-                    Digits = int.Parse(match.Groups[3].Value)
-                })
-                .OrderByDescending(file => file.Year)
-                .ThenByDescending(file => file.Digits)
-                .ToList();
-
-            if (orderedFiles.Count > 0)
-            {
-                var lastFile = orderedFiles.First();
-                return lastFile.Digits + 1;
-            }
-            else
-            {
-                return 1;
-            }
-        }
         public static void UpdateOSMediatorVars(string folderPath)
         {
-            int nextOSnumber = GetNextOSNumber(folderPath);
+            int nextOSnumber = Mediator.GetNextOSNumber(folderPath);
             Mediator.osNumber = nextOSnumber.ToString();
 
             int currentYear = DateTime.Now.Year;
@@ -125,7 +95,7 @@ namespace SIPOS.Forms
         }
 
 
-
+        // GUARDAR CÓDIGO PARA BACKUP E ELIMINAR ASSIM QUE CONFIRMADO NÂO SER MAIS NECESSÁRIO
 
         //public string GetNextFileNumber(string folderPath, string filePattern)
         //{

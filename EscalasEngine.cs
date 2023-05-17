@@ -286,6 +286,10 @@ namespace SIPOS
                 //stringOutput = "1CAB\tSAS\t141368 G – I. PARREIRA\nTEN\tSAS\t140976 L – C. AUGUSTO\nTCOR\tABST\t142343 G – S. COSTA\n2SAR\tOPINF\t139108 A – P. MANUEL";
                 outputText = "";
 
+                // Invocar o string builder
+                StringBuilder outputBuilder = new StringBuilder();
+
+
                 if (Mediator.winMode == 2) { MessageBox.Show(textToParse, "BEFORE PARSING PHRASE"); }
 
                 if ((textToParse != null) && (textToParse.Length > 10))
@@ -294,36 +298,41 @@ namespace SIPOS
                     {
                         string[] lines = textToParse.Split("\n");
 
+                        //string[] lines = textToParse.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+
                         foreach (string line in lines)
                         {
-                            //if (line.Length > 10)
-                            //{
-
-                            string lineFinished = line;
-
-                            while (lineFinished.Contains("  "))
+                            if (line.Length > 10)
                             {
-                                lineFinished = lineFinished.Replace("  ", " ");
 
+                                string lineFinished = line;
+
+                                while (lineFinished.Contains("  "))
+                                {
+                                    lineFinished = lineFinished.Replace("  ", " ");
+
+                                }
+                                if (lineFinished.Contains("\n"))
+                                {
+                                    string[] lines2 = lineFinished.Split("\n");
+                                }
+
+
+                                string[] parts = lineFinished.Split(" ");
+
+                                parts[0] = parts[0].Replace("/", "\t");
+                                parts[0] = Regex.Replace(parts[0], "-(?!.*-)", " ");
+                                parts[1] = parts[1].Substring(0, 1);
+                                //outputText += parts[0] + " – " + parts[1] + ". " + parts[2] + "\n";
+                                outputBuilder.Append(parts[0] + " – " + parts[1] + ". " + parts[2]);
+                                outputBuilder.Append(Environment.NewLine);
+                                outputText = outputBuilder.ToString();
+
+                                outputText = Mediator.doubleReturnsRemover(outputText);
                             }
-                            if (lineFinished.Contains("\n"))
-                            {
-                                string[] lines2 = lineFinished.Split("\n");
-                            }
-
-
-
-                            string[] parts = lineFinished.Split(" ");
-                            parts[0] = parts[0].Replace("/", "\t");
-                            //string partsZero = parts[0].LastIndexOf("-") > 0 ? parts[0].Replace("-", " ", (StringComparison)parts[0].LastIndexOf("-")) : parts[0];
-                            //parts[0] = parts[0].Replace("-", " ");
-                            //StringComparison lastIndexOfHifen = parts[0].LastIndexOf("-");
-                            parts[0] = Regex.Replace(parts[0], "-(?!.*-)", " ");
-                            //parts[0] = parts[0].Replace("-", " ", (StringComparison)parts[0].LastIndexOf("-"));
-                            parts[1] = parts[1].Substring(0, 1);
-                            outputText += parts[0] + " – " + parts[1] + ". " + parts[2] + "\n";
-                            //}
                         }
+
+
                     }
                     else
                     {
@@ -333,18 +342,12 @@ namespace SIPOS
                             line = line.Replace("  ", " ");
 
                         }
-                        string[] parts = line.Split(" ");
+                    string[] parts = line.Split(" ");
 
-
-                        parts[0] = parts[0].Replace("/", "\t");
-                        //parts[0] = parts[0].Replace("-", " ");
-                        parts[0] = Regex.Replace(parts[0], "-(?!.*-)", " ");
-                        //parts[0] = parts[0].Replace("-", " ", (StringComparison)parts[0].LastIndexOf("-"));
-                        //parts[0] = parts[0].Replace(/-(?!.*-)/, " ");
-                        //.Replace(parts[0], "(-)(?!.*-)", " ");
-                        //parts[0] = Regex.Replace(parts[0], "-", " ", RegexOptions.RightToLeft);
-                        parts[1] = parts[1].Substring(0, 1);
-                        outputText += parts[0] + " – " + parts[1] + ". " + parts[2]; // + "\r\n";
+                    parts[0] = parts[0].Replace("/", "\t");
+                    parts[0] = Regex.Replace(parts[0], "-(?!.*-)", " ");
+                    parts[1] = parts[1].Substring(0, 1);
+                    outputText += parts[0] + " – " + parts[1] + ". " + parts[2];
                     }
                 }
                 else

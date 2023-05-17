@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
+using System.Security.Policy;
 
 namespace SIPOS
 {
@@ -76,28 +77,6 @@ namespace SIPOS
 
 
 
-
-
-
-
-        // Textbox Update Handlers
-        ////public delegate void UpdateFormMenuTextBoxHandler(string value);
-        ////public delegate void UpdateFormDadosTextBoxHandler(string value);
-        ////public delegate void UpdateFormExportTextBoxHandler(string value);
-        ////public delegate void UpdateFormHelpTextBoxHandler(string value);
-        ////public delegate void UpdateFormInfoTextBoxHandler(string value);
-        ////public delegate void UpdateFormModelarTextBoxHandler(string value);
-        ////public delegate void UpdateFormPropriedadesTextBoxHandler(string value);
-
-        ////public static event UpdateFormDadosTextBoxHandler UpdateFormDadosTextBox;
-        ////public static event UpdateFormExportTextBoxHandler UpdateFormExportTextBox;
-        ////public static event UpdateFormHelpTextBoxHandler UpdateFormHelpTextBox;
-        ////public static event UpdateFormInfoTextBoxHandler UpdateFormInfoTextBox;
-        ////public static event UpdateFormModelarTextBoxHandler UpdateFormModelarTextBox;
-        ////public static event UpdateFormPropriedadesTextBoxHandler UpdateFormPropriedadesTextBox;
-
-
-
         // Method to trigger the event
         public void UpdateData(string message)
         {
@@ -165,6 +144,58 @@ namespace SIPOS
             }
         }
 
+
+        // Form Export - Detect OSNumber 
+        public static int GetNextOSNumber(string folderPath)
+        {
+            var docFiles = Directory.GetFiles(folderPath, "*.doc");
+
+            var regexPattern = new Regex(@"(\d{4})-(\d{3})-(\d+)\.doc");
+
+            var orderedFiles = docFiles
+                .Select(file => regexPattern.Match(file))
+                .Where(match => match.Success)
+                .Select(match => new
+                {
+                    FilePath = match.Value,
+                    Year = int.Parse(match.Groups[1].Value),
+                    Digits = int.Parse(match.Groups[3].Value)
+                })
+                .OrderByDescending(file => file.Year)
+                .ThenByDescending(file => file.Digits)
+                .ToList();
+
+            if (orderedFiles.Count > 0)
+            {
+                var lastFile = orderedFiles.First();
+                return lastFile.Digits + 1;
+            }
+            else
+            {
+                return 1;
+            }
+        }
+        public static string GetPreviousOSFileName(string folderPath)
+        {
+            int previousOSnumber = Convert.ToInt32(osNumber) - 1;
+
+            int currentYear = DateTime.Now.Year;
+            string previousOSFileName = $"{currentYear}-002-{previousOSnumber}";
+
+            return previousOSFileName;
+        }
+        public static string doubleReturnsRemover(string textToParse)
+        {
+            string parsedText = textToParse;
+            while (parsedText.Contains("\n\n") || parsedText.Contains("\r\r") || parsedText.Contains("\r\n\r\n") || parsedText.Contains("\v\v"))
+            {
+                parsedText = parsedText.Replace("\n\n", "\n")
+                                          .Replace("\r\r", "\r")
+                                          .Replace("\r\n\r\n", "\r\n")
+                                          .Replace("\v\v", "\v");
+            }
+            return parsedText;
+        }
 
         // ..............................
 
@@ -327,11 +358,11 @@ namespace SIPOS
                 {
                     using (var myFile = File.Create(fMemoryPath)) { };
                     saveMemory();
-                    MessageBox.Show($"O ficheiro de memória das preferências não existia. Como tal o programa criou um novo ficheiro em {fMemoryPath}.\r\n\r\nPara o programa funcionar terá de ir a propriedades e carregar os ficheiros Excel das escalas de serviço e de seguida gravar.", "FICHEIRO DE MEMÓRIA INEXISTENTE!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show($"O ficheiro de memória das preferências não existia. Como tal o programa criou um novo ficheiro em {fMemoryPath}.\r\n\r\nPara o programa funcionar terá de ir ao Menu das Propriedades e carregar os caminhos dos ficheiros Excel das escalas de serviço e das pastas solicitadas e de seguida gravar.", "FICHEIRO DE MEMÓRIA INEXISTENTE!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 catch
                 {
-                    MessageBox.Show($"O ficheiro de memória não existia, portanto o programa tentou cria-lo mas sem sucesso, o que resulta nesta instância não poder nem ler nem registar as preferências guardadas.\r\n\r\nO software está a ter problemas em registar ao ficheiro de memória \"settings.txt\" que se iria tentar colocar em: \r\n{fMemoryPath}\r\n" + "\r\nPor favor verifique se alguma aplicação está a utilizar a pasta ou se a pasta está inacessível.", "ERRO AO CRIAR FICHEIRO DE MEMÓRIA!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show($"O ficheiro de memória das preferências não existia ou estava corrompido, portanto o programa tentou cria-lo mas sem sucesso, o que resulta nesta instância não poder nem ler nem registar as preferências anteriormente guardadas.\r\n\r\nO software está a ter problemas em registar ao ficheiro de memória \"settings.txt\" que se iria tentar colocar em: \r\n{fMemoryPath}\r\n" + "\r\nPor favor verifique se alguma aplicação está a utilizar a pasta ou se a pasta está inacessível.", "ERRO AO CRIAR FICHEIRO DE MEMÓRIA!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
                 fileMemoryDidntExist = true;
             }
@@ -344,49 +375,78 @@ namespace SIPOS
 
                 if (frm_OS_system.version == checkVersion) // validar ficheiro  - LÊ A MEMORIA
                 {
-                    tr = new StreamReader(fMemoryPath);
-
-                    // read lines of text
-                    checkVersion = tr.ReadLine();
-                    fPathODU = tr.ReadLine();
-                    fPathCCS = tr.ReadLine();
-                    fPathSD = tr.ReadLine();
-                    fPathPD = tr.ReadLine();
-                    fPathFunerais = tr.ReadLine();
-                    debugMode = Convert.ToBoolean(tr.ReadLine());
-                    winMode = Convert.ToInt32(tr.ReadLine());
-                    fPathModelSemana = tr.ReadLine();
-                    fPathOSWord = tr.ReadLine();
-                    fPathModelQuarta = tr.ReadLine();
-                    fPathOSWord = tr.ReadLine();
-                    wordAppFilePath = tr.ReadLine();
-                    pdfAppFilePath = tr.ReadLine();
-                    inspFilePath = tr.ReadLine();
-
-
-
-                    // close the stream
-                    tr.Close();
-                    fileMemoryDidntExist = false;
+                    readMemoryFile(fMemoryPath, checkVersion);
                 }
                 else    // CASO NÃO SEJA MESMA VERSÃO // Recria um ficheiro para evitar erros
                 {
-                    try
+
+                    string message = $"A versão do SIPOS registada no ficheiro de memória ({checkVersion}) não era a mesma deste software: {frm_OS_system.version}.\n" +
+                             "Por questões de segurança e compatibilidade é recomendável que o sistema crie um novo ficheiro de memória, eliminando assim todas as preferências antes guardadas.\n\n" +
+                             "Pretende que mesmo assim o SIPOS tente reaproveitar o ficheiro antigo?";
+
+                    DialogResult result = MessageBox.Show(message, "VERSÕES DIFERENTES: Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
+
+                    if (result == DialogResult.Yes)
                     {
-                        saveMemory();
-                        MessageBox.Show($"A versão do ficheiro de memória ({checkVersion}) não era a mesma deste software: {frm_OS_system.version}.\r\nPor questões de segurança o software limpa o ficheiro de preferências sempre que há uma grande actualização.\r\n\r\nTerá de ir às propriedades carregar os ficheiros Excel e as suas preferências.", "ACTUALIZAÇÃO!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        // User clicked "Sim" => LOADMEMORY
+                        try
+                        {
+                            readMemoryFile(fMemoryPath, checkVersion);
+                        }
+                        catch
+                        {
+                            MessageBox.Show($"O SIPOS tentou reaproveitar o ficheiro antes existente, no entanto houve um erro ao tentar ler o ficheiro.\r\n\r\nO SIPOS vai recriar um novo ficheiro de memória que seja compatível com a versão atual.", "ERRO AO LER MEMÓRIA!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
                     }
-                    catch // Caso não consiga aceder ou gravar sobre o ficheiro, dá uma mensagem de alerta.
+                    else
                     {
-                        MessageBox.Show($"O ficheiro de memória não pertencia à versão deste software, portanto o programa tentou actualizar o ficheiro, mas sem sucesso, o que resulta nesta instância em não ler as preferências guardadas.\r\n\r\nO software está a ter problemas em aceder ao ficheiro de memória \"settings.txt\" que se encontra localizado em: \r\n{fMemoryPath}\r\n" + "\r\nPor favor verifique se alguma aplicação está a utilizar o ficheiro. Caso não esteja a ser utilizado por nenhum software, tente o seguinte: \r\n-> Feche o programa\r\n-> Elimine o ficheiro\r\n-> Volte a entrar para o programa criar um novo ficheiro \"settings.txt\"", "ERRO AO LER E ACTUALIZAR A MEMÓRIA!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        // User clicked "Não, cria um novo ficheiro"
+                        try
+                        {
+                            saveMemory();
+                            MessageBox.Show($"Optou por apagar o ficheiro de memória.\r\nLembre-se que para o programa funcionar terá de ir ao Menu das Propriedades carregar os ficheiros Excel, as pastas necessárias e as suas preferências.", "ATUALIZAÇÃO DO FICHEIRO DE MEMÓRIA", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        catch // Caso não consiga aceder ou gravar sobre o ficheiro, dá uma mensagem de alerta.
+                        {
+                            MessageBox.Show($"O ficheiro de memória não pertencia à versão deste software, portanto o programa tentou actualizar o ficheiro, mas sem sucesso, o que resulta nesta instância em não ler as preferências guardadas.\r\n\r\nO software está a ter problemas em aceder ao ficheiro de memória \"settings.txt\" que se encontra localizado em: \r\n{fMemoryPath}\r\n" + "\r\nPor favor verifique se alguma aplicação está a utilizar o ficheiro. Caso não esteja a ser utilizado por nenhum software, tente o seguinte: \r\n-> Feche o programa\r\n-> Elimine o ficheiro\r\n-> Volte a entrar para o programa criar um novo ficheiro \"settings.txt\"", "ERRO AO LER E ACTUALIZAR A MEMÓRIA!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
+                        fileMemoryDidntExist = true;
                     }
-                    fileMemoryDidntExist = true;
+
+
                 }
             }
 
             txtboxsActualizer();
         }
+        public static void readMemoryFile(string fMemoryPath, string checkVersion)
+        {
+            TextReader tr = new StreamReader(fMemoryPath);
+            tr = new StreamReader(fMemoryPath);
 
+            // read lines of text
+            checkVersion = tr.ReadLine();
+            fPathODU = tr.ReadLine();
+            fPathCCS = tr.ReadLine();
+            fPathSD = tr.ReadLine();
+            fPathPD = tr.ReadLine();
+            fPathFunerais = tr.ReadLine();
+            debugMode = Convert.ToBoolean(tr.ReadLine());
+            winMode = Convert.ToInt32(tr.ReadLine());
+            fPathModelSemana = tr.ReadLine();
+            fPathOSWord = tr.ReadLine();
+            fPathModelQuarta = tr.ReadLine();
+            fPathOSWord = tr.ReadLine();
+            wordAppFilePath = tr.ReadLine();
+            pdfAppFilePath = tr.ReadLine();
+            inspFilePath = tr.ReadLine();
+
+
+
+            // close the stream
+            tr.Close();
+            fileMemoryDidntExist = false;
+        }
 
         // OPEN DIALOGS
         // --------
