@@ -117,6 +117,9 @@
             this.pBox_SIPOS = new System.Windows.Forms.PictureBox();
             this.panel_TitleBar = new System.Windows.Forms.Panel();
             this.panel_Designio = new System.Windows.Forms.Panel();
+            this.btn_maximize = new System.Windows.Forms.Button();
+            this.btn_minmize = new System.Windows.Forms.Button();
+            this.btn_close = new System.Windows.Forms.Button();
             this.iconCurrentChildForm = new FontAwesome.Sharp.IconPictureBox();
             this.lblTitleChildForm = new System.Windows.Forms.Label();
             this.panelShadowEffect = new System.Windows.Forms.Panel();
@@ -1086,6 +1089,8 @@
             this.pBox_Designio.TabIndex = 12;
             this.pBox_Designio.TabStop = false;
             this.basic_ToolTip.SetToolTip(this.pBox_Designio, resources.GetString("pBox_Designio.ToolTip"));
+            this.pBox_Designio.DoubleClick += new System.EventHandler(this.pBox_Designio_DoubleClick);
+            this.pBox_Designio.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pBox_Designio_MouseDown);
             // 
             // panelMenu
             // 
@@ -1262,6 +1267,7 @@
             this.panelLogo.Size = new System.Drawing.Size(210, 100);
             this.panelLogo.TabIndex = 0;
             this.panelLogo.Click += new System.EventHandler(this.panelLogo_Click);
+            this.panelLogo.DoubleClick += new System.EventHandler(this.panelLogo_DoubleClick);
             // 
             // pBox_SIPOS
             // 
@@ -1283,18 +1289,71 @@
             this.panel_TitleBar.Name = "panel_TitleBar";
             this.panel_TitleBar.Size = new System.Drawing.Size(869, 51);
             this.panel_TitleBar.TabIndex = 13;
+            this.panel_TitleBar.DoubleClick += new System.EventHandler(this.panel_TitleBar_DoubleClick);
             this.panel_TitleBar.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel_TitleBar_MouseDown);
             // 
             // panel_Designio
             // 
+            this.panel_Designio.Controls.Add(this.btn_maximize);
+            this.panel_Designio.Controls.Add(this.btn_minmize);
+            this.panel_Designio.Controls.Add(this.btn_close);
             this.panel_Designio.Controls.Add(this.pBox_Designio);
             this.panel_Designio.Controls.Add(this.iconCurrentChildForm);
             this.panel_Designio.Controls.Add(this.lbl_DesignioSIPOS);
             this.panel_Designio.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel_Designio.Location = new System.Drawing.Point(397, 0);
+            this.panel_Designio.Location = new System.Drawing.Point(287, 0);
             this.panel_Designio.Name = "panel_Designio";
-            this.panel_Designio.Size = new System.Drawing.Size(472, 51);
+            this.panel_Designio.Size = new System.Drawing.Size(582, 51);
             this.panel_Designio.TabIndex = 15;
+            this.panel_Designio.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel_Designio_MouseDown);
+            // 
+            // btn_maximize
+            // 
+            this.btn_maximize.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btn_maximize.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(20)))), ((int)(((byte)(25)))));
+            this.btn_maximize.FlatAppearance.BorderSize = 0;
+            this.btn_maximize.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_maximize.Font = new System.Drawing.Font("Century Gothic", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btn_maximize.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(50)))), ((int)(((byte)(150)))));
+            this.btn_maximize.Location = new System.Drawing.Point(517, 13);
+            this.btn_maximize.Name = "btn_maximize";
+            this.btn_maximize.Size = new System.Drawing.Size(23, 25);
+            this.btn_maximize.TabIndex = 16;
+            this.btn_maximize.Text = "❑";
+            this.btn_maximize.UseVisualStyleBackColor = false;
+            this.btn_maximize.Click += new System.EventHandler(this.btn_maximize_Click);
+            // 
+            // btn_minmize
+            // 
+            this.btn_minmize.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btn_minmize.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(20)))), ((int)(((byte)(25)))));
+            this.btn_minmize.FlatAppearance.BorderSize = 0;
+            this.btn_minmize.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_minmize.Font = new System.Drawing.Font("Century Gothic", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btn_minmize.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(50)))), ((int)(((byte)(150)))));
+            this.btn_minmize.Location = new System.Drawing.Point(487, 13);
+            this.btn_minmize.Name = "btn_minmize";
+            this.btn_minmize.Size = new System.Drawing.Size(23, 25);
+            this.btn_minmize.TabIndex = 15;
+            this.btn_minmize.Text = "_";
+            this.btn_minmize.UseVisualStyleBackColor = false;
+            this.btn_minmize.Click += new System.EventHandler(this.btn_minmize_Click);
+            // 
+            // btn_close
+            // 
+            this.btn_close.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btn_close.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(20)))), ((int)(((byte)(25)))));
+            this.btn_close.FlatAppearance.BorderSize = 0;
+            this.btn_close.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_close.Font = new System.Drawing.Font("Century Gothic", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btn_close.ForeColor = System.Drawing.Color.Maroon;
+            this.btn_close.Location = new System.Drawing.Point(547, 13);
+            this.btn_close.Name = "btn_close";
+            this.btn_close.Size = new System.Drawing.Size(23, 25);
+            this.btn_close.TabIndex = 14;
+            this.btn_close.Text = "X";
+            this.btn_close.UseVisualStyleBackColor = false;
+            this.btn_close.Click += new System.EventHandler(this.btn_close_Click);
             // 
             // iconCurrentChildForm
             // 
@@ -1310,6 +1369,7 @@
             this.iconCurrentChildForm.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.iconCurrentChildForm.TabIndex = 13;
             this.iconCurrentChildForm.TabStop = false;
+            this.iconCurrentChildForm.DoubleClick += new System.EventHandler(this.iconCurrentChildForm_DoubleClick);
             // 
             // lblTitleChildForm
             // 
@@ -1369,6 +1429,9 @@
             this.Name = "frm_OS_system";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SIPOS";
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.frm_OS_system_MouseDown);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.frm_OS_system_MouseMove);
+            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.frm_OS_system_MouseUp);
             this.gBox_DirectorioFlhsExcel.ResumeLayout(false);
             this.gBox_DirectorioFlhsExcel.PerformLayout();
             this.tabControlOS.ResumeLayout(false);
@@ -1501,6 +1564,9 @@
         private Panel panelDesktop;
         private Panel panel_Designio;
         private Button btn_searchFileODU;
+        private Button btn_minmize;
+        private Button btn_close;
+        private Button btn_maximize;
         private PictureBox pictureBox1;
     }
 }

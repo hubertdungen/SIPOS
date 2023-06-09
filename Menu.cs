@@ -25,6 +25,7 @@ using System.Windows.Forms.VisualStyles;
 using ContentAlignment = System.Drawing.ContentAlignment;
 using SIPOS.Forms;
 using SIPOS;
+using Rectangle = System.Drawing.Rectangle;
 
 namespace SIPOS
 {
@@ -42,7 +43,7 @@ namespace SIPOS
         // ------------
 
         // Details VARS
-        public static string version = "v A-0.10.5";
+        public static string version = "v A-0.10.6";
 
 
 
@@ -62,17 +63,36 @@ namespace SIPOS
         private Panel leftBorderBtn;
         private Form currentChildForm;
 
+        // Field to hold whether the mouse button is held down
+        private bool mouseDown;
+        // Field to hold where the mouse pointer was when the mouse button was pressed
+        private Point lastLocation;
+
+
+
+
+
+
         // Constructor
         public frm_OS_system()
         {
             InitializeComponent();
-            
+
+            this.FormBorderStyle = FormBorderStyle.None;
+            this.DoubleBuffered = true;
+            this.SetStyle(ControlStyles.ResizeRedraw, true);
+
+
             // MEDIATOR INITIALIZATION
             mediator = new Mediator();
             Mediator.menu = this;
             mediator.PathErrorCheck += Mediator.pathErrorCheck;
             //mediator.UpdateFormMenuTextBoxHandler += updateFormMenuTextBox;
 
+            // Assign event handlers for the mouse events
+            this.MouseDown += frm_OS_system_MouseDown;
+            this.MouseMove += frm_OS_system_MouseMove;
+            this.MouseUp += frm_OS_system_MouseUp;
 
 
             // Form is Double Buffered // It prevents the flickering of the form
@@ -104,6 +124,11 @@ namespace SIPOS
             // TEXTO INICIAL NO OUTPUT TEXT
             Mediator.instTxtBox_Equal_To(EscalasEngine.outputInitialText);
         }
+
+        private const int cGrip = 16;      // Grip size
+        private const int cCaption = 32;   // Caption bar height;
+
+
 
 
         private void frm_menu_FormClosing(object sender, FormClosingEventArgs e)
@@ -238,19 +263,6 @@ namespace SIPOS
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
         ////////////////////////////////////////////////////// --------------------- // 
         ////////////////////////////////////////////////////// ----- UI CONTROL ---- //
         ////////////////////////////////////////////////////// --------------------- //
@@ -359,7 +371,110 @@ namespace SIPOS
             lblTitleChildForm.Text = "Início";
         }
 
-        
+
+        // UI Window Control
+        private void panel_Designio_MouseDown(object sender, MouseEventArgs e)
+        {
+            ReleaseCapture();
+            SendMessage(this.Handle, 0x112, 0xf012, 0);
+        }
+        private void pBox_Designio_MouseDown(object sender, MouseEventArgs e)
+        {
+            ReleaseCapture();
+            SendMessage(this.Handle, 0x112, 0xf012, 0);
+        }
+        private void btn_close_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+        private void btn_maximize_Click(object sender, EventArgs e)
+        {
+            if (this.WindowState == FormWindowState.Maximized)
+            {
+                this.WindowState = FormWindowState.Normal;
+            }
+            else
+            {
+                this.WindowState = FormWindowState.Maximized;
+            }
+        }
+        private void panelLogo_DoubleClick(object sender, EventArgs e)
+        {
+            if (this.WindowState == FormWindowState.Maximized)
+            {
+                this.WindowState = FormWindowState.Normal;
+            }
+            else
+            {
+                this.WindowState = FormWindowState.Maximized;
+            }
+        }
+        private void pBox_Designio_DoubleClick(object sender, EventArgs e)
+        {
+            if (this.WindowState == FormWindowState.Maximized)
+            {
+                this.WindowState = FormWindowState.Normal;
+            }
+            else
+            {
+                this.WindowState = FormWindowState.Maximized;
+            }
+        }
+        private void iconCurrentChildForm_DoubleClick(object sender, EventArgs e)
+        {
+            if (this.WindowState == FormWindowState.Maximized)
+            {
+                this.WindowState = FormWindowState.Normal;
+            }
+            else
+            {
+                this.WindowState = FormWindowState.Maximized;
+            }
+        }
+        private void btn_minmize_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
+        }
+        private void panel_TitleBar_DoubleClick(object sender, EventArgs e)
+        {
+            if (this.WindowState == FormWindowState.Maximized)
+            {
+                this.WindowState = FormWindowState.Normal;
+            }
+            else
+            {
+                this.WindowState = FormWindowState.Maximized;
+            }
+        }
+        private void frm_OS_system_MouseDown(object sender, MouseEventArgs e)
+        {
+            mouseDown = true;
+            lastLocation = e.Location;
+        }
+        private void frm_OS_system_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (mouseDown)
+            {
+                this.Location = new Point(
+                    (this.Location.X - lastLocation.X) + e.X, (this.Location.Y - lastLocation.Y) + e.Y);
+
+                this.Update();
+
+                if (this.Location.Y <= 5 && this.WindowState != FormWindowState.Maximized)
+                {
+                    this.WindowState = FormWindowState.Maximized;
+                    mouseDown = false;
+                }
+            }
+        }
+        private void frm_OS_system_MouseUp(object sender, MouseEventArgs e)
+        {
+            mouseDown = false;
+        }
+
+
+
+
         // DRAG FORM
         [DllImport("user32.DLL", EntryPoint = "ReleaseCapture")]
         private extern static void ReleaseCapture();
@@ -467,18 +582,86 @@ namespace SIPOS
 
 
 
+        // UMA TENTATIVA DE CRIAR UMA RESIZABLE WINDOW
+        protected override void OnPaint(PaintEventArgs e) // you can safely omit this method if you want
+        {
+            e.Graphics.FillRectangle(Brushes.Green, Top);
+            e.Graphics.FillRectangle(Brushes.Green, Left);
+            e.Graphics.FillRectangle(Brushes.Green, Right);
+            e.Graphics.FillRectangle(Brushes.Green, Bottom);
+        }
+
+        private const int
+            HTLEFT = 10,
+            HTRIGHT = 11,
+            HTTOP = 12,
+            HTTOPLEFT = 13,
+            HTTOPRIGHT = 14,
+            HTBOTTOM = 15,
+            HTBOTTOMLEFT = 16,
+            HTBOTTOMRIGHT = 17;
+
+        const int _ = 10; // you can rename this variable if you like
+
+        Rectangle Top { get { return new Rectangle(0, 0, this.ClientSize.Width, _); } }
+        Rectangle Left { get { return new Rectangle(0, 0, _, this.ClientSize.Height); } }
+        Rectangle Bottom { get { return new Rectangle(0, this.ClientSize.Height - _, this.ClientSize.Width, _); } }
+        Rectangle Right { get { return new Rectangle(this.ClientSize.Width - _, 0, _, this.ClientSize.Height); } }
+
+        Rectangle TopLeft { get { return new Rectangle(0, 0, _, _); } }
+        Rectangle TopRight { get { return new Rectangle(this.ClientSize.Width - _, 0, _, _); } }
+        Rectangle BottomLeft { get { return new Rectangle(0, this.ClientSize.Height - _, _, _); } }
+        Rectangle BottomRight { get { return new Rectangle(this.ClientSize.Width - _, this.ClientSize.Height - _, _, _); } }
 
 
+        protected override void WndProc(ref Message message)
+        {
+            base.WndProc(ref message);
 
+            if (message.Msg == 0x84) // WM_NCHITTEST
+            {
+                var cursor = this.PointToClient(Cursor.Position);
 
+                if (TopLeft.Contains(cursor)) message.Result = (IntPtr)HTTOPLEFT;
+                else if (TopRight.Contains(cursor)) message.Result = (IntPtr)HTTOPRIGHT;
+                else if (BottomLeft.Contains(cursor)) message.Result = (IntPtr)HTBOTTOMLEFT;
+                else if (BottomRight.Contains(cursor)) message.Result = (IntPtr)HTBOTTOMRIGHT;
 
-        // -----------------------------
-        // --------------------------------------------------------------------------
-        // --------------------------------------------------------------------------
-
-
+                else if (Top.Contains(cursor)) message.Result = (IntPtr)HTTOP;
+                else if (Left.Contains(cursor)) message.Result = (IntPtr)HTLEFT;
+                else if (Right.Contains(cursor)) message.Result = (IntPtr)HTRIGHT;
+                else if (Bottom.Contains(cursor)) message.Result = (IntPtr)HTBOTTOM;
+            }
+        }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // -----------------------------
+    // --------------------------------------------------------------------------
+    // --------------------------------------------------------------------------
+
+
 }
+
 
 
 
