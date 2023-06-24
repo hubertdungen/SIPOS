@@ -145,13 +145,16 @@ namespace SIPOS
         }
 
 
-        // Form Export - Detect OSNumber 
+        // Form Export - Detect OSNumber
         public static int GetNextOSNumber(string folderPath)
         {
+            // Retrieve all .doc files
             var docFiles = Directory.GetFiles(folderPath, "*.doc");
 
+            // Create a new Regex pattern to parse filenames in the form "{year}-{sequence}-{number}.doc"
             var regexPattern = new Regex(@"(\d{4})-(\d{3})-(\d+)\.doc");
 
+            // Select files which match the provided pattern and order them descinding by year and the last digits
             var orderedFiles = docFiles
                 .Select(file => regexPattern.Match(file))
                 .Where(match => match.Success)
@@ -165,8 +168,10 @@ namespace SIPOS
                 .ThenByDescending(file => file.Digits)
                 .ToList();
 
+            // If there are no files, return 1
             if (orderedFiles.Count > 0)
             {
+                // Else, return the last file digits + 1
                 var lastFile = orderedFiles.First();
                 return lastFile.Digits + 1;
             }
@@ -175,24 +180,33 @@ namespace SIPOS
                 return 1;
             }
         }
+
         public static string GetPreviousOSFileName(string folderPath)
         {
+            // Get the previous file number by subtracting 1 from the current number
             int previousOSnumber = Convert.ToInt32(osNumber) - 1;
 
+            // Set the current Year
             int currentYear = DateTime.Now.Year;
+
+            // Set the filename based in the previous number
             string previousOSFileName = $"{currentYear}-002-{previousOSnumber}";
 
             return previousOSFileName;
         }
+
         public static string doubleReturnsRemover(string textToParse)
         {
+            // Set the initial parsed text
             string parsedText = textToParse;
+
+            // As long as there are double returns, remove them
             while (parsedText.Contains("\n\n") || parsedText.Contains("\r\r") || parsedText.Contains("\r\n\r\n") || parsedText.Contains("\v\v"))
             {
                 parsedText = parsedText.Replace("\n\n", "\n")
-                                          .Replace("\r\r", "\r")
-                                          .Replace("\r\n\r\n", "\r\n")
-                                          .Replace("\v\v", "\v");
+                            .Replace("\r\r", "\r")
+                            .Replace("\r\n\r\n", "\r\n")
+                            .Replace("\v\v", "\v");
             }
             return parsedText;
         }

@@ -1429,9 +1429,11 @@
             this.Name = "frm_OS_system";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SIPOS";
+            this.Load += new System.EventHandler(this.frm_OS_system_Load);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.frm_OS_system_MouseDown);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.frm_OS_system_MouseMove);
             this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.frm_OS_system_MouseUp);
+            this.Resize += new System.EventHandler(this.frm_OS_system_Resize);
             this.gBox_DirectorioFlhsExcel.ResumeLayout(false);
             this.gBox_DirectorioFlhsExcel.PerformLayout();
             this.tabControlOS.ResumeLayout(false);
