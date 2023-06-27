@@ -423,7 +423,7 @@ namespace SIPOS
                     contextAdapt = $"O seguinte militar está em Adaptação:\r\n{EfectivoOutPTPDArray[1]}\r\n";
 
                     LinqList.ListaManagerEscalados.escaladosList.Add(new LinqList.Pessoa { DataNomeado = dateOut, EscalaNomeado = selectedEscala, EstadoNomeado = "Efetivo", NomeNomeado = EfectivoOutPTPDArray[0] });
-                    LinqList.ListaManagerEscalados.escaladosList.Add(new LinqList.Pessoa { DataNomeado = dateOut, EscalaNomeado = selectedEscala, EstadoNomeado = "Adaptação", NomeNomeado = EfectivoOutPTPDArray[1] });
+                    LinqList.ListaManagerEscalados.escaladosList.Add(new LinqList.Pessoa { DataNomeado = dateOut, EscalaNomeado = selectedEscala, EstadoNomeado = "ADPT", NomeNomeado = EfectivoOutPTPDArray[1] });
                 }
                 else  // SE NÃO ESTIVER NA MESMA CELULA
                 {
@@ -431,7 +431,7 @@ namespace SIPOS
                     contextAdapt = $"O seguinte militar está em Adaptação:\r\n{adaptOut}\r\n";
 
                     LinqList.ListaManagerEscalados.escaladosList.Add(new LinqList.Pessoa { DataNomeado = dateOut, EscalaNomeado = selectedEscala, EstadoNomeado = "Efetivo", NomeNomeado = efectivoOut });
-                    LinqList.ListaManagerEscalados.escaladosList.Add(new LinqList.Pessoa { DataNomeado = dateOut, EscalaNomeado = selectedEscala, EstadoNomeado = "Adaptação", NomeNomeado = adaptOut });
+                    LinqList.ListaManagerEscalados.escaladosList.Add(new LinqList.Pessoa { DataNomeado = dateOut, EscalaNomeado = selectedEscala, EstadoNomeado = "ADPT", NomeNomeado = adaptOut });
                 }
             }
             // CASO TENHA PD OU PT com ADPT
@@ -448,7 +448,7 @@ namespace SIPOS
                         contextAdapt = $"O seguinte militar está em Adaptação:\r\n{adaptOut}\r\n";
 
                         LinqList.ListaManagerEscalados.escaladosList.Add(new LinqList.Pessoa { DataNomeado = dateOut, EscalaNomeado = selectedEscala, EstadoNomeado = "PT", NomeNomeado = EfectivoOutPTPDArray[1] });
-                        LinqList.ListaManagerEscalados.escaladosList.Add(new LinqList.Pessoa { DataNomeado = dateOut, EscalaNomeado = selectedEscala, EstadoNomeado = "Adaptação", NomeNomeado = adaptOut });
+                        LinqList.ListaManagerEscalados.escaladosList.Add(new LinqList.Pessoa { DataNomeado = dateOut, EscalaNomeado = selectedEscala, EstadoNomeado = "ADPT", NomeNomeado = adaptOut });
                     }
                     else // SE FOR POR DESTROCA
                     {
@@ -456,7 +456,7 @@ namespace SIPOS
                         contextAdapt = $"O seguinte militar está em Adaptação:\r\n{adaptOut}\r\n";
 
                         LinqList.ListaManagerEscalados.escaladosList.Add(new LinqList.Pessoa { DataNomeado = dateOut, EscalaNomeado = selectedEscala, EstadoNomeado = "PD", NomeNomeado = EfectivoOutPTPDArray[1] });
-                        LinqList.ListaManagerEscalados.escaladosList.Add(new LinqList.Pessoa { DataNomeado = dateOut, EscalaNomeado = selectedEscala, EstadoNomeado = "Adaptação", NomeNomeado = adaptOut });
+                        LinqList.ListaManagerEscalados.escaladosList.Add(new LinqList.Pessoa { DataNomeado = dateOut, EscalaNomeado = selectedEscala, EstadoNomeado = "ADPT", NomeNomeado = adaptOut });
                     }
                 }
             }
