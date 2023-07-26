@@ -44,11 +44,6 @@ namespace SIPOS
 
         // Details VARS
         public static string version = "v A-0.10.7";
-<<<<<<< HEAD
-=======
-
-
->>>>>>> f2e1e6527900af13e8cb8a5a8e5f482e1b2a6da6
 
         
         private Mediator mediator;
