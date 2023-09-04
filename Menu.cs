@@ -83,8 +83,6 @@ namespace SIPOS
             this.Text = String.Empty;
             //this.ControlBox = false;
             this.DoubleBuffered = true;
-            //this.MaximizedBounds = Screen.FromHandle(this.Handle).WorkingArea;
-            //this.SetStyle(ControlStyles.ResizeRedraw, true);
             this.Padding = new Padding(borderSize); //Border Size
             //this.BackColor = Color.FromArgb(1, 1, 1);
 
@@ -141,127 +139,6 @@ namespace SIPOS
         }
         // -----------------------------
         // --------------------------------------------------------------------------
-
-
-
-
-        ////////////////////////////////////////////////////// BUTTONS 
-        // -------
-
-        ///// A SER ELIMINADO 
-        private void btn_searchFileFMemory_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                Process.Start("explorer.exe", Directory.GetCurrentDirectory());
-            }
-            catch
-            {
-                MessageBox.Show("Não é possível abrir a pasta onde o ficheiro \\settings.txt\\ se encontra.\r\nÉ possível que a pasta esteja protegida ou que o programa tenha guardado mal o ficheiro.", "ERRO AO ABRIR PASTA!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            }
-            //string selectedFolder = "";
-            //openFolder(selectedFolder);
-            //txtBox_FMemory.Text = filePath;
-        }
-
-
-
-
-        // BUTTONS: SAVE FILES ///// A SER ELIMINADO 
-        private void btn_SaveFileLocPD_Click(object sender, EventArgs e)
-        {
-
-        }
-
-
-        // BUTTONS: EXPORT ///// A SER ELIMINADO 
-        private void btn_ExportWord_Click(object sender, EventArgs e)
-        {
-        }
-        private void btn_SaveFolder_OSWord_Click(object sender, EventArgs e)
-        {
-            //openFolder();
-            //txtbox_FolderDirectory_OSWord.Text = selectedFolder;
-        }
-
-
-        // BUTTONS: OPEN FILE DIALOGS ///// A SER ELIMINADO 
-        private void btn_searchFileODU_Click(object sender, EventArgs e)
-        {
-            //openFile();
-            //txtbox_FileDirectoryODU.Text = filePath;
-        }
-        private void btn_searchFileCCS_Click(object sender, EventArgs e)
-        {
-            //openFile();
-            //txtbox_FileDirectoryCCS.Text = filePath;
-        }
-        private void btn_searchFilePD_Click(object sender, EventArgs e)
-        {
-            //openFile();
-            //txtbox_FileDirectoryPD.Text = filePath;
-        }
-        private void btn_searchFileSD_Click(object sender, EventArgs e)
-        {
-            //openFile();
-            //txtbox_FileDirectorySD.Text = filePath;
-        }
-        private void btn_searchFileFunerais_Click(object sender, EventArgs e)
-        {
-            //openFile();
-            //txtbox_FileDirectoryFunerais.Text = filePath;
-        }
-        private void btn_searchFile_ModelSemana_Click(object sender, EventArgs e)
-        {
-            //openFile();
-            //txtbox_FileDirectory_ModelSemana.Text = filePath;
-        }
-        private void btn_searchFile_FDSemana_Click(object sender, EventArgs e)
-        {
-            //openFile();
-            //txtbox_FileDirectory_ModelSemana.Text = filePath;
-        }
-        private void btn_searchFile_Quarta_Click(object sender, EventArgs e)
-        {
-            //openFile();
-            //txtbox_FileDirectory_ModelQuarta.Text = filePath;
-        }
-
-
-        // BUTTONS: DEBUGGERS ///// A SER ELIMINADO 
-        public void btn_VarTester_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show(Mediator.filePath);
-        }
-        private void btn_CheckEscalaList_Click(object sender, EventArgs e)
-        {
-
-            List<Pessoa> peopleLines = LinqList.ListaManagerEscalados.escaladosList;
-
-            string messageEscalaList = "";
-
-            foreach (var pessoaLine in peopleLines)
-            {
-                messageEscalaList += $"{pessoaLine.DataNomeado} {pessoaLine.EscalaNomeado} {pessoaLine.EstadoNomeado} {pessoaLine.NomeNomeado}" + "\r\n";
-            }
-
-            //var messageEscalaList = string.Join(Environment.NewLine, LinqList.ListaManagerEscalados.escaladosList);
-            MessageBox.Show("Lista de pessoal escalado na LinqList do software:\r\n" + messageEscalaList, "DEBUG: Lista de Pessoal Escalado");
-        }
-        private void btn_Export_testDaySelect_Var_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show(Convert.ToString(Mediator.returnEscalaDate(0)));
-        }
-        private void btn_Export_TestListReader_Click(object sender, EventArgs e)
-        {
-            Word_Processor.listToVarsEscalados(0);
-        }
-
-        // -----------------------------
-        // --------------------------------------------------------------------------
-        // --------------------------------------------------------------------------
-
-
 
 
 
@@ -686,7 +563,6 @@ namespace SIPOS
             formSize = this.ClientSize;
         }
     }
-
 
 
 

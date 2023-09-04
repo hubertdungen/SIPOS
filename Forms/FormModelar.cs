@@ -82,7 +82,7 @@ namespace SIPOS.Forms
 
         private void FormModelar_Load(object sender, EventArgs e)
         {
-            forEachUpdateButtonVisibility();
+            RefreshListLayout();
         }
 
 
@@ -498,7 +498,7 @@ namespace SIPOS.Forms
 
                 if (!dragging)
                 {
-                    forEachUpdateButtonVisibility();
+                    RefreshListLayout();
                 }
 
                 tickCount = 0;
@@ -623,56 +623,6 @@ namespace SIPOS.Forms
 
 
 
-        //// SORTABLE LIST FORM CONTROL        //
-        // -------------------------------------
-
-        // FORM RESIZE
-        private void mainWordFlowPanel_Layout(object sender, LayoutEventArgs e)
-        {
-            mainWordFlowPanel.SuspendLayout();
-            foreach (Control ctrl in mainWordFlowPanel.Controls)
-            {
-                if (ctrl is Panel && ctrl.Name.Contains("rowPanel_WordDoc")) ctrl.Width = mainWordFlowPanel.Width - ctrl.Padding.Horizontal - ctrl.Margin.Horizontal;
-            }
-            mainWordFlowPanel.ResumeLayout();
-            ResizeBottomPanel();
-        }
-
-        private void FormModelar_Resize(object sender, EventArgs e)
-        {
-            ResizeBottomPanel();
-        }
-
-        private void mainWordFlowPanel_Resize(object sender, EventArgs e)
-        {
-            ResizeBottomPanel();
-        }
-
-        private void ResizeBottomPanel()
-        {
-            // Set the panel to be 70% of the window height
-
-            int topPanelsHeigh = panelMenu.Size.Height + panelWordMenuSelector.Size.Height;
-            int heightBelowTopPanels = this.ClientSize.Height - topPanelsHeigh;
-
-            if (mainWordFlowPanel.Height < heightBelowTopPanels)
-            {
-                mainWordFlowPanel.Height = (int)(this.ClientSize.Height * 0.7);
-            }
-            else
-            {
-                mainWordFlowPanel.Height = (int)(heightBelowTopPanels);
-            }
-
-
-            mainWordFlowPanel.Width = this.ClientSize.Width;
-
-            // Position the panel at the bottom
-            mainWordFlowPanel.Top = this.ClientSize.Height - mainWordFlowPanel.Height;
-            mainWordFlowPanel.Left = 0;
-        }
-
-        // ---------------///----------------- //
 
 
 
@@ -918,6 +868,73 @@ namespace SIPOS.Forms
                 }
             }
         }
+
+
+
+
+        //// SORTABLE LIST FORM CONTROL        //
+        // -------------------------------------
+
+        // FORM RESIZE
+        private void mainWordFlowPanel_Layout(object sender, LayoutEventArgs e)
+        {
+            mainWordFlowPanel.SuspendLayout();
+            foreach (Control ctrl in mainWordFlowPanel.Controls)
+            {
+                if (ctrl is Panel && ctrl.Name.Contains("rowPanel_WordDoc")) ctrl.Width = mainWordFlowPanel.Width - ctrl.Padding.Horizontal - ctrl.Margin.Horizontal;
+            }
+            mainWordFlowPanel.ResumeLayout();
+            ResizeBottomPanel();
+        }
+
+        private void FormModelar_Resize(object sender, EventArgs e)
+        {
+            ResizeBottomPanel();
+        }
+
+        private void mainWordFlowPanel_Resize(object sender, EventArgs e)
+        {
+            ResizeBottomPanel();
+        }
+
+        private void ResizeBottomPanel()
+        {
+            // Set the panel to be 70% of the window height
+
+            int topPanelsHeigh = panelMenu.Size.Height + panelWordMenuSelector.Size.Height;
+            int heightBelowTopPanels = this.ClientSize.Height - topPanelsHeigh;
+
+            if (mainWordFlowPanel.Height < heightBelowTopPanels)
+            {
+                mainWordFlowPanel.MinimumSize = new Size(mainWordFlowPanel.MinimumSize.Width, (int)(this.ClientSize.Height * 0.7));
+            }
+            else
+            {
+                mainWordFlowPanel.MinimumSize = new Size(mainWordFlowPanel.MinimumSize.Width, (int)heightBelowTopPanels);
+            }
+
+
+            mainWordFlowPanel.Width = this.ClientSize.Width;
+
+            // Position the panel at the bottom
+            mainWordFlowPanel.Top = this.ClientSize.Height - mainWordFlowPanel.Height;
+            mainWordFlowPanel.Left = 0;
+
+            RefreshListLayout();
+        }
+
+        private void RefreshListLayout()
+        {
+            forEachUpdateButtonVisibility();
+
+            foreach (Control row in mainWordFlowPanel.Controls)
+            {
+                if (row is Panel && row.Name.Contains("rowPanel_WordDoc"))
+                    row.Size = new Size(mainWordFlowPanel.Size.Width - row.Margin.Horizontal, row.Height); 
+            }
+        }
+
+        // ---------------///----------------- //
 
 
 

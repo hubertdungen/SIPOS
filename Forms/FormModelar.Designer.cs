@@ -28,282 +28,279 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
-            rowPanel_WordDoc = new Panel();
-            btnWMinus = new Button();
-            btnWPlus = new Button();
-            btnOpenWFile = new Button();
-            txtDirFicheiroW = new TextBox();
-            pnlTextNameW = new Panel();
-            lblWSeparador = new Label();
-            btnChkWRowActive = new Button();
-            txtNameWBox = new TextBox();
-            lbl_ellipse = new Label();
-            frmModelarTimer = new System.Windows.Forms.Timer(components);
-            mainWordFlowPanel = new FlowLayoutPanel();
-            pnl_Separator = new Panel();
-            panelMenu = new Panel();
-            panelWordMenuSelector = new Panel();
-            cmbBoxTemplateName = new ComboBox();
-            rowPanel_WordDoc.SuspendLayout();
-            pnlTextNameW.SuspendLayout();
-            mainWordFlowPanel.SuspendLayout();
-            panelWordMenuSelector.SuspendLayout();
-            SuspendLayout();
+            this.components = new System.ComponentModel.Container();
+            this.rowPanel_WordDoc = new System.Windows.Forms.Panel();
+            this.btnWMinus = new System.Windows.Forms.Button();
+            this.btnWPlus = new System.Windows.Forms.Button();
+            this.btnOpenWFile = new System.Windows.Forms.Button();
+            this.txtDirFicheiroW = new System.Windows.Forms.TextBox();
+            this.pnlTextNameW = new System.Windows.Forms.Panel();
+            this.lblWSeparador = new System.Windows.Forms.Label();
+            this.btnChkWRowActive = new System.Windows.Forms.Button();
+            this.txtNameWBox = new System.Windows.Forms.TextBox();
+            this.lbl_ellipse = new System.Windows.Forms.Label();
+            this.frmModelarTimer = new System.Windows.Forms.Timer(this.components);
+            this.mainWordFlowPanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.pnl_Separator = new System.Windows.Forms.Panel();
+            this.panelMenu = new System.Windows.Forms.Panel();
+            this.panelWordMenuSelector = new System.Windows.Forms.Panel();
+            this.cmbBoxTemplateName = new System.Windows.Forms.ComboBox();
+            this.rowPanel_WordDoc.SuspendLayout();
+            this.pnlTextNameW.SuspendLayout();
+            this.mainWordFlowPanel.SuspendLayout();
+            this.panelWordMenuSelector.SuspendLayout();
+            this.SuspendLayout();
             // 
             // rowPanel_WordDoc
             // 
-            rowPanel_WordDoc.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            rowPanel_WordDoc.AutoSize = true;
-            rowPanel_WordDoc.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            rowPanel_WordDoc.BackColor = Color.FromArgb(40, 30, 40);
-            rowPanel_WordDoc.Controls.Add(btnWMinus);
-            rowPanel_WordDoc.Controls.Add(btnWPlus);
-            rowPanel_WordDoc.Controls.Add(btnOpenWFile);
-            rowPanel_WordDoc.Controls.Add(txtDirFicheiroW);
-            rowPanel_WordDoc.Controls.Add(pnlTextNameW);
-            rowPanel_WordDoc.Controls.Add(lbl_ellipse);
-            rowPanel_WordDoc.Location = new Point(20, 18);
-            rowPanel_WordDoc.Margin = new Padding(20, 13, 20, 13);
-            rowPanel_WordDoc.MaximumSize = new Size(800, 50);
-            rowPanel_WordDoc.MinimumSize = new Size(0, 40);
-            rowPanel_WordDoc.Name = "rowPanel_WordDoc";
-            rowPanel_WordDoc.Size = new Size(800, 50);
-            rowPanel_WordDoc.TabIndex = 0;
+            this.rowPanel_WordDoc.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.rowPanel_WordDoc.AutoSize = true;
+            this.rowPanel_WordDoc.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.rowPanel_WordDoc.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(30)))), ((int)(((byte)(40)))));
+            this.rowPanel_WordDoc.Controls.Add(this.btnWMinus);
+            this.rowPanel_WordDoc.Controls.Add(this.btnWPlus);
+            this.rowPanel_WordDoc.Controls.Add(this.btnOpenWFile);
+            this.rowPanel_WordDoc.Controls.Add(this.txtDirFicheiroW);
+            this.rowPanel_WordDoc.Controls.Add(this.pnlTextNameW);
+            this.rowPanel_WordDoc.Controls.Add(this.lbl_ellipse);
+            this.rowPanel_WordDoc.Location = new System.Drawing.Point(20, 18);
+            this.rowPanel_WordDoc.Margin = new System.Windows.Forms.Padding(20, 13, 20, 13);
+            this.rowPanel_WordDoc.MaximumSize = new System.Drawing.Size(800, 50);
+            this.rowPanel_WordDoc.MinimumSize = new System.Drawing.Size(0, 40);
+            this.rowPanel_WordDoc.Name = "rowPanel_WordDoc";
+            this.rowPanel_WordDoc.Size = new System.Drawing.Size(800, 50);
+            this.rowPanel_WordDoc.TabIndex = 0;
             // 
             // btnWMinus
             // 
-            btnWMinus.BackColor = Color.FromArgb(40, 30, 40);
-            btnWMinus.Dock = DockStyle.Right;
-            btnWMinus.FlatStyle = FlatStyle.Flat;
-            btnWMinus.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
-            btnWMinus.ForeColor = Color.OrangeRed;
-            btnWMinus.Location = new Point(738, 0);
-            btnWMinus.Margin = new Padding(3, 5, 3, 3);
-            btnWMinus.Name = "btnWMinus";
-            btnWMinus.Size = new Size(31, 50);
-            btnWMinus.TabIndex = 8;
-            btnWMinus.Text = "➖";
-            btnWMinus.UseVisualStyleBackColor = false;
-            btnWMinus.Click += btnWMinus_Click;
+            this.btnWMinus.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(30)))), ((int)(((byte)(40)))));
+            this.btnWMinus.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnWMinus.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnWMinus.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnWMinus.ForeColor = System.Drawing.Color.OrangeRed;
+            this.btnWMinus.Location = new System.Drawing.Point(738, 0);
+            this.btnWMinus.Margin = new System.Windows.Forms.Padding(3, 5, 3, 3);
+            this.btnWMinus.Name = "btnWMinus";
+            this.btnWMinus.Size = new System.Drawing.Size(31, 50);
+            this.btnWMinus.TabIndex = 8;
+            this.btnWMinus.Text = "➖";
+            this.btnWMinus.UseVisualStyleBackColor = false;
             // 
             // btnWPlus
             // 
-            btnWPlus.BackColor = Color.FromArgb(40, 30, 40);
-            btnWPlus.Dock = DockStyle.Right;
-            btnWPlus.FlatStyle = FlatStyle.Flat;
-            btnWPlus.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
-            btnWPlus.ForeColor = Color.MediumSpringGreen;
-            btnWPlus.Location = new Point(769, 0);
-            btnWPlus.Margin = new Padding(3, 5, 3, 3);
-            btnWPlus.Name = "btnWPlus";
-            btnWPlus.Size = new Size(31, 50);
-            btnWPlus.TabIndex = 7;
-            btnWPlus.Text = "➕";
-            btnWPlus.UseVisualStyleBackColor = false;
-            btnWPlus.Click += btnWPlus_Click;
+            this.btnWPlus.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(30)))), ((int)(((byte)(40)))));
+            this.btnWPlus.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnWPlus.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnWPlus.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnWPlus.ForeColor = System.Drawing.Color.MediumSpringGreen;
+            this.btnWPlus.Location = new System.Drawing.Point(769, 0);
+            this.btnWPlus.Margin = new System.Windows.Forms.Padding(3, 5, 3, 3);
+            this.btnWPlus.Name = "btnWPlus";
+            this.btnWPlus.Size = new System.Drawing.Size(31, 50);
+            this.btnWPlus.TabIndex = 7;
+            this.btnWPlus.Text = "➕";
+            this.btnWPlus.UseVisualStyleBackColor = false;
             // 
             // btnOpenWFile
             // 
-            btnOpenWFile.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
-            btnOpenWFile.BackColor = Color.FromArgb(40, 30, 40);
-            btnOpenWFile.FlatStyle = FlatStyle.Flat;
-            btnOpenWFile.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
-            btnOpenWFile.ForeColor = Color.PaleVioletRed;
-            btnOpenWFile.Location = new Point(690, 0);
-            btnOpenWFile.Margin = new Padding(0, 0, 5, 0);
-            btnOpenWFile.Name = "btnOpenWFile";
-            btnOpenWFile.Size = new Size(31, 50);
-            btnOpenWFile.TabIndex = 6;
-            btnOpenWFile.Text = "📄";
-            btnOpenWFile.UseVisualStyleBackColor = false;
-            btnOpenWFile.Click += btnOpenWFile_Click;
+            this.btnOpenWFile.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnOpenWFile.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(30)))), ((int)(((byte)(40)))));
+            this.btnOpenWFile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnOpenWFile.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnOpenWFile.ForeColor = System.Drawing.Color.PaleVioletRed;
+            this.btnOpenWFile.Location = new System.Drawing.Point(690, 0);
+            this.btnOpenWFile.Margin = new System.Windows.Forms.Padding(0, 0, 5, 0);
+            this.btnOpenWFile.Name = "btnOpenWFile";
+            this.btnOpenWFile.Size = new System.Drawing.Size(31, 50);
+            this.btnOpenWFile.TabIndex = 6;
+            this.btnOpenWFile.Text = "📄";
+            this.btnOpenWFile.UseVisualStyleBackColor = false;
             // 
             // txtDirFicheiroW
             // 
-            txtDirFicheiroW.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            txtDirFicheiroW.BackColor = Color.FromArgb(40, 30, 40);
-            txtDirFicheiroW.BorderStyle = BorderStyle.None;
-            txtDirFicheiroW.CharacterCasing = CharacterCasing.Upper;
-            txtDirFicheiroW.Font = new Font("Century Gothic", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            txtDirFicheiroW.ForeColor = Color.PaleVioletRed;
-            txtDirFicheiroW.Location = new Point(359, 13);
-            txtDirFicheiroW.Margin = new Padding(10);
-            txtDirFicheiroW.MaxLength = 10000;
-            txtDirFicheiroW.Name = "txtDirFicheiroW";
-            txtDirFicheiroW.PlaceholderText = "Caminho para o ficheiro word";
-            txtDirFicheiroW.RightToLeft = RightToLeft.Yes;
-            txtDirFicheiroW.Size = new Size(308, 20);
-            txtDirFicheiroW.TabIndex = 5;
-            txtDirFicheiroW.TextAlign = HorizontalAlignment.Right;
+            this.txtDirFicheiroW.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtDirFicheiroW.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(30)))), ((int)(((byte)(40)))));
+            this.txtDirFicheiroW.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtDirFicheiroW.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.txtDirFicheiroW.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.txtDirFicheiroW.ForeColor = System.Drawing.Color.PaleVioletRed;
+            this.txtDirFicheiroW.Location = new System.Drawing.Point(359, 13);
+            this.txtDirFicheiroW.Margin = new System.Windows.Forms.Padding(10);
+            this.txtDirFicheiroW.MaxLength = 10000;
+            this.txtDirFicheiroW.Name = "txtDirFicheiroW";
+            this.txtDirFicheiroW.PlaceholderText = "Caminho para o ficheiro word";
+            this.txtDirFicheiroW.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.txtDirFicheiroW.Size = new System.Drawing.Size(308, 20);
+            this.txtDirFicheiroW.TabIndex = 5;
+            this.txtDirFicheiroW.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // pnlTextNameW
             // 
-            pnlTextNameW.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
-            pnlTextNameW.Controls.Add(lblWSeparador);
-            pnlTextNameW.Controls.Add(btnChkWRowActive);
-            pnlTextNameW.Controls.Add(txtNameWBox);
-            pnlTextNameW.ForeColor = SystemColors.ActiveCaption;
-            pnlTextNameW.Location = new Point(51, 0);
-            pnlTextNameW.MaximumSize = new Size(300, 0);
-            pnlTextNameW.Name = "pnlTextNameW";
-            pnlTextNameW.Size = new Size(278, 50);
-            pnlTextNameW.TabIndex = 3;
+            this.pnlTextNameW.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.pnlTextNameW.Controls.Add(this.lblWSeparador);
+            this.pnlTextNameW.Controls.Add(this.btnChkWRowActive);
+            this.pnlTextNameW.Controls.Add(this.txtNameWBox);
+            this.pnlTextNameW.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.pnlTextNameW.Location = new System.Drawing.Point(51, 0);
+            this.pnlTextNameW.MaximumSize = new System.Drawing.Size(300, 0);
+            this.pnlTextNameW.Name = "pnlTextNameW";
+            this.pnlTextNameW.Size = new System.Drawing.Size(278, 50);
+            this.pnlTextNameW.TabIndex = 3;
             // 
             // lblWSeparador
             // 
-            lblWSeparador.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            lblWSeparador.AutoSize = true;
-            lblWSeparador.Font = new Font("Century Gothic", 20.25F, FontStyle.Bold, GraphicsUnit.Point);
-            lblWSeparador.ForeColor = Color.PaleVioletRed;
-            lblWSeparador.Location = new Point(258, 6);
-            lblWSeparador.Name = "lblWSeparador";
-            lblWSeparador.Size = new Size(30, 32);
-            lblWSeparador.TabIndex = 9;
-            lblWSeparador.Text = "|";
+            this.lblWSeparador.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblWSeparador.AutoSize = true;
+            this.lblWSeparador.Font = new System.Drawing.Font("Century Gothic", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lblWSeparador.ForeColor = System.Drawing.Color.PaleVioletRed;
+            this.lblWSeparador.Location = new System.Drawing.Point(258, 6);
+            this.lblWSeparador.Name = "lblWSeparador";
+            this.lblWSeparador.Size = new System.Drawing.Size(30, 32);
+            this.lblWSeparador.TabIndex = 9;
+            this.lblWSeparador.Text = "|";
             // 
             // btnChkWRowActive
             // 
-            btnChkWRowActive.Dock = DockStyle.Left;
-            btnChkWRowActive.FlatStyle = FlatStyle.Flat;
-            btnChkWRowActive.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            btnChkWRowActive.ForeColor = Color.PaleVioletRed;
-            btnChkWRowActive.Location = new Point(0, 0);
-            btnChkWRowActive.Margin = new Padding(10, 3, 3, 3);
-            btnChkWRowActive.Name = "btnChkWRowActive";
-            btnChkWRowActive.Size = new Size(22, 50);
-            btnChkWRowActive.TabIndex = 5;
-            btnChkWRowActive.Text = "✓";
-            btnChkWRowActive.UseVisualStyleBackColor = true;
-            btnChkWRowActive.Click += btnChkWRowActive_Click;
+            this.btnChkWRowActive.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnChkWRowActive.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnChkWRowActive.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnChkWRowActive.ForeColor = System.Drawing.Color.PaleVioletRed;
+            this.btnChkWRowActive.Location = new System.Drawing.Point(0, 0);
+            this.btnChkWRowActive.Margin = new System.Windows.Forms.Padding(10, 3, 3, 3);
+            this.btnChkWRowActive.Name = "btnChkWRowActive";
+            this.btnChkWRowActive.Size = new System.Drawing.Size(22, 50);
+            this.btnChkWRowActive.TabIndex = 5;
+            this.btnChkWRowActive.Text = "✓";
+            this.btnChkWRowActive.UseVisualStyleBackColor = true;
             // 
             // txtNameWBox
             // 
-            txtNameWBox.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            txtNameWBox.BackColor = Color.FromArgb(40, 30, 40);
-            txtNameWBox.BorderStyle = BorderStyle.None;
-            txtNameWBox.CharacterCasing = CharacterCasing.Upper;
-            txtNameWBox.Font = new Font("Century Gothic", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            txtNameWBox.ForeColor = Color.AliceBlue;
-            txtNameWBox.Location = new Point(48, 13);
-            txtNameWBox.Margin = new Padding(10);
-            txtNameWBox.MaxLength = 23;
-            txtNameWBox.Name = "txtNameWBox";
-            txtNameWBox.PlaceholderText = "Nome";
-            txtNameWBox.Size = new Size(204, 20);
-            txtNameWBox.TabIndex = 4;
+            this.txtNameWBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtNameWBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(30)))), ((int)(((byte)(40)))));
+            this.txtNameWBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtNameWBox.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.txtNameWBox.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.txtNameWBox.ForeColor = System.Drawing.Color.AliceBlue;
+            this.txtNameWBox.Location = new System.Drawing.Point(48, 13);
+            this.txtNameWBox.Margin = new System.Windows.Forms.Padding(10);
+            this.txtNameWBox.MaxLength = 23;
+            this.txtNameWBox.Name = "txtNameWBox";
+            this.txtNameWBox.PlaceholderText = "Nome";
+            this.txtNameWBox.Size = new System.Drawing.Size(204, 20);
+            this.txtNameWBox.TabIndex = 4;
             // 
             // lbl_ellipse
             // 
-            lbl_ellipse.Cursor = Cursors.SizeAll;
-            lbl_ellipse.Dock = DockStyle.Left;
-            lbl_ellipse.Font = new Font("Arial Black", 28F, FontStyle.Bold, GraphicsUnit.Point);
-            lbl_ellipse.ForeColor = Color.PaleVioletRed;
-            lbl_ellipse.Location = new Point(0, 0);
-            lbl_ellipse.Margin = new Padding(0, 0, 10, 0);
-            lbl_ellipse.Name = "lbl_ellipse";
-            lbl_ellipse.Size = new Size(51, 50);
-            lbl_ellipse.TabIndex = 2;
-            lbl_ellipse.Text = "⋯";
-            lbl_ellipse.TextAlign = ContentAlignment.MiddleCenter;
-            lbl_ellipse.MouseDown += elli_MouseDown;
-            lbl_ellipse.MouseLeave += lbl_ellipse_MouseLeave;
-            lbl_ellipse.MouseMove += elli_MouseMove;
-            lbl_ellipse.MouseUp += elli_MouseUp;
+            this.lbl_ellipse.Cursor = System.Windows.Forms.Cursors.SizeAll;
+            this.lbl_ellipse.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lbl_ellipse.Font = new System.Drawing.Font("Arial Black", 28F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lbl_ellipse.ForeColor = System.Drawing.Color.PaleVioletRed;
+            this.lbl_ellipse.Location = new System.Drawing.Point(0, 0);
+            this.lbl_ellipse.Margin = new System.Windows.Forms.Padding(0, 0, 10, 0);
+            this.lbl_ellipse.Name = "lbl_ellipse";
+            this.lbl_ellipse.Size = new System.Drawing.Size(51, 50);
+            this.lbl_ellipse.TabIndex = 2;
+            this.lbl_ellipse.Text = "⋯";
+            this.lbl_ellipse.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // frmModelarTimer
             // 
-            frmModelarTimer.Enabled = true;
-            frmModelarTimer.Interval = 20;
-            frmModelarTimer.Tick += frmModelarTimer_Tick;
+            this.frmModelarTimer.Enabled = true;
+            this.frmModelarTimer.Interval = 20;
             // 
             // mainWordFlowPanel
             // 
-            mainWordFlowPanel.AutoScroll = true;
-            mainWordFlowPanel.AutoScrollMargin = new Size(100, 0);
-            mainWordFlowPanel.AutoScrollMinSize = new Size(100, 0);
-            mainWordFlowPanel.AutoSize = true;
-            mainWordFlowPanel.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            mainWordFlowPanel.BackColor = Color.FromArgb(15, 0, 15);
-            mainWordFlowPanel.Controls.Add(rowPanel_WordDoc);
-            mainWordFlowPanel.Dock = DockStyle.Bottom;
-            mainWordFlowPanel.FlowDirection = FlowDirection.TopDown;
-            mainWordFlowPanel.Location = new Point(0, 334);
-            mainWordFlowPanel.Margin = new Padding(3, 5, 3, 5);
-            mainWordFlowPanel.MinimumSize = new Size(0, 150);
-            mainWordFlowPanel.Name = "mainWordFlowPanel";
-            mainWordFlowPanel.Padding = new Padding(0, 5, 0, 5);
-            mainWordFlowPanel.Size = new Size(853, 150);
-            mainWordFlowPanel.TabIndex = 3;
-            mainWordFlowPanel.WrapContents = false;
-            mainWordFlowPanel.Layout += mainWordFlowPanel_Layout;
-            mainWordFlowPanel.Resize += mainWordFlowPanel_Resize;
+            this.mainWordFlowPanel.AutoScroll = true;
+            this.mainWordFlowPanel.AutoScrollMargin = new System.Drawing.Size(100, 0);
+            this.mainWordFlowPanel.AutoScrollMinSize = new System.Drawing.Size(100, 0);
+            this.mainWordFlowPanel.AutoSize = true;
+            this.mainWordFlowPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.mainWordFlowPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(0)))), ((int)(((byte)(15)))));
+            this.mainWordFlowPanel.Controls.Add(this.rowPanel_WordDoc);
+            this.mainWordFlowPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.mainWordFlowPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.mainWordFlowPanel.Location = new System.Drawing.Point(0, 284);
+            this.mainWordFlowPanel.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+            this.mainWordFlowPanel.MinimumSize = new System.Drawing.Size(0, 200);
+            this.mainWordFlowPanel.Name = "mainWordFlowPanel";
+            this.mainWordFlowPanel.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
+            this.mainWordFlowPanel.Size = new System.Drawing.Size(853, 200);
+            this.mainWordFlowPanel.TabIndex = 3;
+            this.mainWordFlowPanel.WrapContents = false;
             // 
             // pnl_Separator
             // 
-            pnl_Separator.BackColor = Color.PaleVioletRed;
-            pnl_Separator.Enabled = false;
-            pnl_Separator.ForeColor = Color.PaleVioletRed;
-            pnl_Separator.Location = new Point(100, 271);
-            pnl_Separator.Name = "pnl_Separator";
-            pnl_Separator.Size = new Size(686, 4);
-            pnl_Separator.TabIndex = 1;
-            pnl_Separator.Visible = false;
+            this.pnl_Separator.BackColor = System.Drawing.Color.PaleVioletRed;
+            this.pnl_Separator.Enabled = false;
+            this.pnl_Separator.ForeColor = System.Drawing.Color.PaleVioletRed;
+            this.pnl_Separator.Location = new System.Drawing.Point(100, 271);
+            this.pnl_Separator.Name = "pnl_Separator";
+            this.pnl_Separator.Size = new System.Drawing.Size(686, 4);
+            this.pnl_Separator.TabIndex = 1;
+            this.pnl_Separator.Visible = false;
             // 
             // panelMenu
             // 
-            panelMenu.BackColor = Color.FromArgb(57, 36, 57);
-            panelMenu.Dock = DockStyle.Top;
-            panelMenu.Location = new Point(0, 0);
-            panelMenu.Name = "panelMenu";
-            panelMenu.Size = new Size(853, 66);
-            panelMenu.TabIndex = 4;
+            this.panelMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(57)))), ((int)(((byte)(36)))), ((int)(((byte)(57)))));
+            this.panelMenu.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelMenu.Location = new System.Drawing.Point(0, 0);
+            this.panelMenu.Name = "panelMenu";
+            this.panelMenu.Size = new System.Drawing.Size(853, 66);
+            this.panelMenu.TabIndex = 4;
             // 
             // panelWordMenuSelector
             // 
-            panelWordMenuSelector.BackColor = Color.FromArgb(27, 20, 25);
-            panelWordMenuSelector.Controls.Add(cmbBoxTemplateName);
-            panelWordMenuSelector.Dock = DockStyle.Top;
-            panelWordMenuSelector.Location = new Point(0, 66);
-            panelWordMenuSelector.Name = "panelWordMenuSelector";
-            panelWordMenuSelector.Size = new Size(853, 108);
-            panelWordMenuSelector.TabIndex = 5;
+            this.panelWordMenuSelector.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(20)))), ((int)(((byte)(25)))));
+            this.panelWordMenuSelector.Controls.Add(this.cmbBoxTemplateName);
+            this.panelWordMenuSelector.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelWordMenuSelector.Location = new System.Drawing.Point(0, 66);
+            this.panelWordMenuSelector.Name = "panelWordMenuSelector";
+            this.panelWordMenuSelector.Size = new System.Drawing.Size(853, 108);
+            this.panelWordMenuSelector.TabIndex = 5;
             // 
             // cmbBoxTemplateName
             // 
-            cmbBoxTemplateName.BackColor = Color.FromArgb(15, 0, 15);
-            cmbBoxTemplateName.FlatStyle = FlatStyle.Flat;
-            cmbBoxTemplateName.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            cmbBoxTemplateName.ForeColor = Color.PaleVioletRed;
-            cmbBoxTemplateName.FormattingEnabled = true;
-            cmbBoxTemplateName.Location = new Point(446, 38);
-            cmbBoxTemplateName.Name = "cmbBoxTemplateName";
-            cmbBoxTemplateName.Size = new Size(251, 25);
-            cmbBoxTemplateName.TabIndex = 0;
+            this.cmbBoxTemplateName.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(0)))), ((int)(((byte)(15)))));
+            this.cmbBoxTemplateName.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cmbBoxTemplateName.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.cmbBoxTemplateName.ForeColor = System.Drawing.Color.PaleVioletRed;
+            this.cmbBoxTemplateName.FormattingEnabled = true;
+            this.cmbBoxTemplateName.Location = new System.Drawing.Point(446, 38);
+            this.cmbBoxTemplateName.Name = "cmbBoxTemplateName";
+            this.cmbBoxTemplateName.Size = new System.Drawing.Size(251, 25);
+            this.cmbBoxTemplateName.TabIndex = 0;
             // 
             // FormModelar
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.FromArgb(27, 20, 25);
-            ClientSize = new Size(853, 484);
-            Controls.Add(panelWordMenuSelector);
-            Controls.Add(panelMenu);
-            Controls.Add(mainWordFlowPanel);
-            Controls.Add(pnl_Separator);
-            Name = "FormModelar";
-            Text = "FormModelar";
-            Load += FormModelar_Load;
-            Resize += FormModelar_Resize;
-            rowPanel_WordDoc.ResumeLayout(false);
-            rowPanel_WordDoc.PerformLayout();
-            pnlTextNameW.ResumeLayout(false);
-            pnlTextNameW.PerformLayout();
-            mainWordFlowPanel.ResumeLayout(false);
-            mainWordFlowPanel.PerformLayout();
-            panelWordMenuSelector.ResumeLayout(false);
-            ResumeLayout(false);
-            PerformLayout();
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(20)))), ((int)(((byte)(25)))));
+            this.ClientSize = new System.Drawing.Size(853, 484);
+            this.Controls.Add(this.panelWordMenuSelector);
+            this.Controls.Add(this.panelMenu);
+            this.Controls.Add(this.mainWordFlowPanel);
+            this.Controls.Add(this.pnl_Separator);
+            this.Name = "FormModelar";
+            this.Text = "FormModelar";
+            this.rowPanel_WordDoc.ResumeLayout(false);
+            this.rowPanel_WordDoc.PerformLayout();
+            this.pnlTextNameW.ResumeLayout(false);
+            this.pnlTextNameW.PerformLayout();
+            this.mainWordFlowPanel.ResumeLayout(false);
+            this.mainWordFlowPanel.PerformLayout();
+            this.panelWordMenuSelector.ResumeLayout(false);
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
 
         #endregion
