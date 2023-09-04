@@ -205,7 +205,7 @@
             this.btn_searchFileFunerais.TabIndex = 22;
             this.btn_searchFileFunerais.Text = "📄 &Procurar Ficheiro";
             this.btn_searchFileFunerais.UseVisualStyleBackColor = true;
-            this.btn_searchFileFunerais.Click += new System.EventHandler(this.btn_searchFileFunerais_Click);
+            //this.btn_searchFileFunerais.Click += new System.EventHandler(this.btn_searchFileFunerais_Click);
             // 
             // txtbox_FileDirectoryFunerais
             // 
@@ -229,19 +229,6 @@
             this.lbl_FEscFunerais.TabIndex = 19;
             this.lbl_FEscFunerais.Text = "Escala de Funerais";
             // 
-            // btn_searchFileODU
-            // 
-            this.btn_searchFileODU.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn_searchFileODU.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btn_searchFileODU.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.btn_searchFileODU.Location = new System.Drawing.Point(382, 38);
-            this.btn_searchFileODU.Margin = new System.Windows.Forms.Padding(2);
-            this.btn_searchFileODU.Name = "btn_searchFileODU";
-            this.btn_searchFileODU.Size = new System.Drawing.Size(130, 29);
-            this.btn_searchFileODU.TabIndex = 18;
-            this.btn_searchFileODU.Text = "📄 &Procurar Ficheiro";
-            this.btn_searchFileODU.UseVisualStyleBackColor = true;
-            this.btn_searchFileODU.Click += new System.EventHandler(this.btn_searchFileODU_Click);
             // 
             // txtbox_FileDirectoryODU
             // 
@@ -253,19 +240,6 @@
             this.txtbox_FileDirectoryODU.TabIndex = 16;
             this.txtbox_FileDirectoryODU.TextChanged += new System.EventHandler(this.txtbox_FileDirectoryODU_TextChanged);
             // 
-            // btn_searchFileCCS
-            // 
-            this.btn_searchFileCCS.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn_searchFileCCS.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btn_searchFileCCS.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.btn_searchFileCCS.Location = new System.Drawing.Point(382, 82);
-            this.btn_searchFileCCS.Margin = new System.Windows.Forms.Padding(2);
-            this.btn_searchFileCCS.Name = "btn_searchFileCCS";
-            this.btn_searchFileCCS.Size = new System.Drawing.Size(130, 29);
-            this.btn_searchFileCCS.TabIndex = 15;
-            this.btn_searchFileCCS.Text = "📄 &Procurar Ficheiro";
-            this.btn_searchFileCCS.UseVisualStyleBackColor = true;
-            this.btn_searchFileCCS.Click += new System.EventHandler(this.btn_searchFileCCS_Click);
             // 
             // txtbox_FileDirectoryCCS
             // 
@@ -277,19 +251,6 @@
             this.txtbox_FileDirectoryCCS.TabIndex = 13;
             this.txtbox_FileDirectoryCCS.TextChanged += new System.EventHandler(this.txtbox_FileDirectoryCCS_TextChanged);
             // 
-            // btn_searchFileSD
-            // 
-            this.btn_searchFileSD.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn_searchFileSD.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btn_searchFileSD.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.btn_searchFileSD.Location = new System.Drawing.Point(382, 127);
-            this.btn_searchFileSD.Margin = new System.Windows.Forms.Padding(2);
-            this.btn_searchFileSD.Name = "btn_searchFileSD";
-            this.btn_searchFileSD.Size = new System.Drawing.Size(130, 29);
-            this.btn_searchFileSD.TabIndex = 12;
-            this.btn_searchFileSD.Text = "📄 &Procurar Ficheiro";
-            this.btn_searchFileSD.UseVisualStyleBackColor = true;
-            this.btn_searchFileSD.Click += new System.EventHandler(this.btn_searchFileSD_Click);
             // 
             // txtbox_FileDirectorySD
             // 
@@ -337,19 +298,6 @@
             this.lbl_FEscODU.TabIndex = 7;
             this.lbl_FEscODU.Text = "Escala de Oficial de Dia";
             // 
-            // btn_searchFilePD
-            // 
-            this.btn_searchFilePD.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn_searchFilePD.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btn_searchFilePD.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.btn_searchFilePD.Location = new System.Drawing.Point(382, 173);
-            this.btn_searchFilePD.Margin = new System.Windows.Forms.Padding(2);
-            this.btn_searchFilePD.Name = "btn_searchFilePD";
-            this.btn_searchFilePD.Size = new System.Drawing.Size(130, 29);
-            this.btn_searchFilePD.TabIndex = 1;
-            this.btn_searchFilePD.Text = "📄 &Procurar Ficheiro";
-            this.btn_searchFilePD.UseVisualStyleBackColor = true;
-            this.btn_searchFilePD.Click += new System.EventHandler(this.btn_searchFilePD_Click);
             // 
             // lbl_FEscPD
             // 
@@ -373,18 +321,6 @@
             this.txtbox_FileDirectoryPD.TabIndex = 2;
             this.txtbox_FileDirectoryPD.TextChanged += new System.EventHandler(this.txtbox_FileDirectoryPD_TextChanged);
             // 
-            // btn_SaveFileLocPD
-            // 
-            this.btn_SaveFileLocPD.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btn_SaveFileLocPD.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
-            this.btn_SaveFileLocPD.Location = new System.Drawing.Point(1, 7);
-            this.btn_SaveFileLocPD.Margin = new System.Windows.Forms.Padding(2);
-            this.btn_SaveFileLocPD.Name = "btn_SaveFileLocPD";
-            this.btn_SaveFileLocPD.Size = new System.Drawing.Size(51, 41);
-            this.btn_SaveFileLocPD.TabIndex = 4;
-            this.btn_SaveFileLocPD.Text = "💾";
-            this.btn_SaveFileLocPD.UseVisualStyleBackColor = true;
-            this.btn_SaveFileLocPD.Click += new System.EventHandler(this.btn_SaveFileLocPD_Click);
             // 
             // btn_refresh
             // 
@@ -520,16 +456,6 @@
             this.prg_Bar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.prg_Bar.TabIndex = 9;
             // 
-            // btn_CheckEscalaList
-            // 
-            this.btn_CheckEscalaList.Location = new System.Drawing.Point(10, 256);
-            this.btn_CheckEscalaList.Margin = new System.Windows.Forms.Padding(2);
-            this.btn_CheckEscalaList.Name = "btn_CheckEscalaList";
-            this.btn_CheckEscalaList.Size = new System.Drawing.Size(187, 45);
-            this.btn_CheckEscalaList.TabIndex = 8;
-            this.btn_CheckEscalaList.Text = "Check Lista de Escalados";
-            this.btn_CheckEscalaList.UseVisualStyleBackColor = true;
-            this.btn_CheckEscalaList.Click += new System.EventHandler(this.btn_CheckEscalaList_Click);
             // 
             // Mensagens
             // 
@@ -558,27 +484,7 @@
             this.Exportar.Text = "Exportar";
             this.Exportar.UseVisualStyleBackColor = true;
             // 
-            // btn_Export_TestListReader
             // 
-            this.btn_Export_TestListReader.Location = new System.Drawing.Point(227, 221);
-            this.btn_Export_TestListReader.Margin = new System.Windows.Forms.Padding(2);
-            this.btn_Export_TestListReader.Name = "btn_Export_TestListReader";
-            this.btn_Export_TestListReader.Size = new System.Drawing.Size(110, 49);
-            this.btn_Export_TestListReader.TabIndex = 3;
-            this.btn_Export_TestListReader.Text = "Test List Reader";
-            this.btn_Export_TestListReader.UseVisualStyleBackColor = true;
-            this.btn_Export_TestListReader.Click += new System.EventHandler(this.btn_Export_TestListReader_Click);
-            // 
-            // btn_Export_testDaySelect_Var
-            // 
-            this.btn_Export_testDaySelect_Var.Location = new System.Drawing.Point(112, 221);
-            this.btn_Export_testDaySelect_Var.Margin = new System.Windows.Forms.Padding(2);
-            this.btn_Export_testDaySelect_Var.Name = "btn_Export_testDaySelect_Var";
-            this.btn_Export_testDaySelect_Var.Size = new System.Drawing.Size(110, 49);
-            this.btn_Export_testDaySelect_Var.TabIndex = 2;
-            this.btn_Export_testDaySelect_Var.Text = "Test DaySelect Var";
-            this.btn_Export_testDaySelect_Var.UseVisualStyleBackColor = true;
-            this.btn_Export_testDaySelect_Var.Click += new System.EventHandler(this.btn_Export_testDaySelect_Var_Click);
             // 
             // gbox_Export
             // 
@@ -605,17 +511,6 @@
             this.btn_ExportPDF.Text = "PDF";
             this.btn_ExportPDF.UseVisualStyleBackColor = true;
             // 
-            // btn_ExportWord
-            // 
-            this.btn_ExportWord.Font = new System.Drawing.Font("Segoe UI Semibold", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btn_ExportWord.Location = new System.Drawing.Point(14, 30);
-            this.btn_ExportWord.Margin = new System.Windows.Forms.Padding(2);
-            this.btn_ExportWord.Name = "btn_ExportWord";
-            this.btn_ExportWord.Size = new System.Drawing.Size(217, 62);
-            this.btn_ExportWord.TabIndex = 0;
-            this.btn_ExportWord.Text = "WORD";
-            this.btn_ExportWord.UseVisualStyleBackColor = true;
-            this.btn_ExportWord.Click += new System.EventHandler(this.btn_ExportWord_Click);
             // 
             // gbox_ExportDetails
             // 
@@ -705,18 +600,6 @@
             this.gBox_FMemory.Text = "Directório do Ficheiro de Memória";
             this.gBox_FMemory.Visible = false;
             // 
-            // btn_openMemoryFolder
-            // 
-            this.btn_openMemoryFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn_openMemoryFolder.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btn_openMemoryFolder.Location = new System.Drawing.Point(389, 25);
-            this.btn_openMemoryFolder.Margin = new System.Windows.Forms.Padding(2);
-            this.btn_openMemoryFolder.Name = "btn_openMemoryFolder";
-            this.btn_openMemoryFolder.Size = new System.Drawing.Size(130, 30);
-            this.btn_openMemoryFolder.TabIndex = 7;
-            this.btn_openMemoryFolder.Text = "📂 &Abrir Pasta";
-            this.btn_openMemoryFolder.UseVisualStyleBackColor = true;
-            this.btn_openMemoryFolder.Click += new System.EventHandler(this.btn_searchFileFMemory_Click);
             // 
             // txtBox_FMemory
             // 
@@ -790,18 +673,6 @@
             this.tpage_ModelosPreferencias.Text = "Ordem de Serviço";
             this.tpage_ModelosPreferencias.UseVisualStyleBackColor = true;
             // 
-            // btn_searchFile_Quarta
-            // 
-            this.btn_searchFile_Quarta.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn_searchFile_Quarta.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btn_searchFile_Quarta.Location = new System.Drawing.Point(392, 130);
-            this.btn_searchFile_Quarta.Margin = new System.Windows.Forms.Padding(2);
-            this.btn_searchFile_Quarta.Name = "btn_searchFile_Quarta";
-            this.btn_searchFile_Quarta.Size = new System.Drawing.Size(130, 29);
-            this.btn_searchFile_Quarta.TabIndex = 34;
-            this.btn_searchFile_Quarta.Text = "📄 &Procurar Ficheiro";
-            this.btn_searchFile_Quarta.UseVisualStyleBackColor = true;
-            this.btn_searchFile_Quarta.Click += new System.EventHandler(this.btn_searchFile_Quarta_Click);
             // 
             // lbl_modelQuarta
             // 
@@ -832,18 +703,6 @@
             this.lbl_SaveFolder_OSWord.TabIndex = 31;
             this.lbl_SaveFolder_OSWord.Text = "Directório pré-definido do documento Word";
             // 
-            // btn_SaveFolder_OSWord
-            // 
-            this.btn_SaveFolder_OSWord.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn_SaveFolder_OSWord.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btn_SaveFolder_OSWord.Location = new System.Drawing.Point(392, 210);
-            this.btn_SaveFolder_OSWord.Margin = new System.Windows.Forms.Padding(2);
-            this.btn_SaveFolder_OSWord.Name = "btn_SaveFolder_OSWord";
-            this.btn_SaveFolder_OSWord.Size = new System.Drawing.Size(130, 29);
-            this.btn_SaveFolder_OSWord.TabIndex = 29;
-            this.btn_SaveFolder_OSWord.Text = "📂 &Procurar Pasta";
-            this.btn_SaveFolder_OSWord.UseVisualStyleBackColor = true;
-            this.btn_SaveFolder_OSWord.Click += new System.EventHandler(this.btn_SaveFolder_OSWord_Click);
             // 
             // txtbox_FolderDirectory_OSWord
             // 
@@ -854,18 +713,6 @@
             this.txtbox_FolderDirectory_OSWord.Size = new System.Drawing.Size(379, 23);
             this.txtbox_FolderDirectory_OSWord.TabIndex = 28;
             // 
-            // btn_searchFile_FDSemana
-            // 
-            this.btn_searchFile_FDSemana.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn_searchFile_FDSemana.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btn_searchFile_FDSemana.Location = new System.Drawing.Point(392, 81);
-            this.btn_searchFile_FDSemana.Margin = new System.Windows.Forms.Padding(2);
-            this.btn_searchFile_FDSemana.Name = "btn_searchFile_FDSemana";
-            this.btn_searchFile_FDSemana.Size = new System.Drawing.Size(130, 29);
-            this.btn_searchFile_FDSemana.TabIndex = 27;
-            this.btn_searchFile_FDSemana.Text = "📄 &Procurar Ficheiro";
-            this.btn_searchFile_FDSemana.UseVisualStyleBackColor = true;
-            this.btn_searchFile_FDSemana.Click += new System.EventHandler(this.btn_searchFile_FDSemana_Click);
             // 
             // lbl_modelFDSemana
             // 
@@ -886,18 +733,6 @@
             this.txtbox_FileDirectory_ModelFDSemana.Size = new System.Drawing.Size(379, 23);
             this.txtbox_FileDirectory_ModelFDSemana.TabIndex = 25;
             // 
-            // btn_searchFile_ModelSemana
-            // 
-            this.btn_searchFile_ModelSemana.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn_searchFile_ModelSemana.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btn_searchFile_ModelSemana.Location = new System.Drawing.Point(392, 30);
-            this.btn_searchFile_ModelSemana.Margin = new System.Windows.Forms.Padding(2);
-            this.btn_searchFile_ModelSemana.Name = "btn_searchFile_ModelSemana";
-            this.btn_searchFile_ModelSemana.Size = new System.Drawing.Size(130, 29);
-            this.btn_searchFile_ModelSemana.TabIndex = 23;
-            this.btn_searchFile_ModelSemana.Text = "📄 &Procurar Ficheiro";
-            this.btn_searchFile_ModelSemana.UseVisualStyleBackColor = true;
-            this.btn_searchFile_ModelSemana.Click += new System.EventHandler(this.btn_searchFile_ModelSemana_Click);
             // 
             // lbl_modelSemana
             // 
