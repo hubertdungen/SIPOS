@@ -28,28 +28,28 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.rowPanel_WordDoc = new System.Windows.Forms.Panel();
-            this.btnWMinus = new System.Windows.Forms.Button();
-            this.btnWPlus = new System.Windows.Forms.Button();
-            this.btnOpenWFile = new System.Windows.Forms.Button();
-            this.txtDirFicheiroW = new System.Windows.Forms.TextBox();
-            this.pnlTextNameW = new System.Windows.Forms.Panel();
-            this.lblWSeparador = new System.Windows.Forms.Label();
-            this.btnChkWRowActive = new System.Windows.Forms.Button();
-            this.txtNameWBox = new System.Windows.Forms.TextBox();
-            this.lbl_ellipse = new System.Windows.Forms.Label();
-            this.frmModelarTimer = new System.Windows.Forms.Timer(this.components);
-            this.mainWordFlowPanel = new System.Windows.Forms.FlowLayoutPanel();
-            this.pnl_Separator = new System.Windows.Forms.Panel();
-            this.panelMenu = new System.Windows.Forms.Panel();
-            this.panelWordMenuSelector = new System.Windows.Forms.Panel();
-            this.cmbBoxTemplateName = new System.Windows.Forms.ComboBox();
-            this.rowPanel_WordDoc.SuspendLayout();
-            this.pnlTextNameW.SuspendLayout();
-            this.mainWordFlowPanel.SuspendLayout();
-            this.panelWordMenuSelector.SuspendLayout();
-            this.SuspendLayout();
+            components = new System.ComponentModel.Container();
+            rowPanel_WordDoc = new Panel();
+            btnWMinus = new Button();
+            btnWPlus = new Button();
+            btnOpenWFile = new Button();
+            txtDirFicheiroW = new TextBox();
+            pnlTextNameW = new Panel();
+            lblWSeparador = new Label();
+            btnChkWRowActive = new Button();
+            txtNameWBox = new TextBox();
+            lbl_ellipse = new Label();
+            frmModelarTimer = new System.Windows.Forms.Timer(components);
+            mainWordFlowPanel = new FlowLayoutPanel();
+            pnl_Separator = new Panel();
+            panelMenu = new Panel();
+            panelWordMenuSelector = new Panel();
+            cmbBoxTemplateName = new ComboBox();
+            rowPanel_WordDoc.SuspendLayout();
+            pnlTextNameW.SuspendLayout();
+            mainWordFlowPanel.SuspendLayout();
+            panelWordMenuSelector.SuspendLayout();
+            SuspendLayout();
             // 
             // rowPanel_WordDoc
             // 
@@ -259,25 +259,45 @@
             // 
             // panelWordMenuSelector
             // 
-            this.panelWordMenuSelector.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(20)))), ((int)(((byte)(25)))));
-            this.panelWordMenuSelector.Controls.Add(this.cmbBoxTemplateName);
-            this.panelWordMenuSelector.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelWordMenuSelector.Location = new System.Drawing.Point(0, 66);
-            this.panelWordMenuSelector.Name = "panelWordMenuSelector";
-            this.panelWordMenuSelector.Size = new System.Drawing.Size(853, 108);
-            this.panelWordMenuSelector.TabIndex = 5;
+            panelWordMenuSelector.BackColor = Color.FromArgb(27, 20, 25);
+            panelWordMenuSelector.Controls.Add(cmbBoxTemplateName);
+            panelWordMenuSelector.Dock = DockStyle.Top;
+            panelWordMenuSelector.Location = new Point(0, 66);
+            panelWordMenuSelector.Name = "panelWordMenuSelector";
+            panelWordMenuSelector.Size = new Size(853, 108);
+            panelWordMenuSelector.TabIndex = 5;
             // 
             // cmbBoxTemplateName
             // 
-            this.cmbBoxTemplateName.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(0)))), ((int)(((byte)(15)))));
-            this.cmbBoxTemplateName.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.cmbBoxTemplateName.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.cmbBoxTemplateName.ForeColor = System.Drawing.Color.PaleVioletRed;
-            this.cmbBoxTemplateName.FormattingEnabled = true;
-            this.cmbBoxTemplateName.Location = new System.Drawing.Point(446, 38);
-            this.cmbBoxTemplateName.Name = "cmbBoxTemplateName";
-            this.cmbBoxTemplateName.Size = new System.Drawing.Size(251, 25);
-            this.cmbBoxTemplateName.TabIndex = 0;
+            cmbBoxTemplateName.BackColor = Color.FromArgb(15, 0, 15);
+            cmbBoxTemplateName.FlatStyle = FlatStyle.Flat;
+            cmbBoxTemplateName.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            cmbBoxTemplateName.ForeColor = Color.PaleVioletRed;
+            cmbBoxTemplateName.FormattingEnabled = true;
+            cmbBoxTemplateName.Location = new Point(446, 38);
+            cmbBoxTemplateName.Name = "cmbBoxTemplateName";
+            cmbBoxTemplateName.Size = new Size(251, 25);
+            cmbBoxTemplateName.TabIndex = 0;
+            // 
+            // customComboBox1
+            // 
+            customComboBox1.BackColor = Color.FromArgb(57, 36, 57);
+            customComboBox1.BorderColor = Color.PaleVioletRed;
+            customComboBox1.BorderSize = 2;
+            customComboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
+            customComboBox1.Font = new Font("Century Gothic", 10F, FontStyle.Regular, GraphicsUnit.Point);
+            customComboBox1.ForeColor = Color.PaleVioletRed;
+            customComboBox1.IconColor = Color.PaleVioletRed;
+            customComboBox1.Items.AddRange(new object[] { "Dungen", "Pires", "Hubert", "Yo Nibba", "Yes it is", "Okey dokey", "Meu" });
+            customComboBox1.ListBackColor = Color.FromArgb(15, 0, 15);
+            customComboBox1.ListTextColor = Color.FromArgb(57, 36, 57);
+            customComboBox1.Location = new Point(535, 52);
+            customComboBox1.MinimumSize = new Size(200, 30);
+            customComboBox1.Name = "customComboBox1";
+            customComboBox1.Padding = new Padding(2);
+            customComboBox1.Size = new Size(256, 40);
+            customComboBox1.TabIndex = 1;
+            customComboBox1.Texts = "Test";
             // 
             // FormModelar
             // 
@@ -320,5 +340,6 @@
         private Panel panelWordMenuSelector;
         private Button btnChkWRowActive;
         private ComboBox cmbBoxTemplateName;
+        private Controls.CustomComboBox customComboBox1;
     }
 }
