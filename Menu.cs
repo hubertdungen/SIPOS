@@ -43,7 +43,7 @@ namespace SIPOS
         // ------------
 
         // Details VARS
-        public static string version = "v A-0.11.1";
+        public static string version = "v A-0.11.6";
 
         
         private Mediator mediator;
@@ -623,14 +623,6 @@ namespace SIPOS
 
 
 
-
-
-
-
-
-
-
-
         // TEXT PATHS CHANGED
         private void txtBox_FMemory_TextChanged(object sender, EventArgs e)
         {
@@ -694,23 +686,6 @@ namespace SIPOS
             formSize = this.ClientSize;
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
