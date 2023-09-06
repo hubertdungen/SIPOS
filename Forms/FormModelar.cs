@@ -740,6 +740,7 @@ namespace SIPOS.Forms
                     ((Label)newControl).BackColor = originalLabel.BackColor;
                     ((Label)newControl).ForeColor = originalLabel.ForeColor;
                     ((Label)newControl).Cursor = originalLabel.Cursor;
+                    ((Label)newControl).AutoSize = originalLabel.AutoSize;
 
                     if (originalLabel.Name.Contains("lbl_ellipse") || originalLabel.Text.Contains("⋯"))
                     {
@@ -758,6 +759,7 @@ namespace SIPOS.Forms
                     ((TextBox)newControl).Font = originalTextBox.Font;
                     ((TextBox)newControl).BackColor = originalTextBox.BackColor;
                     ((TextBox)newControl).ForeColor = originalTextBox.ForeColor;
+                    ((TextBox)newControl).AutoSize = originalTextBox.AutoSize;
                 }
                 else if (control is Button originalButton)
                 {
@@ -796,6 +798,8 @@ namespace SIPOS.Forms
                     ((Panel)newControl).BackColor = originalPanel.BackColor;
                     ((Panel)newControl).ForeColor = originalPanel.ForeColor;
                     ((Panel)newControl).Font = originalPanel.Font;
+                    ((Panel)newControl).AutoSize = originalPanel.AutoSize;
+                    ((Panel)newControl).AutoSizeMode = originalPanel.AutoSizeMode;
                 }
                 else if (control is Control originalControl)
                 {
