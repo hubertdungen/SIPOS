@@ -172,6 +172,130 @@ namespace SIPOS
 
 
 
+                //outputText = "";  // Clearing the TEXT
+
+                //Mediator.instPrgBarAddInc(0);  // progress bar add inc
+                //Microsoft.Office.Interop.Excel.Application excel = new Microsoft.Office.Interop.Excel.Application();
+
+
+                ////Declare main variables
+                //Workbook wb;
+                //Worksheet ws;
+
+                //wb = excel.Workbooks.Open(filePathSelected, false, true);
+                //ws = wb.Worksheets[1];
+
+                //// Initialize variables to represent the columns
+                //int dateCol = 0, efectivoCol = 0, reservaCol = 0;
+                //Range headerRow = null; 
+                //int startRow = 0;
+                //string displayResult = "";
+                ////string displayResultOut = "";
+
+
+                //// Set the range where the headers are expected to be found
+                //Range headerSearchRange = ws.Range["A1", "P16"]; // Adjust the range according to your expectation
+
+                //// Use Find to locate the "DATA" header
+                //Range dateHeader = headerSearchRange.Find("DATA", LookIn: XlFindLookIn.xlValues, LookAt: XlLookAt.xlWhole);
+
+
+                //// Setting the HEADER coordinates
+                //if (dateHeader != null)
+                //{
+                //    // Set the column for "DATA" and the start row for the data range
+                //    dateCol = dateHeader.Column;
+                //    startRow = dateHeader.Row + 1; // Assuming data starts immediately after the header
+
+                //    // Now find the columns for "EFECTIVO" and "RESERVA" based on the header row
+                //    headerRow = ws.Rows[dateHeader.Row];
+                //    for (int col = 1; col <= headerRow.Columns.Count; col++)
+                //    {
+                //        // Safely retrieve the value of the cell as a string
+                //        var cellValue = headerRow.Cells[headerRow, col].Value;
+                //        string text = cellValue != null ? cellValue.ToString() : "";
+
+                //        if (text == "EFECTIVO")
+                //            efectivoCol = col;
+                //        else if (text == "RESERVA")
+                //            reservaCol = col;
+
+                //        MessageBox.Show($"efectivoCol: {efectivoCol} \nreservaCol: {reservaCol}", "Header Finder");
+                //    }
+                //}
+                //else
+                //{
+                //    // Handle the error: "DATA" header was not found
+                //    return;
+                //}
+
+                //if (dateCol == 0 || efectivoCol == 0 || reservaCol == 0)
+                //{
+                //    // Handle the error: one of the headers was not found
+                //    return;
+                //}
+
+
+                //// BACKUP: Range searchedRange = excel.get_Range("B15", "K52");
+                //// Define the searched range based on the found headers
+                //Range searchedRange = ws.Range[ws.Cells[startRow, dateCol], ws.Cells[57, reservaCol]]; // Adjust 57 if necessary
+
+                //// Use Find to search for `Mediator.escalaDay` within the defined range
+                //Range currentFind = searchedRange.Find(Mediator.escalaDay);
+
+
+
+                //MessageBox.Show("Info", $"{Mediator.winMode}");
+                //MessageBox.Show($"dateHeader: {headerRow} \ndateCol: {dateCol} \nstartRow: {startRow}", "Header coordinates") ;
+
+
+
+
+                //List<string> ResultOutList = new List<string>();
+                //Mediator.instPrgBarAddInc(0);  // progress bar add inc
+
+                //// -- CALLER
+                //// ------------------------- //
+                //if (currentFind != null)
+                //{
+                //    displayResult = "Found at \ncolumn - " + currentFind.Column +  // Debugger
+                //                                    "\nrow - " + currentFind.Row;
+
+                //    // Data Values - Index Identifiers
+                //    int colmn = currentFind.Column;
+                //    int rowm = currentFind.Row;
+
+                //    // Individual Identifiers
+                //    Range dateCell = ws.Cells[rowm, dateCol]; // Use the dynamically found dateCol
+                //    Range efectivoCell = ws.Cells[rowm, efectivoCol]; // Use the dynamically found efectivoCol
+
+                //    // Assuming state cells are adjacent to "EFECTIVO"
+                //    int stateColumn = efectivoCol + 1; // The state cells are right next to the "EFECTIVO" column
+                //    Range stateCell1 = ws.Cells[rowm, stateColumn];
+                //    Range stateCell2 = ws.Cells[rowm + 1, stateColumn];
+                //    Range stateCell3 = ws.Cells[rowm + 2, stateColumn];
+
+                //    Range reservaCell = ws.Cells[rowm, reservaCol]; // Use the dynamically found reservaCol
+
+
+                //    MessageBox.Show($"rown: {rowm} \nreservaCol: {reservaCol} \nstateColumn: {stateColumn}");
+
+
+
+                //// Check for "ADPT" in the third state cell and adjust if necessary
+                //int smartAdaptIncrementer = 1;
+                //    if (Convert.ToString(stateCell3.Value) == "ADPT")
+                //    {
+                //        smartAdaptIncrementer = 2; // If "ADPT" is in the third state cell, compensate +1 row
+                //    }
+                //    Range adaptCell = ws.Cells[rowm + smartAdaptIncrementer, efectivoCol]; // Use the dynamically found efectivoCol
+
+
+
+
+
+
+
                 //string textToParse = "";
                 Mediator.instPrgBarAddInc(0);  // progress bar add inc
 
@@ -294,6 +418,11 @@ namespace SIPOS
 
                 if ((textToParse != null) && (textToParse.Length > 10))
                 {
+
+                    textToParse = parseUniversalNamesFixer(textToParse);
+
+
+                    // Parser de texto com enters // Separa alinhas por valores / variaveis diferentes
                     if (textToParse.Contains("\n"))
                     {
                         string[] lines = textToParse.Split("\n");
@@ -360,6 +489,44 @@ namespace SIPOS
             }
         }
         // -----------------------------
+
+
+
+
+
+        // UNIVERSAL NAME'S FIXER FOR OS WORD
+        private string parseUniversalNamesFixer(string nameToFix)
+        {
+
+            // Corrector de tipos de enters
+            while (nameToFix.Contains("\r\n") || nameToFix.Contains("\r"))
+            {
+                nameToFix = nameToFix.Replace("\r\n", "\n");
+                nameToFix = nameToFix.Replace("\r", "\n");
+            }
+
+
+            // Corrector de enters a mais
+            while (nameToFix.Contains("\n\n"))
+            {
+                nameToFix = nameToFix.Replace("\n\n", "\n");
+            }
+
+            // Corrigindo espaços em branco em torno de "/"   // Exemplos como: "2SAR/ SAS /138863-A"
+            nameToFix = Regex.Replace(nameToFix, @"(?<=/)\s+|\s+(?=/)", "");
+
+            // Removendo espaços antes e depois do texto
+            nameToFix = nameToFix.Trim();
+
+            // Removendo espaços imediatamente antes e depois de "-"
+            nameToFix = Regex.Replace(nameToFix, @"\s+-\s+", "-");
+
+            return nameToFix;
+        }
+
+
+
+
 
         // FULL SINGULAR ESCALAS FORMATER
         private void escalaPreviewFormater()

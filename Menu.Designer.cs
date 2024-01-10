@@ -205,7 +205,6 @@
             this.btn_searchFileFunerais.TabIndex = 22;
             this.btn_searchFileFunerais.Text = "📄 &Procurar Ficheiro";
             this.btn_searchFileFunerais.UseVisualStyleBackColor = true;
-            //this.btn_searchFileFunerais.Click += new System.EventHandler(this.btn_searchFileFunerais_Click);
             // 
             // txtbox_FileDirectoryFunerais
             // 
@@ -229,6 +228,12 @@
             this.lbl_FEscFunerais.TabIndex = 19;
             this.lbl_FEscFunerais.Text = "Escala de Funerais";
             // 
+            // btn_searchFileODU
+            // 
+            this.btn_searchFileODU.Location = new System.Drawing.Point(0, 0);
+            this.btn_searchFileODU.Name = "btn_searchFileODU";
+            this.btn_searchFileODU.Size = new System.Drawing.Size(75, 23);
+            this.btn_searchFileODU.TabIndex = 23;
             // 
             // txtbox_FileDirectoryODU
             // 
@@ -240,6 +245,12 @@
             this.txtbox_FileDirectoryODU.TabIndex = 16;
             this.txtbox_FileDirectoryODU.TextChanged += new System.EventHandler(this.txtbox_FileDirectoryODU_TextChanged);
             // 
+            // btn_searchFileCCS
+            // 
+            this.btn_searchFileCCS.Location = new System.Drawing.Point(0, 0);
+            this.btn_searchFileCCS.Name = "btn_searchFileCCS";
+            this.btn_searchFileCCS.Size = new System.Drawing.Size(75, 23);
+            this.btn_searchFileCCS.TabIndex = 24;
             // 
             // txtbox_FileDirectoryCCS
             // 
@@ -251,6 +262,12 @@
             this.txtbox_FileDirectoryCCS.TabIndex = 13;
             this.txtbox_FileDirectoryCCS.TextChanged += new System.EventHandler(this.txtbox_FileDirectoryCCS_TextChanged);
             // 
+            // btn_searchFileSD
+            // 
+            this.btn_searchFileSD.Location = new System.Drawing.Point(0, 0);
+            this.btn_searchFileSD.Name = "btn_searchFileSD";
+            this.btn_searchFileSD.Size = new System.Drawing.Size(75, 23);
+            this.btn_searchFileSD.TabIndex = 25;
             // 
             // txtbox_FileDirectorySD
             // 
@@ -298,6 +315,12 @@
             this.lbl_FEscODU.TabIndex = 7;
             this.lbl_FEscODU.Text = "Escala de Oficial de Dia";
             // 
+            // btn_searchFilePD
+            // 
+            this.btn_searchFilePD.Location = new System.Drawing.Point(0, 0);
+            this.btn_searchFilePD.Name = "btn_searchFilePD";
+            this.btn_searchFilePD.Size = new System.Drawing.Size(75, 23);
+            this.btn_searchFilePD.TabIndex = 26;
             // 
             // lbl_FEscPD
             // 
@@ -321,6 +344,12 @@
             this.txtbox_FileDirectoryPD.TabIndex = 2;
             this.txtbox_FileDirectoryPD.TextChanged += new System.EventHandler(this.txtbox_FileDirectoryPD_TextChanged);
             // 
+            // btn_SaveFileLocPD
+            // 
+            this.btn_SaveFileLocPD.Location = new System.Drawing.Point(0, 0);
+            this.btn_SaveFileLocPD.Name = "btn_SaveFileLocPD";
+            this.btn_SaveFileLocPD.Size = new System.Drawing.Size(75, 23);
+            this.btn_SaveFileLocPD.TabIndex = 14;
             // 
             // btn_refresh
             // 
@@ -456,6 +485,12 @@
             this.prg_Bar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.prg_Bar.TabIndex = 9;
             // 
+            // btn_CheckEscalaList
+            // 
+            this.btn_CheckEscalaList.Location = new System.Drawing.Point(0, 0);
+            this.btn_CheckEscalaList.Name = "btn_CheckEscalaList";
+            this.btn_CheckEscalaList.Size = new System.Drawing.Size(75, 23);
+            this.btn_CheckEscalaList.TabIndex = 14;
             // 
             // Mensagens
             // 
@@ -484,7 +519,19 @@
             this.Exportar.Text = "Exportar";
             this.Exportar.UseVisualStyleBackColor = true;
             // 
+            // btn_Export_TestListReader
             // 
+            this.btn_Export_TestListReader.Location = new System.Drawing.Point(0, 0);
+            this.btn_Export_TestListReader.Name = "btn_Export_TestListReader";
+            this.btn_Export_TestListReader.Size = new System.Drawing.Size(75, 23);
+            this.btn_Export_TestListReader.TabIndex = 0;
+            // 
+            // btn_Export_testDaySelect_Var
+            // 
+            this.btn_Export_testDaySelect_Var.Location = new System.Drawing.Point(0, 0);
+            this.btn_Export_testDaySelect_Var.Name = "btn_Export_testDaySelect_Var";
+            this.btn_Export_testDaySelect_Var.Size = new System.Drawing.Size(75, 23);
+            this.btn_Export_testDaySelect_Var.TabIndex = 1;
             // 
             // gbox_Export
             // 
@@ -511,6 +558,12 @@
             this.btn_ExportPDF.Text = "PDF";
             this.btn_ExportPDF.UseVisualStyleBackColor = true;
             // 
+            // btn_ExportWord
+            // 
+            this.btn_ExportWord.Location = new System.Drawing.Point(0, 0);
+            this.btn_ExportWord.Name = "btn_ExportWord";
+            this.btn_ExportWord.Size = new System.Drawing.Size(75, 23);
+            this.btn_ExportWord.TabIndex = 2;
             // 
             // gbox_ExportDetails
             // 
@@ -600,6 +653,12 @@
             this.gBox_FMemory.Text = "Directório do Ficheiro de Memória";
             this.gBox_FMemory.Visible = false;
             // 
+            // btn_openMemoryFolder
+            // 
+            this.btn_openMemoryFolder.Location = new System.Drawing.Point(0, 0);
+            this.btn_openMemoryFolder.Name = "btn_openMemoryFolder";
+            this.btn_openMemoryFolder.Size = new System.Drawing.Size(75, 23);
+            this.btn_openMemoryFolder.TabIndex = 0;
             // 
             // txtBox_FMemory
             // 
@@ -673,6 +732,12 @@
             this.tpage_ModelosPreferencias.Text = "Ordem de Serviço";
             this.tpage_ModelosPreferencias.UseVisualStyleBackColor = true;
             // 
+            // btn_searchFile_Quarta
+            // 
+            this.btn_searchFile_Quarta.Location = new System.Drawing.Point(0, 0);
+            this.btn_searchFile_Quarta.Name = "btn_searchFile_Quarta";
+            this.btn_searchFile_Quarta.Size = new System.Drawing.Size(75, 23);
+            this.btn_searchFile_Quarta.TabIndex = 0;
             // 
             // lbl_modelQuarta
             // 
@@ -703,6 +768,12 @@
             this.lbl_SaveFolder_OSWord.TabIndex = 31;
             this.lbl_SaveFolder_OSWord.Text = "Directório pré-definido do documento Word";
             // 
+            // btn_SaveFolder_OSWord
+            // 
+            this.btn_SaveFolder_OSWord.Location = new System.Drawing.Point(0, 0);
+            this.btn_SaveFolder_OSWord.Name = "btn_SaveFolder_OSWord";
+            this.btn_SaveFolder_OSWord.Size = new System.Drawing.Size(75, 23);
+            this.btn_SaveFolder_OSWord.TabIndex = 34;
             // 
             // txtbox_FolderDirectory_OSWord
             // 
@@ -713,6 +784,12 @@
             this.txtbox_FolderDirectory_OSWord.Size = new System.Drawing.Size(379, 23);
             this.txtbox_FolderDirectory_OSWord.TabIndex = 28;
             // 
+            // btn_searchFile_FDSemana
+            // 
+            this.btn_searchFile_FDSemana.Location = new System.Drawing.Point(0, 0);
+            this.btn_searchFile_FDSemana.Name = "btn_searchFile_FDSemana";
+            this.btn_searchFile_FDSemana.Size = new System.Drawing.Size(75, 23);
+            this.btn_searchFile_FDSemana.TabIndex = 35;
             // 
             // lbl_modelFDSemana
             // 
@@ -733,6 +810,12 @@
             this.txtbox_FileDirectory_ModelFDSemana.Size = new System.Drawing.Size(379, 23);
             this.txtbox_FileDirectory_ModelFDSemana.TabIndex = 25;
             // 
+            // btn_searchFile_ModelSemana
+            // 
+            this.btn_searchFile_ModelSemana.Location = new System.Drawing.Point(0, 0);
+            this.btn_searchFile_ModelSemana.Name = "btn_searchFile_ModelSemana";
+            this.btn_searchFile_ModelSemana.Size = new System.Drawing.Size(75, 23);
+            this.btn_searchFile_ModelSemana.TabIndex = 36;
             // 
             // lbl_modelSemana
             // 
@@ -879,6 +962,7 @@
             this.lbl_version.TabIndex = 11;
             this.lbl_version.Text = "Version";
             this.lbl_version.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lbl_version.Click += new System.EventHandler(this.lbl_version_Click);
             // 
             // btn_Home
             // 

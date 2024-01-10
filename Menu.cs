@@ -43,7 +43,7 @@ namespace SIPOS
         // ------------
 
         // Details VARS
-        public static string version = "v A-0.11.6";
+        public static string version = "v B-1.0.3";
 
         
         private Mediator mediator;
@@ -561,6 +561,11 @@ namespace SIPOS
         private void frm_OS_system_Load(object sender, EventArgs e)
         {
             formSize = this.ClientSize;
+        }
+
+        private void lbl_version_Click(object sender, EventArgs e)
+        {
+
         }
     }
 

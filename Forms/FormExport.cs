@@ -21,7 +21,7 @@ namespace SIPOS.Forms
             FormExport formExport = Mediator.formExport;
             Mediator.formExport = this;
         }
-        
+        //private bool isUpdatingTextProgrammatically = false;
 
         // FORM CONTROL
         // ----------
@@ -57,9 +57,11 @@ namespace SIPOS.Forms
         // UI CONTROL
         // ----------
 
+
         private void txtBox_NumOS_TextChanged(object sender, EventArgs e)
         {
             txtBox_ExportDocName.Text = DateTime.Now.Year.ToString() + "-" + "002" + "-" + txtBox_NumOS.Text;
+
             Mediator.osNumber = txtBox_NumOS.Text;
 
             doesExportFilesExist();
@@ -347,6 +349,22 @@ namespace SIPOS.Forms
             Word_Processor.listToVarsEscalados(0);
         }
 
+        private void txtBox_NumOS_Leave(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(txtBox_NumOS.Text))
+            {
+                if (int.TryParse(txtBox_NumOS.Text, out int osNumber))
+                {
+                    if (osNumber >= 0 && osNumber <= 9)
+                    {
+                        txtBox_NumOS.Text = osNumber.ToString("00");
+                    }
+                }
+            }
 
+            txtBox_ExportDocName.Text = DateTime.Now.Year.ToString() + "-" + "002" + "-" + txtBox_NumOS.Text;
+            Mediator.osNumber = txtBox_NumOS.Text;
+            doesExportFilesExist();
+        }
     }
 }

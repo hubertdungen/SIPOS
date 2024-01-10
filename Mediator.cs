@@ -181,19 +181,52 @@ namespace SIPOS
             }
         }
 
+
         public static string GetPreviousOSFileName(string folderPath)
         {
-            // Get the previous file number by subtracting 1 from the current number
+            // Obter o número anterior subtraindo 1 do número atual
             int previousOSnumber = Convert.ToInt32(osNumber) - 1;
 
-            // Set the current Year
+            // Definir o ano atual
             int currentYear = DateTime.Now.Year;
 
-            // Set the filename based in the previous number
-            string previousOSFileName = $"{currentYear}-002-{previousOSnumber}";
+            // Tenta diferentes formatos para o número (ex: 07, 007)
+            string[] numberFormats = { "{0:0}", "{0:00}", "{0:000}" };
+            string previousOSFileName;
 
-            return previousOSFileName;
+            foreach (string format in numberFormats)
+            {
+                // Formatar o nome do arquivo com o número no formato atual
+                previousOSFileName = string.Format($"{currentYear}-002-" + format, previousOSnumber);
+
+                // Construir o caminho completo do arquivo
+                string fullPath = Path.Combine(folderPath, previousOSFileName + ".doc");
+
+                // Verificar se o arquivo existe
+                if (File.Exists(fullPath))
+                {
+                    return previousOSFileName; // Retorna o nome do arquivo se ele existir
+                }
+            }
+
+            // Retorna null ou uma string vazia se nenhum arquivo for encontrado
+            // Pode ser alterado para lançar uma exceção ou lidar com esse caso de outra maneira
+            return null;
         }
+        //public static string GetPreviousOSFileName(string folderPath)
+        //{
+        //    // Get the previous file number by subtracting 1 from the current number
+        //    int previousOSnumber = Convert.ToInt32(osNumber) - 1;
+
+        //    // Set the current Year
+        //    int currentYear = DateTime.Now.Year;
+
+        //    // Set the filename based in the previous number
+        //    string previousOSFileName = $"{currentYear}-002-{previousOSnumber}";
+
+        //    return previousOSFileName;
+        //}
+
 
         public static string doubleReturnsRemover(string textToParse)
         {

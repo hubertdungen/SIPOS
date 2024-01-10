@@ -156,18 +156,36 @@ namespace SIPOS
                         // ALTERAR A PAGINAÇÃO 
 
                         string folderPath = Mediator.inspFilePath;
-                        string previousOSFileName = Mediator.GetPreviousOSFileName(folderPath);
-                        string lastDocPath = Path.Combine(folderPath, previousOSFileName + ".doc");
+
+                        // Exibir o nome do arquivo anterior
+                        string previousOSFileName = Mediator.GetPreviousOSFileName(Mediator.inspFilePath);
+                        if (Mediator.winMode == 2) { MessageBox.Show("Nome do Arquivo Anterior: " + previousOSFileName, "Informação de Troubleshooting"); }
+
+                        // Construir o caminho completo do último documento
+                        string lastDocPath = Path.Combine(Mediator.inspFilePath, previousOSFileName + ".doc");
+                        if (Mediator.winMode == 2) { MessageBox.Show("Caminho do Último Documento: " + lastDocPath, "Informação de Troubleshooting"); }
+
+
+
+
                         if (File.Exists(lastDocPath))
                         {
+                            if (Mediator.winMode == 2) { MessageBox.Show("O arquivo existe.", "Informação de Troubleshooting"); }
+
                             int lastPageNumber = GetLastPageNumber(lastDocPath);
                             int afterLastPageLastOS = lastPageNumber % 2 == 0 ? lastPageNumber + 1 : lastPageNumber + 2;
+                            if (Mediator.winMode == 2) { MessageBox.Show("Último Número de Página: " + lastPageNumber, "Informação de Troubleshooting"); }
+
 
                             // Set the starting page number
                             osWordDoc.Sections[1].Footers[Word.WdHeaderFooterIndex.wdHeaderFooterPrimary].PageNumbers.StartingNumber = afterLastPageLastOS;
-                        
-                        
-                        
+
+                            if (Mediator.winMode == 2) { MessageBox.Show("Número de Página para Novo Documento: " + afterLastPageLastOS, "Informação de Troubleshooting"); }
+
+                        }
+                        else
+                        {
+                            MessageBox.Show("O arquivo não existe.", "Informação de Troubleshooting");
                         }
 
                     }

@@ -275,6 +275,7 @@
             this.txtBox_NumOS.TabIndex = 34;
             this.toolTip1.SetToolTip(this.txtBox_NumOS, "Número da Ordem de Serviço");
             this.txtBox_NumOS.TextChanged += new System.EventHandler(this.txtBox_NumOS_TextChanged);
+            this.txtBox_NumOS.Leave += new System.EventHandler(this.txtBox_NumOS_Leave);
             // 
             // lbl_NumOS
             // 
