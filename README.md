@@ -2,14 +2,15 @@
 ## Sistema Inteligente de Processamento de Ordens de Serviço
 O SIPOS é um software que visa automatizar o processo de criação das Ordens de Serviço (O.S.) diárias para cada unidade militar, a fim de otimizar recursos humanos e reduzir a necessidade de trabalho manual repetitivo. Atualmente, as O.S. são feitas de forma manual por 1 ou 2 militares de cada unidade, que precisam juntar a informação por meio de documentos correspondidos e publicá-los na O.S. após despacho e indicação do comandante da unidade.
 
-O SIPOS utiliza técnicas de Inteligência Artificial para detectar e classificar documentos e, em seguida, inserir as informações em um formato reformulado, além de detectar informações específicas, como movimentos de militares e civis na unidade, transferências, escalas de serviço, louvores, punições, entre outros assuntos relacionados.
+O SIPOS irá futuramente utilizar Machine Learning para detectar e classificar documentos e, em seguida, inserir as informações em um formato reformulado, além de detectar informações específicas, como movimentos de militares e civis na unidade, transferências, escalas de serviço, louvores, punições, entre outros assuntos relacionados.
 
 
-## Overview / Status atual do software (Alpha 0.9.7)
-O SIPOS v0.9.7 é uma atualização importante para o software SIPOS, com melhorias significativas na interface do usuário (UI) e adaptação de código. O objetivo desta atualização foi modernizar a UI e otimizar a experiência do usuário, ao mesmo tempo em que melhora a funcionalidade e confiabilidade geral do software.
+## Overview / Status atual do software (Beta 1.1.0)
+O SIPOS v B-1.1.0 traz melhorias significativas na interpretação de dados das folhas Excel e na flexibilidade do sistema. Esta versão beta inclui uma atualização importante no mecanismo de busca de colunas, permitindo uma leitura mais dinâmica e adaptável dos dados das escalas de serviço.
 
 ## Optics
-O software está a ser desenvolvido em C# e está a ser construído com o objetivo de ser intuitivo e fácil de usar, mesmo para usuários que não possuam conhecimentos avançados em programação ou tecnologia. Além disso, estou a trabalhar de forma a que interface gráfica seja amigável, moderna e clean para facilitar ainda mais o uso do software.
+Desenvolvido em C#, o SIPOS continua a evoluir com uma interface intuitiva e amigável, focando na facilidade de uso e eficiência para usuários de todos os níveis de experiência técnica.
 
 ## Planos
-Adaptação e API para Python e uso de bibliotecas como TensorFlow para inteligência artificial estão nos planos futuros do SIPOS. Isto permitirá que o software integre recursos de Machine Learning, tornando-o ainda mais poderoso e versátil em análises e processamento de dados. Embora o código seja atualmente em C#, a adaptação para Python permitirá uma integração mais fácil com outras ferramentas e bibliotecas de IA.
+Futuras atualizações incluirão a integração de recursos de Machine Learning através de adaptações para Python e uso de bibliotecas como TensorFlow, visando ampliar as capacidades de análise e processamento de dados do sistema.
+
