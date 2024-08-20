@@ -94,6 +94,49 @@
             this.btn_SaveFolder_OSWord = new System.Windows.Forms.Button();
             this.btn_searchFile_FDSemana = new System.Windows.Forms.Button();
             this.btn_searchFile_ModelSemana = new System.Windows.Forms.Button();
+            this.tpage_EscalasEngine = new System.Windows.Forms.TabPage();
+            this.gBox_PesquisaForcada = new System.Windows.Forms.GroupBox();
+            this.chkBox_ForcedExcelSearch = new System.Windows.Forms.CheckBox();
+            this.button37 = new System.Windows.Forms.Button();
+            this.button38 = new System.Windows.Forms.Button();
+            this.button39 = new System.Windows.Forms.Button();
+            this.button40 = new System.Windows.Forms.Button();
+            this.button41 = new System.Windows.Forms.Button();
+            this.button42 = new System.Windows.Forms.Button();
+            this.button43 = new System.Windows.Forms.Button();
+            this.button44 = new System.Windows.Forms.Button();
+            this.lbl_ForcedReserva = new System.Windows.Forms.Label();
+            this.button45 = new System.Windows.Forms.Button();
+            this.txtbox_ColForcedReserva = new System.Windows.Forms.TextBox();
+            this.button46 = new System.Windows.Forms.Button();
+            this.button47 = new System.Windows.Forms.Button();
+            this.button48 = new System.Windows.Forms.Button();
+            this.button49 = new System.Windows.Forms.Button();
+            this.lbl_ForcedData = new System.Windows.Forms.Label();
+            this.lbl_ForcedEfectivo = new System.Windows.Forms.Label();
+            this.txtbox_ColForcedData = new System.Windows.Forms.TextBox();
+            this.txtbox_ColForcedEfetivo = new System.Windows.Forms.TextBox();
+            this.gBox_PesquisaAutonomaPorText = new System.Windows.Forms.GroupBox();
+            this.chkBox_AutoExcelSearch = new System.Windows.Forms.CheckBox();
+            this.button18 = new System.Windows.Forms.Button();
+            this.button25 = new System.Windows.Forms.Button();
+            this.button26 = new System.Windows.Forms.Button();
+            this.button27 = new System.Windows.Forms.Button();
+            this.button28 = new System.Windows.Forms.Button();
+            this.button29 = new System.Windows.Forms.Button();
+            this.button30 = new System.Windows.Forms.Button();
+            this.button31 = new System.Windows.Forms.Button();
+            this.lbl_AutoReserva = new System.Windows.Forms.Label();
+            this.button32 = new System.Windows.Forms.Button();
+            this.txtbox_ColAutoReserva = new System.Windows.Forms.TextBox();
+            this.button33 = new System.Windows.Forms.Button();
+            this.button34 = new System.Windows.Forms.Button();
+            this.button35 = new System.Windows.Forms.Button();
+            this.button36 = new System.Windows.Forms.Button();
+            this.lbl_AutoData = new System.Windows.Forms.Label();
+            this.lbl_AutoEfectivo = new System.Windows.Forms.Label();
+            this.txtbox_ColAutoData = new System.Windows.Forms.TextBox();
+            this.txtbox_ColAutoEfetivo = new System.Windows.Forms.TextBox();
             this.tpage_Outros = new System.Windows.Forms.TabPage();
             this.gBox_DirectoriosInspFilesExported = new System.Windows.Forms.GroupBox();
             this.btn_searchFolder_InspFiles = new System.Windows.Forms.Button();
@@ -128,6 +171,9 @@
             this.tpage_ModelosPreferencias.SuspendLayout();
             this.gBox_DirectorioExports.SuspendLayout();
             this.gBox_DirectoriosModelos.SuspendLayout();
+            this.tpage_EscalasEngine.SuspendLayout();
+            this.gBox_PesquisaForcada.SuspendLayout();
+            this.gBox_PesquisaAutonomaPorText.SuspendLayout();
             this.tpage_Outros.SuspendLayout();
             this.gBox_DirectoriosInspFilesExported.SuspendLayout();
             this.gBox_DirectoriosApps.SuspendLayout();
@@ -202,6 +248,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl_Propriedades.Controls.Add(this.tpage_PrepararExportar);
             this.tabControl_Propriedades.Controls.Add(this.tpage_ModelosPreferencias);
+            this.tabControl_Propriedades.Controls.Add(this.tpage_EscalasEngine);
             this.tabControl_Propriedades.Controls.Add(this.tpage_Outros);
             this.tabControl_Propriedades.Controls.Add(this.tpage_Debug);
             this.tabControl_Propriedades.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
@@ -1099,6 +1146,671 @@
             this.btn_searchFile_ModelSemana.Text = "📄 &Procurar Ficheiro";
             this.btn_searchFile_ModelSemana.UseVisualStyleBackColor = true;
             // 
+            // tpage_EscalasEngine
+            // 
+            this.tpage_EscalasEngine.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(20)))), ((int)(((byte)(25)))));
+            this.tpage_EscalasEngine.Controls.Add(this.gBox_PesquisaForcada);
+            this.tpage_EscalasEngine.Controls.Add(this.gBox_PesquisaAutonomaPorText);
+            this.tpage_EscalasEngine.Location = new System.Drawing.Point(4, 26);
+            this.tpage_EscalasEngine.Name = "tpage_EscalasEngine";
+            this.tpage_EscalasEngine.Padding = new System.Windows.Forms.Padding(3);
+            this.tpage_EscalasEngine.Size = new System.Drawing.Size(763, 328);
+            this.tpage_EscalasEngine.TabIndex = 4;
+            this.tpage_EscalasEngine.Text = "Pesquisa no Excel";
+            // 
+            // gBox_PesquisaForcada
+            // 
+            this.gBox_PesquisaForcada.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.gBox_PesquisaForcada.BackColor = System.Drawing.Color.Transparent;
+            this.gBox_PesquisaForcada.Controls.Add(this.chkBox_ForcedExcelSearch);
+            this.gBox_PesquisaForcada.Controls.Add(this.button37);
+            this.gBox_PesquisaForcada.Controls.Add(this.button38);
+            this.gBox_PesquisaForcada.Controls.Add(this.button39);
+            this.gBox_PesquisaForcada.Controls.Add(this.button40);
+            this.gBox_PesquisaForcada.Controls.Add(this.button41);
+            this.gBox_PesquisaForcada.Controls.Add(this.button42);
+            this.gBox_PesquisaForcada.Controls.Add(this.button43);
+            this.gBox_PesquisaForcada.Controls.Add(this.button44);
+            this.gBox_PesquisaForcada.Controls.Add(this.lbl_ForcedReserva);
+            this.gBox_PesquisaForcada.Controls.Add(this.button45);
+            this.gBox_PesquisaForcada.Controls.Add(this.txtbox_ColForcedReserva);
+            this.gBox_PesquisaForcada.Controls.Add(this.button46);
+            this.gBox_PesquisaForcada.Controls.Add(this.button47);
+            this.gBox_PesquisaForcada.Controls.Add(this.button48);
+            this.gBox_PesquisaForcada.Controls.Add(this.button49);
+            this.gBox_PesquisaForcada.Controls.Add(this.lbl_ForcedData);
+            this.gBox_PesquisaForcada.Controls.Add(this.lbl_ForcedEfectivo);
+            this.gBox_PesquisaForcada.Controls.Add(this.txtbox_ColForcedData);
+            this.gBox_PesquisaForcada.Controls.Add(this.txtbox_ColForcedEfetivo);
+            this.gBox_PesquisaForcada.Font = new System.Drawing.Font("Century Gothic", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.gBox_PesquisaForcada.ForeColor = System.Drawing.Color.Cyan;
+            this.gBox_PesquisaForcada.Location = new System.Drawing.Point(396, 20);
+            this.gBox_PesquisaForcada.Margin = new System.Windows.Forms.Padding(2);
+            this.gBox_PesquisaForcada.Name = "gBox_PesquisaForcada";
+            this.gBox_PesquisaForcada.Padding = new System.Windows.Forms.Padding(2);
+            this.gBox_PesquisaForcada.Size = new System.Drawing.Size(266, 276);
+            this.gBox_PesquisaForcada.TabIndex = 40;
+            this.gBox_PesquisaForcada.TabStop = false;
+            this.gBox_PesquisaForcada.Text = "Pesquisa Forçada por Coluna";
+            this.toolTip1.SetToolTip(this.gBox_PesquisaForcada, "O motor de buscar do Excel irá assumir valores predefinidos da letra da coluna e " +
+        "pesquisar com base nestas. ATENÇÃO: Todas as folhas de excel devem ter a informa" +
+        "ção guardada nas mesmas colunas.");
+            // 
+            // chkBox_ForcedExcelSearch
+            // 
+            this.chkBox_ForcedExcelSearch.AutoSize = true;
+            this.chkBox_ForcedExcelSearch.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(168)))), ((int)(((byte)(115)))), ((int)(((byte)(168)))));
+            this.chkBox_ForcedExcelSearch.Location = new System.Drawing.Point(81, 44);
+            this.chkBox_ForcedExcelSearch.Margin = new System.Windows.Forms.Padding(2);
+            this.chkBox_ForcedExcelSearch.Name = "chkBox_ForcedExcelSearch";
+            this.chkBox_ForcedExcelSearch.Size = new System.Drawing.Size(96, 21);
+            this.chkBox_ForcedExcelSearch.TabIndex = 37;
+            this.chkBox_ForcedExcelSearch.Text = "Activado?";
+            this.toolTip1.SetToolTip(this.chkBox_ForcedExcelSearch, "Activar detecção forçada com texto.");
+            this.chkBox_ForcedExcelSearch.UseVisualStyleBackColor = true;
+            this.chkBox_ForcedExcelSearch.CheckedChanged += new System.EventHandler(this.chkBox_ForcedExcelSearch_CheckedChanged);
+            // 
+            // button37
+            // 
+            this.button37.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button37.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(30)))), ((int)(((byte)(51)))));
+            this.button37.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button37.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.button37.ForeColor = System.Drawing.Color.Cyan;
+            this.button37.Location = new System.Drawing.Point(912, 246);
+            this.button37.Margin = new System.Windows.Forms.Padding(2);
+            this.button37.Name = "button37";
+            this.button37.Size = new System.Drawing.Size(134, 29);
+            this.button37.TabIndex = 27;
+            this.button37.Text = "📄 &Procurar Ficheiro";
+            this.button37.UseVisualStyleBackColor = false;
+            // 
+            // button38
+            // 
+            this.button38.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button38.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(30)))), ((int)(((byte)(51)))));
+            this.button38.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button38.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.button38.ForeColor = System.Drawing.Color.Cyan;
+            this.button38.Location = new System.Drawing.Point(912, 196);
+            this.button38.Margin = new System.Windows.Forms.Padding(2);
+            this.button38.Name = "button38";
+            this.button38.Size = new System.Drawing.Size(134, 29);
+            this.button38.TabIndex = 26;
+            this.button38.Text = "📄 &Procurar Ficheiro";
+            this.button38.UseVisualStyleBackColor = false;
+            // 
+            // button39
+            // 
+            this.button39.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.button39.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(30)))), ((int)(((byte)(51)))));
+            this.button39.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button39.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.button39.ForeColor = System.Drawing.Color.Cyan;
+            this.button39.Location = new System.Drawing.Point(488, 335);
+            this.button39.Margin = new System.Windows.Forms.Padding(2);
+            this.button39.Name = "button39";
+            this.button39.Size = new System.Drawing.Size(130, 29);
+            this.button39.TabIndex = 36;
+            this.button39.Text = "📄 &Procurar Ficheiro";
+            this.button39.UseVisualStyleBackColor = false;
+            // 
+            // button40
+            // 
+            this.button40.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button40.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(30)))), ((int)(((byte)(51)))));
+            this.button40.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button40.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.button40.ForeColor = System.Drawing.Color.Cyan;
+            this.button40.Location = new System.Drawing.Point(912, 145);
+            this.button40.Margin = new System.Windows.Forms.Padding(2);
+            this.button40.Name = "button40";
+            this.button40.Size = new System.Drawing.Size(134, 29);
+            this.button40.TabIndex = 25;
+            this.button40.Text = "📄 &Procurar Ficheiro";
+            this.button40.UseVisualStyleBackColor = false;
+            // 
+            // button41
+            // 
+            this.button41.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.button41.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(30)))), ((int)(((byte)(51)))));
+            this.button41.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button41.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.button41.ForeColor = System.Drawing.Color.Cyan;
+            this.button41.Location = new System.Drawing.Point(488, 279);
+            this.button41.Margin = new System.Windows.Forms.Padding(2);
+            this.button41.Name = "button41";
+            this.button41.Size = new System.Drawing.Size(130, 29);
+            this.button41.TabIndex = 35;
+            this.button41.Text = "📄 &Procurar Ficheiro";
+            this.button41.UseVisualStyleBackColor = false;
+            // 
+            // button42
+            // 
+            this.button42.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button42.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(30)))), ((int)(((byte)(51)))));
+            this.button42.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button42.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.button42.ForeColor = System.Drawing.Color.Cyan;
+            this.button42.Location = new System.Drawing.Point(912, 94);
+            this.button42.Margin = new System.Windows.Forms.Padding(2);
+            this.button42.Name = "button42";
+            this.button42.Size = new System.Drawing.Size(134, 29);
+            this.button42.TabIndex = 24;
+            this.button42.Text = "📄 &Procurar Ficheiro";
+            this.button42.UseVisualStyleBackColor = false;
+            // 
+            // button43
+            // 
+            this.button43.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.button43.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(30)))), ((int)(((byte)(51)))));
+            this.button43.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button43.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.button43.ForeColor = System.Drawing.Color.Cyan;
+            this.button43.Location = new System.Drawing.Point(488, 222);
+            this.button43.Margin = new System.Windows.Forms.Padding(2);
+            this.button43.Name = "button43";
+            this.button43.Size = new System.Drawing.Size(130, 29);
+            this.button43.TabIndex = 34;
+            this.button43.Text = "📄 &Procurar Ficheiro";
+            this.button43.UseVisualStyleBackColor = false;
+            // 
+            // button44
+            // 
+            this.button44.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button44.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(30)))), ((int)(((byte)(51)))));
+            this.button44.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button44.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.button44.ForeColor = System.Drawing.Color.Cyan;
+            this.button44.Location = new System.Drawing.Point(912, 44);
+            this.button44.Margin = new System.Windows.Forms.Padding(2);
+            this.button44.Name = "button44";
+            this.button44.Size = new System.Drawing.Size(134, 29);
+            this.button44.TabIndex = 23;
+            this.button44.Text = "📄 &Procurar Ficheiro";
+            this.button44.UseVisualStyleBackColor = false;
+            // 
+            // lbl_ForcedReserva
+            // 
+            this.lbl_ForcedReserva.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.lbl_ForcedReserva.AutoSize = true;
+            this.lbl_ForcedReserva.Font = new System.Drawing.Font("Century Gothic", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lbl_ForcedReserva.ForeColor = System.Drawing.Color.Cyan;
+            this.lbl_ForcedReserva.Location = new System.Drawing.Point(60, 205);
+            this.lbl_ForcedReserva.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lbl_ForcedReserva.Name = "lbl_ForcedReserva";
+            this.lbl_ForcedReserva.Size = new System.Drawing.Size(141, 19);
+            this.lbl_ForcedReserva.TabIndex = 33;
+            this.lbl_ForcedReserva.Text = "Coluna do Reserva";
+            // 
+            // button45
+            // 
+            this.button45.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button45.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.button45.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.button45.Location = new System.Drawing.Point(1248, 242);
+            this.button45.Margin = new System.Windows.Forms.Padding(2);
+            this.button45.Name = "button45";
+            this.button45.Size = new System.Drawing.Size(130, 33);
+            this.button45.TabIndex = 22;
+            this.button45.Text = "📄 &Procurar Ficheiro";
+            this.button45.UseVisualStyleBackColor = true;
+            // 
+            // txtbox_ColForcedReserva
+            // 
+            this.txtbox_ColForcedReserva.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.txtbox_ColForcedReserva.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(30)))), ((int)(((byte)(51)))));
+            this.txtbox_ColForcedReserva.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtbox_ColForcedReserva.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.txtbox_ColForcedReserva.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(168)))), ((int)(((byte)(115)))), ((int)(((byte)(168)))));
+            this.txtbox_ColForcedReserva.Location = new System.Drawing.Point(101, 225);
+            this.txtbox_ColForcedReserva.Margin = new System.Windows.Forms.Padding(2);
+            this.txtbox_ColForcedReserva.Name = "txtbox_ColForcedReserva";
+            this.txtbox_ColForcedReserva.PlaceholderText = " K";
+            this.txtbox_ColForcedReserva.Size = new System.Drawing.Size(49, 22);
+            this.txtbox_ColForcedReserva.TabIndex = 32;
+            this.toolTip1.SetToolTip(this.txtbox_ColForcedReserva, "Texto que o Motor de Busca irá procurar para assumir a letra da coluna onde se en" +
+        "contram os militares reservas.");
+            this.txtbox_ColForcedReserva.TextChanged += new System.EventHandler(this.txtbox_ColForcedReserva_TextChanged);
+            // 
+            // button46
+            // 
+            this.button46.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button46.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.button46.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.button46.Location = new System.Drawing.Point(1248, 39);
+            this.button46.Margin = new System.Windows.Forms.Padding(2);
+            this.button46.Name = "button46";
+            this.button46.Size = new System.Drawing.Size(130, 33);
+            this.button46.TabIndex = 18;
+            this.button46.Text = "📄 &Procurar Ficheiro";
+            this.button46.UseVisualStyleBackColor = true;
+            // 
+            // button47
+            // 
+            this.button47.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button47.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.button47.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.button47.Location = new System.Drawing.Point(1248, 89);
+            this.button47.Margin = new System.Windows.Forms.Padding(2);
+            this.button47.Name = "button47";
+            this.button47.Size = new System.Drawing.Size(130, 33);
+            this.button47.TabIndex = 15;
+            this.button47.Text = "📄 &Procurar Ficheiro";
+            this.button47.UseVisualStyleBackColor = true;
+            // 
+            // button48
+            // 
+            this.button48.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button48.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.button48.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.button48.Location = new System.Drawing.Point(1248, 140);
+            this.button48.Margin = new System.Windows.Forms.Padding(2);
+            this.button48.Name = "button48";
+            this.button48.Size = new System.Drawing.Size(130, 33);
+            this.button48.TabIndex = 12;
+            this.button48.Text = "📄 &Procurar Ficheiro";
+            this.button48.UseVisualStyleBackColor = true;
+            // 
+            // button49
+            // 
+            this.button49.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button49.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.button49.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.button49.Location = new System.Drawing.Point(1248, 192);
+            this.button49.Margin = new System.Windows.Forms.Padding(2);
+            this.button49.Name = "button49";
+            this.button49.Size = new System.Drawing.Size(130, 33);
+            this.button49.TabIndex = 1;
+            this.button49.Text = "📄 &Procurar Ficheiro";
+            this.button49.UseVisualStyleBackColor = true;
+            // 
+            // lbl_ForcedData
+            // 
+            this.lbl_ForcedData.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.lbl_ForcedData.AutoSize = true;
+            this.lbl_ForcedData.Font = new System.Drawing.Font("Century Gothic", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lbl_ForcedData.ForeColor = System.Drawing.Color.Cyan;
+            this.lbl_ForcedData.Location = new System.Drawing.Point(60, 92);
+            this.lbl_ForcedData.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lbl_ForcedData.Name = "lbl_ForcedData";
+            this.lbl_ForcedData.Size = new System.Drawing.Size(123, 19);
+            this.lbl_ForcedData.TabIndex = 1;
+            this.lbl_ForcedData.Text = "Coluna da Data";
+            // 
+            // lbl_ForcedEfectivo
+            // 
+            this.lbl_ForcedEfectivo.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.lbl_ForcedEfectivo.AutoSize = true;
+            this.lbl_ForcedEfectivo.Font = new System.Drawing.Font("Century Gothic", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lbl_ForcedEfectivo.ForeColor = System.Drawing.Color.Cyan;
+            this.lbl_ForcedEfectivo.Location = new System.Drawing.Point(60, 149);
+            this.lbl_ForcedEfectivo.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lbl_ForcedEfectivo.Name = "lbl_ForcedEfectivo";
+            this.lbl_ForcedEfectivo.Size = new System.Drawing.Size(133, 19);
+            this.lbl_ForcedEfectivo.TabIndex = 26;
+            this.lbl_ForcedEfectivo.Text = "Coluna do Efetivo";
+            // 
+            // txtbox_ColForcedData
+            // 
+            this.txtbox_ColForcedData.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.txtbox_ColForcedData.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(30)))), ((int)(((byte)(51)))));
+            this.txtbox_ColForcedData.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtbox_ColForcedData.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.txtbox_ColForcedData.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(168)))), ((int)(((byte)(115)))), ((int)(((byte)(168)))));
+            this.txtbox_ColForcedData.Location = new System.Drawing.Point(101, 112);
+            this.txtbox_ColForcedData.Margin = new System.Windows.Forms.Padding(2);
+            this.txtbox_ColForcedData.Name = "txtbox_ColForcedData";
+            this.txtbox_ColForcedData.PlaceholderText = " C";
+            this.txtbox_ColForcedData.Size = new System.Drawing.Size(49, 22);
+            this.txtbox_ColForcedData.TabIndex = 24;
+            this.toolTip1.SetToolTip(this.txtbox_ColForcedData, "Texto que o Motor de Busca irá procurar para assumir a letra da coluna onde se en" +
+        "contram as Datas.");
+            this.txtbox_ColForcedData.TextChanged += new System.EventHandler(this.txtbox_ColForcedData_TextChanged);
+            // 
+            // txtbox_ColForcedEfetivo
+            // 
+            this.txtbox_ColForcedEfetivo.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.txtbox_ColForcedEfetivo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(30)))), ((int)(((byte)(51)))));
+            this.txtbox_ColForcedEfetivo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtbox_ColForcedEfetivo.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.txtbox_ColForcedEfetivo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(168)))), ((int)(((byte)(115)))), ((int)(((byte)(168)))));
+            this.txtbox_ColForcedEfetivo.Location = new System.Drawing.Point(101, 169);
+            this.txtbox_ColForcedEfetivo.Margin = new System.Windows.Forms.Padding(2);
+            this.txtbox_ColForcedEfetivo.Name = "txtbox_ColForcedEfetivo";
+            this.txtbox_ColForcedEfetivo.PlaceholderText = " E";
+            this.txtbox_ColForcedEfetivo.Size = new System.Drawing.Size(49, 22);
+            this.txtbox_ColForcedEfetivo.TabIndex = 25;
+            this.toolTip1.SetToolTip(this.txtbox_ColForcedEfetivo, "Texto que o Motor de Busca irá procurar para assumir a letra da coluna onde se en" +
+        "contram os militares no efetivo.");
+            this.txtbox_ColForcedEfetivo.TextChanged += new System.EventHandler(this.txtbox_ColForcedEfetivo_TextChanged);
+            // 
+            // gBox_PesquisaAutonomaPorText
+            // 
+            this.gBox_PesquisaAutonomaPorText.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.gBox_PesquisaAutonomaPorText.BackColor = System.Drawing.Color.Transparent;
+            this.gBox_PesquisaAutonomaPorText.Controls.Add(this.chkBox_AutoExcelSearch);
+            this.gBox_PesquisaAutonomaPorText.Controls.Add(this.button18);
+            this.gBox_PesquisaAutonomaPorText.Controls.Add(this.button25);
+            this.gBox_PesquisaAutonomaPorText.Controls.Add(this.button26);
+            this.gBox_PesquisaAutonomaPorText.Controls.Add(this.button27);
+            this.gBox_PesquisaAutonomaPorText.Controls.Add(this.button28);
+            this.gBox_PesquisaAutonomaPorText.Controls.Add(this.button29);
+            this.gBox_PesquisaAutonomaPorText.Controls.Add(this.button30);
+            this.gBox_PesquisaAutonomaPorText.Controls.Add(this.button31);
+            this.gBox_PesquisaAutonomaPorText.Controls.Add(this.lbl_AutoReserva);
+            this.gBox_PesquisaAutonomaPorText.Controls.Add(this.button32);
+            this.gBox_PesquisaAutonomaPorText.Controls.Add(this.txtbox_ColAutoReserva);
+            this.gBox_PesquisaAutonomaPorText.Controls.Add(this.button33);
+            this.gBox_PesquisaAutonomaPorText.Controls.Add(this.button34);
+            this.gBox_PesquisaAutonomaPorText.Controls.Add(this.button35);
+            this.gBox_PesquisaAutonomaPorText.Controls.Add(this.button36);
+            this.gBox_PesquisaAutonomaPorText.Controls.Add(this.lbl_AutoData);
+            this.gBox_PesquisaAutonomaPorText.Controls.Add(this.lbl_AutoEfectivo);
+            this.gBox_PesquisaAutonomaPorText.Controls.Add(this.txtbox_ColAutoData);
+            this.gBox_PesquisaAutonomaPorText.Controls.Add(this.txtbox_ColAutoEfetivo);
+            this.gBox_PesquisaAutonomaPorText.Font = new System.Drawing.Font("Century Gothic", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.gBox_PesquisaAutonomaPorText.ForeColor = System.Drawing.Color.Cyan;
+            this.gBox_PesquisaAutonomaPorText.Location = new System.Drawing.Point(63, 20);
+            this.gBox_PesquisaAutonomaPorText.Margin = new System.Windows.Forms.Padding(2);
+            this.gBox_PesquisaAutonomaPorText.Name = "gBox_PesquisaAutonomaPorText";
+            this.gBox_PesquisaAutonomaPorText.Padding = new System.Windows.Forms.Padding(2);
+            this.gBox_PesquisaAutonomaPorText.Size = new System.Drawing.Size(266, 276);
+            this.gBox_PesquisaAutonomaPorText.TabIndex = 39;
+            this.gBox_PesquisaAutonomaPorText.TabStop = false;
+            this.gBox_PesquisaAutonomaPorText.Text = "Pesquisa Autónoma por Texto";
+            this.toolTip1.SetToolTip(this.gBox_PesquisaAutonomaPorText, "O motor de buscar do Excel irá tentar encontrar as colunas de interesse com a inf" +
+        "o necessária ao pesquisar os nomes inseridos nestas caixas de forma dinâmica.");
+            // 
+            // chkBox_AutoExcelSearch
+            // 
+            this.chkBox_AutoExcelSearch.AutoSize = true;
+            this.chkBox_AutoExcelSearch.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(168)))), ((int)(((byte)(115)))), ((int)(((byte)(168)))));
+            this.chkBox_AutoExcelSearch.Location = new System.Drawing.Point(82, 45);
+            this.chkBox_AutoExcelSearch.Margin = new System.Windows.Forms.Padding(2);
+            this.chkBox_AutoExcelSearch.Name = "chkBox_AutoExcelSearch";
+            this.chkBox_AutoExcelSearch.Size = new System.Drawing.Size(96, 21);
+            this.chkBox_AutoExcelSearch.TabIndex = 37;
+            this.chkBox_AutoExcelSearch.Text = "Activado?";
+            this.toolTip1.SetToolTip(this.chkBox_AutoExcelSearch, "Activar detecção autónoma com texto.");
+            this.chkBox_AutoExcelSearch.UseVisualStyleBackColor = true;
+            this.chkBox_AutoExcelSearch.CheckedChanged += new System.EventHandler(this.chkBox_AutoExcelSearch_CheckedChanged);
+            // 
+            // button18
+            // 
+            this.button18.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button18.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(30)))), ((int)(((byte)(51)))));
+            this.button18.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button18.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.button18.ForeColor = System.Drawing.Color.Cyan;
+            this.button18.Location = new System.Drawing.Point(845, 247);
+            this.button18.Margin = new System.Windows.Forms.Padding(2);
+            this.button18.Name = "button18";
+            this.button18.Size = new System.Drawing.Size(134, 29);
+            this.button18.TabIndex = 27;
+            this.button18.Text = "📄 &Procurar Ficheiro";
+            this.button18.UseVisualStyleBackColor = false;
+            // 
+            // button25
+            // 
+            this.button25.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button25.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(30)))), ((int)(((byte)(51)))));
+            this.button25.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button25.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.button25.ForeColor = System.Drawing.Color.Cyan;
+            this.button25.Location = new System.Drawing.Point(845, 197);
+            this.button25.Margin = new System.Windows.Forms.Padding(2);
+            this.button25.Name = "button25";
+            this.button25.Size = new System.Drawing.Size(134, 29);
+            this.button25.TabIndex = 26;
+            this.button25.Text = "📄 &Procurar Ficheiro";
+            this.button25.UseVisualStyleBackColor = false;
+            // 
+            // button26
+            // 
+            this.button26.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.button26.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(30)))), ((int)(((byte)(51)))));
+            this.button26.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button26.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.button26.ForeColor = System.Drawing.Color.Cyan;
+            this.button26.Location = new System.Drawing.Point(455, 247);
+            this.button26.Margin = new System.Windows.Forms.Padding(2);
+            this.button26.Name = "button26";
+            this.button26.Size = new System.Drawing.Size(130, 29);
+            this.button26.TabIndex = 36;
+            this.button26.Text = "📄 &Procurar Ficheiro";
+            this.button26.UseVisualStyleBackColor = false;
+            // 
+            // button27
+            // 
+            this.button27.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button27.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(30)))), ((int)(((byte)(51)))));
+            this.button27.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button27.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.button27.ForeColor = System.Drawing.Color.Cyan;
+            this.button27.Location = new System.Drawing.Point(845, 146);
+            this.button27.Margin = new System.Windows.Forms.Padding(2);
+            this.button27.Name = "button27";
+            this.button27.Size = new System.Drawing.Size(134, 29);
+            this.button27.TabIndex = 25;
+            this.button27.Text = "📄 &Procurar Ficheiro";
+            this.button27.UseVisualStyleBackColor = false;
+            // 
+            // button28
+            // 
+            this.button28.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.button28.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(30)))), ((int)(((byte)(51)))));
+            this.button28.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button28.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.button28.ForeColor = System.Drawing.Color.Cyan;
+            this.button28.Location = new System.Drawing.Point(455, 191);
+            this.button28.Margin = new System.Windows.Forms.Padding(2);
+            this.button28.Name = "button28";
+            this.button28.Size = new System.Drawing.Size(130, 29);
+            this.button28.TabIndex = 35;
+            this.button28.Text = "📄 &Procurar Ficheiro";
+            this.button28.UseVisualStyleBackColor = false;
+            // 
+            // button29
+            // 
+            this.button29.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button29.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(30)))), ((int)(((byte)(51)))));
+            this.button29.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button29.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.button29.ForeColor = System.Drawing.Color.Cyan;
+            this.button29.Location = new System.Drawing.Point(845, 95);
+            this.button29.Margin = new System.Windows.Forms.Padding(2);
+            this.button29.Name = "button29";
+            this.button29.Size = new System.Drawing.Size(134, 29);
+            this.button29.TabIndex = 24;
+            this.button29.Text = "📄 &Procurar Ficheiro";
+            this.button29.UseVisualStyleBackColor = false;
+            // 
+            // button30
+            // 
+            this.button30.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.button30.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(30)))), ((int)(((byte)(51)))));
+            this.button30.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button30.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.button30.ForeColor = System.Drawing.Color.Cyan;
+            this.button30.Location = new System.Drawing.Point(455, 134);
+            this.button30.Margin = new System.Windows.Forms.Padding(2);
+            this.button30.Name = "button30";
+            this.button30.Size = new System.Drawing.Size(130, 29);
+            this.button30.TabIndex = 34;
+            this.button30.Text = "📄 &Procurar Ficheiro";
+            this.button30.UseVisualStyleBackColor = false;
+            // 
+            // button31
+            // 
+            this.button31.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button31.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(30)))), ((int)(((byte)(51)))));
+            this.button31.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button31.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.button31.ForeColor = System.Drawing.Color.Cyan;
+            this.button31.Location = new System.Drawing.Point(845, 45);
+            this.button31.Margin = new System.Windows.Forms.Padding(2);
+            this.button31.Name = "button31";
+            this.button31.Size = new System.Drawing.Size(134, 29);
+            this.button31.TabIndex = 23;
+            this.button31.Text = "📄 &Procurar Ficheiro";
+            this.button31.UseVisualStyleBackColor = false;
+            // 
+            // lbl_AutoReserva
+            // 
+            this.lbl_AutoReserva.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.lbl_AutoReserva.AutoSize = true;
+            this.lbl_AutoReserva.Font = new System.Drawing.Font("Century Gothic", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lbl_AutoReserva.ForeColor = System.Drawing.Color.Cyan;
+            this.lbl_AutoReserva.Location = new System.Drawing.Point(45, 205);
+            this.lbl_AutoReserva.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lbl_AutoReserva.Name = "lbl_AutoReserva";
+            this.lbl_AutoReserva.Size = new System.Drawing.Size(141, 19);
+            this.lbl_AutoReserva.TabIndex = 33;
+            this.lbl_AutoReserva.Text = "Coluna do Reserva";
+            // 
+            // button32
+            // 
+            this.button32.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button32.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.button32.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.button32.Location = new System.Drawing.Point(1181, 243);
+            this.button32.Margin = new System.Windows.Forms.Padding(2);
+            this.button32.Name = "button32";
+            this.button32.Size = new System.Drawing.Size(130, 33);
+            this.button32.TabIndex = 22;
+            this.button32.Text = "📄 &Procurar Ficheiro";
+            this.button32.UseVisualStyleBackColor = true;
+            // 
+            // txtbox_ColAutoReserva
+            // 
+            this.txtbox_ColAutoReserva.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.txtbox_ColAutoReserva.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(30)))), ((int)(((byte)(51)))));
+            this.txtbox_ColAutoReserva.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtbox_ColAutoReserva.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.txtbox_ColAutoReserva.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(168)))), ((int)(((byte)(115)))), ((int)(((byte)(168)))));
+            this.txtbox_ColAutoReserva.Location = new System.Drawing.Point(43, 225);
+            this.txtbox_ColAutoReserva.Margin = new System.Windows.Forms.Padding(2);
+            this.txtbox_ColAutoReserva.Name = "txtbox_ColAutoReserva";
+            this.txtbox_ColAutoReserva.PlaceholderText = " RESERVA";
+            this.txtbox_ColAutoReserva.Size = new System.Drawing.Size(164, 22);
+            this.txtbox_ColAutoReserva.TabIndex = 32;
+            this.toolTip1.SetToolTip(this.txtbox_ColAutoReserva, "Texto que o Motor de Busca irá procurar para assumir a letra da coluna onde se en" +
+        "contram os militares reservas.");
+            this.txtbox_ColAutoReserva.TextChanged += new System.EventHandler(this.txtbox_ColAutoReserva_TextChanged);
+            // 
+            // button33
+            // 
+            this.button33.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button33.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.button33.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.button33.Location = new System.Drawing.Point(1181, 40);
+            this.button33.Margin = new System.Windows.Forms.Padding(2);
+            this.button33.Name = "button33";
+            this.button33.Size = new System.Drawing.Size(130, 33);
+            this.button33.TabIndex = 18;
+            this.button33.Text = "📄 &Procurar Ficheiro";
+            this.button33.UseVisualStyleBackColor = true;
+            // 
+            // button34
+            // 
+            this.button34.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button34.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.button34.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.button34.Location = new System.Drawing.Point(1181, 90);
+            this.button34.Margin = new System.Windows.Forms.Padding(2);
+            this.button34.Name = "button34";
+            this.button34.Size = new System.Drawing.Size(130, 33);
+            this.button34.TabIndex = 15;
+            this.button34.Text = "📄 &Procurar Ficheiro";
+            this.button34.UseVisualStyleBackColor = true;
+            // 
+            // button35
+            // 
+            this.button35.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button35.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.button35.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.button35.Location = new System.Drawing.Point(1181, 141);
+            this.button35.Margin = new System.Windows.Forms.Padding(2);
+            this.button35.Name = "button35";
+            this.button35.Size = new System.Drawing.Size(130, 33);
+            this.button35.TabIndex = 12;
+            this.button35.Text = "📄 &Procurar Ficheiro";
+            this.button35.UseVisualStyleBackColor = true;
+            // 
+            // button36
+            // 
+            this.button36.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button36.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.button36.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.button36.Location = new System.Drawing.Point(1181, 193);
+            this.button36.Margin = new System.Windows.Forms.Padding(2);
+            this.button36.Name = "button36";
+            this.button36.Size = new System.Drawing.Size(130, 33);
+            this.button36.TabIndex = 1;
+            this.button36.Text = "📄 &Procurar Ficheiro";
+            this.button36.UseVisualStyleBackColor = true;
+            // 
+            // lbl_AutoData
+            // 
+            this.lbl_AutoData.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.lbl_AutoData.AutoSize = true;
+            this.lbl_AutoData.Font = new System.Drawing.Font("Century Gothic", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lbl_AutoData.ForeColor = System.Drawing.Color.Cyan;
+            this.lbl_AutoData.Location = new System.Drawing.Point(45, 92);
+            this.lbl_AutoData.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lbl_AutoData.Name = "lbl_AutoData";
+            this.lbl_AutoData.Size = new System.Drawing.Size(123, 19);
+            this.lbl_AutoData.TabIndex = 1;
+            this.lbl_AutoData.Text = "Coluna da Data";
+            // 
+            // lbl_AutoEfectivo
+            // 
+            this.lbl_AutoEfectivo.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.lbl_AutoEfectivo.AutoSize = true;
+            this.lbl_AutoEfectivo.Font = new System.Drawing.Font("Century Gothic", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lbl_AutoEfectivo.ForeColor = System.Drawing.Color.Cyan;
+            this.lbl_AutoEfectivo.Location = new System.Drawing.Point(45, 149);
+            this.lbl_AutoEfectivo.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lbl_AutoEfectivo.Name = "lbl_AutoEfectivo";
+            this.lbl_AutoEfectivo.Size = new System.Drawing.Size(133, 19);
+            this.lbl_AutoEfectivo.TabIndex = 26;
+            this.lbl_AutoEfectivo.Text = "Coluna do Efetivo";
+            // 
+            // txtbox_ColAutoData
+            // 
+            this.txtbox_ColAutoData.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.txtbox_ColAutoData.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(30)))), ((int)(((byte)(51)))));
+            this.txtbox_ColAutoData.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtbox_ColAutoData.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.txtbox_ColAutoData.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(168)))), ((int)(((byte)(115)))), ((int)(((byte)(168)))));
+            this.txtbox_ColAutoData.Location = new System.Drawing.Point(43, 112);
+            this.txtbox_ColAutoData.Margin = new System.Windows.Forms.Padding(2);
+            this.txtbox_ColAutoData.Name = "txtbox_ColAutoData";
+            this.txtbox_ColAutoData.PlaceholderText = " DATA";
+            this.txtbox_ColAutoData.Size = new System.Drawing.Size(164, 22);
+            this.txtbox_ColAutoData.TabIndex = 24;
+            this.toolTip1.SetToolTip(this.txtbox_ColAutoData, "Texto que o Motor de Busca irá procurar para assumir a letra da coluna onde se en" +
+        "contram as Datas.");
+            this.txtbox_ColAutoData.TextChanged += new System.EventHandler(this.txtbox_ColAutoData_TextChanged);
+            // 
+            // txtbox_ColAutoEfetivo
+            // 
+            this.txtbox_ColAutoEfetivo.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.txtbox_ColAutoEfetivo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(30)))), ((int)(((byte)(51)))));
+            this.txtbox_ColAutoEfetivo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtbox_ColAutoEfetivo.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.txtbox_ColAutoEfetivo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(168)))), ((int)(((byte)(115)))), ((int)(((byte)(168)))));
+            this.txtbox_ColAutoEfetivo.Location = new System.Drawing.Point(43, 169);
+            this.txtbox_ColAutoEfetivo.Margin = new System.Windows.Forms.Padding(2);
+            this.txtbox_ColAutoEfetivo.Name = "txtbox_ColAutoEfetivo";
+            this.txtbox_ColAutoEfetivo.PlaceholderText = " EFECTIVO";
+            this.txtbox_ColAutoEfetivo.Size = new System.Drawing.Size(164, 22);
+            this.txtbox_ColAutoEfetivo.TabIndex = 25;
+            this.toolTip1.SetToolTip(this.txtbox_ColAutoEfetivo, "Texto que o Motor de Busca irá procurar para assumir a letra da coluna onde se en" +
+        "contram os militares no efetivo.");
+            this.txtbox_ColAutoEfetivo.TextChanged += new System.EventHandler(this.txtbox_ColAutoEfetivo_TextChanged);
+            // 
             // tpage_Outros
             // 
             this.tpage_Outros.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(20)))), ((int)(((byte)(25)))));
@@ -1369,6 +2081,7 @@
             this.rbutton_AllDebugWindows.TabStop = true;
             this.rbutton_AllDebugWindows.Text = "Todas as Janelas";
             this.rbutton_AllDebugWindows.UseVisualStyleBackColor = true;
+            this.rbutton_AllDebugWindows.CheckedChanged += new System.EventHandler(this.rbutton_AllDebugWindows_CheckedChanged_1);
             // 
             // rbutton_lowDebugWindows
             // 
@@ -1382,6 +2095,7 @@
             this.rbutton_lowDebugWindows.TabStop = true;
             this.rbutton_lowDebugWindows.Text = "Poucas Janelas";
             this.rbutton_lowDebugWindows.UseVisualStyleBackColor = true;
+            this.rbutton_lowDebugWindows.CheckedChanged += new System.EventHandler(this.rbutton_lowDebugWindows_CheckedChanged_1);
             // 
             // rbutton_NoDebugWindows
             // 
@@ -1396,6 +2110,7 @@
             this.rbutton_NoDebugWindows.TabStop = true;
             this.rbutton_NoDebugWindows.Text = "Nenhuma";
             this.rbutton_NoDebugWindows.UseVisualStyleBackColor = true;
+            this.rbutton_NoDebugWindows.CheckedChanged += new System.EventHandler(this.rbutton_NoDebugWindows_CheckedChanged_1);
             // 
             // gBox_BackgroundMode
             // 
@@ -1483,6 +2198,11 @@
             this.gBox_DirectorioExports.PerformLayout();
             this.gBox_DirectoriosModelos.ResumeLayout(false);
             this.gBox_DirectoriosModelos.PerformLayout();
+            this.tpage_EscalasEngine.ResumeLayout(false);
+            this.gBox_PesquisaForcada.ResumeLayout(false);
+            this.gBox_PesquisaForcada.PerformLayout();
+            this.gBox_PesquisaAutonomaPorText.ResumeLayout(false);
+            this.gBox_PesquisaAutonomaPorText.PerformLayout();
             this.tpage_Outros.ResumeLayout(false);
             this.gBox_DirectoriosInspFilesExported.ResumeLayout(false);
             this.gBox_DirectoriosInspFilesExported.PerformLayout();
@@ -1595,5 +2315,48 @@
         private Button btn_searchFile_PDFApp;
         private TextBox txtBox_PDFAppPath;
         private Label lbl_dirAppWords;
+        private TabPage tpage_EscalasEngine;
+        private GroupBox gBox_PesquisaAutonomaPorText;
+        private Button button18;
+        private Button button25;
+        private Button button26;
+        private Button button27;
+        private Button button28;
+        private Button button29;
+        private Button button30;
+        private Button button31;
+        private Label lbl_AutoReserva;
+        private Button button32;
+        private TextBox txtbox_ColAutoReserva;
+        private Button button33;
+        private Button button34;
+        private Button button35;
+        private Button button36;
+        private Label lbl_AutoData;
+        private Label lbl_AutoEfectivo;
+        private TextBox txtbox_ColAutoData;
+        private TextBox txtbox_ColAutoEfetivo;
+        private GroupBox gBox_PesquisaForcada;
+        private CheckBox chkBox_ForcedExcelSearch;
+        private Button button37;
+        private Button button38;
+        private Button button39;
+        private Button button40;
+        private Button button41;
+        private Button button42;
+        private Button button43;
+        private Button button44;
+        private Label lbl_ForcedReserva;
+        private Button button45;
+        private TextBox txtbox_ColForcedReserva;
+        private Button button46;
+        private Button button47;
+        private Button button48;
+        private Button button49;
+        private Label lbl_ForcedData;
+        private Label lbl_ForcedEfectivo;
+        private TextBox txtbox_ColForcedData;
+        private TextBox txtbox_ColForcedEfetivo;
+        private CheckBox chkBox_AutoExcelSearch;
     }
 }

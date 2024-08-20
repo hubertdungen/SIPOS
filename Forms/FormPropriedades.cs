@@ -20,6 +20,8 @@ namespace SIPOS.Forms
             InitializeComponent();
             FormPropriedades formPropriedades = Mediator.formPropriedades;
             Mediator.formPropriedades = this;
+
+
         }
 
 
@@ -38,6 +40,18 @@ namespace SIPOS.Forms
             txtBox_WordAppPath.Text = Mediator.wordAppFilePath;
             txtBox_PDFAppPath.Text = Mediator.pdfAppFilePath;
             txtBox_InspFilePath.Text = Mediator.inspFilePath;
+            chkBox_DebugerMode.Checked = Mediator.debugMode;
+            chkBox_AutoExcelSearch.Checked = Mediator.autoExcelSearch;
+            chkBox_ForcedExcelSearch.Checked = !Mediator.autoExcelSearch;
+            txtbox_ColAutoData.Text = Mediator.autoExcelData;
+            txtbox_ColAutoEfetivo.Text = Mediator.autoExcelEfetivo;
+            txtbox_ColAutoReserva.Text = Mediator.autoExcelReserva;
+            txtbox_ColForcedData.Text = Mediator.forcedExcelData;
+            txtbox_ColForcedEfetivo.Text = Mediator.forcedExcelEfetivo;
+            txtbox_ColForcedReserva.Text = Mediator.forcedExcelReserva;
+            
+
+            if (Mediator.winMode == 1 && Mediator.debugMode == true) { rbutton_lowDebugWindows.Checked = true; } else if (Mediator.winMode == 2 && Mediator.debugMode == true) { rbutton_AllDebugWindows.Checked = true; }
 
         }
 
@@ -60,6 +74,15 @@ namespace SIPOS.Forms
             frmPropriedades.txtbox_FileDirectory_ModelQuarta.Text = Mediator.fPathModelQuarta;
             frmPropriedades.txtbox_FolderDirectory_OSWord.Text = Mediator.fPathOSWord;
             frmPropriedades.chkBox_DebugerMode.Checked = Mediator.debugMode;
+            frmPropriedades.chkBox_AutoExcelSearch.Checked = Mediator.autoExcelSearch;
+            frmPropriedades.chkBox_ForcedExcelSearch.Checked =! Mediator.autoExcelSearch;
+            frmPropriedades.txtbox_ColAutoData.Text = Mediator.autoExcelData;
+            frmPropriedades.txtbox_ColAutoEfetivo.Text = Mediator.autoExcelEfetivo;
+            frmPropriedades.txtbox_ColAutoReserva.Text = Mediator.autoExcelReserva;
+            frmPropriedades.txtbox_ColForcedData.Text = Mediator.forcedExcelData;
+            frmPropriedades.txtbox_ColForcedEfetivo.Text = Mediator.forcedExcelEfetivo;
+            frmPropriedades.txtbox_ColForcedReserva.Text = Mediator.forcedExcelReserva;
+            if (Mediator.winMode == 1 && Mediator.debugMode == true) { frmPropriedades.rbutton_lowDebugWindows.Checked = true; } else if (Mediator.winMode == 2 && Mediator.debugMode == true) { frmPropriedades.rbutton_AllDebugWindows.Checked = true; }
         }
 
         // PATH VARS ACTUALIZED BY TEXTBOXES
@@ -87,42 +110,42 @@ namespace SIPOS.Forms
         private void txtbox_FileDirectoryFunerais_TextChanged(object sender, EventArgs e)
         {
             Mediator.isPathSaved = false;
-            
+
         }
         private void txtbox_FileDirectoryPD_TextChanged(object sender, EventArgs e)
         {
             Mediator.isPathSaved = false;
-            
+
         }
         private void txtbox_FileDirectorySD_TextChanged(object sender, EventArgs e)
         {
             Mediator.isPathSaved = false;
-            
+
         }
         private void txtbox_FileDirectoryCCS_TextChanged(object sender, EventArgs e)
         {
             Mediator.isPathSaved = false;
-            
+
         }
         private void txtbox_FileDirectoryODU_TextChanged(object sender, EventArgs e)
         {
             Mediator.isPathSaved = false;
-            
+
         }
         private void txtbox_FileDirectory_ModelSemana_TextChanged(object sender, EventArgs e)
         {
             Mediator.isPathSaved = false;
-            
+
         }
         private void txtbox_FileDirectory_ModelFDSemana_TextChanged(object sender, EventArgs e)
         {
             Mediator.isPathSaved = false;
-            
+
         }
         private void txtbox_FolderDirectory_OSWord_TextChanged(object sender, EventArgs e)
         {
             Mediator.isPathSaved = false;
-            
+
         }
         private void txtBox_WordAppPath_TextChanged(object sender, EventArgs e)
         {
@@ -265,34 +288,41 @@ namespace SIPOS.Forms
 
 
         // WINDOWS MODE
-        private void rbutton_NoDebugWindows_CheckedChanged(object sender, EventArgs e)
+
+        private void rbutton_NoDebugWindows_CheckedChanged_1(object sender, EventArgs e)
         {
             if (rbutton_NoDebugWindows.Checked)
             {
                 Mediator.winMode = 0;
+                //MessageBox.Show("Mediator.winMode: " + Mediator.winMode, "Informação de Troubleshooting");
             }
         }
-        private void rbutton_lowDebugWindows_CheckedChanged(object sender, EventArgs e)
+
+        private void rbutton_lowDebugWindows_CheckedChanged_1(object sender, EventArgs e)
         {
-            if (rbutton_lowDebugWindows.Checked)
+            if (rbutton_NoDebugWindows.Checked)
             {
-                Mediator.winMode = 1;
+                Mediator.winMode = 0;
+                //MessageBox.Show("Mediator.winMode: " + Mediator.winMode, "Informação de Troubleshooting");
             }
         }
-        private void rbutton_AllDebugWindows_CheckedChanged(object sender, EventArgs e)
+
+        private void rbutton_AllDebugWindows_CheckedChanged_1(object sender, EventArgs e)
         {
             if (rbutton_AllDebugWindows.Checked)
             {
                 Mediator.winMode = 2;
+                //MessageBox.Show("Mediator.winMode: " + Mediator.winMode, "Informação de Troubleshooting");
             }
         }
 
-        
+
+
 
         // FORM CONTROL
         public void prg_SaveButton_AddInc(int addMore)
         {
-            
+
             if (prg_SaveButton.Value == prg_SaveButton.Minimum)
             {
                 prg_SaveButton.Value += prg_SaveButton.Value + 1 + addMore;
@@ -370,6 +400,12 @@ namespace SIPOS.Forms
 
         }
 
+
+
+        ////////////////////////////////////////////////////// -------------------------------------------- // 
+        ////////////////////////////////////////////////////// ------- ESCALAS ENGINE EXCEL FINDER ------- //
+        ////////////////////////////////////////////////////// ------------------------------------------ //
+
         private void chkBox_VisibleWordExportProcess_CheckedChanged(object sender, EventArgs e)
         {
             if (chkBox_VisibleWordExportProcess.Checked == true)
@@ -378,10 +414,72 @@ namespace SIPOS.Forms
             }
             else
             {
-                Mediator.isExportVisible = false; 
+                Mediator.isExportVisible = false;
             }
         }
 
+        private void chkBox_AutoExcelSearch_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkBox_AutoExcelSearch.Checked == true)
+            {
+                Mediator.autoExcelSearch = true;
+                chkBox_ForcedExcelSearch.Checked = false;
+            }
+            else
+            {
+                Mediator.autoExcelSearch = false;
+                chkBox_ForcedExcelSearch.Checked = true;
+            }
+        }
 
+        private void chkBox_ForcedExcelSearch_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkBox_ForcedExcelSearch.Checked == true)
+            {
+                Mediator.autoExcelSearch = false;
+                chkBox_AutoExcelSearch.Checked = false;
+            }
+            else
+            {
+                Mediator.autoExcelSearch = true;
+                chkBox_AutoExcelSearch.Checked = true;
+            }
+        }
+
+        private void txtbox_ColAutoData_TextChanged(object sender, EventArgs e)
+        {
+            Mediator.autoExcelData = txtbox_ColAutoData.Text;
+            Mediator.isPathSaved = false;
+        }
+
+        private void txtbox_ColAutoEfetivo_TextChanged(object sender, EventArgs e)
+        {
+            Mediator.autoExcelEfetivo = txtbox_ColAutoEfetivo.Text;
+            Mediator.isPathSaved = false;
+        }
+
+        private void txtbox_ColAutoReserva_TextChanged(object sender, EventArgs e)
+        {
+            Mediator.autoExcelReserva = txtbox_ColAutoReserva.Text;
+            Mediator.isPathSaved = false;
+        }
+
+        private void txtbox_ColForcedData_TextChanged(object sender, EventArgs e)
+        {
+            Mediator.forcedExcelData = txtbox_ColForcedData.Text;
+            Mediator.isPathSaved = false;
+        }
+
+        private void txtbox_ColForcedEfetivo_TextChanged(object sender, EventArgs e)
+        {
+            Mediator.forcedExcelEfetivo = txtbox_ColForcedEfetivo.Text;
+            Mediator.isPathSaved = false;
+        }
+
+        private void txtbox_ColForcedReserva_TextChanged(object sender, EventArgs e)
+        {
+            Mediator.forcedExcelReserva = txtbox_ColForcedReserva.Text;
+            Mediator.isPathSaved = false;
+        }
     }
 }

@@ -43,7 +43,7 @@ namespace SIPOS
         // ------------
 
         // Details VARS
-        public static string version = "v B-1.0.3";
+        public static string version = "v B-1.1.0";
 
         
         private Mediator mediator;

@@ -10,6 +10,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Range = Microsoft.Office.Interop.Excel.Range;
+using System.Diagnostics;
 
 namespace SIPOS
 {
@@ -123,273 +124,210 @@ namespace SIPOS
         }
         // -----------------------------
 
-        // CHECK THE ROWS
+
+
+        // MOTOR DE PESQUISA DE COLUNAS
+        private Dictionary<string, int> FindColumnIndexes(Worksheet ws, int startRow = 1, int endRow = 20)
+        {
+            Dictionary<string, int> columnIndexes = new Dictionary<string, int>();
+
+            if (Mediator.autoExcelSearch)
+            {
+                int lastColumn = ws.UsedRange.Columns.Count;
+
+                for (int row = startRow; row <= endRow; row++)
+                {
+                    Range headerRow = ws.Range[ws.Cells[row, 1], ws.Cells[row, lastColumn]];
+                    foreach (Range cell in headerRow.Cells)
+                    {
+                        string headerText = cell.Value?.ToString().Trim().ToUpper();
+                        if (!string.IsNullOrEmpty(headerText))
+                        {
+                            if (headerText == Mediator.autoExcelData.ToUpper())
+                                columnIndexes["Date"] = cell.Column;
+                            else if (headerText == Mediator.autoExcelEfetivo.ToUpper())
+                                columnIndexes["Efectivo"] = cell.Column;
+                            else if (headerText == Mediator.autoExcelReserva.ToUpper())
+                                columnIndexes["Reserva"] = cell.Column;
+                        }
+                    }
+
+                    if (columnIndexes.Count == 3)
+                        break;
+                }
+            }
+
+            // Apply forced indexes for any columns that weren't found
+            if (!columnIndexes.ContainsKey("Date"))
+                columnIndexes["Date"] = GetColumnIndexFromLetter(Mediator.forcedExcelData);
+            if (!columnIndexes.ContainsKey("Efectivo"))
+                columnIndexes["Efectivo"] = GetColumnIndexFromLetter(Mediator.forcedExcelEfetivo);
+            if (!columnIndexes.ContainsKey("Reserva"))
+                columnIndexes["Reserva"] = GetColumnIndexFromLetter(Mediator.forcedExcelReserva);
+
+            
+            //System.Windows.Forms.MessageBox.Show($"Date column index: {columnIndexes["Date"]}");
+            //System.Windows.Forms.MessageBox.Show($"Efectivo column index: {columnIndexes["Efectivo"]}");
+            //System.Windows.Forms.MessageBox.Show($"Reserva column index: {columnIndexes["Reserva"]}");
+            //System.Windows.Forms.MessageBox.Show($"Row found for date {Mediator.escalaDay}: {rowm}");
+
+
+            return columnIndexes;
+        }
+
+
+
+
+        private int GetColumnIndexFromLetter(string columnLetter)
+        {
+            int columnNumber = 0;
+            for (int i = 0; i < columnLetter.Length; i++)
+            {
+                columnNumber *= 26;
+                columnNumber += (columnLetter[i] - 'A' + 1);
+            }
+            return columnNumber;
+        }
+
+        // -----------------------------
+
+
+
+        // CHECK THE ROWS (UPDATED)
         public void checkRows(string filePathSelected)
         {
-            outputText = "";  // Clearing the TEXT
+            outputText = "";
+            Microsoft.Office.Interop.Excel.Application excelApp = null;
+            Workbook wb = null;
+            Worksheet ws = null;
 
-            Mediator.instPrgBarAddInc(0);  // progress bar add inc
-            Microsoft.Office.Interop.Excel.Application excel = new Microsoft.Office.Interop.Excel.Application();
-            Workbook wb;
-            Worksheet ws;
-
-            wb = excel.Workbooks.Open(filePathSelected, false, true);
-            ws = wb.Worksheets[1];
-
-            Range searchedRange = excel.get_Range("B15", "K52");
-
-            // LINE FINDER
-            Range currentFind = searchedRange.Find(Mediator.escalaDay);
-
-            string displayResult = "";
-            //string displayResultOut = "";
-            List<string> ResultOutList = new List<string>();
-            Mediator.instPrgBarAddInc(0);  // progress bar add inc
-
-            // -- CALLER
-            // ------------------------- //
-            if (currentFind != null)
+            try
             {
-                displayResult = "Found at \ncolumn - " + currentFind.Column +  // Debuger
-                                            "\nrow - " + currentFind.Row;
-
-                // Data Values - Index Identifiers
-                int colmn = currentFind.Column;
-                int rowm = currentFind.Row;
-
-                // Individual Identifiers
-                Range dateCell = ws.Cells[rowm, colmn];
-                Range efectivoCell = ws.Cells[rowm, "E"];
-                Range stateCell1 = ws.Cells[rowm, "J"];
-                Range stateCell2 = ws.Cells[rowm + 1, "J"];
-                Range stateCell3 = ws.Cells[rowm + 2, "J"];
-                Range reservaCell = ws.Cells[rowm, "K"];
-
-                int smartAdaptIncrementer = 1;
-                if (Convert.ToString(stateCell3.Value) == "ADPT") { smartAdaptIncrementer = 2; }   // SE "ADPT" está na ROW 3, O adaptCell COMPENSA +1 ROW
-                Range adaptCell = ws.Cells[rowm + smartAdaptIncrementer, "E"];
-
-
-
-
-                //outputText = "";  // Clearing the TEXT
-
-                //Mediator.instPrgBarAddInc(0);  // progress bar add inc
-                //Microsoft.Office.Interop.Excel.Application excel = new Microsoft.Office.Interop.Excel.Application();
-
-
-                ////Declare main variables
-                //Workbook wb;
-                //Worksheet ws;
-
-                //wb = excel.Workbooks.Open(filePathSelected, false, true);
-                //ws = wb.Worksheets[1];
-
-                //// Initialize variables to represent the columns
-                //int dateCol = 0, efectivoCol = 0, reservaCol = 0;
-                //Range headerRow = null; 
-                //int startRow = 0;
-                //string displayResult = "";
-                ////string displayResultOut = "";
-
-
-                //// Set the range where the headers are expected to be found
-                //Range headerSearchRange = ws.Range["A1", "P16"]; // Adjust the range according to your expectation
-
-                //// Use Find to locate the "DATA" header
-                //Range dateHeader = headerSearchRange.Find("DATA", LookIn: XlFindLookIn.xlValues, LookAt: XlLookAt.xlWhole);
-
-
-                //// Setting the HEADER coordinates
-                //if (dateHeader != null)
-                //{
-                //    // Set the column for "DATA" and the start row for the data range
-                //    dateCol = dateHeader.Column;
-                //    startRow = dateHeader.Row + 1; // Assuming data starts immediately after the header
-
-                //    // Now find the columns for "EFECTIVO" and "RESERVA" based on the header row
-                //    headerRow = ws.Rows[dateHeader.Row];
-                //    for (int col = 1; col <= headerRow.Columns.Count; col++)
-                //    {
-                //        // Safely retrieve the value of the cell as a string
-                //        var cellValue = headerRow.Cells[headerRow, col].Value;
-                //        string text = cellValue != null ? cellValue.ToString() : "";
-
-                //        if (text == "EFECTIVO")
-                //            efectivoCol = col;
-                //        else if (text == "RESERVA")
-                //            reservaCol = col;
-
-                //        MessageBox.Show($"efectivoCol: {efectivoCol} \nreservaCol: {reservaCol}", "Header Finder");
-                //    }
-                //}
-                //else
-                //{
-                //    // Handle the error: "DATA" header was not found
-                //    return;
-                //}
-
-                //if (dateCol == 0 || efectivoCol == 0 || reservaCol == 0)
-                //{
-                //    // Handle the error: one of the headers was not found
-                //    return;
-                //}
-
-
-                //// BACKUP: Range searchedRange = excel.get_Range("B15", "K52");
-                //// Define the searched range based on the found headers
-                //Range searchedRange = ws.Range[ws.Cells[startRow, dateCol], ws.Cells[57, reservaCol]]; // Adjust 57 if necessary
-
-                //// Use Find to search for `Mediator.escalaDay` within the defined range
-                //Range currentFind = searchedRange.Find(Mediator.escalaDay);
-
-
-
-                //MessageBox.Show("Info", $"{Mediator.winMode}");
-                //MessageBox.Show($"dateHeader: {headerRow} \ndateCol: {dateCol} \nstartRow: {startRow}", "Header coordinates") ;
-
-
-
-
-                //List<string> ResultOutList = new List<string>();
-                //Mediator.instPrgBarAddInc(0);  // progress bar add inc
-
-                //// -- CALLER
-                //// ------------------------- //
-                //if (currentFind != null)
-                //{
-                //    displayResult = "Found at \ncolumn - " + currentFind.Column +  // Debugger
-                //                                    "\nrow - " + currentFind.Row;
-
-                //    // Data Values - Index Identifiers
-                //    int colmn = currentFind.Column;
-                //    int rowm = currentFind.Row;
-
-                //    // Individual Identifiers
-                //    Range dateCell = ws.Cells[rowm, dateCol]; // Use the dynamically found dateCol
-                //    Range efectivoCell = ws.Cells[rowm, efectivoCol]; // Use the dynamically found efectivoCol
-
-                //    // Assuming state cells are adjacent to "EFECTIVO"
-                //    int stateColumn = efectivoCol + 1; // The state cells are right next to the "EFECTIVO" column
-                //    Range stateCell1 = ws.Cells[rowm, stateColumn];
-                //    Range stateCell2 = ws.Cells[rowm + 1, stateColumn];
-                //    Range stateCell3 = ws.Cells[rowm + 2, stateColumn];
-
-                //    Range reservaCell = ws.Cells[rowm, reservaCol]; // Use the dynamically found reservaCol
-
-
-                //    MessageBox.Show($"rown: {rowm} \nreservaCol: {reservaCol} \nstateColumn: {stateColumn}");
-
-
-
-                //// Check for "ADPT" in the third state cell and adjust if necessary
-                //int smartAdaptIncrementer = 1;
-                //    if (Convert.ToString(stateCell3.Value) == "ADPT")
-                //    {
-                //        smartAdaptIncrementer = 2; // If "ADPT" is in the third state cell, compensate +1 row
-                //    }
-                //    Range adaptCell = ws.Cells[rowm + smartAdaptIncrementer, efectivoCol]; // Use the dynamically found efectivoCol
-
-
-
-
-
-
-
-                //string textToParse = "";
-                Mediator.instPrgBarAddInc(0);  // progress bar add inc
-
-                //List<string> variableTextOutsList = new List<string> ();   // LISTA COM VARIAVEIS DE STRING OUTPUT
-
-
-                // PROCESSADORES DE VALORES INDIVIDUAIS
-                // ------------------------------------
-
-                // Data
-                string dateOut = dateCell.Value;
-
-                // Pessoal Efectivo
-                efectivoOut = Convert.ToString(efectivoCell.Value);
-                namesFormater(efectivoOut);
-                efectivoOut = outputText;
-
-                // Pessoal em Adaptação
-                adaptOut = Convert.ToString(adaptCell.Value);
-                namesFormater(adaptOut);
-                adaptOut = outputText;
-
-                // Pessoal de Troca ou Destroca
-                state1Out = Convert.ToString(stateCell1.Value);
-                if (state1Out == null) { state1Out = ""; }
-
-                // Verificador de Troca ou Destroca ou Adaptação
-                state2Out = Convert.ToString(stateCell2.Value);
-                if (state2Out == null) { state2Out = ""; }
-
-                // Verificador de Adaptação caso haja PT ou PD
-                state3Out = Convert.ToString(stateCell3.Value);
-                if (state3Out == null) { state3Out = ""; }
-
-                // Pessoal de Reserva
-                string reservaCellValue = reservaCell.Value;
-                namesFormater(reservaCellValue);
-                reservaOut = outputText;
-
-                // TENTATIVA DE CANCELAR O LOOP DE EXECUÇÃO DO EXCEL
-                //System.Runtime.InteropServices.Marshal.ReleaseComObject(searchedRange);
-                //System.Runtime.InteropServices.Marshal.ReleaseComObject(currentFind);
-                //System.Runtime.InteropServices.Marshal.ReleaseComObject(dateCell);
-                //System.Runtime.InteropServices.Marshal.ReleaseComObject(efectivoCell);
-                //System.Runtime.InteropServices.Marshal.ReleaseComObject(stateCell1);
-                //System.Runtime.InteropServices.Marshal.ReleaseComObject(stateCell2);
-                //System.Runtime.InteropServices.Marshal.ReleaseComObject(stateCell3);
-                //System.Runtime.InteropServices.Marshal.ReleaseComObject(reservaCell);
-                //System.Runtime.InteropServices.Marshal.ReleaseComObject(adaptCell);
-
-                //System.Runtime.InteropServices.Marshal.ReleaseComObject(ws);
-                wb.Close(true);
-                //System.Runtime.InteropServices.Marshal.ReleaseComObject(wb);
-                excel.Quit();          // QUIT EXCEL
-                //System.Runtime.InteropServices.Marshal.ReleaseComObject(excel);
-
-                // WHILE LOOP TO CERTIFY THAT THE OBJECTS ARE RELEASED
-                while (Marshal.ReleaseComObject(ws) != 0) ;
-                while (Marshal.ReleaseComObject(wb) != 0) ;
-                while (Marshal.ReleaseComObject(excel) != 0) ;
-
-                GC.Collect();
-                GC.WaitForPendingFinalizers();
-
-                // Formatador de Texto do Bloco Individual duma Escala de Serviço
-
-
-                escalaPreviewFormater();
-                outputFullText.Replace("\n", "\r\n");
-                Mediator.instTxtBox_Equal_To(outputFullText);
+                excelApp = new Microsoft.Office.Interop.Excel.Application();
+                wb = excelApp.Workbooks.Open(filePathSelected, false, true);
+                ws = wb.Worksheets[1];
+
+                Dictionary<string, int> columnIndexes = FindColumnIndexes(ws, 1, 20);
+
+                Debug.WriteLine("Column Indexes:");
+                foreach (var kvp in columnIndexes)
+                {
+                    Debug.WriteLine($"{kvp.Key}: {kvp.Value}");
+                }
+
+                if (!columnIndexes.ContainsKey("Efectivo") || !columnIndexes.ContainsKey("Reserva"))
+                {
+                    throw new Exception("Required columns not found in the Excel file.");
+                }
+
+                // Define a range similar to the original script
+                Range searchedRange = ws.get_Range("A1", "K" + ws.UsedRange.Rows.Count);
+
+                Debug.WriteLine($"Searching for date: {Mediator.escalaDay}");
+
+                // Use Range.Find() method similar to the old script
+                Range currentFind = searchedRange.Find(
+                    What: Mediator.escalaDay,
+                    LookIn: XlFindLookIn.xlValues,
+                    LookAt: XlLookAt.xlPart,
+                    SearchOrder: XlSearchOrder.xlByRows,
+                    SearchDirection: XlSearchDirection.xlNext,
+                    MatchCase: false);
+
+                if (currentFind != null)
+                {
+                    int rowm = currentFind.Row;
+                    int colmn = currentFind.Column;
+                    Debug.WriteLine($"Date found at row {rowm}, column {colmn}");
+
+                    // Use the found column as the date column
+                    Range dateCell = ws.Cells[rowm, colmn];
+
+                    // This will make sure the "Efectivo" column is the one before "Efectivo" Column if the current one is empty
+                    int efectivoColumn = columnIndexes["Efectivo"];
+                    Range efectivoCell = ws.Cells[rowm, efectivoColumn];
+                    if (string.IsNullOrWhiteSpace(Convert.ToString(efectivoCell.Value)))
+                    {
+                        efectivoColumn--;
+                        efectivoCell = ws.Cells[rowm, efectivoColumn];
+                        Debug.WriteLine($"Efectivo column adjusted to {efectivoColumn}");
+                    }
+                    
+                    Range reservaCell = ws.Cells[rowm, columnIndexes["Reserva"]];
+
+                    // Assuming state cells are next to "Reserva"
+                    int stateColumn = columnIndexes["Reserva"] - 1;
+                    Range stateCell1 = ws.Cells[rowm, stateColumn];
+                    Range stateCell2 = ws.Cells[rowm + 1, stateColumn];
+                    Range stateCell3 = ws.Cells[rowm + 2, stateColumn];
+
+                    int smartAdaptIncrementer = Convert.ToString(stateCell3.Value) == "ADPT" ? 2 : 1;
+                    Range adaptCell = ws.Cells[rowm + smartAdaptIncrementer, columnIndexes["Efectivo"]];
+
+                    // Process the data
+                    dateOut = Convert.ToString(dateCell.Value);
+                    efectivoOut = Convert.ToString(efectivoCell.Value);
+                    adaptOut = Convert.ToString(adaptCell.Value);
+                    state1Out = Convert.ToString(stateCell1.Value) ?? "";
+                    state2Out = Convert.ToString(stateCell2.Value) ?? "";
+                    state3Out = Convert.ToString(stateCell3.Value) ?? "";
+                    reservaOut = Convert.ToString(reservaCell.Value);
+
+                    // Debug: Print extracted values
+                    Debug.WriteLine($"Date: {dateOut}");
+                    Debug.WriteLine($"Efectivo: {efectivoOut}");
+                    Debug.WriteLine($"Adapt: {adaptOut}");
+                    Debug.WriteLine($"State1: {state1Out}");
+                    Debug.WriteLine($"State2: {state2Out}");
+                    Debug.WriteLine($"State3: {state3Out}");
+                    Debug.WriteLine($"Reserva: {reservaOut}");
+
+                    // Apply name formatting
+                    namesFormater(efectivoOut);
+                    efectivoOut = outputText;
+
+                    namesFormater(adaptOut);
+                    adaptOut = outputText;
+
+                    namesFormater(reservaOut);
+                    reservaOut = outputText;
+
+                    escalaPreviewFormater();
+                    outputFullText = outputFullText.Replace("\n", "\r\n");
+                    Mediator.instTxtBox_Equal_To(outputFullText);
+
+                    Debug.WriteLine("Data processing completed successfully.");
+                }
+                else
+                {
+                    Debug.WriteLine($"Date {Mediator.escalaDay} not found in the Excel file.");
+                    escalaPreviewText += $"\r\nA escala de {selectedEscala} não tem registos para o dia {Mediator.escalaDay}.\r\n\r\n";
+                    Mediator.instTxtBox_Equal_To(escalaPreviewText);
+                }
             }
-            else  // CASO NÃO ENCONTRE A DATA SELECCIONADA NA FOLHA QUESTÃO
+            catch (Exception ex)
             {
-                //System.Runtime.InteropServices.Marshal.ReleaseComObject(searchedRange);
-                //System.Runtime.InteropServices.Marshal.ReleaseComObject(currentFind);
-                //System.Runtime.InteropServices.Marshal.ReleaseComObject(ws);
-                wb.Close(true);
-                //System.Runtime.InteropServices.Marshal.ReleaseComObject(wb);
-                excel.Quit();          // QUIT EXCEL
-                //System.Runtime.InteropServices.Marshal.ReleaseComObject(excel);
-
-                while (Marshal.ReleaseComObject(ws) != 0) ;
-                while (Marshal.ReleaseComObject(wb) != 0) ;
-                while (Marshal.ReleaseComObject(excel) != 0) ;
-
+                System.Windows.Forms.MessageBox.Show($"An error occurred: {ex.Message}");
+                System.Windows.Forms.MessageBox.Show($"Stack Trace: {ex.StackTrace}");
+                MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                // Clean up
+                if (wb != null)
+                {
+                    wb.Close(false);
+                    Marshal.ReleaseComObject(wb);
+                }
+                if (ws != null)
+                    Marshal.ReleaseComObject(ws);
+                if (excelApp != null)
+                {
+                    excelApp.Quit();
+                    Marshal.ReleaseComObject(excelApp);
+                }
                 GC.Collect();
                 GC.WaitForPendingFinalizers();
-
-                displayResult = "A data que procurou: \"" + Mediator.escalaDay +
-                        $"\" não existe na lista de {selectedEscala}.";
-
-
-                escalaPreviewText = escalaPreviewText + $"\r\nA escala de {selectedEscala} não tem registos para o dia {Mediator.escalaDay}.\r\n\r\n";
-                Mediator.instTxtBox_Equal_To(escalaPreviewText);
             }
 
             Mediator.instPrgBarAddInc(0);  // progress bar add inc

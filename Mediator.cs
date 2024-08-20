@@ -1,5 +1,6 @@
 ﻿using SIPOS.Forms;
 using Microsoft.Office.Interop.Word;
+using Microsoft.Office.Interop.Excel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using System.Security.Policy;
+using Range = Microsoft.Office.Interop.Excel.Range;
 
 namespace SIPOS
 {
@@ -47,6 +49,12 @@ namespace SIPOS
         public static string pdfAppFilePath = "";
         public static string inspFilePath = "";
 
+        // CheckRow VARS
+        public static Range efectivoHeader = null;
+        public static Range reservaHeader = null;
+
+
+
         // Memory VARS
         public static string fPathODU = "";
         public static string fPathCCS = "";
@@ -59,10 +67,20 @@ namespace SIPOS
         public static string fPathOSWord = "";
         public static bool fileMemoryDidntExist = false;
 
+        
+        // Escalas Engine Excel VARS
+        public static bool autoExcelSearch = false;
+        public static string autoExcelData = "DATA";
+        public static string autoExcelEfetivo = "EFECTIVO";
+        public static string autoExcelReserva = "RESERVA";
+        public static string forcedExcelData = "";
+        public static string forcedExcelEfetivo = "";
+        public static string forcedExcelReserva = "";
+
 
         // UI VARS
         public static bool debugMode = false;
-        public static int winMode = 0; // 0 = No Windows / 1 = Low Windows / 2 = All Windows
+        public static int winMode = 0; // 0 = No DebugPopWindows / 1 = Low DebugWindows / 2 = All DebugWindows
         public static int backgroundMode = 0; // 0 = No Backgrounds / 1 = Bkg Light / 2 = Bkg Dark
         public static bool isExportVisible = false; // Visibilidade de processamento e exportador do Word 
 
@@ -312,6 +330,15 @@ namespace SIPOS
                 tw.WriteLine(wordAppFilePath);
                 tw.WriteLine(pdfAppFilePath);
                 tw.WriteLine(inspFilePath);
+                tw.WriteLine(autoExcelSearch);
+                tw.WriteLine(autoExcelData);
+                tw.WriteLine(autoExcelEfetivo);
+                tw.WriteLine(autoExcelReserva);
+                tw.WriteLine(forcedExcelData);
+                tw.WriteLine(forcedExcelEfetivo);
+                tw.WriteLine(forcedExcelReserva);
+                
+
 
 
                 // close the stream     
@@ -487,6 +514,13 @@ namespace SIPOS
             wordAppFilePath = tr.ReadLine();
             pdfAppFilePath = tr.ReadLine();
             inspFilePath = tr.ReadLine();
+            autoExcelSearch = Convert.ToBoolean(tr.ReadLine());
+            autoExcelData = tr.ReadLine();
+            autoExcelEfetivo = tr.ReadLine();
+            autoExcelReserva = tr.ReadLine();
+            forcedExcelData = tr.ReadLine();
+            forcedExcelEfetivo = tr.ReadLine();
+            forcedExcelReserva = tr.ReadLine();
 
 
 
