@@ -374,7 +374,7 @@ namespace SIPOS
                 GC.WaitForPendingFinalizers();
             }
 
-            Mediator.instPrgBarAddInc(0);  // progress bar add inc
+            Mediator.instPrgBarAddInc(2);  // progress bar add inc
         }
         // -----------------------------
 
