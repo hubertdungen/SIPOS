@@ -33,7 +33,6 @@ namespace SIPOS.Forms
             monthCalendar.SelectionStart = Mediator.osDay;
             numUpDow_diasIntp.Value = Mediator.plusDayIntrup;
             textBox_Output.Text = EscalasEngine.outputInitialText;
-
         }
 
 
@@ -58,7 +57,7 @@ namespace SIPOS.Forms
         {
             prg_Bar.Value = 0;  // Progress Bar to 0
             LinqList.ListaManagerEscalados.escaladosList.Clear();           //Limpa a Lista
-            EscalasEngine.escalaPreviewText = "";                                         //Limpa o texto preview
+            //EscalasEngine.escalaPreviewText = "";                                         //Limpa o texto preview
             Mediator.instPrgBarAddInc(0);
 
             //selectedDay = Convert.ToString(monthCalendar.SelectionStart);   //Converte o input data para string

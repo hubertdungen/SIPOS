@@ -48,6 +48,8 @@ namespace SIPOS
         public void triagemEscalas()
         {
 
+            // FIX THE LOAD BAR
+            Mediator.instPrgBarFix();
 
             //missingPathsChecker();
             int allWithErrors = 0;
@@ -68,7 +70,7 @@ namespace SIPOS
             }
 
             // CCS
-            Mediator.instTxtBox_Clear();
+            //Mediator.instTxtBox_Clear();
             selectedEscala = "CCS";
             Mediator.pathErrorCheck(Mediator.fPathCCS);
             if (Mediator.nonePathError == true) { checkRows(Mediator.fPathCCS); }
@@ -79,7 +81,7 @@ namespace SIPOS
             }
 
             // SD
-            Mediator.instTxtBox_Clear();
+            //Mediator.instTxtBox_Clear();
             selectedEscala = "Sargento de Dia";
             Mediator.pathErrorCheck(Mediator.fPathSD);
             if (Mediator.nonePathError == true) { checkRows(Mediator.fPathSD); }
@@ -90,7 +92,7 @@ namespace SIPOS
             }
 
             // PD
-            Mediator.instTxtBox_Clear();
+            //Mediator.instTxtBox_Clear();
             selectedEscala = "Praça de Dia";
             Mediator.pathErrorCheck(Mediator.fPathPD);
             if (Mediator.nonePathError == true) { checkRows(Mediator.fPathPD); }
@@ -101,10 +103,10 @@ namespace SIPOS
             }
 
             // FUNERAIS
-            Mediator.instTxtBox_Clear();
+            //Mediator.instTxtBox_Clear();
             selectedEscala = "Honras Fúnebres";
             Mediator.pathErrorCheck(Mediator.fPathFunerais);
-            if (Mediator.nonePathError == true) { checkRows(Mediator.fPathFunerais); }
+            if (Mediator.nonePathError == true) { checkRows(Mediator.fPathFunerais); Mediator.instPrgBarToMax(); }
             else
             {
                 Mediator.nonePathError = true;
@@ -119,7 +121,7 @@ namespace SIPOS
             }
 
             // FIX THE LOAD BAR
-            Mediator.instPrgBarFix();
+            //Mediator.instPrgBarFix();
 
         }
         // -----------------------------
@@ -198,6 +200,7 @@ namespace SIPOS
         {
             outputText = "";
             Microsoft.Office.Interop.Excel.Application excelApp = null;
+
             Workbook wb = null;
             Worksheet ws = null;
 
@@ -205,6 +208,7 @@ namespace SIPOS
             {
                 excelApp = new Microsoft.Office.Interop.Excel.Application();
                 wb = excelApp.Workbooks.Open(filePathSelected, false, true);
+                //excelApp.Visible = true;  // This line makes Excel visible
                 ws = wb.Worksheets[1];
 
                 Dictionary<string, int> columnIndexes = FindColumnIndexes(ws, 1, 20);
@@ -222,17 +226,56 @@ namespace SIPOS
 
                 // Define a range similar to the original script
                 Range searchedRange = ws.get_Range("A1", "K" + ws.UsedRange.Rows.Count);
+                Debug.WriteLine($"Used rows count: {ws.UsedRange.Rows.Count} and for columns: {ws.UsedRange.Columns.Count}");
+
 
                 Debug.WriteLine($"Searching for date: {Mediator.escalaDay}");
 
                 // Use Range.Find() method similar to the old script
                 Range currentFind = searchedRange.Find(
                     What: Mediator.escalaDay,
-                    LookIn: XlFindLookIn.xlValues,
+                    LookIn: XlFindLookIn.xlFormulas,
                     LookAt: XlLookAt.xlPart,
                     SearchOrder: XlSearchOrder.xlByRows,
                     SearchDirection: XlSearchDirection.xlNext,
                     MatchCase: false);
+
+
+                if (currentFind == null)
+                {
+                        currentFind = searchedRange.Find(
+                        What: Mediator.escalaDay,
+                        LookIn: XlFindLookIn.xlValues,
+                        LookAt: XlLookAt.xlPart,
+                        SearchOrder: XlSearchOrder.xlByRows,
+                        SearchDirection: XlSearchDirection.xlNext,
+                        MatchCase: false);
+                }
+                if (currentFind == null)
+                {
+                        currentFind = searchedRange.Find(
+                        What: Mediator.escalaDay,
+                        LookIn: XlFindLookIn.xlFormulas,
+                        LookAt: XlLookAt.xlWhole,
+                        SearchOrder: XlSearchOrder.xlByRows,
+                        SearchDirection: XlSearchDirection.xlNext,
+                        MatchCase: false);
+                }
+                if (currentFind == null)
+                {
+                        currentFind = searchedRange.Find(
+                        What: Mediator.escalaDay,
+                        LookIn: XlFindLookIn.xlValues,
+                        LookAt: XlLookAt.xlWhole,
+                        SearchOrder: XlSearchOrder.xlByRows,
+                        SearchDirection: XlSearchDirection.xlNext,
+                        MatchCase: false);
+                }
+
+
+                Debug.WriteLine($"Date: {dateOut} and Efectivo: {efectivoOut}");
+                Debug.WriteLine($"escalaDay: {Mediator.escalaDay}");
+                Debug.WriteLine($"diaDeEscala: {Mediator.diaDeEscala}");
 
                 if (currentFind != null)
                 {
@@ -273,14 +316,15 @@ namespace SIPOS
                     state3Out = Convert.ToString(stateCell3.Value) ?? "";
                     reservaOut = Convert.ToString(reservaCell.Value);
 
-                    // Debug: Print extracted values
-                    Debug.WriteLine($"Date: {dateOut}");
-                    Debug.WriteLine($"Efectivo: {efectivoOut}");
+                    // Debug: Print extracted values      
+                    Debug.WriteLine($"Date: {dateOut} and Efectivo: {efectivoOut}");
                     Debug.WriteLine($"Adapt: {adaptOut}");
                     Debug.WriteLine($"State1: {state1Out}");
                     Debug.WriteLine($"State2: {state2Out}");
                     Debug.WriteLine($"State3: {state3Out}");
                     Debug.WriteLine($"Reserva: {reservaOut}");
+                    Debug.WriteLine($"escalaDay: {Mediator.escalaDay}");
+                    Debug.WriteLine($"diaDeEscala: {Mediator.diaDeEscala}");
 
                     // Apply name formatting
                     namesFormater(efectivoOut);
@@ -300,7 +344,7 @@ namespace SIPOS
                 }
                 else
                 {
-                    Debug.WriteLine($"Date {Mediator.escalaDay} not found in the Excel file.");
+                    //System.Windows.Forms.MessageBox.Show($"Date {Mediator.escalaDay} not found in the Excel file.");
                     escalaPreviewText += $"\r\nA escala de {selectedEscala} não tem registos para o dia {Mediator.escalaDay}.\r\n\r\n";
                     Mediator.instTxtBox_Equal_To(escalaPreviewText);
                 }

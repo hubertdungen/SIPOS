@@ -43,7 +43,7 @@ namespace SIPOS
         // ------------
 
         // Details VARS
-        public static string version = "v B-1.1.0";
+        public static string version = "v B-1.1.1";
 
         
         private Mediator mediator;
@@ -118,8 +118,8 @@ namespace SIPOS
             Mediator.instDateProcess(1);
 
             // START ENGINE IF POSSIBLE
-            LinqList.ListaManagerEscalados.escaladosList.Clear();
-            Mediator.instTriagemEscalas();
+            //LinqList.ListaManagerEscalados.escaladosList.Clear();
+            //Mediator.instTriagemEscalas();
             Mediator.isPathSaved = true;
 
 
