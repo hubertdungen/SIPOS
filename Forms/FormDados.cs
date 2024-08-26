@@ -290,12 +290,20 @@ namespace SIPOS.Forms
         // ------------
         public void prgBarAddInc(int addMore)
         {
-            prg_Bar.Value = prg_Bar.Value + 1 + addMore;
-
-            if (prg_Bar.Value >= prg_Bar.Maximum)
+            try
             {
-                prg_Bar.Value = prg_Bar.Maximum;
+                prg_Bar.Value = prg_Bar.Value + 1 + addMore;
+
+                if (prg_Bar.Value >= prg_Bar.Maximum)
+                {
+                    prg_Bar.Value = prg_Bar.Maximum;
+                }
             }
+            catch
+            {
+                prgBarFix();
+            }
+
         }
         public void prgBarToMax()
         {
