@@ -19,8 +19,18 @@ namespace SIPOS.Forms
     {
 
 
+        //// UNIVERSAL VARIABLES //
+        // -------------------------------------
 
-        //// UNIVERSAL SORTABLE-LIST VARIABLES //
+        bool isProgramMenu = true;
+
+        // --------------///----------------- //
+
+
+
+
+
+        //// SORTABLE-LIST VARIABLES //
         // -------------------------------------
 
         private static int rowCount = 0;  // Static variable to count the rows
@@ -39,6 +49,8 @@ namespace SIPOS.Forms
         static int rh = 0;  // row height
         int totalRows = 0;
         int lineAnimation = 0;
+
+
 
         Panel originalRow;
         Panel separator;
@@ -84,6 +96,67 @@ namespace SIPOS.Forms
         {
             RefreshListLayout();
         }
+
+
+
+
+
+
+        ///////*                      *\\\\\\\
+        //////*    TOP MENU BUTTONS    *\\\\\\ 
+
+
+
+        //// TOP MENU BUTTONS                 //
+        // -------------------------------------
+
+        private void btnProgramas_Click(object sender, EventArgs e)
+        {
+            isProgramMenu = true;
+            panelMenu_Resize(null, null);
+
+        }
+
+        private void btnFicheiros_Click(object sender, EventArgs e)
+        {
+            isProgramMenu = false;
+            panelMenu_Resize(null, null);
+        }
+
+
+
+        //// MENU LOGIC                        //
+        // -------------------------------------
+
+        private void panelMenu_Resize(object sender, EventArgs e)
+        {
+            if (isProgramMenu)
+            {
+                btnProgramas.Size = new Size((int)(panelMenu.Width * 0.8), btnProgramas.Height);
+                btnFicheiros.Size = new Size((int)(panelMenu.Width * 0.21), (int)(btnFicheiros.Height*0.85));
+                btnProgramas.Font = new Font(btnProgramas.Font, FontStyle.Bold | FontStyle.Italic);
+                btnFicheiros.Font = new Font(btnFicheiros.Font, FontStyle.Italic);
+                btnProgramas.BackColor = Color.DeepSkyBlue;
+                btnFicheiros.BackColor = Color.FromArgb(40, 30, 40);
+                btnProgramas.ForeColor = Color.FromArgb(40, 30, 40);
+                btnFicheiros.ForeColor = Color.Aqua;
+                btnProgramas.Dock = DockStyle.Left;
+                btnFicheiros.Dock = DockStyle.Right;
+            }
+            else
+            {
+                btnProgramas.Size = new Size((int)(panelMenu.Width * 0.21), (int)(btnProgramas.Height*0.85));
+                btnFicheiros.Size = new Size((int)(panelMenu.Width * 0.8), btnFicheiros.Height);
+                btnFicheiros.Font = new Font(btnFicheiros.Font, FontStyle.Bold | FontStyle.Italic);
+                btnProgramas.BackColor = Color.FromArgb(40, 30, 40);
+                btnFicheiros.BackColor = Color.Aqua;
+                btnProgramas.ForeColor = Color.DeepSkyBlue;
+                btnFicheiros.ForeColor = Color.FromArgb(40, 30, 40);
+                btnProgramas.Dock = DockStyle.Left;
+                btnFicheiros.Dock = DockStyle.Right;
+            }
+        }
+
 
 
 
@@ -718,6 +791,9 @@ namespace SIPOS.Forms
             Debug.WriteLine($"Total controls inside new row: {newRow.Controls.Count}");
             UpdateButtonVisibility(originalRow);
 
+
+            ResizeTextBoxesInRow(newRow);
+
             return newRow;
         }
 
@@ -918,24 +994,69 @@ namespace SIPOS.Forms
             }
 
 
+
             mainWordFlowPanel.Width = this.ClientSize.Width;
 
             // Position the panel at the bottom
             mainWordFlowPanel.Top = this.ClientSize.Height - mainWordFlowPanel.Height;
             mainWordFlowPanel.Left = 0;
 
+
+
+            foreach (Control row in mainWordFlowPanel.Controls)
+            {
+                if (row is Panel && row.Name.Contains("rowPanel_WordDoc"))
+                {
+                    row.Width = mainWordFlowPanel.ClientSize.Width - row.Margin.Horizontal;
+                    ResizeTextBoxesInRow(row as Panel);
+                }
+            }
+
             RefreshListLayout();
+        }
+
+
+        private void ResizeTextBoxesInRow(Panel row)
+        {
+            TextBox txtNameWBox = row.Controls.OfType<TextBox>().FirstOrDefault(tb => tb.Name.Contains("txtNameWBox"));
+            TextBox txtDirFicheiroW = row.Controls.OfType<TextBox>().FirstOrDefault(tb => tb.Name.Contains("txtDirFicheiroW"));
+
+            if (txtNameWBox != null && txtDirFicheiroW != null)
+            {
+                int totalWidth = row.ClientSize.Width;
+                int leftControlsWidth = row.Controls.Cast<Control>().Where(c => c.Dock == DockStyle.Left).Sum(c => c.Width);
+                int rightControlsWidth = row.Controls.Cast<Control>().Where(c => c.Dock == DockStyle.Right).Sum(c => c.Width);
+
+                int availableWidth = totalWidth - leftControlsWidth - rightControlsWidth - 20; // 20 for padding
+                int nameBoxWidth = Math.Min(200, availableWidth / 3);
+                int dirBoxWidth = availableWidth - nameBoxWidth;
+
+                txtNameWBox.Width = nameBoxWidth;
+                txtDirFicheiroW.Width = dirBoxWidth;
+
+                txtNameWBox.Left = leftControlsWidth + 10;
+                txtDirFicheiroW.Left = txtNameWBox.Right + 10;
+            }
         }
 
         private void RefreshListLayout()
         {
+            mainWordFlowPanel.SuspendLayout();
             forEachUpdateButtonVisibility();
 
             foreach (Control row in mainWordFlowPanel.Controls)
             {
                 if (row is Panel && row.Name.Contains("rowPanel_WordDoc"))
-                    row.Size = new Size(mainWordFlowPanel.Size.Width - row.Margin.Horizontal, row.Height); 
+                {
+                    row.Width = mainWordFlowPanel.ClientSize.Width - row.Margin.Horizontal;
+                    ResizeTextBoxesInRow(row as Panel);
+                }
             }
+
+
+            panelMenu_Resize(null, null);
+
+            mainWordFlowPanel.ResumeLayout();
         }
 
         // ---------------///----------------- //
@@ -1043,6 +1164,12 @@ namespace SIPOS.Forms
             //    y += row.Height + row.Padding.Bottom + rowPadBottom; // Update y for the next row
             //}
         }
+
+
+
+
+
+
 
 
         // ---------------///----------------- //
