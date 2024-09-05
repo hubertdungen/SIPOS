@@ -1,17 +1,4 @@
-﻿using SIPOS;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-
-namespace SIPOS.Forms
+﻿namespace SIPOS.Forms
 {
     public partial class FormExport : Form
     {
@@ -28,7 +15,7 @@ namespace SIPOS.Forms
         private void FormExport_Load(object sender, EventArgs e)
         {
             //txtboxsActualizer();
-            
+
             // Will update the boxes with the next OS number.
             UpdateOSMediatorVars(Mediator.inspFilePath);
 
@@ -164,7 +151,7 @@ namespace SIPOS.Forms
             {
                 // The Word document does not exist, so hide the "btn_OpenWord" button
                 btn_OpenWord.Visible = false;
-                btn_reportWordFile_onExportFolder.Visible= false;
+                btn_reportWordFile_onExportFolder.Visible = false;
             }
 
 
@@ -184,7 +171,7 @@ namespace SIPOS.Forms
 
 
             // BOTÕES DO INSPECTOR
-            
+
 
             string inspFilePath = Mediator.inspFilePath + @"\" + Mediator.exportDocName + ".doc";
             string inspPDFfilePath = Mediator.inspFilePath + @"\" + Mediator.exportDocName + ".pdf";

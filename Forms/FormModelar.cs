@@ -128,12 +128,14 @@ namespace SIPOS.Forms
         //// MENU LOGIC                        //
         // -------------------------------------
 
+        
+        // Resize the menu buttons
         private void panelMenu_Resize(object sender, EventArgs e)
         {
             if (isProgramMenu)
             {
                 btnProgramas.Size = new Size((int)(panelMenu.Width * 0.8), btnProgramas.Height);
-                btnFicheiros.Size = new Size((int)(panelMenu.Width * 0.21), (int)(btnFicheiros.Height*0.85));
+                btnFicheiros.Size = new Size((int)(panelMenu.Width * 0.21), (int)(btnFicheiros.Height * 0.85));
                 btnProgramas.Font = new Font(btnProgramas.Font, FontStyle.Bold | FontStyle.Italic);
                 btnFicheiros.Font = new Font(btnFicheiros.Font, FontStyle.Italic);
                 btnProgramas.BackColor = Color.DeepSkyBlue;
@@ -145,9 +147,10 @@ namespace SIPOS.Forms
             }
             else
             {
-                btnProgramas.Size = new Size((int)(panelMenu.Width * 0.21), (int)(btnProgramas.Height*0.85));
+                btnProgramas.Size = new Size((int)(panelMenu.Width * 0.21), (int)(btnProgramas.Height * 0.85));
                 btnFicheiros.Size = new Size((int)(panelMenu.Width * 0.8), btnFicheiros.Height);
                 btnFicheiros.Font = new Font(btnFicheiros.Font, FontStyle.Bold | FontStyle.Italic);
+                btnProgramas.Font = new Font(btnProgramas.Font, FontStyle.Italic);
                 btnProgramas.BackColor = Color.FromArgb(40, 30, 40);
                 btnFicheiros.BackColor = Color.Aqua;
                 btnProgramas.ForeColor = Color.DeepSkyBlue;
@@ -156,6 +159,24 @@ namespace SIPOS.Forms
                 btnFicheiros.Dock = DockStyle.Right;
             }
         }
+
+        // Change panel list events based on the menu button clicked
+        
+        
+        
+
+
+        // -------------------------------------
+
+
+
+
+        //////*    ------------------------------------------------------------------------------------    *\\\\\\ 
+
+
+
+
+
 
 
 
@@ -1164,11 +1185,6 @@ namespace SIPOS.Forms
             //    y += row.Height + row.Padding.Bottom + rowPadBottom; // Update y for the next row
             //}
         }
-
-
-
-
-
 
 
 

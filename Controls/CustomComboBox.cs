@@ -1,12 +1,6 @@
-﻿using System;
-
-using System.Windows.Forms;
-using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.ComponentModel;
-using System.Xml;
-using System.Windows.Navigation;
+﻿using System.ComponentModel;
 using System.Drawing.Design;
+using System.Drawing.Drawing2D;
 
 
 namespace SIPOS.Controls
@@ -14,7 +8,7 @@ namespace SIPOS.Controls
     [DefaultEvent("OnSelectedIndexChanged")]
     class CustomComboBox : UserControl
     {
-       
+
         //Fields
         private Color backColor = Color.WhiteSmoke;
         private Color iconColor = Color.MediumSlateBlue;
@@ -36,7 +30,7 @@ namespace SIPOS.Controls
         [Category("HD - Custom Appearance")]
         public Color IconColor { get { return iconColor; } set { iconColor = value; btnIcon.Invalidate();/*Redraw icon*/ } }
         [Category("HD - Custom Appearance")]
-        public Color ListBackColor { get { return listBackColor; }  set { listBackColor = value; cmbList.BackColor = listBackColor; } }
+        public Color ListBackColor { get { return listBackColor; } set { listBackColor = value; cmbList.BackColor = listBackColor; } }
         [Category("HD - Custom Appearance")]
         public Color ListTextColor { get { return listTextColor; } set { listTextColor = value; cmbList.ForeColor = listTextColor; } }
         [Category("HD - Custom Appearance")]
@@ -48,10 +42,10 @@ namespace SIPOS.Controls
         [Category("HD - Custom Appearance")]
         public override Font Font { get { return base.Font; } set { base.Font = value; lblText.Font = value; cmbList.Font = value; } }
         [Category("HD - Custom Appearance")]
-        public string Texts {  get { return lblText.Text; } set { lblText.Text = value; } }
+        public string Texts { get { return lblText.Text; } set { lblText.Text = value; } }
 
-        [Category ("HD - Custom Appearance")]
-        public ComboBoxStyle DropDownStyle { get { return cmbList.DropDownStyle; } set { if (cmbList.DropDownStyle != ComboBoxStyle.Simple) { cmbList.DropDownStyle = value;  } } }
+        [Category("HD - Custom Appearance")]
+        public ComboBoxStyle DropDownStyle { get { return cmbList.DropDownStyle; } set { if (cmbList.DropDownStyle != ComboBoxStyle.Simple) { cmbList.DropDownStyle = value; } } }
 
         //-> Data
         [Category("HD - Custom Data")]

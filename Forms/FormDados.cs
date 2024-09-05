@@ -1,16 +1,4 @@
 ﻿using LinqList;
-using Microsoft.Office.Interop.Word;
-using SIPOS;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Security;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace SIPOS.Forms
 {
@@ -124,7 +112,7 @@ namespace SIPOS.Forms
         {
 
             Mediator.diaDeEscala = monthCalendar.SelectionStart.AddDays(addDay);
-            
+
             Mediator.isItSabado = (Mediator.diaDeEscala.DayOfWeek == DayOfWeek.Saturday) ? true : false;
             Mediator.isItQuarta = (Mediator.diaDeEscala.DayOfWeek == DayOfWeek.Wednesday) ? true : false;
 

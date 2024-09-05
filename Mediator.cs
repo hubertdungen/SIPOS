@@ -1,13 +1,5 @@
 ﻿using SIPOS.Forms;
-using Microsoft.Office.Interop.Word;
-using Microsoft.Office.Interop.Excel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Text.RegularExpressions;
-using System.Security.Policy;
 using Range = Microsoft.Office.Interop.Excel.Range;
 
 namespace SIPOS
@@ -34,7 +26,7 @@ namespace SIPOS
         public delegate void pathErrorCheckHandler(string path);
         public event pathErrorCheckHandler PathErrorCheck;
 
-        
+
         // General Path VARS
         public static string filePath = "";
         public static string selectedFolder = "";
@@ -67,7 +59,7 @@ namespace SIPOS
         public static string fPathOSWord = "";
         public static bool fileMemoryDidntExist = false;
 
-        
+
         // Escalas Engine Excel VARS
         public static bool autoExcelSearch = false;
         public static string autoExcelData = "DATA";
@@ -103,14 +95,14 @@ namespace SIPOS
 
 
 
-        
+
 
         // --------------------
         // FORMS INTERACTION //
 
         // Estas funções não estão a ser utilizadas porque abrem uma form fora do menu (erro); Mas poderão ser uteis se corrigir esse erro mais tarde, pois é uma forma de usar menos recursos do que ter todas as janelas abertas
 
-        
+
         // Open Forms                
 
         public static void OpenChildForm(Form form)
@@ -135,9 +127,9 @@ namespace SIPOS
         // .....................
 
 
-        
-        
-        
+
+
+
 
         // -----------------------------
         // MULTIPLE FORMS INTERACTION //
@@ -337,7 +329,7 @@ namespace SIPOS
                 tw.WriteLine(forcedExcelData);
                 tw.WriteLine(forcedExcelEfetivo);
                 tw.WriteLine(forcedExcelReserva);
-                
+
 
 
 
@@ -356,7 +348,7 @@ namespace SIPOS
             }
             if (fileMemoryDidntExist == false) { formPropriedades.prg_SaveButton_AddInc(0); } else { formPropriedades.prg_SaveButton_Minimum(); }
         }
-        
+
         // CHECKING ERRORS AND SAVING PATHS
         public static void chkANDsaveMemory(string txtBoxSelected)
         {
@@ -657,7 +649,7 @@ namespace SIPOS
             {
                 formDados.prgBarAddInc(addMore);
             }
-            
+
         }
         public static void instPrgBarToMax()
         {
@@ -798,8 +790,8 @@ namespace SIPOS
                 //currentChildForm.Mensagens.BackgroundImage = mensagensImage;
                 //currentChildForm.Exportar.BackgroundImage = exportarImage;
                 //currentChildForm.Propriedades.BackgroundImage = propImage;
-                
-                
+
+
             }
             else if (backgroundMode == 1)
             {

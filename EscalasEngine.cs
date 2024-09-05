@@ -1,22 +1,15 @@
-﻿using SIPOS.Forms;
-using Microsoft.Office.Interop.Excel;
-using SIPOS;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Microsoft.Office.Interop.Excel;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using Range = Microsoft.Office.Interop.Excel.Range;
-using System.Diagnostics;
 
 namespace SIPOS
 {
     internal class EscalasEngine
     {
-        
+
         // General VARS
         private string filePath = "";
         private string joinedOutput = "";
@@ -167,7 +160,7 @@ namespace SIPOS
             if (!columnIndexes.ContainsKey("Reserva"))
                 columnIndexes["Reserva"] = GetColumnIndexFromLetter(Mediator.forcedExcelReserva);
 
-            
+
             //System.Windows.Forms.MessageBox.Show($"Date column index: {columnIndexes["Date"]}");
             //System.Windows.Forms.MessageBox.Show($"Efectivo column index: {columnIndexes["Efectivo"]}");
             //System.Windows.Forms.MessageBox.Show($"Reserva column index: {columnIndexes["Reserva"]}");
@@ -243,33 +236,33 @@ namespace SIPOS
 
                 if (currentFind == null)
                 {
-                        currentFind = searchedRange.Find(
-                        What: Mediator.escalaDay,
-                        LookIn: XlFindLookIn.xlValues,
-                        LookAt: XlLookAt.xlPart,
-                        SearchOrder: XlSearchOrder.xlByRows,
-                        SearchDirection: XlSearchDirection.xlNext,
-                        MatchCase: false);
+                    currentFind = searchedRange.Find(
+                    What: Mediator.escalaDay,
+                    LookIn: XlFindLookIn.xlValues,
+                    LookAt: XlLookAt.xlPart,
+                    SearchOrder: XlSearchOrder.xlByRows,
+                    SearchDirection: XlSearchDirection.xlNext,
+                    MatchCase: false);
                 }
                 if (currentFind == null)
                 {
-                        currentFind = searchedRange.Find(
-                        What: Mediator.escalaDay,
-                        LookIn: XlFindLookIn.xlFormulas,
-                        LookAt: XlLookAt.xlWhole,
-                        SearchOrder: XlSearchOrder.xlByRows,
-                        SearchDirection: XlSearchDirection.xlNext,
-                        MatchCase: false);
+                    currentFind = searchedRange.Find(
+                    What: Mediator.escalaDay,
+                    LookIn: XlFindLookIn.xlFormulas,
+                    LookAt: XlLookAt.xlWhole,
+                    SearchOrder: XlSearchOrder.xlByRows,
+                    SearchDirection: XlSearchDirection.xlNext,
+                    MatchCase: false);
                 }
                 if (currentFind == null)
                 {
-                        currentFind = searchedRange.Find(
-                        What: Mediator.escalaDay,
-                        LookIn: XlFindLookIn.xlValues,
-                        LookAt: XlLookAt.xlWhole,
-                        SearchOrder: XlSearchOrder.xlByRows,
-                        SearchDirection: XlSearchDirection.xlNext,
-                        MatchCase: false);
+                    currentFind = searchedRange.Find(
+                    What: Mediator.escalaDay,
+                    LookIn: XlFindLookIn.xlValues,
+                    LookAt: XlLookAt.xlWhole,
+                    SearchOrder: XlSearchOrder.xlByRows,
+                    SearchDirection: XlSearchDirection.xlNext,
+                    MatchCase: false);
                 }
 
 
@@ -295,7 +288,7 @@ namespace SIPOS
                         efectivoCell = ws.Cells[rowm, efectivoColumn];
                         Debug.WriteLine($"Efectivo column adjusted to {efectivoColumn}");
                     }
-                    
+
                     Range reservaCell = ws.Cells[rowm, columnIndexes["Reserva"]];
 
                     // Assuming state cells are next to "Reserva"
@@ -453,12 +446,12 @@ namespace SIPOS
                             line = line.Replace("  ", " ");
 
                         }
-                    string[] parts = line.Split(" ");
+                        string[] parts = line.Split(" ");
 
-                    parts[0] = parts[0].Replace("/", "\t");
-                    parts[0] = Regex.Replace(parts[0], "-(?!.*-)", " ");
-                    parts[1] = parts[1].Substring(0, 1);
-                    outputText += parts[0] + " – " + parts[1] + ". " + parts[2];
+                        parts[0] = parts[0].Replace("/", "\t");
+                        parts[0] = Regex.Replace(parts[0], "-(?!.*-)", " ");
+                        parts[1] = parts[1].Substring(0, 1);
+                        outputText += parts[0] + " – " + parts[1] + ". " + parts[2];
                     }
                 }
                 else
@@ -670,7 +663,7 @@ namespace SIPOS
         // --------------------------------------------------------------------------
         // --------------------------------------------------------------------------
 
-        
+
 
 
 

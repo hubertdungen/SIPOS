@@ -1,17 +1,4 @@
-﻿using Microsoft.Office.Interop.Word;
-using SIPOS;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Printing;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-
-namespace SIPOS.Forms
+﻿namespace SIPOS.Forms
 {
     public partial class FormPropriedades : Form
     {
@@ -49,7 +36,7 @@ namespace SIPOS.Forms
             txtbox_ColForcedData.Text = Mediator.forcedExcelData;
             txtbox_ColForcedEfetivo.Text = Mediator.forcedExcelEfetivo;
             txtbox_ColForcedReserva.Text = Mediator.forcedExcelReserva;
-            
+
 
             if (Mediator.winMode == 1 && Mediator.debugMode == true) { rbutton_lowDebugWindows.Checked = true; } else if (Mediator.winMode == 2 && Mediator.debugMode == true) { rbutton_AllDebugWindows.Checked = true; }
 
@@ -75,7 +62,7 @@ namespace SIPOS.Forms
             frmPropriedades.txtbox_FolderDirectory_OSWord.Text = Mediator.fPathOSWord;
             frmPropriedades.chkBox_DebugerMode.Checked = Mediator.debugMode;
             frmPropriedades.chkBox_AutoExcelSearch.Checked = Mediator.autoExcelSearch;
-            frmPropriedades.chkBox_ForcedExcelSearch.Checked =! Mediator.autoExcelSearch;
+            frmPropriedades.chkBox_ForcedExcelSearch.Checked = !Mediator.autoExcelSearch;
             frmPropriedades.txtbox_ColAutoData.Text = Mediator.autoExcelData;
             frmPropriedades.txtbox_ColAutoEfetivo.Text = Mediator.autoExcelEfetivo;
             frmPropriedades.txtbox_ColAutoReserva.Text = Mediator.autoExcelReserva;
