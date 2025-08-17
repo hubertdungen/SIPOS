@@ -34,7 +34,7 @@ Licensee shall **not**:
 
 ## 4. Content Creation
 
-* * **4.1. General Display**: Licensee may display screenshots, screen recordings, and incidental portions of the SIPOS code for the purposes of review, tutorials, or demonstration in Content Creation (including monetized content), provided that such display is not excessive and does not expose substantial or core parts of the software's source code. Credit must be given to "SIPOS by Hubert Pires van den Dungen".
+* **4.1. General Display**: Licensee may display screenshots, screen recordings, and incidental portions of the SIPOS code for the purposes of review, tutorials, or demonstration in Content Creation (including monetized content), provided that such display is not excessive and does not expose substantial or core parts of the software's source code. Credit must be given to "SIPOS by Hubert Pires van den Dungen".
 
 * **4.2. Content Focused on SIPOS**: Licensees whose Content Creation is primarily focused on SIPOS (defined as more than 50% of the total content's runtime, or more than 4 hours of published and monetized video, whichever is greater) must contact the Licensor for prior authorization and to discuss potential partnership terms.
 
