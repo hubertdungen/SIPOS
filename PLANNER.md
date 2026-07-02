@@ -12,15 +12,16 @@ This document mirrors the live Asana planning state for SIPOS and keeps a reposi
 | Tags | Força Aérea, C# |
 | Boards/projects | Development, Força Aérea, Central Board |
 | Status in Força Aérea board | In progress |
-| Main task subtasks visible | 16 / 26 complete |
+| Main task subtasks visible | 17 / 27 complete |
 | Description visible in Asana | Automatização de Ordens de Serviço na UAL e no espectro da Força Aérea |
 
 ## Release status interpreted from Asana
 
-The live Asana task shows the main SIPOS work as active with 16 of 26 subtasks complete. The most recent completed development items remain under the `Modelar: Drag&Drop Improvements and Modulation Mechanics [v B-1.2.0]` epic:
+The live Asana task shows the main SIPOS work as active with 17 of 27 subtasks complete. The most recent completed development items remain under the `Modelar: Drag&Drop Improvements and Modulation Mechanics [v B-1.2.0]` epic, plus the repository repair task completed on 2026-07-02:
 
 - `Modelar: Implement "Programar" and "Ficheiros" menus [v B-1.2.1]` - complete.
 - `Modelar: Fix issue related to menu styling [v B-1.2.2]` - complete.
+- `Repo: Reparar branch default do GitHub sem perder a ultima versao` - complete.
 
 Therefore, repo/docs should describe Beta 1.2.2 as the latest completed code milestone reflected by Asana, while planning continues with pending B-1.2.x work, B-1.3.x holiday detection, and the new B-1.4 portable Windows release path.
 
@@ -44,6 +45,7 @@ Therefore, repo/docs should describe Beta 1.2.2 as the latest completed code mil
 - [x] `Modelar: Drag&Drop Sortable Document List [v A-0.11.0]`
 - [x] `ES: Interpretação, Detecção e Inputs de datas diferentes [v B-1.0.0]`
 - [x] `Interpretação e FormDados: Excel & Data improvements [v B-1.1.0]`
+- [x] `Repo: Reparar branch default do GitHub sem perder a ultima versao`
 
 ### Current / upcoming items visible
 
@@ -124,7 +126,7 @@ Asana link: https://app.asana.com/1/193050978126127/project/193050978126132/task
 
 ## Repository branch repair notes
 
-GitHub repair completed on 2026-07-02:
+GitHub repair completed on 2026-07-02 and reflected in Asana task `Repo: Reparar branch default do GitHub sem perder a ultima versao`:
 
 - The repository default branch name is still `SIPOS_v0-8-3`, but the branch content now points to the latest known SIPOS implementation from `SIPOS_v0-9-4`.
 - Old default branch commit preserved at `backup/SIPOS_v0-8-3-before-2026-07-02`.
