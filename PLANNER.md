@@ -1,8 +1,8 @@
 # SIPOS Planning Board
 
-This document mirrors the visible Asana planning screenshots for SIPOS and keeps a repository-side planning copy for development work that cannot directly write to Asana from this environment.
+This document mirrors the live Asana planning state for SIPOS and keeps a repository-side planning copy for implementation work. Asana remains the source of truth; this file records the GitHub-side snapshot and the repo changes tied to each planning item.
 
-## Asana snapshot read from screenshots
+## Asana snapshot verified on 2026-07-02
 
 | Field | Value |
 | --- | --- |
@@ -12,17 +12,17 @@ This document mirrors the visible Asana planning screenshots for SIPOS and keeps
 | Tags | Força Aérea, C# |
 | Boards/projects | Development, Força Aérea, Central Board |
 | Status in Força Aérea board | In progress |
-| Subtasks visible | 16 / 25 complete |
+| Main task subtasks visible | 16 / 26 complete |
 | Description visible in Asana | Automatização de Ordens de Serviço na UAL e no espectro da Força Aérea |
 
 ## Release status interpreted from Asana
 
-The Asana screenshots show the main SIPOS task as an active project with 16 of 25 subtasks complete. The most recent completed development items shown are under the `Modelar: Drag&Drop Improvements and Modulation Mechanics [v B-1.2.0]` epic:
+The live Asana task shows the main SIPOS work as active with 16 of 26 subtasks complete. The most recent completed development items remain under the `Modelar: Drag&Drop Improvements and Modulation Mechanics [v B-1.2.0]` epic:
 
-- `Modelar: Implement "Programar" and "Ficheiros" menus [v B-1.2.1]` — complete.
-- `Modelar: Fix issue related to menu styling [v B-1.2.2]` — complete.
+- `Modelar: Implement "Programar" and "Ficheiros" menus [v B-1.2.1]` - complete.
+- `Modelar: Fix issue related to menu styling [v B-1.2.2]` - complete.
 
-Therefore, repo/docs should describe Beta 1.2.2 as the latest completed code milestone seen in Asana, while planning should continue with the pending B-1.2.x items below.
+Therefore, repo/docs should describe Beta 1.2.2 as the latest completed code milestone reflected by Asana, while planning continues with pending B-1.2.x work, B-1.3.x holiday detection, and the new B-1.4 portable Windows release path.
 
 ## Main SIPOS roadmap from Asana
 
@@ -49,6 +49,7 @@ Therefore, repo/docs should describe Beta 1.2.2 as the latest completed code mil
 
 - [ ] `Modelar: Drag&Drop Improvements and Modulation Mechanics [v B-1.2.0]`
 - [ ] `Detectar: Feriados [v B-1.3.0]`
+- [ ] `Release: Criar versão portátil / .exe para Windows [v B-1.4.0]`
 - [ ] `Mensagens: Interpretar mensagens (Detetar Padrões) [v 2.0.0]`
 - [ ] `Mensagens: Capturar os detalhes das mensagens`
 - [ ] `Mensagens: Capturar o corpo da mensagem`
@@ -74,7 +75,7 @@ Therefore, repo/docs should describe Beta 1.2.2 as the latest completed code mil
 
 ## B-1.1.0 Interpretação e FormDados epic details
 
-The Asana screenshots show this epic as complete with 4 / 4 subtasks complete:
+The live Asana task shows this epic as complete with 4 / 4 subtasks complete:
 
 - [x] `Interpretar: Actualizar range da folha Excel e interpretação de coordenadas dinâmicas de dados [v B-1.1.0]`
 - [x] `Interpretar: Fixed an issue on "Range Finding" the escala dates (Formulas or Values) [v B-1.1.1]`
@@ -86,45 +87,58 @@ The Asana screenshots show this epic as complete with 4 / 4 subtasks complete:
 - [ ] `Detectar: Detection Engine updates (starts detecting holidays) [v B-1.3.1]`
 - [ ] `Calendário: Adicionar checkBox para ativar Start e End Date. [v B-1.3.2]`
 
-## Portable app / portable .exe plan
+## B-1.4.0 Portable Windows release
 
-Goal: add a planning path for making SIPOS available as a Windows `.exe` that can be distributed as a portable folder/zip where feasible. This should be added to Asana as a new planning item, because it is not visible in the screenshots.
+Asana task: `Release: Criar versão portátil / .exe para Windows [v B-1.4.0]`  
+Asana link: https://app.asana.com/1/193050978126127/project/193050978126132/task/1216249466525311
 
-### Suggested Asana task
+### Phase 1 - Feasibility
 
-`Release: Criar versão portátil / .exe para Windows [v B-1.4.0 or release task]`
+- [x] Confirm first supported architecture target: `win-x64`.
+- [x] Confirm Microsoft Office remains a prerequisite for Word/Excel interop.
+- [x] Start with a self-contained single-file publish so the .NET runtime does not need to be installed separately.
+- [ ] Inventory and validate every runtime asset on a clean Windows machine with Office installed.
 
-### Phase 1 — Feasibility
+### Phase 2 - Publish profile / command
 
-- [ ] Confirm supported Windows versions and architecture target (`win-x64` first; decide later on `win-x86` or `win-arm64`).
-- [ ] Confirm whether Microsoft Office is an accepted prerequisite for Word/Excel interop.
-- [ ] Decide framework-dependent vs self-contained publish.
-- [ ] Inventory required runtime assets: fonts, templates, manifest, default folders, and any documents used by Word/Excel automation.
-
-### Phase 2 — Publish profile / command
-
-- [ ] Add or document a Windows publish command for `net6.0-windows` and `win-x64`.
-- [ ] Test `dotnet publish` with `-p:PublishSingleFile=true`.
-- [ ] Test self-contained publish with `-p:SelfContained=true` if artifact size is acceptable.
+- [x] Add a Windows publish profile for `net6.0-windows` and `win-x64`.
+- [x] Add `scripts/Publish-Portable.ps1` to create a portable zip and checksum.
+- [x] Test `dotnet publish` with `PublishSingleFile=true`.
+- [x] Test self-contained publish with `SelfContained=true`.
 - [ ] Confirm Office automation works from the published folder on Windows.
 
-### Phase 3 — Portable artifact
+### Phase 3 - Portable artifact
 
-- [ ] Produce `SIPOS-Beta-<version>-win-x64-portable.zip`.
-- [ ] Include the `.exe`, required assets, and `README-PORTABLE.txt`.
-- [ ] Generate a checksum for the zip artifact.
+- [x] Produce local `SIPOS-Beta-1.2.2-win-x64-portable.zip`.
+- [x] Include `SIPOS.exe`, debug symbols, and `README-PORTABLE.md` in the portable output.
+- [x] Generate a SHA-256 checksum for the zip artifact.
 - [ ] Smoke-test launch from an extracted folder path with spaces.
 - [ ] Smoke-test Excel import and Word export on Windows.
 
-### Phase 4 — Release / upload
+### Phase 4 - Release / upload
 
 - [ ] Decide the authoritative upload location: GitHub Releases, Asana attachment, shared drive, or another channel.
 - [ ] Upload the portable artifact.
 - [ ] Link the artifact in Asana and release notes.
 - [ ] Mark the release task complete only after Windows runtime smoke testing passes.
 
+## Repository branch repair notes
+
+GitHub repair completed on 2026-07-02:
+
+- The repository default branch name is still `SIPOS_v0-8-3`, but the branch content now points to the latest known SIPOS implementation from `SIPOS_v0-9-4`.
+- Old default branch commit preserved at `backup/SIPOS_v0-8-3-before-2026-07-02`.
+- Old default commit before repair: `4533fdd336c7348fa5d84a9f7ec0116e653ec3f4`.
+- Latest branch commit used for repair: `9eb971f97353f00d4760df39ca4e05dcdc9d29f7`.
+- GitHub reported no common ancestor between the old default and latest branch, so a normal merge was not safe. The repair used a backup branch plus a forced default-ref move to avoid losing the latest working code.
+
 ## Repository verification notes
 
-- The repository can restore and build in this environment with .NET SDK 6.0 and Windows targeting enabled.
-- Non-Windows builds are compile checks only; SIPOS still needs Windows runtime validation because it is a Windows Forms app and uses Microsoft Office interop.
+- `dotnet restore` succeeds locally with .NET SDK 10.0.103 and Windows desktop targeting available.
+- `dotnet build` succeeds locally for `net6.0-windows`.
+- `dotnet publish /p:PublishProfile=win-x64-portable` succeeds locally.
+- `scripts/Publish-Portable.ps1 -Version Beta-1.2.2` succeeds locally and creates `artifacts/SIPOS-Beta-1.2.2-win-x64-portable.zip` plus a `.sha256` checksum.
+- Local artifact checksum: `455ABE811E8E4D4668B76AB3213C0360974F62D6340463B9D207AE090DBD467C`.
+- Build still emits existing warnings, including `NETSDK1138` because `net6.0-windows` is out of support. That should be planned separately from this portable compatibility start.
+- SIPOS still needs Windows runtime validation because it is a Windows Forms app and uses Microsoft Office interop.
 - The app should not be marked uploaded/live based only on repository build success. Upload/live status must be confirmed in the chosen external distribution channel.
