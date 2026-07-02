@@ -6,11 +6,16 @@ O SIPOS irá futuramente utilizar Machine Learning para detectar e classificar d
 
 
 ## Overview / Status atual do software (Beta 1.2.2)
-O SIPOS v B-1.2.2 mantém o foco na interpretação de dados das folhas Excel e na flexibilidade do sistema, com validação recente de restauro e build para ambientes de desenvolvimento atualizados. Esta versão beta também prepara o projeto para planeamento de empacotamento e distribuição como executável Windows portátil.
+O SIPOS v B-1.2.2 mantém o foco na interpretação de dados das folhas Excel e na flexibilidade do sistema, com validação recente de restauro e build para ambientes de desenvolvimento atualizados. Esta versão beta também prepara o projeto para empacotamento e distribuição como executável Windows portátil.
+
+## Portable Windows build
+A primeira base de compatibilidade portátil está documentada em `README-PORTABLE.md`. O perfil `Properties/PublishProfiles/win-x64-portable.pubxml` gera um build Windows x64, self-contained e single-file, e o helper `scripts/Publish-Portable.ps1` cria o zip portátil e o checksum SHA-256.
+
+O Microsoft Office continua a ser requisito para as funcionalidades que usam interoperabilidade com Word e Excel.
 
 ## Optics
 Desenvolvido em C#, o SIPOS continua a evoluir com uma interface intuitiva e amigável, focando na facilidade de uso e eficiência para usuários de todos os níveis de experiência técnica.
 
 ## Planos
-Futuras atualizações incluirão a integração de recursos de Machine Learning através de adaptações para Python e uso de bibliotecas como TensorFlow, visando ampliar as capacidades de análise e processamento de dados do sistema. O planeamento de release também inclui a criação de uma versão portátil em `.exe` para Windows, documentada em `PLANNER.md`.
+Futuras atualizações incluirão a integração de recursos de Machine Learning através de adaptações para Python e uso de bibliotecas como TensorFlow, visando ampliar as capacidades de análise e processamento de dados do sistema. O planeamento de release e a sincronização com Asana estão documentados em `PLANNER.md`.
 
