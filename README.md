@@ -15,6 +15,11 @@ O perfil `Properties/PublishProfiles/win-x64-portable.pubxml` gera um build Wind
 
 O Microsoft Office continua a ser requisito para as funcionalidades que usam interoperabilidade com Word e Excel.
 
+## Repository branch model
+A branch `main` é a branch ativa/recomendada para o estado atual do projeto. A branch antiga `SIPOS_v0-8-3` ainda pode aparecer como default branch no GitHub até a configuração do repositório ser alterada, mas deve ser tratada apenas como nome legado da linha principal atual.
+
+Branches de versão ou trabalho devem usar nomes próprios, como `release/beta-1.2.2`, `feature/<nome>`, ou `backup/<nome>`.
+
 ## Optics
 Desenvolvido em C#, o SIPOS continua a evoluir com uma interface intuitiva e amigável, focando na facilidade de uso e eficiência para usuários de todos os níveis de experiência técnica.
 
