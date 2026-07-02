@@ -9,7 +9,9 @@ O SIPOS irá futuramente utilizar Machine Learning para detectar e classificar d
 O SIPOS v B-1.2.2 mantém o foco na interpretação de dados das folhas Excel e na flexibilidade do sistema, com validação recente de restauro e build para ambientes de desenvolvimento atualizados. Esta versão beta também prepara o projeto para empacotamento e distribuição como executável Windows portátil.
 
 ## Portable Windows build
-A primeira base de compatibilidade portátil está documentada em `README-PORTABLE.md`. O perfil `Properties/PublishProfiles/win-x64-portable.pubxml` gera um build Windows x64, self-contained e single-file, e o helper `scripts/Publish-Portable.ps1` cria o zip portátil e o checksum SHA-256.
+A primeira base de compatibilidade portátil está documentada em `README-PORTABLE.md`. O caminho mais simples é fazer duplo clique em `Build-Portable.bat`, escolher ou aceitar a versão padrão, e usar o zip gerado em `artifacts`.
+
+O perfil `Properties/PublishProfiles/win-x64-portable.pubxml` gera um build Windows x64, self-contained e single-file, e o helper `scripts/Publish-Portable.ps1` cria o zip portátil e o checksum SHA-256. O computador que gera o pacote precisa do .NET SDK; o executável gerado não precisa de runtime .NET separado.
 
 O Microsoft Office continua a ser requisito para as funcionalidades que usam interoperabilidade com Word e Excel.
 
