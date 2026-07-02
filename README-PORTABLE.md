@@ -9,18 +9,42 @@ This build profile is the first portable distribution path for SIPOS on Windows 
 - Single-file `SIPOS.exe` inside a publish folder that can be zipped.
 - Microsoft Office desktop apps remain required for Excel and Word interop.
 
-## Publish
+## Easiest Build
+
+Double-click this file from the repository folder:
+
+```text
+Build-Portable.bat
+```
+
+The batch file:
+
+- asks for a version label, defaulting to `Beta-1.2.2`;
+- runs the portable publish profile;
+- creates the portable zip in `artifacts`;
+- creates a `.sha256` checksum beside the zip;
+- pauses at the end so success or error messages stay visible.
+
+The build computer must have the .NET SDK installed. The generated portable app is self-contained, so the target computer does not need a separate .NET runtime installed.
+
+## Advanced Publish Command
 
 From the repository root:
 
 ```powershell
-dotnet publish SIPOS.csproj /p:PublishProfile=win-x64-portable
+powershell -ExecutionPolicy Bypass -File .\scripts\Publish-Portable.ps1 -Version Beta-1.2.2
 ```
 
-The publish output is:
+The underlying publish output is:
 
 ```text
 bin\Release\net6.0-windows\win-x64\publish\portable\
+```
+
+The final distributable zip is written to:
+
+```text
+artifacts\SIPOS-Beta-1.2.2-win-x64-portable.zip
 ```
 
 ## Portable Folder Rules
