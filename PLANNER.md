@@ -105,6 +105,7 @@ Asana link: https://app.asana.com/1/193050978126127/project/193050978126132/task
 
 - [x] Add a Windows publish profile for `net6.0-windows` and `win-x64`.
 - [x] Add `scripts/Publish-Portable.ps1` to create a portable zip and checksum.
+- [x] Add `Build-Portable.bat` as the one-click Windows build entrypoint.
 - [x] Test `dotnet publish` with `PublishSingleFile=true`.
 - [x] Test self-contained publish with `SelfContained=true`.
 
@@ -139,6 +140,7 @@ GitHub repair completed on 2026-07-02 and reflected in Asana task `Repo: Reparar
 - `dotnet build` succeeds locally for `net6.0-windows`.
 - `dotnet publish /p:PublishProfile=win-x64-portable` succeeds locally.
 - `scripts/Publish-Portable.ps1 -Version Beta-1.2.2` succeeds locally and creates `artifacts/SIPOS-Beta-1.2.2-win-x64-portable.zip` plus a `.sha256` checksum.
+- `Build-Portable.bat` succeeds locally with the default version label and creates the same portable zip/checksum through the one-click path.
 - Local artifact checksum: `455ABE811E8E4D4668B76AB3213C0360974F62D6340463B9D207AE090DBD467C`.
 - Build still emits existing warnings, including `NETSDK1138` because `net6.0-windows` is out of support. That should be planned separately from this portable compatibility start.
 - SIPOS still needs Windows runtime validation because it is a Windows Forms app and uses Microsoft Office interop.
