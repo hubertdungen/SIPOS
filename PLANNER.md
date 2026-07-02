@@ -2,7 +2,7 @@
 
 This document mirrors the live Asana planning state for SIPOS and keeps a repository-side planning copy for implementation work. Asana remains the source of truth; this file records the GitHub-side snapshot and the repo changes tied to each planning item.
 
-## Asana snapshot verified on 2026-07-02
+## Asana snapshot verified on 2026-07-03
 
 | Field | Value |
 | --- | --- |
@@ -124,6 +124,16 @@ Asana link: https://app.asana.com/1/193050978126127/project/193050978126132/task
 - [ ] Link the artifact in Asana and release notes.
 - [ ] Mark the release task complete only after Windows runtime smoke testing passes.
 
+## Repository branch model
+
+Recommended branch model as of 2026-07-03:
+
+- `main` is the active/recommended branch for the latest useful SIPOS code.
+- `SIPOS_v0-8-3` remains as a legacy branch name and still appears as the GitHub default branch setting because the available connector can create/move branches but does not expose repository-settings updates.
+- `main` and `SIPOS_v0-8-3` should be kept aligned until the GitHub default branch setting can be changed to `main`.
+- `backup/SIPOS_v0-8-3-before-2026-07-02` preserves the old default branch state from before the repair.
+- Future version snapshots should use release-style branch names such as `release/beta-1.2.2`; feature work should use names such as `feature/<name>` or `codex/<name>`.
+
 ## Repository branch repair notes
 
 GitHub repair completed on 2026-07-02 and reflected in Asana task `Repo: Reparar branch default do GitHub sem perder a ultima versao`:
@@ -132,6 +142,7 @@ GitHub repair completed on 2026-07-02 and reflected in Asana task `Repo: Reparar
 - Old default branch commit preserved at `backup/SIPOS_v0-8-3-before-2026-07-02`.
 - Old default commit before repair: `4533fdd336c7348fa5d84a9f7ec0116e653ec3f4`.
 - Latest branch commit used for repair: `9eb971f97353f00d4760df39ca4e05dcdc9d29f7`.
+- PR #2 merged portable compatibility into `SIPOS_v0-8-3` at merge commit `c0ba9f0fcf9ce12880b2c63ceb7d9bc3a4d3d722`.
 - GitHub reported no common ancestor between the old default and latest branch, so a normal merge was not safe. The repair used a backup branch plus a forced default-ref move to avoid losing the latest working code.
 
 ## Repository verification notes
