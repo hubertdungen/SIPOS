@@ -635,7 +635,7 @@ namespace SIPOS
             // Get the last page number from the footer
             Word.Range lastPageRange = lastDoc.Range(lastDoc.Content.End - 1, lastDoc.Content.End);
             lastPageRange.Select();
-            lastPageNumber = lastPageRange.Information[Word.WdInformation.wdActiveEndAdjustedPageNumber];
+            lastPageNumber = (int)lastPageRange.Information[Word.WdInformation.wdActiveEndAdjustedPageNumber];
 
 
 
@@ -675,7 +675,7 @@ namespace SIPOS
             {
                 Application wordApp = new Application();
                 Document doc = wordApp.Documents.Open(latestFile);
-                int lastPageNumber = doc.Content.Information[WdInformation.wdNumberOfPagesInDocument];
+                int lastPageNumber = (int)doc.Content.Information[WdInformation.wdNumberOfPagesInDocument];
 
                 Console.WriteLine("Last page number: " + lastPageNumber);
 
@@ -697,5 +697,4 @@ namespace SIPOS
 
 
 }
-
 
