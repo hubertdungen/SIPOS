@@ -107,7 +107,6 @@ Asana link: https://app.asana.com/1/193050978126127/project/193050978126132/task
 - [x] Add `scripts/Publish-Portable.ps1` to create a portable zip and checksum.
 - [x] Test `dotnet publish` with `PublishSingleFile=true`.
 - [x] Test self-contained publish with `SelfContained=true`.
-- [ ] Confirm Office automation works from the published folder on Windows.
 
 ### Phase 3 - Portable artifact
 
