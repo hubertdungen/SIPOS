@@ -202,7 +202,7 @@ namespace SIPOS
                 excelApp = new Microsoft.Office.Interop.Excel.Application();
                 wb = excelApp.Workbooks.Open(filePathSelected, false, true);
                 //excelApp.Visible = true;  // This line makes Excel visible
-                ws = wb.Worksheets[1];
+                ws = (Worksheet)wb.Worksheets[1];
 
                 Dictionary<string, int> columnIndexes = FindColumnIndexes(ws, 1, 20);
 
@@ -277,28 +277,28 @@ namespace SIPOS
                     Debug.WriteLine($"Date found at row {rowm}, column {colmn}");
 
                     // Use the found column as the date column
-                    Range dateCell = ws.Cells[rowm, colmn];
+                    Range dateCell = (Range)ws.Cells[rowm, colmn];
 
                     // This will make sure the "Efectivo" column is the one before "Efectivo" Column if the current one is empty
                     int efectivoColumn = columnIndexes["Efectivo"];
-                    Range efectivoCell = ws.Cells[rowm, efectivoColumn];
+                    Range efectivoCell = (Range)ws.Cells[rowm, efectivoColumn];
                     if (string.IsNullOrWhiteSpace(Convert.ToString(efectivoCell.Value)))
                     {
                         efectivoColumn--;
-                        efectivoCell = ws.Cells[rowm, efectivoColumn];
+                        efectivoCell = (Range)ws.Cells[rowm, efectivoColumn];
                         Debug.WriteLine($"Efectivo column adjusted to {efectivoColumn}");
                     }
 
-                    Range reservaCell = ws.Cells[rowm, columnIndexes["Reserva"]];
+                    Range reservaCell = (Range)ws.Cells[rowm, columnIndexes["Reserva"]];
 
                     // Assuming state cells are next to "Reserva"
                     int stateColumn = columnIndexes["Reserva"] - 1;
-                    Range stateCell1 = ws.Cells[rowm, stateColumn];
-                    Range stateCell2 = ws.Cells[rowm + 1, stateColumn];
-                    Range stateCell3 = ws.Cells[rowm + 2, stateColumn];
+                    Range stateCell1 = (Range)ws.Cells[rowm, stateColumn];
+                    Range stateCell2 = (Range)ws.Cells[rowm + 1, stateColumn];
+                    Range stateCell3 = (Range)ws.Cells[rowm + 2, stateColumn];
 
                     int smartAdaptIncrementer = Convert.ToString(stateCell3.Value) == "ADPT" ? 2 : 1;
-                    Range adaptCell = ws.Cells[rowm + smartAdaptIncrementer, columnIndexes["Efectivo"]];
+                    Range adaptCell = (Range)ws.Cells[rowm + smartAdaptIncrementer, columnIndexes["Efectivo"]];
 
                     // Process the data
                     dateOut = Convert.ToString(dateCell.Value);
