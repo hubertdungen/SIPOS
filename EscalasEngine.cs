@@ -11,8 +11,6 @@ namespace SIPOS
     {
 
         // General VARS
-        private string filePath = "";
-        private string joinedOutput = "";
         private string outputText = "";
         private string outputFullText = "";
         private string selectedEscala = "";

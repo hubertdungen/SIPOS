@@ -123,6 +123,29 @@ Rebuilt artifact on 2026-07-08 (with the settings.txt portability fix) via cross
 - Artifact: `SIPOS-Beta-1.2.2-win-x64-portable.zip`
 - SHA-256: `86EFA952D77D2BA40107E85562DEDA881177B26FCBC4620849923E473A0B033E`
 
+Superseded later on 2026-07-08 by the Beta-1.2.2-r2 maintenance rebuild described below.
+
+## Maintenance r2 (2026-07-08): code cleanup and .NET 10 upgrade
+
+Maintenance pass requested after PR #4 merged, before resuming B-1.2.x feature work:
+
+- Removed dead code flagged by compiler warnings: unused `applyModeloEscala` and `detectLastPageNumber` methods in `Word_Processor.cs` (both contained hardcoded `C:\` paths and were never called), plus never-read private fields in `Mediator.cs`, `EscalasEngine.cs`, `Word_Processor.cs`, and `Forms/FormModelar.cs`.
+- Fixed a duplicated `StreamReader` construction in `Mediator.readMemoryFile` that leaked the first reader.
+- Moved DPI awareness out of `app.manifest` into the project property `ApplicationHighDpiMode=SystemAware` (same effective mode as before), clearing warning WFAC010.
+- Upgraded the target framework from `net6.0-windows` (out of support, warning NETSDK1138) to `net10.0-windows` (LTS, supported until Nov 2028). The portable build stays self-contained, so end users still do not need any .NET runtime installed.
+- Added the `DesignerSerializationVisibility` attributes required by the .NET 10 WinForms analyzer (WFO1000) to `Controls/CustomComboBox.cs` custom properties.
+- Enabled `EnableCompressionInSingleFile`, shrinking `SIPOS.exe` from ~165 MB to ~85 MB on disk.
+- Build warnings dropped from ~144 to 122; the remainder are pre-existing nullable-reference warnings (CS86xx) left for a dedicated pass.
+- The in-app version string stays `v B-1.2.2` (no behavior changes), so existing `settings.txt` files keep loading without a version-mismatch prompt. The artifact label is `Beta-1.2.2-r2`.
+- `settings.txt` format is unchanged, including the historical duplicated `fPathOSWord` line, to avoid breaking existing files; consolidating that format needs a version bump and belongs to a future change.
+- Windows smoke tests (launch, Excel import, Word export with Office installed) remain pending for this rebuild, same as Phase 3.
+
+Artifact rebuilt from this maintenance state:
+
+- Artifact: `SIPOS-Beta-1.2.2-r2-win-x64-portable.zip`
+- SHA-256: `C0C6170FD699FF0CA1819EBA91E5CAD238687445531541EA3FB99792A29029AB`
+- Published in-repo under `releases/` and tagged `portable/beta-1.2.2-r2` (GitHub Releases upload still pending the Phase 4 channel decision).
+
 ### Phase 4 - Release / upload
 
 - [ ] Decide the authoritative upload location: GitHub Releases, Asana attachment, shared drive, or another channel.

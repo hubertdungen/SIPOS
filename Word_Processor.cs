@@ -29,13 +29,10 @@ namespace SIPOS
         static string efetivoPD = "", ptpdPD = "", adaptPD = "", resPD = "", statusPD = "";         //PD
         static string efetivoFN = "", ptpdFN = "", adaptFN = "", resFN = "", statusFN = "";         //FN
 
-        int plusDay = 0; //ir buscar ao form
-
         // PARSING CHAR VARS
         //
         //
         static string returnChar = "\v";
-        static string tabChar = "\t";
 
 
 
@@ -586,32 +583,6 @@ namespace SIPOS
 
 
 
-        // APLICAR MODELO DE ESCALA
-        //
-        //
-        public static void applyModeloEscala(Word.Application wordApp)
-        {
-            //Open the word model file
-            Microsoft.Office.Interop.Word.Document wordDoc = wordApp.Documents.Open(@"C:\Users\Public\Documents\Word\escalas.docx");
-
-            //Copy the text from the word file
-            wordDoc.Select();
-            wordDoc.Range().Copy();
-
-            //Paste the text into the last line of the CreateWordDocument(object filename, object SaveAs) word document
-            wordApp.Selection.EndKey();
-            wordApp.Selection.TypeParagraph();
-            wordApp.Selection.Paste();
-
-            //Save the CreateWordDocument(object filename, object SaveAs) word document
-            wordDoc.SaveAs2(@"C:\Users\Public\Documents\Word\escalas.docx");
-
-            //Close the word file
-            wordDoc.Close();
-        }
-
-
-
         // DETECTAR A ÚLTIMA PÁGINA
         //
         //
@@ -649,47 +620,6 @@ namespace SIPOS
             wordApp.Quit(ref missing, ref missing, ref missing);
 
             return lastPageNumber;
-        }
-
-
-        // SEM USO POR ENQUANTO -> APAGAR ASSIM QUE FOR CONFIRMADO QUE NÃO TEM USO
-        static void detectLastPageNumber(string[] args)
-        {
-            string directory = @"C:\Documents";
-            string[] files = Directory.GetFiles(directory, "*.doc");
-            string latestFile = string.Empty;
-            DateTime latestDate = DateTime.MinValue;
-
-            foreach (string file in files)
-            {
-                DateTime creationDate = File.GetCreationTime(file);
-
-                if (creationDate > latestDate)
-                {
-                    latestDate = creationDate;
-                    latestFile = file;
-                }
-            }
-
-            if (!string.IsNullOrEmpty(latestFile))
-            {
-                Application wordApp = new Application();
-                Document doc = wordApp.Documents.Open(latestFile);
-                int lastPageNumber = (int)doc.Content.Information[WdInformation.wdNumberOfPagesInDocument];
-
-                Console.WriteLine("Last page number: " + lastPageNumber);
-
-                doc.Close();
-                wordApp.Quit();
-            }
-            else
-            {
-                Console.WriteLine("No .doc files found in " + directory);
-            }
-
-
-
-
         }
 
 

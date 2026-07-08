@@ -2,7 +2,7 @@
 setlocal
 
 cd /d "%~dp0"
-set "SIPOS_DEFAULT_LABEL=Beta-1.2.2"
+set "SIPOS_DEFAULT_LABEL=Beta-1.2.2-r2"
 
 echo.
 echo SIPOS Portable Builder
