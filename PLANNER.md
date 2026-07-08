@@ -114,8 +114,14 @@ Asana link: https://app.asana.com/1/193050978126127/project/193050978126132/task
 - [x] Produce local `SIPOS-Beta-1.2.2-win-x64-portable.zip`.
 - [x] Include `SIPOS.exe`, debug symbols, and `README-PORTABLE.md` in the portable output.
 - [x] Generate a SHA-256 checksum for the zip artifact.
+- [x] Fix portable `settings.txt` location: it is now anchored to the executable folder (`AppContext.BaseDirectory`) instead of the process current directory, and the file picker restores the current directory after browsing. Before this fix, browsing for an Excel file could silently move where preferences were saved/loaded.
 - [ ] Smoke-test launch from an extracted folder path with spaces.
 - [ ] Smoke-test Excel import and Word export on Windows.
+
+Rebuilt artifact on 2026-07-08 (with the settings.txt portability fix) via cross-compilation on Linux with .NET SDK 10.0.109:
+
+- Artifact: `SIPOS-Beta-1.2.2-win-x64-portable.zip`
+- SHA-256: `86EFA952D77D2BA40107E85562DEDA881177B26FCBC4620849923E473A0B033E`
 
 ### Phase 4 - Release / upload
 
