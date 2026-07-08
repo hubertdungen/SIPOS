@@ -297,7 +297,8 @@ namespace SIPOS
         // SAVER
         public static void saveMemory()
         {
-            string fMemoryPath = Directory.GetCurrentDirectory() + "\\settings.txt";
+            // Portable: settings.txt vive sempre ao lado do SIPOS.exe, mesmo que os diálogos de ficheiros mudem o diretório atual
+            string fMemoryPath = Path.Combine(AppContext.BaseDirectory, "settings.txt");
 
             try
             {
@@ -416,7 +417,7 @@ namespace SIPOS
         {
 
             //MessageBox.Show(fMemoryPath);
-            string fMemoryPath = Directory.GetCurrentDirectory() + "\\settings.txt";
+            string fMemoryPath = Path.Combine(AppContext.BaseDirectory, "settings.txt");
 
             if (!File.Exists(fMemoryPath))  // PROCURA SE HÁ MEMORIA GRAVADA
             {
@@ -528,6 +529,7 @@ namespace SIPOS
         public static void openFile()
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.RestoreDirectory = true;
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 filePath = openFileDialog.FileName;
