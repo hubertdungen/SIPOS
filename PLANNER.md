@@ -144,7 +144,7 @@ Artifact rebuilt from this maintenance state:
 
 - Artifact: `SIPOS-Beta-1.2.2-r2-win-x64-portable.zip`
 - SHA-256: `C0C6170FD699FF0CA1819EBA91E5CAD238687445531541EA3FB99792A29029AB`
-- Published in-repo under `releases/` and tagged `portable/beta-1.2.2-r2` (GitHub Releases upload still pending the Phase 4 channel decision).
+- Published in-repo under `dist/` on the `claude/sipos-portability-release-m6x9tq` branch (GitHub Releases upload still pending the Phase 4 channel decision). A `portable/beta-1.2.2-r2` git tag exists locally but the remote session proxy only accepts pushes to the designated branch, so the tag still needs to be pushed from an unrestricted clone.
 
 ### Phase 4 - Release / upload
 
