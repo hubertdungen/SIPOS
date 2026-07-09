@@ -73,9 +73,11 @@ Update 2026-07-09: repository work has since advanced past that snapshot — the
 
 - [ ] `Modelar: Template ComboBox Custom Design [v B-1.2.3]`
 - [ ] `Modelar: Arrows to switch order [v B-1.2.4]`
-- [ ] `Modelar: Prevent empty or similar names from moving [v B-1.2.5]`
+- [x] `Modelar: Prevent empty or similar names from moving [v B-1.2.5]` — implemented 2026-07-09 (shipped in Beta-1.3.1; Windows UI validation pending).
 - [ ] `Modelar: Template ComboBox Logic [v B-1.2.6]`
 - [ ] `Modelar: Form Layout Update & Menu Logic [v B-1.2.7]`
+
+B-1.2.5 implementation notes: `FormModelar.elli_MouseDown` now refuses to start a drag when the row's `txtNameWBox` is empty or matches another row's name (case- and whitespace-insensitive). The blocked row's name box flashes red with a tooltip explaining the reason, and the drag state never engages, so `MouseMove`/`MouseUp` ignore the gesture. Needs visual confirmation on Windows.
 
 ## B-1.1.0 Interpretação e FormDados epic details
 
@@ -178,13 +180,34 @@ Artifact:
 - SHA-256: `CF04D65C533D15790C1F288F2966AB64D774743FCA4EDBC0280F5AD1671C4E48`
 - Published in-repo under `dist/` on the `claude/sipos-portability-release-m6x9tq` branch (GitHub Releases upload still pending the Phase 4 channel decision).
 
+## Release Beta-1.3.1 (2026-07-09): resilience hardening + B-1.2.5
+
+Troubleshooting/resilience pass over the runtime-critical paths, plus one Modelar feature:
+
+- `Word_Processor.CreateWordDocument`: missing Word template now aborts cleanly before starting Word (previously it showed the error but continued into a null-document `SaveAs2` crash and leaked a WINWORD.EXE process). The whole export is now wrapped in try/catch/finally so the document and Word app always close, and the success message only shows when the export actually succeeded.
+- `Word_Processor.GetLastPageNumber`: wrapped in try/finally with guarded close/quit/release — a failed read no longer leaves an orphaned Word process.
+- `EscalasEngine.checkRows` finally block: each COM cleanup step (release worksheet, close/release workbook, quit/release Excel) is individually guarded so one COM failure cannot skip the rest and leak EXCEL.EXE.
+- `Mediator.readMemoryFile`: resilient parsing — missing or corrupted lines in `settings.txt` fall back to safe defaults instead of crashing startup with FormatException; reader wrapped in `using`. File format unchanged.
+- `Mediator.saveMemory`: writer wrapped in `using` so a failed write cannot keep `settings.txt` locked.
+- `Mediator.GetNextOSNumber`: unset/missing export folder now returns 1 instead of throwing.
+- `Mediator.GetPreviousOSFileName`: non-numeric/empty `osNumber` now returns null instead of throwing.
+- B-1.2.5 (see the Modelar epic section above): drag of rows with empty or duplicate document names is blocked with visual feedback.
+- Build warnings: 121 → 104 (remaining are pre-existing nullability warnings).
+- In-app version bumped to `v B-1.3.1`.
+
+Artifact:
+
+- Artifact: `SIPOS-Beta-1.3.1-win-x64-portable.zip`
+- SHA-256: `134EBC0D96475F88049EE8F26D80B6FA04FEF40592F3651AA1C476AC7484805B`
+- Published in-repo under `dist/` (replaces the Beta-1.3.0 zip; Phase 4 channel decision still pending).
+
 ## Branch cleanup (2026-07-09)
 
 The GitHub default branch is now `main` (the earlier `SIPOS_v0-8-3` repair is complete). Branch inventory reconciled against `main`:
 
 - Fully merged into `main` (0 commits ahead), safe to delete: `SIPOS_v0-8-3`, `SIPOS_v0-9-4`, `codex/start-portable-compatibility`, `codex/verify-.net-installation-and-build-sipos`.
 - PR #3 (`codex/verify-.net-installation-and-build-sipos-0vhcy4`): obsolete — its single commit branched from a pre-portable state and would delete the portable build infrastructure; its Office interop casts are already in `main`. Its only genuinely new content (`README_PT.md`) was salvaged; the PR should be closed.
-- `backup/SIPOS_v0-8-3-before-2026-07-02`: deliberate pre-repair history backup (old default commit `4533fdd`); kept as a safety net.
+- `backup/SIPOS_v0-8-3-before-2026-07-02`: deliberate pre-repair history backup (old default commit `4533fdd`); **decision confirmed 2026-07-09: keep this backup branch permanently** as a safety net.
 
 Note: the remote session git proxy only accepts pushes to the designated working branch, and no branch-deletion tool is exposed, so the actual deletion of the merged branches must be done by the maintainer (GitHub UI → Branches, or `git push origin --delete <branch>` from a normal clone). Enabling "Automatically delete head branches" in the repo settings will keep this tidy going forward.
 
