@@ -10,6 +10,7 @@ using Microsoft.Office.Interop.Word;
 using SIPOS;
 using Microsoft.Office.Interop.Excel;
 using Application = Microsoft.Office.Interop.Word.Application;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace SIPOS
@@ -109,11 +110,22 @@ namespace SIPOS
         //
         public static void CreateWordDocument(object filename, object SaveAs)
         {
-            Word.Application wordApp = new Word.Application();
             object missing = Missing.Value;
-            Word.Document osWordDoc = null;
 
-            if (File.Exists((string)filename))
+            // Sem template não há nada a fazer: sair antes de arrancar o Word,
+            // senão o SaveAs2 abaixo rebentava com um documento null e o processo
+            // do Word ficava órfão em memória.
+            if (!File.Exists((string)filename))
+            {
+                MessageBox.Show("Ficheiro Templare do Word não encontrado!", "FICHEIRO INEXISTENTE!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            Word.Application wordApp = new Word.Application();
+            Word.Document osWordDoc = null;
+            bool exportOk = false;
+
+            try
             {
                 object readOnly = false;
                 object isVisible = Mediator.isExportVisible;
@@ -233,24 +245,31 @@ namespace SIPOS
                     clearVars();
                 }
 
-
-
+                // Save As
+                osWordDoc.SaveAs2(ref SaveAs, ref missing, ref missing, ref missing,
+                                ref missing, ref missing, ref missing,
+                                ref missing, ref missing, ref missing,
+                                ref missing, ref missing, ref missing,
+                                ref missing, ref missing, ref missing);
+                exportOk = true;
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Ficheiro Templare do Word não encontrado!", "FICHEIRO INEXISTENTE!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Ocorreu um erro durante a exportação do documento Word:\r\n{ex.Message}", "ERRO NA EXPORTAÇÃO!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                // Fechar sempre o documento e o Word, mesmo em erro, para não
+                // deixar processos WINWORD.EXE órfãos em memória.
+                try { osWordDoc?.Close(false); } catch { /* já fechado ou COM inacessível */ }
+                try { wordApp.Quit(); } catch { /* já fechado ou COM inacessível */ }
+                try { Marshal.ReleaseComObject(wordApp); } catch { }
             }
 
-            // Save As
-            osWordDoc.SaveAs2(ref SaveAs, ref missing, ref missing, ref missing,
-                            ref missing, ref missing, ref missing,
-                            ref missing, ref missing, ref missing,
-                            ref missing, ref missing, ref missing,
-                            ref missing, ref missing, ref missing);
-            osWordDoc.Close();
-            wordApp.Quit();
-            MessageBox.Show("Ficheiro criado com sucesso!", "EXPORTAÇÃO CONCLUÍDA", MessageBoxButtons.OK);
-
+            if (exportOk)
+            {
+                MessageBox.Show("Ficheiro criado com sucesso!", "EXPORTAÇÃO CONCLUÍDA", MessageBoxButtons.OK);
+            }
         }
 
 
@@ -592,32 +611,33 @@ namespace SIPOS
             Word.Application wordApp = new Word.Application();
             object missing = Type.Missing;
             object readOnly = true;
-            object isVisible = false;
-            wordApp.Visible = false;
+            Word.Document lastDoc = null;
 
-            object lastDocPathObj = lastDocPath;
-            Word.Document lastDoc = wordApp.Documents.Open(ref lastDocPathObj, ref missing, ref readOnly,
-                ref missing, ref missing, ref missing,
-                ref missing, ref missing, ref missing,
-                ref missing, ref missing, ref missing,
-                ref missing, ref missing, ref missing, ref missing);
-            lastDoc.Activate();
+            try
+            {
+                wordApp.Visible = false;
 
-            // Get the last page number from the footer
-            Word.Range lastPageRange = lastDoc.Range(lastDoc.Content.End - 1, lastDoc.Content.End);
-            lastPageRange.Select();
-            lastPageNumber = (int)lastPageRange.Information[Word.WdInformation.wdActiveEndAdjustedPageNumber];
+                object lastDocPathObj = lastDocPath;
+                lastDoc = wordApp.Documents.Open(ref lastDocPathObj, ref missing, ref readOnly,
+                    ref missing, ref missing, ref missing,
+                    ref missing, ref missing, ref missing,
+                    ref missing, ref missing, ref missing,
+                    ref missing, ref missing, ref missing, ref missing);
+                lastDoc.Activate();
 
-
-
-            //foreach (Word.Section section in lastDoc.Sections)
-            //{
-            //    Word.Range footerRange = section.Footers[Word.WdHeaderFooterIndex.wdHeaderFooterPrimary].Range;
-            //    lastPageNumber = Math.Max(lastPageNumber, footerRange.Information[Word.WdInformation.wdActiveEndAdjustedPageNumber]);
-            //}
-
-            lastDoc.Close(ref missing, ref missing, ref missing);
-            wordApp.Quit(ref missing, ref missing, ref missing);
+                // Get the last page number from the footer
+                Word.Range lastPageRange = lastDoc.Range(lastDoc.Content.End - 1, lastDoc.Content.End);
+                lastPageRange.Select();
+                lastPageNumber = (int)lastPageRange.Information[Word.WdInformation.wdActiveEndAdjustedPageNumber];
+            }
+            finally
+            {
+                // Garantir que o Word fecha mesmo se a leitura falhar, para não
+                // deixar processos WINWORD.EXE órfãos em memória.
+                try { lastDoc?.Close(ref missing, ref missing, ref missing); } catch { }
+                try { wordApp.Quit(ref missing, ref missing, ref missing); } catch { }
+                try { Marshal.ReleaseComObject(wordApp); } catch { }
+            }
 
             return lastPageNumber;
         }

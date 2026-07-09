@@ -348,18 +348,21 @@ namespace SIPOS
             }
             finally
             {
-                // Clean up
+                // Clean up — cada passo protegido individualmente para que uma falha COM
+                // num deles não impeça os seguintes (senão ficava um EXCEL.EXE órfão).
+                if (ws != null)
+                {
+                    try { Marshal.ReleaseComObject(ws); } catch { }
+                }
                 if (wb != null)
                 {
-                    wb.Close(false);
-                    Marshal.ReleaseComObject(wb);
+                    try { wb.Close(false); } catch { }
+                    try { Marshal.ReleaseComObject(wb); } catch { }
                 }
-                if (ws != null)
-                    Marshal.ReleaseComObject(ws);
                 if (excelApp != null)
                 {
-                    excelApp.Quit();
-                    Marshal.ReleaseComObject(excelApp);
+                    try { excelApp.Quit(); } catch { }
+                    try { Marshal.ReleaseComObject(excelApp); } catch { }
                 }
                 GC.Collect();
                 GC.WaitForPendingFinalizers();

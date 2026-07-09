@@ -156,6 +156,12 @@ namespace SIPOS
         // Form Export - Detect OSNumber
         public static int GetNextOSNumber(string folderPath)
         {
+            // Pasta não configurada ou inexistente: começar a numeração em 1 em vez de rebentar
+            if (string.IsNullOrWhiteSpace(folderPath) || !Directory.Exists(folderPath))
+            {
+                return 1;
+            }
+
             // Retrieve all .doc files
             var docFiles = Directory.GetFiles(folderPath, "*.doc");
 
@@ -192,8 +198,14 @@ namespace SIPOS
 
         public static string GetPreviousOSFileName(string folderPath)
         {
+            // Número atual inválido/vazio: não há como calcular o anterior
+            if (!int.TryParse(osNumber, out int currentOSnumber))
+            {
+                return null;
+            }
+
             // Obter o número anterior subtraindo 1 do número atual
-            int previousOSnumber = Convert.ToInt32(osNumber) - 1;
+            int previousOSnumber = currentOSnumber - 1;
 
             // Definir o ano atual
             int currentYear = DateTime.Now.Year;
@@ -300,40 +312,36 @@ namespace SIPOS
 
             try
             {
-                TextWriter tw = new StreamWriter(fMemoryPath);
-
                 // Debug MsgBox EachFile
                 if (winMode == 2) { MessageBox.Show("fPathPD: " + fPathPD + "\nfMemoryPath: " + fMemoryPath + "\nfilePathSelected" + filePath); }
 
-                // write lines of text to the file
-                tw.WriteLine(frm_OS_system.version);
-                tw.WriteLine(fPathODU);
-                tw.WriteLine(fPathCCS);
-                tw.WriteLine(fPathSD);
-                tw.WriteLine(fPathPD);
-                tw.WriteLine(fPathFunerais);
-                tw.WriteLine(debugMode);
-                tw.WriteLine(winMode);
-                tw.WriteLine(fPathModelSemana);   //tw.WriteLine(txtbox_FileDirectory_ModelSemana.Text);
-                tw.WriteLine(fPathOSWord);      //tw.WriteLine(txtbox_FolderDirectory_OSWord.Text);
-                tw.WriteLine(fPathModelQuarta);   //tw.WriteLine(txtbox_FileDirectory_ModelQuarta.Text);
-                tw.WriteLine(fPathOSWord);
-                tw.WriteLine(wordAppFilePath);
-                tw.WriteLine(pdfAppFilePath);
-                tw.WriteLine(inspFilePath);
-                tw.WriteLine(autoExcelSearch);
-                tw.WriteLine(autoExcelData);
-                tw.WriteLine(autoExcelEfetivo);
-                tw.WriteLine(autoExcelReserva);
-                tw.WriteLine(forcedExcelData);
-                tw.WriteLine(forcedExcelEfetivo);
-                tw.WriteLine(forcedExcelReserva);
-
-
-
-
-                // close the stream     
-                tw.Close();
+                // write lines of text to the file ("using" garante que o ficheiro é
+                // libertado mesmo que uma escrita falhe a meio)
+                using (TextWriter tw = new StreamWriter(fMemoryPath))
+                {
+                    tw.WriteLine(frm_OS_system.version);
+                    tw.WriteLine(fPathODU);
+                    tw.WriteLine(fPathCCS);
+                    tw.WriteLine(fPathSD);
+                    tw.WriteLine(fPathPD);
+                    tw.WriteLine(fPathFunerais);
+                    tw.WriteLine(debugMode);
+                    tw.WriteLine(winMode);
+                    tw.WriteLine(fPathModelSemana);   //tw.WriteLine(txtbox_FileDirectory_ModelSemana.Text);
+                    tw.WriteLine(fPathOSWord);      //tw.WriteLine(txtbox_FolderDirectory_OSWord.Text);
+                    tw.WriteLine(fPathModelQuarta);   //tw.WriteLine(txtbox_FileDirectory_ModelQuarta.Text);
+                    tw.WriteLine(fPathOSWord);
+                    tw.WriteLine(wordAppFilePath);
+                    tw.WriteLine(pdfAppFilePath);
+                    tw.WriteLine(inspFilePath);
+                    tw.WriteLine(autoExcelSearch);
+                    tw.WriteLine(autoExcelData);
+                    tw.WriteLine(autoExcelEfetivo);
+                    tw.WriteLine(autoExcelReserva);
+                    tw.WriteLine(forcedExcelData);
+                    tw.WriteLine(forcedExcelEfetivo);
+                    tw.WriteLine(forcedExcelReserva);
+                }
                 //txtBox_FMemory.Text = fMemoryPath;
                 //txtbox_FileDirectoryPD.Text = fPathPD;  
                 if (winMode == 2) { MessageBox.Show($"Directorio de {selectedEscala} gravado com sucesso!", "GRAVADO!", MessageBoxButtons.OK, MessageBoxIcon.Information); }
@@ -486,36 +494,40 @@ namespace SIPOS
         }
         public static void readMemoryFile(string fMemoryPath, string checkVersion)
         {
-            TextReader tr = new StreamReader(fMemoryPath);
+            // Leitura resistente: linhas em falta ou corrompidas não rebentam o arranque;
+            // cada campo cai num valor por omissão seguro. A ordem das linhas tem de se
+            // manter exatamente igual à do saveMemory (incluindo a linha duplicada
+            // histórica do fPathOSWord).
+            using (TextReader tr = new StreamReader(fMemoryPath))
+            {
+                string readLine() => tr.ReadLine() ?? "";
+                bool readBool(bool fallback) { return bool.TryParse(tr.ReadLine(), out bool v) ? v : fallback; }
+                int readInt(int fallback) { return int.TryParse(tr.ReadLine(), out int v) ? v : fallback; }
 
-            // read lines of text
-            checkVersion = tr.ReadLine();
-            fPathODU = tr.ReadLine();
-            fPathCCS = tr.ReadLine();
-            fPathSD = tr.ReadLine();
-            fPathPD = tr.ReadLine();
-            fPathFunerais = tr.ReadLine();
-            debugMode = Convert.ToBoolean(tr.ReadLine());
-            winMode = Convert.ToInt32(tr.ReadLine());
-            fPathModelSemana = tr.ReadLine();
-            fPathOSWord = tr.ReadLine();
-            fPathModelQuarta = tr.ReadLine();
-            fPathOSWord = tr.ReadLine();
-            wordAppFilePath = tr.ReadLine();
-            pdfAppFilePath = tr.ReadLine();
-            inspFilePath = tr.ReadLine();
-            autoExcelSearch = Convert.ToBoolean(tr.ReadLine());
-            autoExcelData = tr.ReadLine();
-            autoExcelEfetivo = tr.ReadLine();
-            autoExcelReserva = tr.ReadLine();
-            forcedExcelData = tr.ReadLine();
-            forcedExcelEfetivo = tr.ReadLine();
-            forcedExcelReserva = tr.ReadLine();
+                checkVersion = readLine();
+                fPathODU = readLine();
+                fPathCCS = readLine();
+                fPathSD = readLine();
+                fPathPD = readLine();
+                fPathFunerais = readLine();
+                debugMode = readBool(false);
+                winMode = readInt(0);
+                fPathModelSemana = readLine();
+                fPathOSWord = readLine();
+                fPathModelQuarta = readLine();
+                fPathOSWord = readLine();
+                wordAppFilePath = readLine();
+                pdfAppFilePath = readLine();
+                inspFilePath = readLine();
+                autoExcelSearch = readBool(false);
+                autoExcelData = readLine();
+                autoExcelEfetivo = readLine();
+                autoExcelReserva = readLine();
+                forcedExcelData = readLine();
+                forcedExcelEfetivo = readLine();
+                forcedExcelReserva = readLine();
+            }
 
-
-
-            // close the stream
-            tr.Close();
             fileMemoryDidntExist = false;
         }
 

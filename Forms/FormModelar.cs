@@ -185,11 +185,82 @@ namespace SIPOS.Forms
         //// DRAG AND DROP & MOUSE CONTROL     //
         // -------------------------------------
 
+        // B-1.2.5: VALIDAÇÃO DE NOMES ANTES DE MOVER
+        // Uma linha só pode ser arrastada/reordenada se o nome do documento não
+        // estiver vazio nem for igual (ignorando maiúsculas e espaços) ao de outra linha.
+        private TextBox GetRowNameTextBox(Control row)
+        {
+            return (row as Panel)?.Controls.OfType<TextBox>().FirstOrDefault(tb => tb.Name.Contains("txtNameWBox"));
+        }
+
+        private bool CanMoveRow(Control row, out string blockReason)
+        {
+            blockReason = "";
+            TextBox nameBox = GetRowNameTextBox(row);
+            if (nameBox == null)
+            {
+                return true; // linha sem caixa de nome (não é uma linha de documento): não bloquear
+            }
+
+            string name = (nameBox.Text ?? "").Trim();
+            if (name.Length == 0)
+            {
+                blockReason = "O nome do documento está vazio. Preencha o nome antes de mover a linha.";
+                return false;
+            }
+
+            foreach (Control other in mainWordFlowPanel.Controls)
+            {
+                if (other == row) { continue; }
+                TextBox otherBox = GetRowNameTextBox(other);
+                string otherName = (otherBox?.Text ?? "").Trim();
+                if (otherName.Length > 0 && string.Equals(name, otherName, StringComparison.OrdinalIgnoreCase))
+                {
+                    blockReason = $"Já existe outra linha com o nome \"{otherName}\". Renomeie antes de mover.";
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        // Realce temporário da caixa de nome que causou o bloqueio do movimento.
+        private void FlashRowNameBox(Control row, string reason)
+        {
+            System.Media.SystemSounds.Beep.Play();
+
+            TextBox nameBox = GetRowNameTextBox(row);
+            if (nameBox == null) { return; }
+
+            Color originalColor = nameBox.BackColor;
+            nameBox.BackColor = Color.FromArgb(255, 200, 200);
+            nameBox.Focus();
+
+            var tip = new ToolTip();
+            tip.Show(reason, nameBox, 0, -40, 2200);
+
+            var restoreTimer = new System.Windows.Forms.Timer { Interval = 1200 };
+            restoreTimer.Tick += (s, args) =>
+            {
+                nameBox.BackColor = originalColor;
+                restoreTimer.Stop();
+                restoreTimer.Dispose();
+                tip.Dispose();
+            };
+            restoreTimer.Start();
+        }
+
         private void elli_MouseDown(object sender, MouseEventArgs e)
         {
             Control c;
             c = (Control)sender;
             Control parentC = c.Parent;
+
+            // B-1.2.5: bloquear o arrasto de linhas com nome vazio ou duplicado
+            if (parentC != null && !CanMoveRow(parentC, out string blockReason))
+            {
+                FlashRowNameBox(parentC, blockReason);
+                return; // dragging nunca fica true, por isso MouseMove/MouseUp ignoram o gesto
+            }
 
             mainWordFlowPanel.SuspendLayout();
             //c.Dock = DockStyle.None;
