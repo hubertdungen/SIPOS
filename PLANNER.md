@@ -72,12 +72,14 @@ Update 2026-07-09: repository work has since advanced past that snapshot — the
 ### Pending
 
 - [ ] `Modelar: Template ComboBox Custom Design [v B-1.2.3]`
-- [ ] `Modelar: Arrows to switch order [v B-1.2.4]`
+- [x] `Modelar: Arrows to switch order [v B-1.2.4]` — implemented 2026-07-09 (shipped in Beta-1.3.2; Windows UI validation pending).
 - [x] `Modelar: Prevent empty or similar names from moving [v B-1.2.5]` — implemented 2026-07-09 (shipped in Beta-1.3.1; Windows UI validation pending).
 - [ ] `Modelar: Template ComboBox Logic [v B-1.2.6]`
 - [ ] `Modelar: Form Layout Update & Menu Logic [v B-1.2.7]`
 
 B-1.2.5 implementation notes: `FormModelar.elli_MouseDown` now refuses to start a drag when the row's `txtNameWBox` is empty or matches another row's name (case- and whitespace-insensitive). The blocked row's name box flashes red with a tooltip explaining the reason, and the drag state never engages, so `MouseMove`/`MouseUp` ignore the gesture. Needs visual confirmation on Windows.
+
+B-1.2.4 implementation notes: each document row now carries ▲/▼ buttons (created in code in `AddOrderArrowButtons`, right-docked next to the existing ➕/➖ buttons, and wired by name in `CloneControls` so cloned rows get working arrows too). Clicking moves the row one position up/down via `SetChildIndex` + `RefreshListLayout`, honoring the B-1.2.5 name validation (blocked rows flash instead of moving). Needs visual confirmation on Windows.
 
 ## B-1.1.0 Interpretação e FormDados epic details
 
@@ -91,7 +93,9 @@ The live Asana task shows this epic as complete with 4 / 4 subtasks complete:
 ## B-1.3.0 Detectar: Feriados details
 
 - [x] `Detectar: Detection Engine updates (starts detecting holidays) [v B-1.3.1]` — **motor implementado** em `Feriados.cs` (2026-07-09).
-- [ ] `Calendário: Adicionar checkBox para ativar Start e End Date. [v B-1.3.2]`
+- [x] `Calendário: Adicionar checkBox para ativar Start e End Date. [v B-1.3.2]` — implemented 2026-07-09 (shipped in Beta-1.3.2; Windows UI validation pending).
+
+B-1.3.2 implementation notes: `FormDados` gains a code-created checkbox "Ativar data de início e fim" beside the "Dias de interrupção" spinner. Unchecked (default), the calendar keeps its classic single-day selection (`MaxSelectionCount = 1`) and nothing changes. Checked, the calendar accepts a start→end range (up to 62 days) and the interruption-days spinner (and `Mediator.plusDayIntrup`) is auto-filled with the number of days between start and end; unchecking collapses the selection back to a single day. Needs visual confirmation on Windows.
 
 ### B-1.3.1 detection engine — implementado 2026-07-09
 
@@ -200,6 +204,21 @@ Artifact:
 - Artifact: `SIPOS-Beta-1.3.1-win-x64-portable.zip`
 - SHA-256: `134EBC0D96475F88049EE8F26D80B6FA04FEF40592F3651AA1C476AC7484805B`
 - Published in-repo under `dist/` (replaces the Beta-1.3.0 zip; Phase 4 channel decision still pending).
+
+## Release Beta-1.3.2 (2026-07-09): B-1.2.4 order arrows + B-1.3.2 range checkbox
+
+Two roadmap features in one cycle:
+
+- B-1.2.4 (Modelar): ▲/▼ buttons on each document row to move it one position up or down, honoring the B-1.2.5 name validation. See the Modelar epic section for details.
+- B-1.3.2 (Calendário): "Ativar data de início e fim" checkbox on FormDados enabling start→end range selection, auto-filling the interruption days from the range. See the B-1.3.0 epic section for details.
+- In-app version bumped to `v B-1.3.2`.
+- Both features need Windows UI validation (built and verified compile-clean on Linux only).
+
+Artifact:
+
+- Artifact: `SIPOS-Beta-1.3.2-win-x64-portable.zip`
+- SHA-256: `1C0936A9F37B9327C212A09DB859156BE78341939D47C15DC33236EC7F3D4471`
+- Published in-repo under `dist/` (replaces the Beta-1.3.1 zip; Phase 4 channel decision still pending).
 
 ## Branch cleanup (2026-07-09)
 

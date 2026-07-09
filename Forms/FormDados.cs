@@ -7,6 +7,9 @@ namespace SIPOS.Forms
         // VARS DECLARATION
         public static string DadosTextBoxString = "";
 
+        // B-1.3.2: checkBox para ativar seleção de data de início e fim no calendário
+        private CheckBox chkRangeSelection;
+
         public FormDados()
         {
             InitializeComponent();
@@ -21,6 +24,55 @@ namespace SIPOS.Forms
             monthCalendar.SelectionStart = Mediator.osDay;
             numUpDow_diasIntp.Value = Mediator.plusDayIntrup;
             textBox_Output.Text = EscalasEngine.outputInitialText;
+            AddRangeSelectionCheckBox();
+        }
+
+        // B-1.3.2: criado em código para dispensar alterações no Designer.
+        // Desligado (estado inicial) o calendário comporta-se exatamente como antes
+        // (seleção de um único dia). Ligado, permite escolher um intervalo
+        // início→fim e os "Dias de interrupção" passam a ser calculados
+        // automaticamente a partir desse intervalo.
+        private void AddRangeSelectionCheckBox()
+        {
+            chkRangeSelection = new CheckBox
+            {
+                Name = "chkRangeSelection",
+                Text = "Ativar data de início e fim",
+                AutoSize = true,
+                Font = new Font("Century Gothic", 10F, FontStyle.Regular, GraphicsUnit.Point),
+                ForeColor = Color.Gainsboro,
+                BackColor = Color.Transparent,
+                Location = new Point(numUpDow_diasIntp.Right + 24, numUpDow_diasIntp.Top + 4),
+                Checked = false
+            };
+            chkRangeSelection.CheckedChanged += chkRangeSelection_CheckedChanged;
+            monthCalendar.Parent.Controls.Add(chkRangeSelection);
+            chkRangeSelection.BringToFront();
+        }
+
+        private void chkRangeSelection_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkRangeSelection.Checked)
+            {
+                monthCalendar.MaxSelectionCount = 62;
+            }
+            else
+            {
+                // Voltar ao comportamento clássico: colapsar o intervalo num único dia
+                monthCalendar.SelectionEnd = monthCalendar.SelectionStart;
+                monthCalendar.MaxSelectionCount = 1;
+            }
+        }
+
+        // Devolve o nº de dias entre o início e o fim selecionados (0 se o modo
+        // intervalo estiver desligado ou só estiver escolhido um dia).
+        private int GetSelectedRangeExtraDays()
+        {
+            if (chkRangeSelection == null || !chkRangeSelection.Checked)
+            {
+                return 0;
+            }
+            return Math.Max(0, (monthCalendar.SelectionEnd.Date - monthCalendar.SelectionStart.Date).Days);
         }
 
 
@@ -95,7 +147,17 @@ namespace SIPOS.Forms
         {
             dateProcess(1);
 
-            if (Mediator.isItSabado)
+            // B-1.3.2: com o modo início/fim ativo, os dias de interrupção derivam do
+            // intervalo selecionado no calendário; caso contrário mantém-se a regra
+            // clássica do sábado (fim-de-semana = 2 dias de interrupção).
+            int rangeExtraDays = GetSelectedRangeExtraDays();
+            if (rangeExtraDays > 0)
+            {
+                decimal cappedDays = Math.Min(rangeExtraDays, numUpDow_diasIntp.Maximum);
+                numUpDow_diasIntp.Value = cappedDays;
+                Mediator.plusDayIntrup = (int)cappedDays;
+            }
+            else if (Mediator.isItSabado)
             {
                 numUpDow_diasIntp.Value = 2;
                 Mediator.plusDayIntrup = 2;
