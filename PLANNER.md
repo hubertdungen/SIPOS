@@ -78,12 +78,25 @@ Evidence in the repository that supports this design:
 
 Current limitation: `FindAndReplace` uses `wdReplaceAll`, so every copy of a tag in the document receives the SAME value. Multi-day substitution requires either scoping the replace to the freshly pasted range or per-day tag suffixes.
 
-Proposed next epic — `Modelar/Exportar: Motor de execução de templates multi-dia [v B-1.5.0]`:
+Next epic (mirrored in Asana) — `Modelar/Exportar: Motor de execução de templates multi-dia [v B-1.5.0]`:
 
-- B-1.5.1 Bind the Modelar rows (name + file + active + order) to a persisted program structure the exporter can read.
-- B-1.5.2 Engine: for each selected day, copy the fragment → paste into the final document → substitute variables only within the pasted range.
-- B-1.5.3 Integrate day selection with the start/end range (B-1.3.2) and the holiday engine (`Feriados.cs`) to derive the day list.
-- B-1.5.4 Windows validation against the real exemplares in `modelos_word/`.
+- [x] B-1.5.1 Bind the Modelar rows to a persisted program structure the exporter can read — **implemented 2026-07-09** in `ModelarPrograma.cs`.
+- [ ] B-1.5.2 Engine: for each selected day, copy the fragment → paste into the final document → substitute variables only within the pasted range (Word interop; needs Windows).
+- [x] B-1.5.3 Derive the day list from the start/end range (B-1.3.2) and the holiday engine (`Feriados.cs`) — **implemented 2026-07-09** as `PlaneadorDeDias`.
+- [ ] B-1.5.4 Windows validation against the real exemplares in `modelos_word/`.
+
+### B-1.5.1 + B-1.5.3 implementation (2026-07-09, `ModelarPrograma.cs`)
+
+Pure-logic foundation, no WinForms/Office dependencies, so it is testable in isolation:
+
+- `TipoDeAcao` — extensible action-type enum: `InserirDocumento` (copy/paste a Word doc into the output), `LerEscalasDoDia` (query the Excel escala for the loop's current day), `SubstituirVariaveis` (fill the `<tag>` variables in the last pasted block), `LoopDias` (repeat nested child actions once per selected day), `QuebraDePagina`.
+- `AcaoModelar` — one action line: type + name + optional Word file + active toggle + nested children (for loops). Mirrors the Modelar row concept (name box, file box, ✓ toggle, order) and generalizes it to an action program.
+- `ProgramaModelar` — ordered action list with: JSON persistence (`modelar_programa.json` beside SIPOS.exe, portable rule; corrupted/missing file loads as null instead of crashing), validation coherent with B-1.2.5 (no empty/duplicate action names, document actions need a file, loops cannot be empty), `CriarProgramaClassico()` reproducing today's flow (loop over days → read escalas → insert `modelo_escalas.doc` fragment → substitute variables), and `ExpandirPlano(dias)` which resolves loops into a flat, ordered list of `OperacaoPlaneada` (action + concrete day + file) — the exact input the B-1.5.2 Word engine will execute step by step.
+- `PlaneadorDeDias` — `DiasDeEscala(diaDaOS)`: starting the day after the O.S., include consecutive rest days (weekends and holidays via `Feriados.IsDiaDeDescanso`) and stop at the first working day. Reproduces the classic behavior (normal Wednesday O.S. → Thursday only; Friday O.S. → Sat+Sun+Mon) and generalizes it to holidays (O.S. on a holiday's eve covers the holiday plus the next working day). `DiasDoIntervalo(inicio, fim)` supports the B-1.3.2 start/end mode. Hard cap of 14 days guards against runaway expansion.
+
+Verification: isolated .NET 10 test suite, 17 checks, all passing — day derivation against real 2026 dates (normal day, Friday, eve of Dia de Portugal, Christmas Friday + weekend = 4 days), plan expansion order across 3 days (9 operations, correct day per operation, inactive actions skipped, out-of-loop actions carry no day), validation catching all 4 defect classes, and JSON round-trip preserving nested loops plus corrupted/missing-file safety.
+
+UI note: the pending `Template ComboBox` tasks (B-1.2.3/B-1.2.6) now have a clear target — the ComboBox selects each row's `TipoDeAcao`/template, mapping the row list onto `ProgramaModelar`.
 
 ## B-1.2.0 Modelar epic details
 
@@ -242,6 +255,18 @@ Artifact:
 - Artifact: `SIPOS-Beta-1.3.2-win-x64-portable.zip`
 - SHA-256: `1C0936A9F37B9327C212A09DB859156BE78341939D47C15DC33236EC7F3D4471`
 - Published in-repo under `dist/` (replaces the Beta-1.3.1 zip; Phase 4 channel decision still pending).
+
+## Release Beta-1.5.1 (2026-07-09): Modelar program foundation
+
+- New `ModelarPrograma.cs` implementing B-1.5.1 (action-program structure + JSON persistence + validation + plan expansion) and B-1.5.3 (holiday-aware day derivation). See the Modelar concept section for details.
+- No behavior change in the app yet — the classes are the foundation the B-1.5.2 Word engine and the B-1.2.3/B-1.2.6 ComboBox UI will consume.
+- In-app version bumped to `v B-1.5.1`.
+
+Artifact:
+
+- Artifact: `SIPOS-Beta-1.5.1-win-x64-portable.zip`
+- SHA-256: `B88CCB750AC890B32415F0ED7C534F84BFBE8AFB63139B23B84B22C890516046`
+- Published in-repo under `dist/` (replaces the Beta-1.3.2 zip; Phase 4 channel decision still pending).
 
 ## Branch cleanup (2026-07-09)
 
