@@ -89,6 +89,59 @@ namespace SIPOS.Forms
 
         private void FormModelar_Load(object sender, EventArgs e)
         {
+            AddOrderArrowButtons(rowPanel_WordDoc);
+            RefreshListLayout();
+        }
+
+        // B-1.2.4: SETAS PARA TROCAR A ORDEM DAS LINHAS
+        // Criadas em código (e não no Designer) para serem também clonadas pelo
+        // CloneControls, que lhes liga os eventos por nome (btnWUp / btnWDown).
+        private void AddOrderArrowButtons(Panel row)
+        {
+            Button btnWUp = CreateOrderArrowButton("btnWUp", "▲");
+            Button btnWDown = CreateOrderArrowButton("btnWDown", "▼");
+
+            btnWUp.Click += (s, args) => MoveRowByOffset(((Control)s).Parent, -1);
+            btnWDown.Click += (s, args) => MoveRowByOffset(((Control)s).Parent, +1);
+
+            row.Controls.Add(btnWUp);
+            row.Controls.Add(btnWDown);
+        }
+
+        private Button CreateOrderArrowButton(string name, string glyph)
+        {
+            return new Button
+            {
+                Name = name,
+                Text = glyph,
+                Dock = DockStyle.Right,
+                Width = 26,
+                FlatStyle = FlatStyle.Flat,
+                Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point),
+                BackColor = Color.FromArgb(40, 30, 40),
+                ForeColor = Color.LightSkyBlue,
+                UseVisualStyleBackColor = false,
+                TabStop = false
+            };
+        }
+
+        // Move a linha uma posição para cima (delta -1) ou para baixo (delta +1),
+        // respeitando a validação de nomes do B-1.2.5.
+        private void MoveRowByOffset(Control row, int delta)
+        {
+            if (row == null || row.Parent != mainWordFlowPanel) { return; }
+
+            if (!CanMoveRow(row, out string blockReason))
+            {
+                FlashRowNameBox(row, blockReason);
+                return;
+            }
+
+            int idx = mainWordFlowPanel.Controls.GetChildIndex(row);
+            int newIdx = idx + delta;
+            if (newIdx < 0 || newIdx >= mainWordFlowPanel.Controls.Count) { return; }
+
+            mainWordFlowPanel.Controls.SetChildIndex(row, newIdx);
             RefreshListLayout();
         }
 
@@ -950,6 +1003,14 @@ namespace SIPOS.Forms
                     else if (originalButton.Name.Contains("btnChkWRowActive") || originalButton.Text.Contains("✓"))
                     {
                         newControl.Click += (sender, e) => btnChkWRowActive_Click(newControl, e);
+                    }
+                    else if (originalButton.Name.Contains("btnWUp") || originalButton.Text.Contains("▲"))
+                    {
+                        newControl.Click += (sender, e) => MoveRowByOffset(clone, -1);   // B-1.2.4
+                    }
+                    else if (originalButton.Name.Contains("btnWDown") || originalButton.Text.Contains("▼"))
+                    {
+                        newControl.Click += (sender, e) => MoveRowByOffset(clone, +1);   // B-1.2.4
                     }
 
 
