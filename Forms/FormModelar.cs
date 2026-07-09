@@ -35,20 +35,15 @@ namespace SIPOS.Forms
 
         private static int rowCount = 0;  // Static variable to count the rows
 
-        Control initialRow;
         bool dragging;
         int xoffset;
         int yoffset;
         int tickCount = 0;
 
-        int rowIndex;
         float floatI;
-        int rowNumber = -1;
         int rowMarginH = 14;
         readonly int rowPadBottom = 5; // margin between rows
         static int rh = 0;  // row height
-        int totalRows = 0;
-        int lineAnimation = 0;
 
 
 

@@ -43,7 +43,7 @@ namespace SIPOS
         // ------------
 
         // Details VARS
-        public static string version = "v B-1.2.2";
+        public static string version = "v B-1.3.0";
 
         
         private Mediator mediator;
@@ -249,7 +249,7 @@ namespace SIPOS
             leftBorderBtn.Visible = false;
             iconCurrentChildForm.IconChar = IconChar.PlaneDeparture;
             iconCurrentChildForm.IconColor = Color.FromArgb(255, 0, 249);
-            lblTitleChildForm.Text = "Início";
+            lblTitleChildForm.Text = "Inï¿½cio";
         }
 
 

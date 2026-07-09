@@ -1,5 +1,5 @@
 param(
-    [string]$Version = "Beta-1.2.2",
+    [string]$Version = "Beta-1.3.0",
     [string]$Runtime = "win-x64"
 )
 
@@ -7,7 +7,7 @@ $ErrorActionPreference = "Stop"
 
 $repoRoot = Split-Path -Parent $PSScriptRoot
 $publishProfile = "$Runtime-portable"
-$publishDir = Join-Path $repoRoot "bin\Release\net6.0-windows\$Runtime\publish\portable"
+$publishDir = Join-Path $repoRoot "bin\Release\net10.0-windows\$Runtime\publish\portable"
 $artifactDir = Join-Path $repoRoot "artifacts"
 $zipPath = Join-Path $artifactDir "SIPOS-$Version-$Runtime-portable.zip"
 $checksumPath = "$zipPath.sha256"

@@ -26,25 +26,33 @@ namespace SIPOS.Controls
         //Properties
         //-> Appearance
         [Category("HD - Custom Appearance")]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public new Color BackColor { get { return backColor; } set { backColor = value; lblText.BackColor = backColor; btnIcon.BackColor = backColor; } }
         [Category("HD - Custom Appearance")]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public Color IconColor { get { return iconColor; } set { iconColor = value; btnIcon.Invalidate();/*Redraw icon*/ } }
         [Category("HD - Custom Appearance")]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public Color ListBackColor { get { return listBackColor; } set { listBackColor = value; cmbList.BackColor = listBackColor; } }
         [Category("HD - Custom Appearance")]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public Color ListTextColor { get { return listTextColor; } set { listTextColor = value; cmbList.ForeColor = listTextColor; } }
         [Category("HD - Custom Appearance")]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public Color BorderColor { get { return borderColor; } set { borderColor = value; base.BackColor = borderColor; /*Border Color*/ } }
         [Category("HD - Custom Appearance")]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public int BorderSize { get { return borderSize; } set { borderSize = value; this.Padding = new Padding(borderSize); /*Border Size*/ AdjustComboBoxDimensions(); } }
         [Category("HD - Custom Appearance")]
         public override Color ForeColor { get { return base.ForeColor; } set { base.ForeColor = value; lblText.ForeColor = value; } }
         [Category("HD - Custom Appearance")]
         public override Font Font { get { return base.Font; } set { base.Font = value; lblText.Font = value; cmbList.Font = value; } }
         [Category("HD - Custom Appearance")]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public string Texts { get { return lblText.Text; } set { lblText.Text = value; } }
 
         [Category("HD - Custom Appearance")]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public ComboBoxStyle DropDownStyle { get { return cmbList.DropDownStyle; } set { if (cmbList.DropDownStyle != ComboBoxStyle.Simple) { cmbList.DropDownStyle = value; } } }
 
         //-> Data

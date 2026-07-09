@@ -31,9 +31,7 @@ namespace SIPOS
         public static string filePath = "";
         public static string selectedFolder = "";
         public static string selectedEscala = "";
-        private string escalaPreviewText = "";
         public static bool isPathSaved = true;
-        private bool nonePathMissing = true;
         public static bool nonePathError = true;
         public static string osNumber = "";
         public static string exportDocName = DateTime.Now.Year.ToString() + "-" + "002" + "-";
@@ -489,7 +487,6 @@ namespace SIPOS
         public static void readMemoryFile(string fMemoryPath, string checkVersion)
         {
             TextReader tr = new StreamReader(fMemoryPath);
-            tr = new StreamReader(fMemoryPath);
 
             // read lines of text
             checkVersion = tr.ReadLine();
@@ -562,31 +559,26 @@ namespace SIPOS
             if (fPathODU == "" || fPathODU == null)
             {
                 MessageBox.Show("Não tem um caminho especificado para o ficheiro da Escala de \"Oficial de Dia\"" + "\r\n Ao clicar \"OK\" concorda em que o programa insira os dados sem a Escala de ODU.", "ALERTA!", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2);
-                nonePathMissing = false;
             }
 
             if (fPathCCS == "" || fPathCCS == null)
             {
                 MessageBox.Show("Não tem um caminho especificado para o ficheiro da Escala de \"Centro Coordenador de Segurança e Defesa\"" + "\r\n Ao clicar \"OK\" concorda em que o programa insira os dados sem a Escala de CCS.", "ALERTA!", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2);
-                nonePathMissing = false;
             }
 
             if (fPathSD == "" || fPathSD == null)
             {
                 MessageBox.Show("Não tem um caminho especificado para o ficheiro da Escala de \"Sargento de Dia\"" + "\r\n Ao clicar \"OK\" concorda em que o programa insira os dados sem a Escala de SD.", "ALERTA!", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2);
-                nonePathMissing = false;
             }
 
             if (fPathPD == "" || fPathPD == null)
             {
                 MessageBox.Show("Não tem um caminho especificado para o ficheiro da Escala de \"Praça de Dia\"" + "\r\n Ao clicar \"OK\" concorda em que o programa insira os dados sem a Escala de PD.", "ALERTA!", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2);
-                nonePathMissing = false;
             }
 
             if (fPathFunerais == "" || fPathFunerais == null)
             {
                 MessageBox.Show("Não tem um caminho especificado para o ficheiro da Escala de \"Funerais\"" + "\r\n Ao clicar \"OK\" concorda em que o programa insira os dados sem a Escala de Funerais.", "ALERTA!", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2);
-                nonePathMissing = false;
             }
 
 
@@ -721,10 +713,32 @@ namespace SIPOS
             // Converte a data da escala para a data escolhida no motor para ser exportada...
             // P.ex.: O.S. de sexta-feira, se o SIPOS estiver a ver o domingo, o escalaDay vai ser o sábado e o que o returnEscalaDate vai returnar é o Domingo.
 
-            diaDeEscala.AddDays(plusDay);
+            // NOTA (2026-07-08): historicamente esta função tinha "diaDeEscala.AddDays(plusDay)"
+            // cujo resultado era descartado (DateTime é imutável), seguido de código inalcançável
+            // depois do return. Na prática o parâmetro plusDay nunca era aplicado e a expansão de
+            // fim-de-semana já é feita via FormDados.dateProcess(). O comportamento atual (devolver
+            // diaDeEscala sem deslocamento) foi preservado; aplicar realmente o plusDay precisa de
+            // validação com dados reais em Windows antes de mudar (ver PLANNER.md).
             return diaDeEscala.ToString("dd-MM-yyyy");
-            diaDeEscala.AddDays(-plusDay);
         }
+        // FERIADOS (epic B-1.3.0) — atalhos para o motor de deteção de feriados nacionais.
+        // Deixados prontos para a futura integração na UI de calendário (B-1.3.2) e no
+        // cálculo de dias de interrupção, sem alterar os fluxos de escala já validados.
+        public static bool isDiaFeriado(DateTime data)
+        {
+            return Feriados.IsFeriado(data);
+        }
+
+        public static string? nomeDoFeriado(DateTime data)
+        {
+            return Feriados.NomeFeriado(data);
+        }
+
+        public static bool isDiaDeDescanso(DateTime data)
+        {
+            return Feriados.IsDiaDeDescanso(data);
+        }
+
         public static object returnOSDateExtensoParse()
         {
             string osDayString = osDay.ToString("D");
