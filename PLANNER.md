@@ -25,6 +25,8 @@ The live Asana task shows the main SIPOS work as active with 17 of 27 subtasks c
 
 Therefore, repo/docs should describe Beta 1.2.2 as the latest completed code milestone reflected by Asana, while planning continues with pending B-1.2.x work, B-1.3.x holiday detection, and the new B-1.4 portable Windows release path.
 
+Update 2026-07-09: repository work has since advanced past that snapshot — the portable release path (B-1.4) was fixed and shipped as a portable artifact, and the B-1.3.1 holiday-detection engine was implemented and unit-verified. The in-app version string is now `v B-1.3.0`. See the dedicated sections below.
+
 ## Main SIPOS roadmap from Asana
 
 ### Completed items visible
@@ -86,8 +88,23 @@ The live Asana task shows this epic as complete with 4 / 4 subtasks complete:
 
 ## B-1.3.0 Detectar: Feriados details
 
-- [ ] `Detectar: Detection Engine updates (starts detecting holidays) [v B-1.3.1]`
+- [x] `Detectar: Detection Engine updates (starts detecting holidays) [v B-1.3.1]` — **motor implementado** em `Feriados.cs` (2026-07-09).
 - [ ] `Calendário: Adicionar checkBox para ativar Start e End Date. [v B-1.3.2]`
+
+### B-1.3.1 detection engine — implementado 2026-07-09
+
+Nova classe autónoma `Feriados.cs` (sem dependências de WinForms/Office, por isso testável isoladamente):
+
+- `DomingoDePascoa(ano)` — computus gregoriano (Meeus/Jones/Butcher).
+- `DoAno(ano, incluirFacultativos)` — lista ordenada dos feriados nacionais fixos (Ano Novo, Dia da Liberdade, Dia do Trabalhador, Dia de Portugal, Assunção, Implantação da República, Todos os Santos, Restauração da Independência, Imaculada Conceição, Natal) e móveis (Sexta-feira Santa, Páscoa, Corpo de Deus), com o Carnaval como facultativo opcional.
+- `IsFeriado(data)`, `NomeFeriado(data)`, `IsDiaDeDescanso(data)` (fim-de-semana ou feriado).
+- Atalhos expostos em `Mediator`: `isDiaFeriado`, `nomeDoFeriado`, `isDiaDeDescanso`, prontos para a integração de UI de B-1.3.2 e para o cálculo de dias de interrupção, sem alterar os fluxos de escala já validados.
+
+Verificação: teste isolado em .NET 10 confirmou as datas de Páscoa de 2000/2023/2024/2025/2026/2027 contra valores conhecidos e a deteção correta de feriados fixos, móveis e dias úteis. Todos os testes passaram. A integração real no cálculo de `plusDayIntrup`/calendário continua pendente de validação em Windows.
+
+### Bug conhecido registado
+
+`Mediator.returnEscalaDate(plusDay)` ignorava o parâmetro `plusDay`: `diaDeEscala.AddDays(plusDay)` descartava o resultado (DateTime é imutável) e tinha uma linha inalcançável a seguir ao `return`. O código morto foi removido e o comportamento atual (devolver a data sem deslocamento) foi preservado, porque aplicar realmente o `plusDay` afeta a filtragem de escalados por data e precisa de validação com dados reais em Windows antes de ser mudado.
 
 ## B-1.4.0 Portable Windows release
 
@@ -144,7 +161,32 @@ Artifact rebuilt from this maintenance state:
 
 - Artifact: `SIPOS-Beta-1.2.2-r2-win-x64-portable.zip`
 - SHA-256: `C0C6170FD699FF0CA1819EBA91E5CAD238687445531541EA3FB99792A29029AB`
-- Published in-repo under `dist/` on the `claude/sipos-portability-release-m6x9tq` branch (GitHub Releases upload still pending the Phase 4 channel decision). A `portable/beta-1.2.2-r2` git tag exists locally but the remote session proxy only accepts pushes to the designated branch, so the tag still needs to be pushed from an unrestricted clone.
+- Superseded by the Beta-1.3.0 artifact below once the holiday-detection engine landed.
+
+## Release Beta-1.3.0 (2026-07-09): holiday detection engine
+
+This is the first release carrying real feature work on top of the r2 maintenance base:
+
+- Added the `Feriados.cs` national-holiday detection engine (B-1.3.1, see above).
+- In-app version string bumped to `v B-1.3.0`. Existing `settings.txt` files from `v B-1.2.2` now trigger the built-in version-mismatch prompt, which lets the user keep or recreate their preferences — expected behavior for a feature release.
+- Salvaged `README_PT.md` (Portuguese README) from the obsolete PR #3 branch, updated for the .NET 10 target and the current milestone, before closing that PR.
+- Windows smoke tests remain pending, same as before.
+
+Artifact:
+
+- Artifact: `SIPOS-Beta-1.3.0-win-x64-portable.zip`
+- SHA-256: `CF04D65C533D15790C1F288F2966AB64D774743FCA4EDBC0280F5AD1671C4E48`
+- Published in-repo under `dist/` on the `claude/sipos-portability-release-m6x9tq` branch (GitHub Releases upload still pending the Phase 4 channel decision).
+
+## Branch cleanup (2026-07-09)
+
+The GitHub default branch is now `main` (the earlier `SIPOS_v0-8-3` repair is complete). Branch inventory reconciled against `main`:
+
+- Fully merged into `main` (0 commits ahead), safe to delete: `SIPOS_v0-8-3`, `SIPOS_v0-9-4`, `codex/start-portable-compatibility`, `codex/verify-.net-installation-and-build-sipos`.
+- PR #3 (`codex/verify-.net-installation-and-build-sipos-0vhcy4`): obsolete — its single commit branched from a pre-portable state and would delete the portable build infrastructure; its Office interop casts are already in `main`. Its only genuinely new content (`README_PT.md`) was salvaged; the PR should be closed.
+- `backup/SIPOS_v0-8-3-before-2026-07-02`: deliberate pre-repair history backup (old default commit `4533fdd`); kept as a safety net.
+
+Note: the remote session git proxy only accepts pushes to the designated working branch, and no branch-deletion tool is exposed, so the actual deletion of the merged branches must be done by the maintainer (GitHub UI → Branches, or `git push origin --delete <branch>` from a normal clone). Enabling "Automatically delete head branches" in the repo settings will keep this tidy going forward.
 
 ### Phase 4 - Release / upload
 

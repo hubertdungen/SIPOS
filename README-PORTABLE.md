@@ -19,7 +19,7 @@ Build-Portable.bat
 
 The batch file:
 
-- asks for a version label, defaulting to `Beta-1.2.2-r2`;
+- asks for a version label, defaulting to `Beta-1.3.0`;
 - runs the portable publish profile;
 - creates the portable zip in `artifacts`;
 - creates a `.sha256` checksum beside the zip;
@@ -32,7 +32,7 @@ The build computer must have the .NET SDK installed. The generated portable app 
 From the repository root:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\Publish-Portable.ps1 -Version Beta-1.2.2-r2
+powershell -ExecutionPolicy Bypass -File .\scripts\Publish-Portable.ps1 -Version Beta-1.3.0
 ```
 
 The underlying publish output is:
@@ -44,7 +44,7 @@ bin\Release\net10.0-windows\win-x64\publish\portable\
 The final distributable zip is written to:
 
 ```text
-artifacts\SIPOS-Beta-1.2.2-r2-win-x64-portable.zip
+artifacts\SIPOS-Beta-1.3.0-win-x64-portable.zip
 ```
 
 ## Portable Folder Rules

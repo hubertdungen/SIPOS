@@ -713,10 +713,32 @@ namespace SIPOS
             // Converte a data da escala para a data escolhida no motor para ser exportada...
             // P.ex.: O.S. de sexta-feira, se o SIPOS estiver a ver o domingo, o escalaDay vai ser o sábado e o que o returnEscalaDate vai returnar é o Domingo.
 
-            diaDeEscala.AddDays(plusDay);
+            // NOTA (2026-07-08): historicamente esta função tinha "diaDeEscala.AddDays(plusDay)"
+            // cujo resultado era descartado (DateTime é imutável), seguido de código inalcançável
+            // depois do return. Na prática o parâmetro plusDay nunca era aplicado e a expansão de
+            // fim-de-semana já é feita via FormDados.dateProcess(). O comportamento atual (devolver
+            // diaDeEscala sem deslocamento) foi preservado; aplicar realmente o plusDay precisa de
+            // validação com dados reais em Windows antes de mudar (ver PLANNER.md).
             return diaDeEscala.ToString("dd-MM-yyyy");
-            diaDeEscala.AddDays(-plusDay);
         }
+        // FERIADOS (epic B-1.3.0) — atalhos para o motor de deteção de feriados nacionais.
+        // Deixados prontos para a futura integração na UI de calendário (B-1.3.2) e no
+        // cálculo de dias de interrupção, sem alterar os fluxos de escala já validados.
+        public static bool isDiaFeriado(DateTime data)
+        {
+            return Feriados.IsFeriado(data);
+        }
+
+        public static string? nomeDoFeriado(DateTime data)
+        {
+            return Feriados.NomeFeriado(data);
+        }
+
+        public static bool isDiaDeDescanso(DateTime data)
+        {
+            return Feriados.IsDiaDeDescanso(data);
+        }
+
         public static object returnOSDateExtensoParse()
         {
             string osDayString = osDay.ToString("D");
