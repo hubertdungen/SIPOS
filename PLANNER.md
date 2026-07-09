@@ -81,9 +81,19 @@ Current limitation: `FindAndReplace` uses `wdReplaceAll`, so every copy of a tag
 Next epic (mirrored in Asana) — `Modelar/Exportar: Motor de execução de templates multi-dia [v B-1.5.0]`:
 
 - [x] B-1.5.1 Bind the Modelar rows to a persisted program structure the exporter can read — **implemented 2026-07-09** in `ModelarPrograma.cs`.
-- [ ] B-1.5.2 Engine: for each selected day, copy the fragment → paste into the final document → substitute variables only within the pasted range (Word interop; needs Windows).
+- [x] B-1.5.2 Engine: for each selected day, copy the fragment → paste into the final document → substitute variables only within the pasted range — **implemented 2026-07-09 on branch `feature/modelar-motor-b1.5.2`**; Windows validation pending before merge.
 - [x] B-1.5.3 Derive the day list from the start/end range (B-1.3.2) and the holiday engine (`Feriados.cs`) — **implemented 2026-07-09** as `PlaneadorDeDias`.
 - [ ] B-1.5.4 Windows validation against the real exemplares in `modelos_word/`.
+
+### B-1.5.2 engine implementation (2026-07-09, branch `feature/modelar-motor-b1.5.2`)
+
+- `ModelarMotorWord.Executar(programa, dias, modeloBase, destino)`: validates the program, opens the base O.S. model once, prepares headers/footers and page numbering exactly like the classic flow, then executes the expanded plan step by step. Word always closes on error (Beta-1.3.1 hardening pattern).
+- `InserirDocumento` opens the fragment read-only, copies its whole content and pastes at the end of the output document, recording the pasted range.
+- `SubstituirVariaveis` calls the new `Word_Processor.SubstituirVariaveisNoRange(range, dia)`, which replaces all escala tags (`<dataEscalados>`, ODU/CCS/SD/PD, plus OAF on Wednesdays) **only inside the last pasted block** using scoped `Range.Find` with `wdFindStop` — the key capability `wdReplaceAll` could not provide — and clears the loaded vars afterwards so the next day starts clean.
+- `LerEscalasDoDia` points the global date state at the operation's day and runs the Excel triage.
+- Opt-in wiring in `FormExport.btn_ExportWord_Click`: if `modelar_programa.json` exists beside SIPOS.exe the engine runs (day list from the B-1.3.2 range when active, otherwise `PlaneadorDeDias.DiasDeEscala`); without the file the classic flow runs untouched.
+- User guide added at `docs/GUIA-MODELAR.md` with the concept, action-type table, annotated JSON example (`docs/modelar_programa.exemplo.json`, verified to load/validate/expand with the real code), the Windows test script, and the epic status table.
+- This branch is intentionally NOT merged to `main`: the interop path cannot be exercised on Linux, so it waits for the Windows smoke test (B-1.5.4). `main` stays at Beta 1.5.1.
 
 ### B-1.5.1 + B-1.5.3 implementation (2026-07-09, `ModelarPrograma.cs`)
 

@@ -69,6 +69,74 @@ namespace SIPOS
                 ref matchDiactitics, ref matchAlefHamza,
                 ref matchControl);
         }
+        // B-1.5.2: FIND & REPLACE POR ÂMBITO
+        // Substitui uma tag apenas dentro do range indicado (o bloco acabado de
+        // colar pelo motor Modelar), ao contrário do FindAndReplace clássico que
+        // usa wdReplaceAll e altera o documento inteiro.
+        private static void ReplaceInRange(Word.Range alvo, string tag, string valor)
+        {
+            Word.Range r = alvo.Duplicate;
+            Word.Find find = r.Find;
+            find.ClearFormatting();
+            find.Replacement.ClearFormatting();
+            find.Execute(FindText: tag,
+                MatchCase: true,
+                MatchWholeWord: false,
+                Wrap: Word.WdFindWrap.wdFindStop,
+                Replace: Word.WdReplace.wdReplaceAll,
+                ReplaceWith: valor ?? "");
+        }
+
+        // B-1.5.2: substitui todas as variáveis das escalas (carregadas por
+        // listToVarsEscalados) apenas dentro do range indicado, incluindo a data
+        // dos escalados do dia. No fim limpa as variáveis para o próximo dia do
+        // loop não herdar valores antigos.
+        public static void SubstituirVariaveisNoRange(Word.Range alvo, DateTime dia)
+        {
+            string dataEscalados = (string)Mediator.returnEscaladosDateParse();
+            ReplaceInRange(alvo, "<dataEscalados>", dataEscalados);
+
+            // ODU
+            ReplaceInRange(alvo, "<ODUefectivo>", efetivoODU);
+            ReplaceInRange(alvo, "<ODUptpd>", ptpdODU);
+            ReplaceInRange(alvo, "<ODUadapt>", adaptODU);
+            ReplaceInRange(alvo, "<ODUstatus>", statusODU);
+            ReplaceInRange(alvo, "<ODUreserva>", resODU);
+
+            // CCS
+            ReplaceInRange(alvo, "<CCSefectivo>", efetivoCCS);
+            ReplaceInRange(alvo, "<CCSptpd>", ptpdCCS);
+            ReplaceInRange(alvo, "<CCSadapt>", adaptCCS);
+            ReplaceInRange(alvo, "<CCSstatus>", statusCCS);
+            ReplaceInRange(alvo, "<CCSreserva>", resCCS);
+
+            // SD
+            ReplaceInRange(alvo, "<SDefectivo>", efetivoSD);
+            ReplaceInRange(alvo, "<SDptpd>", ptpdSD);
+            ReplaceInRange(alvo, "<SDadapt>", adaptSD);
+            ReplaceInRange(alvo, "<SDstatus>", statusSD);
+            ReplaceInRange(alvo, "<SDreserva>", resSD);
+
+            // PD
+            ReplaceInRange(alvo, "<PDefectivo>", efetivoPD);
+            ReplaceInRange(alvo, "<PDptpd>", ptpdPD);
+            ReplaceInRange(alvo, "<PDadapt>", adaptPD);
+            ReplaceInRange(alvo, "<PDstatus>", statusPD);
+            ReplaceInRange(alvo, "<PDreserva>", resPD);
+
+            // OAF (previsão de quarta-feira)
+            if (dia.DayOfWeek == DayOfWeek.Wednesday)
+            {
+                ReplaceInRange(alvo, "<OAFefectivo>", efetivoFN);
+                ReplaceInRange(alvo, "<OAFptpd>", ptpdFN);
+                ReplaceInRange(alvo, "<OAFadapt>", adaptFN);
+                ReplaceInRange(alvo, "<OAFstatus>", statusFN);
+                ReplaceInRange(alvo, "<OAFreserva>", resFN);
+            }
+
+            clearVars();
+        }
+
         public static void FindAndReplaceHeader(Word.Document osWordDoc, Word.Application wordApp, object ToFindText, object replaceWithText)
         {
 

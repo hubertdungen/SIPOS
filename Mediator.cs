@@ -83,6 +83,12 @@ namespace SIPOS
 
         public static string escalaDay = "";
 
+        // B-1.3.2 / B-1.5.2: intervalo início→fim escolhido no calendário do
+        // FormDados quando a checkbox "Ativar data de início e fim" está ligada.
+        public static bool rangeAtivo = false;
+        public static DateTime rangeInicio = DateTime.Today;
+        public static DateTime rangeFim = DateTime.Today;
+
 
 
         // Method to trigger the event
