@@ -62,6 +62,29 @@ Update 2026-07-09: repository work has since advanced past that snapshot — the
 - [ ] `Propriedades: Função para o utilizador programar o software`
 - [ ] `SIPOS: Mais adaptável a outras unidades`
 
+## Modelar — real concept (clarified by Hubert on 2026-07-09)
+
+The Modelar module is for the user to model/program the OPERATIONS SIPOS performs on export, not just to manage a list of documents. Each row in the drag&drop list (name + Word file + active toggle + order) is one step of an "export program": an action template based on copying model documents, inserting everything into one final document, and substituting the `<tag>` variables for each selected day.
+
+Example flow the user described: select 3 days → the engine queries the Excel escala list once per day → for each day it inserts a copy of a fragment (e.g. `modelo_escalas.doc`, the formatted O.S. escala report table) into the final document → and in each pasted copy substitutes that specific day's variables.
+
+Evidence in the repository that supports this design:
+
+- `modelo_escalas.doc` is a single-block fragment (each `<tag>` appears exactly once) — built to be copy-pasted N times;
+- the old `applyModeloEscala` method (removed as dead code in Beta-1.2.2-r2) copied an escalas doc and pasted it at the end of the document — the embryo of this engine;
+- `CreateWordDocument` still has a `for (int i = 0; i < 1; i++)` placeholder loop for iterating days;
+- `FormDados.btn_refresh` already runs the escala triage 3× (sáb/dom/seg) when the day is Saturday;
+- the B-1.3.2 start/end checkbox now provides multi-day selection input.
+
+Current limitation: `FindAndReplace` uses `wdReplaceAll`, so every copy of a tag in the document receives the SAME value. Multi-day substitution requires either scoping the replace to the freshly pasted range or per-day tag suffixes.
+
+Proposed next epic — `Modelar/Exportar: Motor de execução de templates multi-dia [v B-1.5.0]`:
+
+- B-1.5.1 Bind the Modelar rows (name + file + active + order) to a persisted program structure the exporter can read.
+- B-1.5.2 Engine: for each selected day, copy the fragment → paste into the final document → substitute variables only within the pasted range.
+- B-1.5.3 Integrate day selection with the start/end range (B-1.3.2) and the holiday engine (`Feriados.cs`) to derive the day list.
+- B-1.5.4 Windows validation against the real exemplares in `modelos_word/`.
+
 ## B-1.2.0 Modelar epic details
 
 ### Completed
