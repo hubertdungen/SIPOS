@@ -123,27 +123,40 @@ namespace SIPOS.Forms
             "Quebra de página"
         };
 
+        // B-1.2.3: usa o CustomComboBox do projeto (design custom com borda,
+        // seta desenhada e dropdown estilizado) em vez do ComboBox nativo.
         private void AddTipoAcaoComboBox(Panel row)
         {
-            var cmb = new ComboBox
-            {
-                Name = "cmbTipoAcao",
-                DropDownStyle = ComboBoxStyle.DropDownList,
-                Dock = DockStyle.Right,
-                Width = 150,
-                FlatStyle = FlatStyle.Flat,
-                Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point),
-                BackColor = Color.FromArgb(35, 26, 45),
-                ForeColor = Color.Gainsboro
-            };
-            cmb.Items.AddRange(rotulosTiposDeAcao);
-            cmb.SelectedIndex = 0;
+            var cmb = CreateTipoAcaoCustomCombo();
             row.Controls.Add(cmb);
         }
 
-        private ComboBox GetRowTipoCombo(Control row)
+        private SIPOS.Controls.CustomComboBox CreateTipoAcaoCustomCombo()
         {
-            return (row as Panel)?.Controls.OfType<ComboBox>().FirstOrDefault(cb => cb.Name.Contains("cmbTipoAcao"));
+            var cmb = new SIPOS.Controls.CustomComboBox
+            {
+                Name = "cmbTipoAcao",
+                MinimumSize = new Size(150, 30),
+                Dock = DockStyle.Right,
+                Width = 165,
+                Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point),
+                DropDownStyle = ComboBoxStyle.DropDownList,
+                BackColor = Color.FromArgb(40, 30, 40),
+                ForeColor = Color.Gainsboro,
+                IconColor = Color.DeepSkyBlue,
+                BorderColor = Color.FromArgb(79, 49, 79),
+                BorderSize = 1,
+                ListBackColor = Color.FromArgb(35, 26, 45),
+                ListTextColor = Color.Gainsboro
+            };
+            cmb.Items.AddRange(rotulosTiposDeAcao);
+            cmb.SelectedIndex = 0;
+            return cmb;
+        }
+
+        private SIPOS.Controls.CustomComboBox GetRowTipoCombo(Control row)
+        {
+            return (row as Panel)?.Controls.OfType<SIPOS.Controls.CustomComboBox>().FirstOrDefault(cb => cb.Name.Contains("cmbTipoAcao"));
         }
 
         private Button GetRowChkButton(Control row)
@@ -203,7 +216,7 @@ namespace SIPOS.Forms
 
             foreach (Panel row in GetDocumentRows())
             {
-                ComboBox cmb = GetRowTipoCombo(row);
+                var cmb = GetRowTipoCombo(row);
                 TextBox nameBox = GetRowNameTextBox(row);
                 TextBox fileBox = GetRowFileTextBox(row);
                 Button chk = GetRowChkButton(row);
@@ -273,7 +286,7 @@ namespace SIPOS.Forms
 
         private void SetRowFromAcao(Panel row, AcaoModelar acao)
         {
-            ComboBox cmb = GetRowTipoCombo(row);
+            var cmb = GetRowTipoCombo(row);
             if (cmb != null)
             {
                 int idx = Array.IndexOf(tiposDeAcaoPorIndice, acao.Tipo);
@@ -1036,7 +1049,7 @@ namespace SIPOS.Forms
             {
                 txt.ForeColor = isActive ? Color.Gainsboro : Color.DimGray;
             }
-            ComboBox cmb = GetRowTipoCombo(row);
+            var cmb = GetRowTipoCombo(row);
             if (cmb != null) { cmb.ForeColor = isActive ? Color.Gainsboro : Color.DimGray; }
         }
 
@@ -1152,6 +1165,7 @@ namespace SIPOS.Forms
             foreach (Control control in original.Controls)
             {
                 Control newControl = null;
+                bool skipChildren = false;
 
 
 
@@ -1226,24 +1240,17 @@ namespace SIPOS.Forms
 
 
                 }
-                else if (control is ComboBox originalCombo)
+                else if (control is SIPOS.Controls.CustomComboBox originalCustomCombo)
                 {
-                    // B-1.2.6: ComboBox do tipo de ação — clonar itens e estilo
-                    var newCombo = new ComboBox();
-                    newCombo.DropDownStyle = originalCombo.DropDownStyle;
-                    newCombo.FlatStyle = originalCombo.FlatStyle;
-                    newCombo.Font = originalCombo.Font;
-                    newCombo.BackColor = originalCombo.BackColor;
-                    newCombo.ForeColor = originalCombo.ForeColor;
-                    foreach (object item in originalCombo.Items)
-                    {
-                        newCombo.Items.Add(item);
-                    }
+                    // B-1.2.3/B-1.2.6: ComboBox custom do tipo de ação — criar um novo
+                    // (o construtor monta os controlos internos; não clonar os filhos)
+                    var newCombo = CreateTipoAcaoCustomCombo();
                     if (newCombo.Items.Count > 0)
                     {
-                        newCombo.SelectedIndex = Math.Max(0, originalCombo.SelectedIndex);
+                        newCombo.SelectedIndex = Math.Max(0, originalCustomCombo.SelectedIndex);
                     }
                     newControl = newCombo;
+                    skipChildren = true;
                 }
                 else if (control is Panel originalPanel)
                 {
@@ -1278,7 +1285,12 @@ namespace SIPOS.Forms
                     CloneEvents(control, newControl);
 
                     // Recursive call to handle nested controls
-                    CloneControls(control, newControl, control.Name + rowName);
+                    // (skipChildren: controlos compostos como o CustomComboBox já
+                    // constroem os seus controlos internos no construtor)
+                    if (!skipChildren)
+                    {
+                        CloneControls(control, newControl, control.Name + rowName);
+                    }
 
                     Debug.WriteLine($"Created new control inside row: Type: {newControl.GetType().Name}, Name: {newControl.Name}");
                 }

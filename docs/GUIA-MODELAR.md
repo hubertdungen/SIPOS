@@ -141,8 +141,8 @@ ser escritos à mão no JSON — a UI cobre o caso comum de um loop de dias.
 | B-1.5.3 lista de dias (feriados/intervalo) | ✅ implementado e testado |
 | B-1.5.2 motor Word (este branch) | ⚠️ implementado, **por validar no Windows** |
 | B-1.2.6 UI: ComboBox de tipo + guardar/carregar programa (este branch) | ⚠️ implementado, **por validar no Windows** |
+| B-1.2.3 design custom do ComboBox (este branch) | ⚠️ implementado com o `CustomComboBox` do projeto, **por validar no Windows** |
 | B-1.5.4 validação com exemplares reais | ⏳ pendente (depende dos testes acima) |
-| B-1.2.3 design custom do ComboBox | ⏳ planeado (usar o `CustomComboBox` existente) |
 
 O formato JSON é estável e validado ao carregar (ficheiro corrompido → o
 SIPOS avisa e usa o fluxo clássico em vez de crashar).

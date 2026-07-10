@@ -105,6 +105,10 @@ FormModelar now edits `modelar_programa.json` directly:
 - `btnOpenWFile` (📄) switched from anchored to right-docked so it cannot be overlapped by the growing docked button stack (arrows + ComboBox).
 - Windows UI validation pending, same as the engine. `docs/GUIA-MODELAR.md` updated with the UI chapter.
 
+### B-1.2.3 custom ComboBox design (2026-07-10, same branch)
+
+The action-type selector now uses the project's own `Controls/CustomComboBox` (custom border, drawn arrow icon, styled dropdown) instead of the native ComboBox, themed to the SIPOS dark palette (surface 40/30/40, list 35/26/45, border 79/49/79, DeepSkyBlue icon). `CloneControls` gained a dedicated branch that builds a fresh CustomComboBox per cloned row (copying the selected type) and skips child recursion, since the composite control constructs its internals in its constructor. Windows UI validation pending.
+
 ### B-1.5.1 + B-1.5.3 implementation (2026-07-09, `ModelarPrograma.cs`)
 
 Pure-logic foundation, no WinForms/Office dependencies, so it is testable in isolation:
