@@ -1,0 +1,35 @@
+{
+  "Nome": "Exportação clássica de O.S.",
+  "Versao": 1,
+  "Acoes": [
+    {
+      "Tipo": "LoopDias",
+      "Nome": "Por cada dia selecionado",
+      "Ficheiro": "",
+      "Ativa": true,
+      "Filhos": [
+        {
+          "Tipo": "LerEscalasDoDia",
+          "Nome": "Ler escalas do dia",
+          "Ficheiro": "",
+          "Ativa": true,
+          "Filhos": []
+        },
+        {
+          "Tipo": "InserirDocumento",
+          "Nome": "Inserir tabela de escalas",
+          "Ficheiro": "C:\\SIPOS\\modelos_word\\modelo_escalas.doc",
+          "Ativa": true,
+          "Filhos": []
+        },
+        {
+          "Tipo": "SubstituirVariaveis",
+          "Nome": "Preencher variáveis do dia",
+          "Ficheiro": "",
+          "Ativa": true,
+          "Filhos": []
+        }
+      ]
+    }
+  ]
+}

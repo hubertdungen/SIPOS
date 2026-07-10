@@ -112,13 +112,28 @@
         {
             try
             {
-                if (Mediator.osDay.DayOfWeek == DayOfWeek.Tuesday)  // CASO A O.S. seja de TERÇA, ou seja, ESCALA DE SERVIÇO seja QUARTA-FEIRA
+                string modeloBase = Mediator.osDay.DayOfWeek == DayOfWeek.Tuesday
+                    ? Mediator.fPathModelQuarta   // O.S. de TERÇA => ESCALA DE SERVIÇO de QUARTA-FEIRA
+                    : Mediator.fPathModelSemana;  // O.S. nos outros dias de semana
+
+                string destino = Mediator.fPathOSWord + @"\" + txtBox_ExportDocName.Text + ".doc";
+
+                // B-1.5.2 (opt-in): se existir um programa Modelar gravado ao lado do
+                // SIPOS.exe, a exportação é executada pelo motor Modelar (multi-dia,
+                // substituição por bloco). Sem esse ficheiro, o fluxo clássico corre
+                // exatamente como sempre.
+                ProgramaModelar programa = ProgramaModelar.Carregar(ProgramaModelar.CaminhoPorOmissao());
+                if (programa != null)
                 {
-                    Word_Processor.CreateWordDocument(Mediator.fPathModelQuarta, Mediator.fPathOSWord + @"\" + txtBox_ExportDocName.Text + ".doc");
+                    List<DateTime> dias = Mediator.rangeAtivo
+                        ? PlaneadorDeDias.DiasDoIntervalo(Mediator.rangeInicio, Mediator.rangeFim)
+                        : PlaneadorDeDias.DiasDeEscala(Mediator.osDay);
+
+                    ModelarMotorWord.Executar(programa, dias, modeloBase, destino);
                 }
-                else                             // CASO A O.S. seja noutros dias de semana
+                else
                 {
-                    Word_Processor.CreateWordDocument(Mediator.fPathModelSemana, Mediator.fPathOSWord + @"\" + txtBox_ExportDocName.Text + ".doc");
+                    Word_Processor.CreateWordDocument(modeloBase, destino);
                 }
 
 

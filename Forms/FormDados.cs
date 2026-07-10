@@ -52,6 +52,8 @@ namespace SIPOS.Forms
 
         private void chkRangeSelection_CheckedChanged(object sender, EventArgs e)
         {
+            Mediator.rangeAtivo = chkRangeSelection.Checked;
+
             if (chkRangeSelection.Checked)
             {
                 monthCalendar.MaxSelectionCount = 62;
@@ -146,6 +148,10 @@ namespace SIPOS.Forms
         private void monthCalendar_DateChanged(object sender, DateRangeEventArgs e)
         {
             dateProcess(1);
+
+            // B-1.5.2: expor o intervalo atual ao motor Modelar
+            Mediator.rangeInicio = monthCalendar.SelectionStart.Date;
+            Mediator.rangeFim = monthCalendar.SelectionEnd.Date;
 
             // B-1.3.2: com o modo início/fim ativo, os dias de interrupção derivam do
             // intervalo selecionado no calendário; caso contrário mantém-se a regra

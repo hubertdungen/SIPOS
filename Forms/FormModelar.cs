@@ -89,8 +89,316 @@ namespace SIPOS.Forms
 
         private void FormModelar_Load(object sender, EventArgs e)
         {
+            // B-1.2.4/B-1.2.6: o botão 📄 estava ancorado (não docked) e podia ficar
+            // por baixo dos botões docked à direita; passa a docked como os restantes.
+            btnOpenWFile.Dock = DockStyle.Right;
+
+            // B-1.2.7: com mais controlos por linha (✓ ⋯ nome caminho combo 📄 ▲▼ ➖➕),
+            // deixar as linhas crescer além dos 800px em janelas largas.
+            rowPanel_WordDoc.MaximumSize = new Size(1400, 50);
+
             AddOrderArrowButtons(rowPanel_WordDoc);
+            AddTipoAcaoComboBox(rowPanel_WordDoc);
+            AddProgramaButtons();
+            SetupTemplateSelector();
+            CarregarProgramaParaLinhas();
             RefreshListLayout();
+        }
+
+        // ------------------------------------------------------------------
+        // B-1.2.7: MENU LOGIC — o seletor de modelos (cmbBoxTemplateName + ➕)
+        // passa a ter função: escolher um modelo de programa completo ou uma
+        // ação avulsa e adicioná-la à lista. As dicas mudam com o menu ativo.
+        // ------------------------------------------------------------------
+
+        private const string hintProgramar =
+            "Modelos: escolha um programa completo ou uma ação no seletor e clique ➕ para adicionar à lista. " +
+            "Ordene com ▲▼ ou arrastando ⋯, ative/desative com ✓, e grave com 💾 Guardar Programa para a exportação passar a usar o programa.";
+
+        private const string hintFicheiros =
+            "Ficheiros: cada linha \"Inserir documento\" aponta para um ficheiro Word (use 📄 para escolher). " +
+            "Na exportação, o conteúdo do ficheiro é copiado e colado no documento final uma vez por cada dia selecionado.";
+
+        private void SetupTemplateSelector()
+        {
+            cmbBoxTemplateName.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbBoxTemplateName.Items.Clear();
+            cmbBoxTemplateName.Items.Add("Programa: Exportação clássica (loop de dias)");
+            foreach (string rotulo in rotulosTiposDeAcao)
+            {
+                cmbBoxTemplateName.Items.Add("Ação: " + rotulo);
+            }
+            cmbBoxTemplateName.SelectedIndex = 0;
+
+            btnAddtoList.Click += BtnAddtoList_Click;
+
+            richtxtBox_ProgramaHints.Text = hintProgramar;
+        }
+
+        private void BtnAddtoList_Click(object sender, EventArgs e)
+        {
+            int idx = cmbBoxTemplateName.SelectedIndex;
+
+            if (idx <= 0)
+            {
+                // Programa completo: as três ações do fluxo clássico
+                AddOrFillRow(TipoDeAcao.LerEscalasDoDia, "Ler escalas do dia", "");
+                AddOrFillRow(TipoDeAcao.InserirDocumento, "Inserir tabela de escalas", "");
+                AddOrFillRow(TipoDeAcao.SubstituirVariaveis, "Preencher variáveis do dia", "");
+            }
+            else
+            {
+                // Ação avulsa do tipo escolhido
+                int tipoIdx = Math.Min(idx - 1, tiposDeAcaoPorIndice.Length - 1);
+                AddOrFillRow(tiposDeAcaoPorIndice[tipoIdx], rotulosTiposDeAcao[tipoIdx], "");
+            }
+
+            RefreshListLayout();
+        }
+
+        // Reutiliza a primeira linha vazia (sem nome nem ficheiro) ou clona uma
+        // nova, e preenche-a com a ação pedida. Garante nomes únicos para não
+        // esbarrar na validação do B-1.2.5.
+        private void AddOrFillRow(TipoDeAcao tipo, string nomeBase, string ficheiro)
+        {
+            Panel row = GetDocumentRows().FirstOrDefault(r =>
+                string.IsNullOrWhiteSpace(GetRowNameTextBox(r)?.Text) &&
+                string.IsNullOrWhiteSpace(GetRowFileTextBox(r)?.Text));
+
+            if (row == null)
+            {
+                row = CloneRow(rowPanel_WordDoc);
+                mainWordFlowPanel.Controls.Add(row);
+            }
+
+            SetRowFromAcao(row, new AcaoModelar
+            {
+                Tipo = tipo,
+                Nome = NomeUnicoParaLinha(nomeBase, row),
+                Ficheiro = ficheiro,
+                Ativa = true
+            });
+        }
+
+        private string NomeUnicoParaLinha(string nomeBase, Panel linhaAtual)
+        {
+            var nomesExistentes = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            foreach (Panel r in GetDocumentRows())
+            {
+                if (r == linhaAtual) { continue; }
+                string n = (GetRowNameTextBox(r)?.Text ?? "").Trim();
+                if (n.Length > 0) { nomesExistentes.Add(n); }
+            }
+
+            string candidato = nomeBase;
+            for (int i = 2; nomesExistentes.Contains(candidato); i++)
+            {
+                candidato = $"{nomeBase} {i}";
+            }
+            return candidato;
+        }
+
+        // ------------------------------------------------------------------
+        // B-1.2.6: LIGAÇÃO DA LISTA AO PROGRAMA MODELAR (modelar_programa.json)
+        // Cada linha é uma ação: o ComboBox escolhe o tipo, o nome/ficheiro/✓
+        // preenchem o resto. As linhas são gravadas como filhos de um LoopDias
+        // ("por cada dia selecionado"), o caso descrito no GUIA-MODELAR.
+        // ------------------------------------------------------------------
+
+        private static readonly TipoDeAcao[] tiposDeAcaoPorIndice =
+        {
+            TipoDeAcao.InserirDocumento,
+            TipoDeAcao.LerEscalasDoDia,
+            TipoDeAcao.SubstituirVariaveis,
+            TipoDeAcao.QuebraDePagina
+        };
+
+        private static readonly string[] rotulosTiposDeAcao =
+        {
+            "Inserir documento",
+            "Ler escalas do dia",
+            "Substituir variáveis",
+            "Quebra de página"
+        };
+
+        // B-1.2.3: usa o CustomComboBox do projeto (design custom com borda,
+        // seta desenhada e dropdown estilizado) em vez do ComboBox nativo.
+        private void AddTipoAcaoComboBox(Panel row)
+        {
+            var cmb = CreateTipoAcaoCustomCombo();
+            row.Controls.Add(cmb);
+        }
+
+        private SIPOS.Controls.CustomComboBox CreateTipoAcaoCustomCombo()
+        {
+            var cmb = new SIPOS.Controls.CustomComboBox
+            {
+                Name = "cmbTipoAcao",
+                MinimumSize = new Size(150, 30),
+                Dock = DockStyle.Right,
+                Width = 165,
+                Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point),
+                DropDownStyle = ComboBoxStyle.DropDownList,
+                BackColor = Color.FromArgb(40, 30, 40),
+                ForeColor = Color.Gainsboro,
+                IconColor = Color.DeepSkyBlue,
+                BorderColor = Color.FromArgb(79, 49, 79),
+                BorderSize = 1,
+                ListBackColor = Color.FromArgb(35, 26, 45),
+                ListTextColor = Color.Gainsboro
+            };
+            cmb.Items.AddRange(rotulosTiposDeAcao);
+            cmb.SelectedIndex = 0;
+            return cmb;
+        }
+
+        private SIPOS.Controls.CustomComboBox GetRowTipoCombo(Control row)
+        {
+            return (row as Panel)?.Controls.OfType<SIPOS.Controls.CustomComboBox>().FirstOrDefault(cb => cb.Name.Contains("cmbTipoAcao"));
+        }
+
+        private Button GetRowChkButton(Control row)
+        {
+            return (row as Panel)?.Controls.OfType<Button>().FirstOrDefault(b => b.Name.Contains("btnChkWRowActive"));
+        }
+
+        private TextBox GetRowFileTextBox(Control row)
+        {
+            return (row as Panel)?.Controls.OfType<TextBox>().FirstOrDefault(tb => tb.Name.Contains("txtDirFicheiroW"));
+        }
+
+        private List<Panel> GetDocumentRows()
+        {
+            return mainWordFlowPanel.Controls.OfType<Panel>()
+                .Where(p => p.Name.Contains("rowPanel_WordDoc"))
+                .ToList();
+        }
+
+        private void AddProgramaButtons()
+        {
+            Button btnGuardar = CreateMenuButton("btnGuardarPrograma", "💾 Guardar Programa", 190, Color.MediumSpringGreen);
+            btnGuardar.Click += (s, args) => GuardarPrograma();
+            panelMenu.Controls.Add(btnGuardar);
+
+            Button btnRecarregar = CreateMenuButton("btnRecarregarPrograma", "⭯ Recarregar", 130, Color.Gainsboro);
+            btnRecarregar.Click += (s, args) => { CarregarProgramaParaLinhas(); RefreshListLayout(); };
+            panelMenu.Controls.Add(btnRecarregar);
+        }
+
+        private Button CreateMenuButton(string name, string text, int width, Color foreColor)
+        {
+            return new Button
+            {
+                Name = name,
+                Text = text,
+                Dock = DockStyle.Right,
+                Width = width,
+                FlatStyle = FlatStyle.Flat,
+                Font = new Font("Century Gothic", 10F, FontStyle.Regular, GraphicsUnit.Point),
+                BackColor = Color.FromArgb(40, 30, 40),
+                ForeColor = foreColor,
+                UseVisualStyleBackColor = false
+            };
+        }
+
+        // Constrói o programa a partir das linhas visíveis (pela ordem da lista)
+        // e grava-o em modelar_programa.json ao lado do SIPOS.exe.
+        private void GuardarPrograma()
+        {
+            var loop = new AcaoModelar
+            {
+                Tipo = TipoDeAcao.LoopDias,
+                Nome = "Por cada dia selecionado",
+                Filhos = new List<AcaoModelar>()
+            };
+
+            foreach (Panel row in GetDocumentRows())
+            {
+                var cmb = GetRowTipoCombo(row);
+                TextBox nameBox = GetRowNameTextBox(row);
+                TextBox fileBox = GetRowFileTextBox(row);
+                Button chk = GetRowChkButton(row);
+
+                int idx = Math.Max(0, cmb?.SelectedIndex ?? 0);
+                loop.Filhos.Add(new AcaoModelar
+                {
+                    Tipo = tiposDeAcaoPorIndice[Math.Min(idx, tiposDeAcaoPorIndice.Length - 1)],
+                    Nome = (nameBox?.Text ?? "").Trim(),
+                    Ficheiro = (fileBox?.Text ?? "").Trim(),
+                    Ativa = chk == null || chk.Text == "✓"
+                });
+            }
+
+            var programa = new ProgramaModelar
+            {
+                Nome = "Programa Modelar",
+                Acoes = new List<AcaoModelar> { loop }
+            };
+
+            List<string> problemas = programa.Validar();
+            if (problemas.Count > 0)
+            {
+                MessageBox.Show("O programa não foi gravado porque tem problemas:\r\n\r\n- " + string.Join("\r\n- ", problemas),
+                    "PROGRAMA INVÁLIDO!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            try
+            {
+                programa.Guardar(ProgramaModelar.CaminhoPorOmissao());
+                MessageBox.Show($"Programa gravado em:\r\n{ProgramaModelar.CaminhoPorOmissao()}\r\n\r\nA próxima exportação Word será executada por este programa. Para voltar ao fluxo clássico, apague o ficheiro.",
+                    "PROGRAMA GRAVADO", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Não foi possível gravar o programa:\r\n{ex.Message}", "ERRO AO GRAVAR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // Preenche as linhas da lista a partir do modelar_programa.json (se existir).
+        private void CarregarProgramaParaLinhas()
+        {
+            ProgramaModelar programa = ProgramaModelar.Carregar(ProgramaModelar.CaminhoPorOmissao());
+            if (programa == null) { return; }
+
+            // As linhas editam os filhos do primeiro LoopDias (o caso comum);
+            // se não houver loop, usa as ações de topo.
+            List<AcaoModelar> acoes = programa.Acoes.FirstOrDefault(a => a.Tipo == TipoDeAcao.LoopDias)?.Filhos ?? programa.Acoes;
+            if (acoes.Count == 0) { return; }
+
+            List<Panel> rows = GetDocumentRows();
+
+            // Garantir uma linha por ação (clonando a linha modelo)
+            while (rows.Count < acoes.Count)
+            {
+                Panel novaLinha = CloneRow(rowPanel_WordDoc);
+                mainWordFlowPanel.Controls.Add(novaLinha);
+                rows.Add(novaLinha);
+            }
+
+            for (int i = 0; i < acoes.Count; i++)
+            {
+                SetRowFromAcao(rows[i], acoes[i]);
+            }
+        }
+
+        private void SetRowFromAcao(Panel row, AcaoModelar acao)
+        {
+            var cmb = GetRowTipoCombo(row);
+            if (cmb != null)
+            {
+                int idx = Array.IndexOf(tiposDeAcaoPorIndice, acao.Tipo);
+                cmb.SelectedIndex = idx >= 0 ? idx : 0;
+            }
+
+            TextBox nameBox = GetRowNameTextBox(row);
+            if (nameBox != null) { nameBox.Text = acao.Nome; }
+
+            TextBox fileBox = GetRowFileTextBox(row);
+            if (fileBox != null) { fileBox.Text = acao.Ficheiro; }
+
+            Button chk = GetRowChkButton(row);
+            if (chk != null) { SwitchRowActivationState(chk, acao.Ativa); }
         }
 
         // B-1.2.4: SETAS PARA TROCAR A ORDEM DAS LINHAS
@@ -162,13 +470,14 @@ namespace SIPOS.Forms
         {
             isProgramMenu = true;
             panelMenu_Resize(null, null);
-
+            richtxtBox_ProgramaHints.Text = hintProgramar;   // B-1.2.7
         }
 
         private void btnFicheiros_Click(object sender, EventArgs e)
         {
             isProgramMenu = false;
             panelMenu_Resize(null, null);
+            richtxtBox_ProgramaHints.Text = hintFicheiros;   // B-1.2.7
         }
 
 
@@ -824,10 +1133,23 @@ namespace SIPOS.Forms
         //// LIST LOGIC                        //
         // -------------------------------------
 
+        // B-1.2.6: o ✓/✗ passa a refletir (e alimentar) o campo "Ativa" do
+        // programa Modelar. Linhas inativas ficam esbatidas e são saltadas
+        // pelo motor de exportação.
         private void SwitchRowActivationState(Control chkButtonState, bool isActive)
         {
+            chkButtonState.Text = isActive ? "✓" : "✗";
+            chkButtonState.ForeColor = isActive ? Color.MediumSpringGreen : Color.DimGray;
 
+            Control row = chkButtonState.Parent;
+            if (row == null) { return; }
 
+            foreach (TextBox txt in row.Controls.OfType<TextBox>())
+            {
+                txt.ForeColor = isActive ? Color.Gainsboro : Color.DimGray;
+            }
+            var cmb = GetRowTipoCombo(row);
+            if (cmb != null) { cmb.ForeColor = isActive ? Color.Gainsboro : Color.DimGray; }
         }
 
 
@@ -942,6 +1264,7 @@ namespace SIPOS.Forms
             foreach (Control control in original.Controls)
             {
                 Control newControl = null;
+                bool skipChildren = false;
 
 
 
@@ -1016,6 +1339,18 @@ namespace SIPOS.Forms
 
 
                 }
+                else if (control is SIPOS.Controls.CustomComboBox originalCustomCombo)
+                {
+                    // B-1.2.3/B-1.2.6: ComboBox custom do tipo de ação — criar um novo
+                    // (o construtor monta os controlos internos; não clonar os filhos)
+                    var newCombo = CreateTipoAcaoCustomCombo();
+                    if (newCombo.Items.Count > 0)
+                    {
+                        newCombo.SelectedIndex = Math.Max(0, originalCustomCombo.SelectedIndex);
+                    }
+                    newControl = newCombo;
+                    skipChildren = true;
+                }
                 else if (control is Panel originalPanel)
                 {
                     newControl = new Panel();
@@ -1049,7 +1384,12 @@ namespace SIPOS.Forms
                     CloneEvents(control, newControl);
 
                     // Recursive call to handle nested controls
-                    CloneControls(control, newControl, control.Name + rowName);
+                    // (skipChildren: controlos compostos como o CustomComboBox já
+                    // constroem os seus controlos internos no construtor)
+                    if (!skipChildren)
+                    {
+                        CloneControls(control, newControl, control.Name + rowName);
+                    }
 
                     Debug.WriteLine($"Created new control inside row: Type: {newControl.GetType().Name}, Name: {newControl.Name}");
                 }
