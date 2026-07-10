@@ -95,14 +95,35 @@ O documento base continua a ser o modelo de semana/quarta configurado nas
 Propriedades; os cabeçalhos (`<numOS>`, `<dataOS>`, `<dataOS_abv>`) e a
 numeração de páginas são tratados uma vez, como no fluxo clássico.
 
-## 5. Como testar no Windows (passo a passo)
+## 5. Editar o programa na própria UI (B-1.2.6)
+
+O separador **Modelar** edita o programa diretamente — não é preciso escrever
+o JSON à mão para o caso comum:
+
+- Cada linha da lista tem um **ComboBox com o tipo de ação** (Inserir
+  documento, Ler escalas do dia, Substituir variáveis, Quebra de página),
+  além do nome, do caminho do ficheiro (📄), do **✓/✗** de ativação (linhas
+  desligadas ficam esbatidas e são saltadas pelo motor) e das setas ▲/▼
+  para ordenar.
+- **💾 Guardar Programa** (menu superior) valida as linhas e grava-as em
+  `modelar_programa.json` como filhos de um "Loop: por cada dia selecionado"
+  — o caso do capítulo 1. **⭯ Recarregar** volta a preencher as linhas a
+  partir do ficheiro gravado.
+- Ao abrir o Modelar, se já existir um `modelar_programa.json` ao lado do
+  exe, as linhas são preenchidas automaticamente a partir dele.
+
+Programas mais avançados (vários loops, ações fora do loop) continuam a poder
+ser escritos à mão no JSON — a UI cobre o caso comum de um loop de dias.
+
+## 6. Como testar no Windows (passo a passo)
 
 1. Extrair o zip portátil para uma pasta com permissões de escrita.
 2. Configurar as Propriedades como habitualmente (Excel das escalas, modelos,
    pasta de exportação) e gravar.
-3. Copiar `docs/modelar_programa.exemplo.json` para junto do `SIPOS.exe`,
-   renomear para `modelar_programa.json` e corrigir o caminho do
-   `modelo_escalas.doc`.
+3. Criar o programa: ou no separador Modelar (preencher as linhas e
+   💾 Guardar Programa), ou copiando `docs/modelar_programa.exemplo.json`
+   para junto do `SIPOS.exe`, renomeado para `modelar_programa.json` e com o
+   caminho do `modelo_escalas.doc` corrigido.
 4. No separador Dados, escolher um dia — para multi-dia, ligar a checkbox
    "Ativar data de início e fim" e arrastar um intervalo de 2–3 dias no
    calendário.
@@ -112,16 +133,16 @@ numeração de páginas são tratados uma vez, como no fluxo clássico.
    duplicado deve mostrar a validação e abortar; o Gestor de Tarefas não deve
    ficar com WINWORD.EXE órfãos depois de um erro.
 
-## 6. Estado e próximos passos
+## 7. Estado e próximos passos
 
 | Peça | Estado |
 | --- | --- |
 | B-1.5.1 estrutura do programa + JSON | ✅ implementado e testado (17 testes) |
 | B-1.5.3 lista de dias (feriados/intervalo) | ✅ implementado e testado |
 | B-1.5.2 motor Word (este branch) | ⚠️ implementado, **por validar no Windows** |
-| B-1.5.4 validação com exemplares reais | ⏳ pendente (depende do teste acima) |
-| UI de edição do programa (ComboBox B-1.2.3/B-1.2.6) | ⏳ planeado — a lista drag&drop do Modelar vai editar este JSON, com o ComboBox a escolher o `TipoDeAcao` de cada linha |
+| B-1.2.6 UI: ComboBox de tipo + guardar/carregar programa (este branch) | ⚠️ implementado, **por validar no Windows** |
+| B-1.5.4 validação com exemplares reais | ⏳ pendente (depende dos testes acima) |
+| B-1.2.3 design custom do ComboBox | ⏳ planeado (usar o `CustomComboBox` existente) |
 
-Até a UI existir, o programa edita-se à mão no JSON — o formato acima é
-estável e validado ao carregar (ficheiro corrompido → o SIPOS avisa e usa o
-fluxo clássico em vez de crashar).
+O formato JSON é estável e validado ao carregar (ficheiro corrompido → o
+SIPOS avisa e usa o fluxo clássico em vez de crashar).

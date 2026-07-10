@@ -95,6 +95,16 @@ Next epic (mirrored in Asana) — `Modelar/Exportar: Motor de execução de temp
 - User guide added at `docs/GUIA-MODELAR.md` with the concept, action-type table, annotated JSON example (`docs/modelar_programa.exemplo.json`, verified to load/validate/expand with the real code), the Windows test script, and the epic status table.
 - This branch is intentionally NOT merged to `main`: the interop path cannot be exercised on Linux, so it waits for the Windows smoke test (B-1.5.4). `main` stays at Beta 1.5.1.
 
+### B-1.2.6 program-editing UI (2026-07-10, same branch)
+
+FormModelar now edits `modelar_programa.json` directly:
+
+- Each document row gains a code-created **action-type ComboBox** (`Inserir documento`, `Ler escalas do dia`, `Substituir variáveis`, `Quebra de página`); cloned rows inherit items and selection via a new ComboBox branch in `CloneControls`.
+- New top-menu buttons: **💾 Guardar Programa** builds the program from the visible rows (in list order, wrapped in a `LoopDias`), runs `ProgramaModelar.Validar()` and saves beside SIPOS.exe; **⭯ Recarregar** re-populates the rows from the saved file. On form load, an existing program auto-populates the rows (cloning extra rows as needed).
+- The previously empty `SwitchRowActivationState` stub is implemented: the ✓/✗ button now toggles and displays the row's `Ativa` state, dimming disabled rows; the engine skips inactive actions.
+- `btnOpenWFile` (📄) switched from anchored to right-docked so it cannot be overlapped by the growing docked button stack (arrows + ComboBox).
+- Windows UI validation pending, same as the engine. `docs/GUIA-MODELAR.md` updated with the UI chapter.
+
 ### B-1.5.1 + B-1.5.3 implementation (2026-07-09, `ModelarPrograma.cs`)
 
 Pure-logic foundation, no WinForms/Office dependencies, so it is testable in isolation:
