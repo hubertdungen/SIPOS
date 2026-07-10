@@ -93,11 +93,109 @@ namespace SIPOS.Forms
             // por baixo dos botões docked à direita; passa a docked como os restantes.
             btnOpenWFile.Dock = DockStyle.Right;
 
+            // B-1.2.7: com mais controlos por linha (✓ ⋯ nome caminho combo 📄 ▲▼ ➖➕),
+            // deixar as linhas crescer além dos 800px em janelas largas.
+            rowPanel_WordDoc.MaximumSize = new Size(1400, 50);
+
             AddOrderArrowButtons(rowPanel_WordDoc);
             AddTipoAcaoComboBox(rowPanel_WordDoc);
             AddProgramaButtons();
+            SetupTemplateSelector();
             CarregarProgramaParaLinhas();
             RefreshListLayout();
+        }
+
+        // ------------------------------------------------------------------
+        // B-1.2.7: MENU LOGIC — o seletor de modelos (cmbBoxTemplateName + ➕)
+        // passa a ter função: escolher um modelo de programa completo ou uma
+        // ação avulsa e adicioná-la à lista. As dicas mudam com o menu ativo.
+        // ------------------------------------------------------------------
+
+        private const string hintProgramar =
+            "Modelos: escolha um programa completo ou uma ação no seletor e clique ➕ para adicionar à lista. " +
+            "Ordene com ▲▼ ou arrastando ⋯, ative/desative com ✓, e grave com 💾 Guardar Programa para a exportação passar a usar o programa.";
+
+        private const string hintFicheiros =
+            "Ficheiros: cada linha \"Inserir documento\" aponta para um ficheiro Word (use 📄 para escolher). " +
+            "Na exportação, o conteúdo do ficheiro é copiado e colado no documento final uma vez por cada dia selecionado.";
+
+        private void SetupTemplateSelector()
+        {
+            cmbBoxTemplateName.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbBoxTemplateName.Items.Clear();
+            cmbBoxTemplateName.Items.Add("Programa: Exportação clássica (loop de dias)");
+            foreach (string rotulo in rotulosTiposDeAcao)
+            {
+                cmbBoxTemplateName.Items.Add("Ação: " + rotulo);
+            }
+            cmbBoxTemplateName.SelectedIndex = 0;
+
+            btnAddtoList.Click += BtnAddtoList_Click;
+
+            richtxtBox_ProgramaHints.Text = hintProgramar;
+        }
+
+        private void BtnAddtoList_Click(object sender, EventArgs e)
+        {
+            int idx = cmbBoxTemplateName.SelectedIndex;
+
+            if (idx <= 0)
+            {
+                // Programa completo: as três ações do fluxo clássico
+                AddOrFillRow(TipoDeAcao.LerEscalasDoDia, "Ler escalas do dia", "");
+                AddOrFillRow(TipoDeAcao.InserirDocumento, "Inserir tabela de escalas", "");
+                AddOrFillRow(TipoDeAcao.SubstituirVariaveis, "Preencher variáveis do dia", "");
+            }
+            else
+            {
+                // Ação avulsa do tipo escolhido
+                int tipoIdx = Math.Min(idx - 1, tiposDeAcaoPorIndice.Length - 1);
+                AddOrFillRow(tiposDeAcaoPorIndice[tipoIdx], rotulosTiposDeAcao[tipoIdx], "");
+            }
+
+            RefreshListLayout();
+        }
+
+        // Reutiliza a primeira linha vazia (sem nome nem ficheiro) ou clona uma
+        // nova, e preenche-a com a ação pedida. Garante nomes únicos para não
+        // esbarrar na validação do B-1.2.5.
+        private void AddOrFillRow(TipoDeAcao tipo, string nomeBase, string ficheiro)
+        {
+            Panel row = GetDocumentRows().FirstOrDefault(r =>
+                string.IsNullOrWhiteSpace(GetRowNameTextBox(r)?.Text) &&
+                string.IsNullOrWhiteSpace(GetRowFileTextBox(r)?.Text));
+
+            if (row == null)
+            {
+                row = CloneRow(rowPanel_WordDoc);
+                mainWordFlowPanel.Controls.Add(row);
+            }
+
+            SetRowFromAcao(row, new AcaoModelar
+            {
+                Tipo = tipo,
+                Nome = NomeUnicoParaLinha(nomeBase, row),
+                Ficheiro = ficheiro,
+                Ativa = true
+            });
+        }
+
+        private string NomeUnicoParaLinha(string nomeBase, Panel linhaAtual)
+        {
+            var nomesExistentes = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            foreach (Panel r in GetDocumentRows())
+            {
+                if (r == linhaAtual) { continue; }
+                string n = (GetRowNameTextBox(r)?.Text ?? "").Trim();
+                if (n.Length > 0) { nomesExistentes.Add(n); }
+            }
+
+            string candidato = nomeBase;
+            for (int i = 2; nomesExistentes.Contains(candidato); i++)
+            {
+                candidato = $"{nomeBase} {i}";
+            }
+            return candidato;
         }
 
         // ------------------------------------------------------------------
@@ -372,13 +470,14 @@ namespace SIPOS.Forms
         {
             isProgramMenu = true;
             panelMenu_Resize(null, null);
-
+            richtxtBox_ProgramaHints.Text = hintProgramar;   // B-1.2.7
         }
 
         private void btnFicheiros_Click(object sender, EventArgs e)
         {
             isProgramMenu = false;
             panelMenu_Resize(null, null);
+            richtxtBox_ProgramaHints.Text = hintFicheiros;   // B-1.2.7
         }
 
 

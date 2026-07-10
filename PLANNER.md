@@ -105,6 +105,15 @@ FormModelar now edits `modelar_programa.json` directly:
 - `btnOpenWFile` (📄) switched from anchored to right-docked so it cannot be overlapped by the growing docked button stack (arrows + ComboBox).
 - Windows UI validation pending, same as the engine. `docs/GUIA-MODELAR.md` updated with the UI chapter.
 
+### B-1.2.7 form layout & menu logic (2026-07-10, same branch)
+
+The previously dead selector panel (`cmbBoxTemplateName` + `btnAddtoList` + `richtxtBox_ProgramaHints`, present in the Designer but never wired) now has its intended function:
+
+- The template ComboBox lists "Programa: Exportação clássica (loop de dias)" plus one "Ação: X" entry per action type; ➕ adds the chosen program (3 preconfigured rows) or a single row of that type, reusing the first empty row and generating unique names so the B-1.2.5 validation never blocks fresh rows.
+- The hint box text switches with the active top menu: Programar shows program-editing guidance, Ficheiros shows Word-file guidance. `btnProgramas_Click`/`btnFicheiros_Click` were previously style-only.
+- Row `MaximumSize` widened from 800px to 1400px at load so the now-crowded rows (✓ ⋯ nome caminho combo 📄 ▲▼ ➖➕) can breathe in wider windows.
+- Windows UI validation pending, same as the rest of the branch. With this, every B-1.2.x item of the Modelar epic is implemented.
+
 ### B-1.2.3 custom ComboBox design (2026-07-10, same branch)
 
 The action-type selector now uses the project's own `Controls/CustomComboBox` (custom border, drawn arrow icon, styled dropdown) instead of the native ComboBox, themed to the SIPOS dark palette (surface 40/30/40, list 35/26/45, border 79/49/79, DeepSkyBlue icon). `CloneControls` gained a dedicated branch that builds a fresh CustomComboBox per cloned row (copying the selected type) and skips child recursion, since the composite control constructs its internals in its constructor. Windows UI validation pending.

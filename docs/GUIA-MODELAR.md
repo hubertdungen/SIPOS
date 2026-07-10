@@ -111,6 +111,11 @@ o JSON à mão para o caso comum:
   partir do ficheiro gravado.
 - Ao abrir o Modelar, se já existir um `modelar_programa.json` ao lado do
   exe, as linhas são preenchidas automaticamente a partir dele.
+- O **seletor de modelos** (topo da lista) permite adicionar com ➕ um
+  programa completo ("Exportação clássica") ou uma ação avulsa do tipo
+  escolhido — a primeira linha vazia é reutilizada e os nomes são gerados
+  únicos. As dicas por cima da lista mudam consoante o menu
+  Programar/Ficheiros ativo.
 
 Programas mais avançados (vários loops, ações fora do loop) continuam a poder
 ser escritos à mão no JSON — a UI cobre o caso comum de um loop de dias.
@@ -142,6 +147,7 @@ ser escritos à mão no JSON — a UI cobre o caso comum de um loop de dias.
 | B-1.5.2 motor Word (este branch) | ⚠️ implementado, **por validar no Windows** |
 | B-1.2.6 UI: ComboBox de tipo + guardar/carregar programa (este branch) | ⚠️ implementado, **por validar no Windows** |
 | B-1.2.3 design custom do ComboBox (este branch) | ⚠️ implementado com o `CustomComboBox` do projeto, **por validar no Windows** |
+| B-1.2.7 layout & menu logic (este branch) | ⚠️ implementado (seletor de modelos com ➕, dicas por menu, linhas até 1400px), **por validar no Windows** |
 | B-1.5.4 validação com exemplares reais | ⏳ pendente (depende dos testes acima) |
 
 O formato JSON é estável e validado ao carregar (ficheiro corrompido → o
