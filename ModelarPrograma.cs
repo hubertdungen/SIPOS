@@ -105,11 +105,35 @@ namespace SIPOS
             try
             {
                 if (!File.Exists(caminho)) { return null; }
-                return JsonSerializer.Deserialize<ProgramaModelar>(File.ReadAllText(caminho), jsonOptions);
+                ProgramaModelar? programa = JsonSerializer.Deserialize<ProgramaModelar>(File.ReadAllText(caminho), jsonOptions);
+                programa?.Normalizar();
+                return programa;
             }
             catch
             {
                 return null; // JSON corrompido: o chamador decide recriar o programa por omissão
+            }
+        }
+
+        // JSON escrito à mão pode trazer null ("Acoes": null, "Filhos": null...):
+        // trocar por valores vazios para a validação e a expansão não rebentarem.
+        private void Normalizar()
+        {
+            Nome ??= "";
+            Acoes ??= new List<AcaoModelar>();
+            Acoes.RemoveAll(a => a == null);
+            NormalizarAcoes(Acoes);
+        }
+
+        private static void NormalizarAcoes(List<AcaoModelar> acoes)
+        {
+            foreach (AcaoModelar acao in acoes)
+            {
+                acao.Nome ??= "";
+                acao.Ficheiro ??= "";
+                acao.Filhos ??= new List<AcaoModelar>();
+                acao.Filhos.RemoveAll(f => f == null);
+                NormalizarAcoes(acao.Filhos);
             }
         }
 
@@ -191,6 +215,19 @@ namespace SIPOS
         }
 
         /// <summary>
+        /// true se o programa tem a forma que a UI do Modelar edita: nenhuma ação,
+        /// ou um único LoopDias de topo cujos filhos não têm ações aninhadas.
+        /// Programas escritos à mão com outra estrutura são "avançados" e a UI
+        /// avisa antes de os substituir pela lista de linhas.
+        /// </summary>
+        public bool EhEditavelNaLista()
+        {
+            if (Acoes.Count == 0) { return true; }
+            if (Acoes.Count != 1 || Acoes[0].Tipo != TipoDeAcao.LoopDias) { return false; }
+            return Acoes[0].Filhos.All(f => f.Tipo != TipoDeAcao.LoopDias && f.Filhos.Count == 0);
+        }
+
+        /// <summary>
         /// Programa que replica o fluxo clássico atual do SIPOS num único dia
         /// ou em vários: por cada dia selecionado, lê as escalas, insere o
         /// fragmento da tabela (ex.: modelo_escalas.doc) e substitui as
@@ -216,6 +253,152 @@ namespace SIPOS
                     }
                 }
             };
+        }
+    }
+
+    /// <summary>
+    /// Operações de documento de que o <see cref="ExecutorModelar"/> precisa.
+    /// Posições são caracteres do texto principal. Implementada sobre o Word
+    /// (ModelarMotorWord) e, nos testes, sobre texto simples.
+    /// </summary>
+    public interface IDocumentoModelar
+    {
+        /// <summary>Posição antes da marca de parágrafo final do documento.</summary>
+        int FimDoTexto { get; }
+
+        /// <summary>Início do parágrafo do primeiro bloco de escala por preencher ("Para o dia &lt;dataEscalados&gt;"), ou -1.</summary>
+        int InicioDoBlocoPorPreencher();
+
+        /// <summary>
+        /// Onde entram os blocos dos dias seguintes, procurando a partir de
+        /// <paramref name="aPartirDe"/>: o parágrafo com o marcador &lt;fimEscalas&gt;
+        /// (que é retirado), senão o início do título "102.", senão o fim do texto.
+        /// </summary>
+        int PontoDeInsercao(int aPartirDe);
+
+        bool FicheiroTemBlocoDeEscala(string caminho);
+
+        /// <summary>
+        /// Insere o ficheiro na posição, num parágrafo próprio (se a posição não
+        /// for o início de um parágrafo, abre um antes); devolve a variação do
+        /// comprimento do documento.
+        /// </summary>
+        int InserirFicheiro(int posicao, string caminho);
+
+        /// <summary>Insere uma quebra de página na posição; devolve a variação do comprimento.</summary>
+        int InserirQuebraDePagina(int posicao);
+
+        /// <summary>Preenche as tags do dia em [inicio, fim); devolve a variação do comprimento.</summary>
+        int SubstituirVariaveis(int inicio, int fim, DateTime? dia);
+    }
+
+    /// <summary>
+    /// Executa um plano Modelar sobre um documento, decidindo onde fica cada bloco.
+    ///
+    /// Numa O.S. real de vários dias, os blocos "Para o dia ..." ficam seguidos no
+    /// ponto 101, antes do "102. AUSÊNCIAS..." — e, às quartas, a secção dos
+    /// funerais fica logo a seguir ao bloco de quarta. Os modelos base já trazem
+    /// esse primeiro bloco por preencher, por isso:
+    /// - o bloco do modelo base serve o PRIMEIRO dia: a primeira inserção de um
+    ///   fragmento com bloco de escala é trocada por esse bloco;
+    /// - os blocos seguintes entram no ponto de inserção (fim do ponto 101), pela
+    ///   ordem dos dias;
+    /// - cada SubstituirVariaveis preenche tudo o que foi inserido (ou reutilizado)
+    ///   desde a substituição anterior.
+    /// Com um só dia o resultado é igual ao do fluxo clássico. Sem bloco no modelo
+    /// base, os fragmentos entram no ponto de inserção ("102." ou fim do texto).
+    /// </summary>
+    public sealed class ExecutorModelar
+    {
+        private readonly IDocumentoModelar doc;
+        private readonly Action<DateTime> lerEscalasDoDia;
+        private readonly Dictionary<string, bool> temBloco = new Dictionary<string, bool>(StringComparer.OrdinalIgnoreCase);
+
+        private int cursor;
+        private int zonaInicio = -1;       // início do que ainda não foi substituído (-1 = nada)
+        private int blocoBaseInicio = -1;  // bloco do modelo base ainda por usar (-1 = não há / já usado)
+
+        public ExecutorModelar(IDocumentoModelar doc, Action<DateTime> lerEscalasDoDia)
+        {
+            this.doc = doc;
+            this.lerEscalasDoDia = lerEscalasDoDia;
+        }
+
+        public void Executar(IReadOnlyList<OperacaoPlaneada> plano)
+        {
+            blocoBaseInicio = doc.InicioDoBlocoPorPreencher();
+            cursor = doc.PontoDeInsercao(Math.Max(0, blocoBaseInicio));
+
+            foreach (OperacaoPlaneada op in plano)
+            {
+                switch (op.Tipo)
+                {
+                    case TipoDeAcao.LerEscalasDoDia:
+                        if (op.Dia != null) { lerEscalasDoDia(op.Dia.Value); }
+                        break;
+
+                    case TipoDeAcao.InserirDocumento:
+                        InserirDocumento(op.Ficheiro);
+                        break;
+
+                    case TipoDeAcao.SubstituirVariaveis:
+                        SubstituirVariaveis(op.Dia);
+                        break;
+
+                    case TipoDeAcao.QuebraDePagina:
+                        cursor += doc.InserirQuebraDePagina(cursor);
+                        break;
+                }
+            }
+        }
+
+        private void InserirDocumento(string ficheiro)
+        {
+            if (blocoBaseInicio >= 0 && FicheiroTemBloco(ficheiro))
+            {
+                // O bloco que o modelo base já traz serve este dia: nada a inserir
+                zonaInicio = zonaInicio < 0 ? blocoBaseInicio : Math.Min(zonaInicio, blocoBaseInicio);
+                blocoBaseInicio = -1;
+                return;
+            }
+
+            if (zonaInicio < 0) { zonaInicio = cursor; }
+            cursor += doc.InserirFicheiro(cursor, ficheiro);
+        }
+
+        private void SubstituirVariaveis(DateTime? dia)
+        {
+            // O que foi inserido desde a última substituição (termina sempre no
+            // cursor), mais o bloco do modelo base se ainda estiver por usar (ex.:
+            // programa só com ler + substituir)
+            int inicio = zonaInicio;
+            if (blocoBaseInicio >= 0)
+            {
+                inicio = inicio < 0 ? blocoBaseInicio : Math.Min(inicio, blocoBaseInicio);
+                blocoBaseInicio = -1;
+            }
+
+            if (inicio >= 0)
+            {
+                cursor += doc.SubstituirVariaveis(inicio, cursor, dia);
+                zonaInicio = -1;
+            }
+            else
+            {
+                // Sem blocos: documento inteiro, em duas partes para manter o cursor certo
+                cursor += doc.SubstituirVariaveis(0, cursor, dia);
+                doc.SubstituirVariaveis(cursor, doc.FimDoTexto + 1, dia);
+            }
+        }
+
+        private bool FicheiroTemBloco(string ficheiro)
+        {
+            if (!temBloco.TryGetValue(ficheiro, out bool tem))
+            {
+                tem = doc.FicheiroTemBlocoDeEscala(ficheiro);
+                temBloco[ficheiro] = tem;
+            }
+            return tem;
         }
     }
 
@@ -263,6 +446,39 @@ namespace SIPOS
                 dias.Add(dia);
             }
             return dias;
+        }
+
+        /// <summary>
+        /// Dias que a exportação Modelar gera. No modo início/fim (B-1.3.2) o
+        /// primeiro dia selecionado é o dia da O.S. (é esse que o calendário usa
+        /// para a data da O.S. e para escolher o modelo), por isso os dias de
+        /// escala vão do dia seguinte até ao fim do intervalo — ex.: sexta→segunda
+        /// cobre sábado, domingo e segunda. Com o modo desligado, ou com um só dia
+        /// selecionado, aplica-se a regra automática com feriados.
+        /// </summary>
+        public static List<DateTime> DiasParaExportacao(DateTime diaDaOS, bool intervaloAtivo, DateTime inicio, DateTime fim, bool incluirFacultativos = false)
+        {
+            if (intervaloAtivo && fim.Date > inicio.Date)
+            {
+                return DiasDoIntervalo(inicio.Date.AddDays(1), fim);
+            }
+            return DiasDeEscala(diaDaOS, incluirFacultativos);
+        }
+
+        /// <summary>
+        /// Descrição curta dos dias para mostrar ao utilizador, em português e
+        /// com o nome dos feriados — ex.: "qua 05/10/2022 (Implantação da
+        /// República), qui 06/10/2022".
+        /// </summary>
+        public static string DescreverDias(IEnumerable<DateTime> dias)
+        {
+            var pt = new System.Globalization.CultureInfo("pt-PT");
+            return string.Join(", ", dias.Select(d =>
+            {
+                string texto = d.ToString("ddd dd/MM/yyyy", pt);
+                string? feriado = Feriados.NomeFeriado(d);
+                return feriado == null ? texto : $"{texto} ({feriado})";
+            }));
         }
     }
 }
