@@ -48,6 +48,13 @@ namespace SIPOS.Forms
             chkRangeSelection.CheckedChanged += chkRangeSelection_CheckedChanged;
             monthCalendar.Parent.Controls.Add(chkRangeSelection);
             chkRangeSelection.BringToFront();
+
+            // O FormDados é recriado a cada visita ao separador e a checkbox nasce
+            // desligada: o estado partilhado com o Export tem de acompanhar, senão
+            // a exportação continuava em modo intervalo sem o utilizador o ver.
+            Mediator.rangeAtivo = false;
+            Mediator.rangeInicio = monthCalendar.SelectionStart.Date;
+            Mediator.rangeFim = monthCalendar.SelectionEnd.Date;
         }
 
         private void chkRangeSelection_CheckedChanged(object sender, EventArgs e)
@@ -66,15 +73,19 @@ namespace SIPOS.Forms
             }
         }
 
-        // Devolve o nº de dias entre o início e o fim selecionados (0 se o modo
-        // intervalo estiver desligado ou só estiver escolhido um dia).
-        private int GetSelectedRangeExtraDays()
+        // Dias de interrupção do intervalo selecionado, ou null se o modo
+        // intervalo estiver desligado ou só estiver escolhido um dia. O início é
+        // o dia da O.S. e o fim o último dia coberto (o primeiro dia útil), por
+        // isso os dias de interrupção são os que ficam entre os dois — ex.:
+        // sexta→segunda dá 2 (sábado e domingo), como a regra clássica do sábado.
+        private int? GetSelectedRangeInterruptionDays()
         {
             if (chkRangeSelection == null || !chkRangeSelection.Checked)
             {
-                return 0;
+                return null;
             }
-            return Math.Max(0, (monthCalendar.SelectionEnd.Date - monthCalendar.SelectionStart.Date).Days);
+            int dias = (monthCalendar.SelectionEnd.Date - monthCalendar.SelectionStart.Date).Days;
+            return dias > 0 ? dias - 1 : null;
         }
 
 
@@ -156,10 +167,10 @@ namespace SIPOS.Forms
             // B-1.3.2: com o modo início/fim ativo, os dias de interrupção derivam do
             // intervalo selecionado no calendário; caso contrário mantém-se a regra
             // clássica do sábado (fim-de-semana = 2 dias de interrupção).
-            int rangeExtraDays = GetSelectedRangeExtraDays();
-            if (rangeExtraDays > 0)
+            int? rangeInterruptionDays = GetSelectedRangeInterruptionDays();
+            if (rangeInterruptionDays.HasValue)
             {
-                decimal cappedDays = Math.Min(rangeExtraDays, numUpDow_diasIntp.Maximum);
+                decimal cappedDays = Math.Min(rangeInterruptionDays.Value, numUpDow_diasIntp.Maximum);
                 numUpDow_diasIntp.Value = cappedDays;
                 Mediator.plusDayIntrup = (int)cappedDays;
             }

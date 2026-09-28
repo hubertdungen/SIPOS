@@ -89,12 +89,18 @@ namespace SIPOS
 
         // B-1.5.2: substitui todas as variáveis das escalas (carregadas por
         // listToVarsEscalados) apenas dentro do range indicado, incluindo a data
-        // dos escalados do dia. No fim limpa as variáveis para o próximo dia do
-        // loop não herdar valores antigos.
+        // dos escalados do dia. Quem chama carrega as variáveis antes e limpa-as
+        // depois (clearVars), para o próximo dia do loop não herdar valores.
         public static void SubstituirVariaveisNoRange(Word.Range alvo, DateTime dia)
         {
             string dataEscalados = (string)Mediator.returnEscaladosDateParse();
             ReplaceInRange(alvo, "<dataEscalados>", dataEscalados);
+
+            // Dados da própria O.S. (iguais em todos os blocos): no modelo base são
+            // tratados nos cabeçalhos, mas um fragmento pode trazê-los no corpo.
+            ReplaceInRange(alvo, "<numOS>", Mediator.osNumber);
+            ReplaceInRange(alvo, "<dataOS>", Mediator.returnOSextensiveDate());
+            ReplaceInRange(alvo, "<dataOS_abv>", (string)Mediator.returnOSDateABVParse());
 
             // ODU
             ReplaceInRange(alvo, "<ODUefectivo>", efetivoODU);
@@ -133,8 +139,6 @@ namespace SIPOS
                 ReplaceInRange(alvo, "<OAFstatus>", statusFN);
                 ReplaceInRange(alvo, "<OAFreserva>", resFN);
             }
-
-            clearVars();
         }
 
         public static void FindAndReplaceHeader(Word.Document osWordDoc, Word.Application wordApp, object ToFindText, object replaceWithText)
@@ -380,7 +384,7 @@ namespace SIPOS
 
             // ODU ADAPT
             nomeados = LinqList.ListaManagerEscalados.LoadList();
-            nomeados = nomeados.Where(x => x.DataNomeado == currentDate && x.EscalaNomeado == "Oficial de Dia" && x.EstadoNomeado == "Adaptação").ToList();
+            nomeados = nomeados.Where(x => x.DataNomeado == currentDate && x.EscalaNomeado == "Oficial de Dia" && EhAdaptacao(x.EstadoNomeado)).ToList();
 
             foreach (var nomeado in nomeados) { if (nomeado.NomeNomeado != "" && nomeado.NomeNomeado != null) { adaptODU = returnChar + nomeado.NomeNomeado; } }
 
@@ -403,7 +407,7 @@ namespace SIPOS
 
             // ODU Status - ADAPT
             nomeados = LinqList.ListaManagerEscalados.LoadList();
-            nomeados = nomeados.Where(x => x.DataNomeado == currentDate && x.EscalaNomeado == "Oficial de Dia" && x.EstadoNomeado == "Adaptação").ToList();
+            nomeados = nomeados.Where(x => x.DataNomeado == currentDate && x.EscalaNomeado == "Oficial de Dia" && EhAdaptacao(x.EstadoNomeado)).ToList();
 
             foreach (var nomeado in nomeados) { if (statusODU != "" && statusODU != null) { statusODU += returnChar + nomeado.EstadoNomeado; } else { statusODU = returnChar + nomeado.EstadoNomeado; } }
 
@@ -430,7 +434,7 @@ namespace SIPOS
 
             // CCS ADAPT
             nomeados = LinqList.ListaManagerEscalados.LoadList();
-            nomeados = nomeados.Where(x => x.DataNomeado == currentDate && x.EscalaNomeado == "CCS" && x.EstadoNomeado == "Adaptação").ToList();
+            nomeados = nomeados.Where(x => x.DataNomeado == currentDate && x.EscalaNomeado == "CCS" && EhAdaptacao(x.EstadoNomeado)).ToList();
 
             foreach (var nomeado in nomeados) { if (nomeado.NomeNomeado != "" && nomeado.NomeNomeado != null) { adaptCCS = returnChar + GetTextWithNoParagraphs(nomeado.NomeNomeado); } }
 
@@ -453,7 +457,7 @@ namespace SIPOS
 
             // CCS Status - ADAPT
             nomeados = LinqList.ListaManagerEscalados.LoadList();
-            nomeados = nomeados.Where(x => x.DataNomeado == currentDate && x.EscalaNomeado == "CCS" && x.EstadoNomeado == "Adaptação").ToList();
+            nomeados = nomeados.Where(x => x.DataNomeado == currentDate && x.EscalaNomeado == "CCS" && EhAdaptacao(x.EstadoNomeado)).ToList();
 
             foreach (var nomeado in nomeados) { if (statusCCS != "" && statusCCS != null) { statusCCS += returnChar + GetTextWithNoParagraphs(nomeado.EstadoNomeado); } else { statusCCS = returnChar + GetTextWithNoParagraphs(nomeado.EstadoNomeado); } }
 
@@ -480,7 +484,7 @@ namespace SIPOS
 
             // SD ADAPT
             nomeados = LinqList.ListaManagerEscalados.LoadList();
-            nomeados = nomeados.Where(x => x.DataNomeado == currentDate && x.EscalaNomeado == "Sargento de Dia" && x.EstadoNomeado == "Adaptação").ToList();
+            nomeados = nomeados.Where(x => x.DataNomeado == currentDate && x.EscalaNomeado == "Sargento de Dia" && EhAdaptacao(x.EstadoNomeado)).ToList();
 
             foreach (var nomeado in nomeados) { if (nomeado.NomeNomeado != "" && nomeado.NomeNomeado != null) { adaptSD = returnChar + nomeado.NomeNomeado; } }
 
@@ -503,7 +507,7 @@ namespace SIPOS
 
             // SD Status - ADAPT
             nomeados = LinqList.ListaManagerEscalados.LoadList();
-            nomeados = nomeados.Where(x => x.DataNomeado == currentDate && x.EscalaNomeado == "Sargento de Dia" && x.EstadoNomeado == "Adaptação").ToList();
+            nomeados = nomeados.Where(x => x.DataNomeado == currentDate && x.EscalaNomeado == "Sargento de Dia" && EhAdaptacao(x.EstadoNomeado)).ToList();
 
             foreach (var nomeado in nomeados) { if (statusSD != "" && statusSD != null) { statusSD += returnChar + nomeado.EstadoNomeado; } else { statusSD = returnChar + nomeado.EstadoNomeado; } }
 
@@ -531,7 +535,7 @@ namespace SIPOS
 
             // PD ADAPT
             nomeados = LinqList.ListaManagerEscalados.LoadList();
-            nomeados = nomeados.Where(x => x.DataNomeado == currentDate && x.EscalaNomeado == "Praça de Dia" && x.EstadoNomeado == "Adaptação").ToList();
+            nomeados = nomeados.Where(x => x.DataNomeado == currentDate && x.EscalaNomeado == "Praça de Dia" && EhAdaptacao(x.EstadoNomeado)).ToList();
 
             foreach (var nomeado in nomeados) { if (nomeado.NomeNomeado != "" && nomeado.NomeNomeado != null) { adaptPD = returnChar + nomeado.NomeNomeado; } }
 
@@ -554,7 +558,7 @@ namespace SIPOS
 
             // PD Status - ADAPT
             nomeados = LinqList.ListaManagerEscalados.LoadList();
-            nomeados = nomeados.Where(x => x.DataNomeado == currentDate && x.EscalaNomeado == "Praça de Dia" && x.EstadoNomeado == "Adaptação").ToList();
+            nomeados = nomeados.Where(x => x.DataNomeado == currentDate && x.EscalaNomeado == "Praça de Dia" && EhAdaptacao(x.EstadoNomeado)).ToList();
 
             foreach (var nomeado in nomeados) { if (statusPD != "" && statusPD != null) { statusPD += returnChar + nomeado.EstadoNomeado; } else { statusPD = returnChar + nomeado.EstadoNomeado; } }
 
@@ -581,7 +585,7 @@ namespace SIPOS
 
             // FN ADAPT
             nomeados = LinqList.ListaManagerEscalados.LoadList();
-            nomeados = nomeados.Where(x => x.DataNomeado == currentDate && x.EscalaNomeado == "Honras Fúnebres" && x.EstadoNomeado == "Adaptação").ToList();
+            nomeados = nomeados.Where(x => x.DataNomeado == currentDate && x.EscalaNomeado == "Honras Fúnebres" && EhAdaptacao(x.EstadoNomeado)).ToList();
 
             foreach (var nomeado in nomeados) { if (nomeado.NomeNomeado != "" && nomeado.NomeNomeado != null) { adaptFN = returnChar + nomeado.NomeNomeado; } }
 
@@ -604,12 +608,22 @@ namespace SIPOS
 
             // FN Status - ADAPT
             nomeados = LinqList.ListaManagerEscalados.LoadList();
-            nomeados = nomeados.Where(x => x.DataNomeado == currentDate && x.EscalaNomeado == "Honras Fúnebres" && x.EstadoNomeado == "Adaptação").ToList();
+            nomeados = nomeados.Where(x => x.DataNomeado == currentDate && x.EscalaNomeado == "Honras Fúnebres" && EhAdaptacao(x.EstadoNomeado)).ToList();
 
             foreach (var nomeado in nomeados) { if (statusFN != "" && statusFN != null) { statusFN += returnChar + nomeado.EstadoNomeado; } else { statusFN = returnChar + nomeado.EstadoNomeado; } }
 
             ///-------------------------------------------------
 
+        }
+
+
+        // Estado "em adaptação" de um escalado. Desde a v A-0.10.8 a triagem
+        // (EscalasEngine) grava "ADPT" — é o que as O.S. reais mostram —, mas os
+        // filtros acima continuavam a procurar "Adaptação" e os militares em
+        // adaptação nunca chegavam ao Word. Aceita os dois valores.
+        private static bool EhAdaptacao(string estado)
+        {
+            return estado == "ADPT" || estado == "Adaptação";
         }
 
 

@@ -7,25 +7,35 @@ namespace SIPOS
     /// Motor de execução Word do programa Modelar (B-1.5.2).
     ///
     /// Recebe o plano linear produzido por <see cref="ProgramaModelar.ExpandirPlano"/>
-    /// e executa-o passo a passo contra o Microsoft Word:
+    /// e executa-o contra o Microsoft Word. A decisão de onde fica cada bloco é do
+    /// <see cref="ExecutorModelar"/> (lógica pura, testável); aqui ficam as
+    /// validações, a abertura/fecho do Word e as operações de documento:
     ///
-    /// - InserirDocumento: abre o fragmento (ex.: modelo_escalas.doc) em modo
-    ///   leitura, copia o conteúdo todo e cola-o no fim do documento final,
-    ///   registando o range colado;
     /// - LerEscalasDoDia: aponta o Mediator para o dia da operação e corre a
     ///   triagem das folhas Excel para carregar os escalados desse dia;
-    /// - SubstituirVariaveis: preenche as tags &lt;...&gt; APENAS dentro do último
-    ///   range colado, com os valores do dia da operação (ao contrário do fluxo
-    ///   clássico, que usa wdReplaceAll e dá o mesmo valor a todas as cópias);
-    /// - QuebraDePagina: insere uma quebra de página no fim do documento.
+    /// - InserirDocumento: insere o ficheiro (ex.: modelo_escalas.doc) com
+    ///   Range.InsertFile, sem usar a área de transferência;
+    /// - SubstituirVariaveis: preenche as tags &lt;...&gt; APENAS na zona indicada,
+    ///   com os valores do dia da operação (ao contrário do fluxo clássico, que
+    ///   usa wdReplaceAll e dá o mesmo valor a todas as cópias);
+    /// - QuebraDePagina: insere uma quebra de página.
     ///
     /// O documento base (modelo de semana/quarta) é aberto uma vez, os
     /// cabeçalhos/rodapés e a numeração de páginas são tratados como no fluxo
-    /// clássico, e o Word é sempre fechado mesmo em erro (padrão endurecido
-    /// da Beta 1.3.1).
+    /// clássico, o Word é sempre fechado mesmo em erro (padrão endurecido da
+    /// Beta 1.3.1) e o estado global de datas do Mediator é reposto no fim.
     /// </summary>
     public static class ModelarMotorWord
     {
+        /// <summary>Marcador do início de um bloco de escala ("Para o dia &lt;dataEscalados&gt;").</summary>
+        internal const string MarcadorBlocoEscala = "<dataEscalados>";
+
+        /// <summary>Marcador opcional, num parágrafo próprio do modelo base, do sítio onde entram os blocos dos dias seguintes.</summary>
+        internal const string MarcadorFimEscalas = "<fimEscalas>";
+
+        /// <summary>Título da secção que se segue ao "101. PESSOAL DE SERVIÇO" nas O.S.</summary>
+        internal const string TituloSeguinteAsEscalas = "102.";
+
         /// <summary>
         /// Executa um programa Modelar completo.
         /// </summary>
@@ -51,13 +61,29 @@ namespace SIPOS
             }
 
             List<OperacaoPlaneada> plano = programa.ExpandirPlano(dias);
+            if (plano.Count == 0)
+            {
+                MessageBox.Show("O programa Modelar não tem ações ativas para executar.", "PROGRAMA MODELAR VAZIO!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
 
-            Word.Application wordApp = new Word.Application();
-            Word.Document doc = null;
+            // Fragmentos em falta ou iguais ao modelo base: verificar antes de arrancar o Word
+            List<string> problemasFicheiros = VerificarFragmentos(plano, caminhoModeloBase);
+            if (problemasFicheiros.Count > 0)
+            {
+                MessageBox.Show("Não é possível executar o programa Modelar:\r\n\r\n- " + string.Join("\r\n- ", problemasFicheiros),
+                    "FICHEIROS DO PROGRAMA MODELAR!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            var datasOriginais = new EstadoDeDatas();
+            Word.Application? wordApp = null;
+            Word.Document? doc = null;
             bool exportOk = false;
 
             try
             {
+                wordApp = new Word.Application();
                 wordApp.Visible = Mediator.isExportVisible;
                 doc = wordApp.Documents.Open(caminhoModeloBase, ReadOnly: false, Visible: Mediator.isExportVisible);
                 doc.Activate();
@@ -65,31 +91,7 @@ namespace SIPOS
                 // Cabeçalhos, rodapés e numeração — uma vez, como no fluxo clássico
                 PrepararCabecalhosEPaginacao(doc, wordApp);
 
-                // Estado do bloco colado mais recente (para substituição por âmbito)
-                int inicioUltimoBloco = -1;
-                int fimUltimoBloco = -1;
-
-                foreach (OperacaoPlaneada op in plano)
-                {
-                    switch (op.Tipo)
-                    {
-                        case TipoDeAcao.LerEscalasDoDia:
-                            LerEscalasDoDia(op.Dia);
-                            break;
-
-                        case TipoDeAcao.InserirDocumento:
-                            InserirDocumentoNoFim(wordApp, doc, op.Ficheiro, out inicioUltimoBloco, out fimUltimoBloco);
-                            break;
-
-                        case TipoDeAcao.SubstituirVariaveis:
-                            SubstituirVariaveisDaOperacao(doc, op.Dia, inicioUltimoBloco, fimUltimoBloco);
-                            break;
-
-                        case TipoDeAcao.QuebraDePagina:
-                            InserirQuebraDePagina(doc);
-                            break;
-                    }
-                }
+                new ExecutorModelar(new DocumentoWord(wordApp, doc), LerEscalasDoDia).Executar(plano);
 
                 doc.SaveAs2(caminhoDestino);
                 exportOk = true;
@@ -101,8 +103,13 @@ namespace SIPOS
             finally
             {
                 try { doc?.Close(false); } catch { }
-                try { wordApp.Quit(); } catch { }
-                try { Marshal.ReleaseComObject(wordApp); } catch { }
+                try { wordApp?.Quit(); } catch { }
+                if (wordApp != null)
+                {
+                    try { Marshal.ReleaseComObject(wordApp); } catch { }
+                }
+                Word_Processor.clearVars();
+                datasOriginais.Repor();
             }
 
             if (exportOk)
@@ -110,6 +117,29 @@ namespace SIPOS
                 MessageBox.Show("Ficheiro criado com sucesso pelo programa Modelar!", "EXPORTAÇÃO CONCLUÍDA", MessageBoxButtons.OK);
             }
             return exportOk;
+        }
+
+        // Fragmentos que não existem, ou que são o próprio modelo base (abri-lo
+        // outra vez fecharia o documento em construção).
+        private static List<string> VerificarFragmentos(List<OperacaoPlaneada> plano, string caminhoModeloBase)
+        {
+            var problemas = new List<string>();
+            string baseCompleto = Path.GetFullPath(caminhoModeloBase);
+
+            foreach (string ficheiro in plano.Where(op => op.Tipo == TipoDeAcao.InserirDocumento)
+                                             .Select(op => op.Ficheiro)
+                                             .Distinct(StringComparer.OrdinalIgnoreCase))
+            {
+                if (!File.Exists(ficheiro))
+                {
+                    problemas.Add($"Ficheiro Word não encontrado: {ficheiro}");
+                }
+                else if (string.Equals(Path.GetFullPath(ficheiro), baseCompleto, StringComparison.OrdinalIgnoreCase))
+                {
+                    problemas.Add($"O ficheiro a inserir é o próprio modelo base da O.S.: {ficheiro}");
+                }
+            }
+            return problemas;
         }
 
         // Cabeçalhos/rodapés (<numOS>, <dataOS>, <dataOS_abv>) e numeração inicial
@@ -123,7 +153,7 @@ namespace SIPOS
             Word_Processor.FindAndReplaceHeader(doc, wordApp, "<dataOS>", osExtensiveDate);
             Word_Processor.FindAndReplaceHeader(doc, wordApp, "<dataOS_abv>", osDateABVParse);
 
-            string previousOSFileName = Mediator.GetPreviousOSFileName(Mediator.inspFilePath);
+            string? previousOSFileName = Mediator.GetPreviousOSFileName(Mediator.inspFilePath);
             if (previousOSFileName == null) { return; }
 
             string lastDocPath = Path.Combine(Mediator.inspFilePath, previousOSFileName + ".doc");
@@ -135,78 +165,168 @@ namespace SIPOS
         }
 
         // LerEscalasDoDia: aponta o estado global de datas para o dia da operação
-        // e corre a triagem Excel, acumulando os escalados desse dia na lista.
-        private static void LerEscalasDoDia(DateTime? dia)
+        // e corre a triagem Excel. As entradas desse dia que já estivessem na lista
+        // (ex.: de um "Atualizar" no separador Dados) são retiradas antes, para o
+        // dia não ficar em duplicado.
+        private static void LerEscalasDoDia(DateTime dia)
         {
-            if (dia == null) { return; }
-
-            Mediator.diaDeEscala = dia.Value;
-            Mediator.escalaDay = dia.Value.ToString("dd-MM-yyyy");
-            Mediator.isItSabado = dia.Value.DayOfWeek == DayOfWeek.Saturday;
-            Mediator.isItQuarta = dia.Value.DayOfWeek == DayOfWeek.Wednesday;
+            ApontarDatasPara(dia);
+            LinqList.ListaManagerEscalados.escaladosList.RemoveAll(p => p.DataNomeado == Mediator.escalaDay);
 
             Mediator.instTriagemEscalas();
         }
 
-        // InserirDocumento: copia o conteúdo do fragmento e cola-o no fim do
-        // documento final, devolvendo o range [inicio, fim) do bloco colado.
-        private static void InserirDocumentoNoFim(Word.Application wordApp, Word.Document doc, string caminhoFragmento, out int inicioBloco, out int fimBloco)
+        private static void ApontarDatasPara(DateTime dia)
         {
-            inicioBloco = -1;
-            fimBloco = -1;
-
-            if (!File.Exists(caminhoFragmento))
-            {
-                throw new FileNotFoundException($"Fragmento Word não encontrado: {caminhoFragmento}");
-            }
-
-            Word.Document fragmento = null;
-            try
-            {
-                fragmento = wordApp.Documents.Open(caminhoFragmento, ReadOnly: true, Visible: false);
-                fragmento.Range().Copy();
-            }
-            finally
-            {
-                try { fragmento?.Close(false); } catch { }
-            }
-
-            doc.Activate();
-            Word.Range fim = doc.Range(doc.Content.End - 1, doc.Content.End - 1);
-            int posicaoAntes = fim.Start;
-
-            fim.Paste();
-
-            inicioBloco = posicaoAntes;
-            fimBloco = doc.Content.End;
+            Mediator.diaDeEscala = dia;
+            Mediator.escalaDay = dia.ToString("dd-MM-yyyy");
+            Mediator.isItSabado = dia.DayOfWeek == DayOfWeek.Saturday;
+            Mediator.isItQuarta = dia.DayOfWeek == DayOfWeek.Wednesday;
         }
 
-        // SubstituirVariaveis: preenche as tags do dia APENAS no último bloco
-        // colado. Se ainda não houve colagem (programa sem InserirDocumento),
-        // cai no documento inteiro para manter compatibilidade com modelos
-        // clássicos que já trazem as tags no próprio modelo base.
-        private static void SubstituirVariaveisDaOperacao(Word.Document doc, DateTime? dia, int inicioBloco, int fimBloco)
+        /// <summary>Operações de documento do <see cref="ExecutorModelar"/> sobre o Word.</summary>
+        private sealed class DocumentoWord : IDocumentoModelar
         {
-            if (dia != null)
+            private readonly Word.Application wordApp;
+            private readonly Word.Document doc;
+
+            public DocumentoWord(Word.Application wordApp, Word.Document doc)
             {
-                Mediator.diaDeEscala = dia.Value;
-                Mediator.escalaDay = dia.Value.ToString("dd-MM-yyyy");
+                this.wordApp = wordApp;
+                this.doc = doc;
             }
 
-            // Carrega as variáveis (efetivoODU, resCCS, ...) dos escalados do dia atual
-            Word_Processor.listToVarsEscalados(0);
+            public int FimDoTexto => doc.Content.End - 1;
 
-            Word.Range alvo = (inicioBloco >= 0 && fimBloco > inicioBloco)
-                ? doc.Range(inicioBloco, Math.Min(fimBloco, doc.Content.End))
-                : doc.Range();
+            public int InicioDoBlocoPorPreencher()
+            {
+                Word.Range? r = Procurar(0, MarcadorBlocoEscala);
+                return r == null ? -1 : r.Paragraphs[1].Range.Start;
+            }
 
-            Word_Processor.SubstituirVariaveisNoRange(alvo, dia ?? Mediator.diaDeEscala);
+            public int PontoDeInsercao(int aPartirDe)
+            {
+                Word.Range? marcador = Procurar(aPartirDe, MarcadorFimEscalas);
+                if (marcador != null)
+                {
+                    Word.Range paragrafo = marcador.Paragraphs[1].Range;
+                    int posicao = paragrafo.Start;
+                    paragrafo.Delete();
+                    return posicao;
+                }
+
+                // Primeiro "102." que abra um parágrafo (só espaços antes)
+                int inicio = aPartirDe;
+                Word.Range? titulo;
+                while ((titulo = Procurar(inicio, TituloSeguinteAsEscalas)) != null)
+                {
+                    int inicioParagrafo = titulo.Paragraphs[1].Range.Start;
+                    if (string.IsNullOrWhiteSpace(doc.Range(inicioParagrafo, titulo.Start).Text))
+                    {
+                        return inicioParagrafo;
+                    }
+                    inicio = titulo.End;
+                }
+                return FimDoTexto;
+            }
+
+            public bool FicheiroTemBlocoDeEscala(string caminho)
+            {
+                Word.Document? fragmento = null;
+                try
+                {
+                    fragmento = wordApp.Documents.Open(caminho, ReadOnly: true, AddToRecentFiles: false, Visible: false);
+                    return fragmento.Content.Text.Contains(MarcadorBlocoEscala);
+                }
+                finally
+                {
+                    try { fragmento?.Close(false); } catch { }
+                }
+            }
+
+            public int InserirFicheiro(int posicao, string caminho)
+            {
+                return MedirVariacao(() =>
+                {
+                    int p = posicao;
+                    // A meio ou no fim de um parágrafo com texto (ex.: fim do documento),
+                    // abrir um parágrafo novo, senão o 1.º parágrafo inserido juntava-se a ele
+                    if (p > 0 && doc.Range(p - 1, p).Text != "\r")
+                    {
+                        doc.Range(p, p).InsertParagraphAfter();
+                        p++;
+                    }
+                    doc.Range(p, p).InsertFile(caminho);
+                });
+            }
+
+            public int InserirQuebraDePagina(int posicao)
+            {
+                return MedirVariacao(() => doc.Range(posicao, posicao).InsertBreak(Word.WdBreakType.wdPageBreak));
+            }
+
+            public int SubstituirVariaveis(int inicio, int fim, DateTime? dia)
+            {
+                if (dia != null) { ApontarDatasPara(dia.Value); }
+
+                // Carrega as variáveis (efetivoODU, resCCS, ...) dos escalados do dia atual
+                Word_Processor.clearVars();
+                Word_Processor.listToVarsEscalados(0);
+
+                int fimValido = Math.Min(fim, doc.Content.End);
+                int d = MedirVariacao(() => Word_Processor.SubstituirVariaveisNoRange(doc.Range(inicio, fimValido), dia ?? Mediator.diaDeEscala));
+
+                Word_Processor.clearVars();
+                return d;
+            }
+
+            // Procura o texto (maiúsculas exatas) a partir da posição; devolve o
+            // range encontrado ou null.
+            private Word.Range? Procurar(int aPartirDe, string texto)
+            {
+                int fim = doc.Content.End;
+                if (aPartirDe >= fim) { return null; }
+
+                Word.Range r = doc.Range(aPartirDe, fim);
+                Word.Find find = r.Find;
+                find.ClearFormatting();
+                bool encontrado = find.Execute(FindText: texto,
+                    MatchCase: true,
+                    MatchWholeWord: false,
+                    MatchWildcards: false,
+                    Forward: true,
+                    Wrap: Word.WdFindWrap.wdFindStop,
+                    Format: false);
+                return encontrado ? r : null;
+            }
+
+            private int MedirVariacao(Action alteracao)
+            {
+                int antes = doc.Content.End;
+                alteracao();
+                return doc.Content.End - antes;
+            }
         }
 
-        private static void InserirQuebraDePagina(Word.Document doc)
+        /// <summary>
+        /// Guarda e repõe o estado global de datas do Mediator, que o motor
+        /// altera dia a dia; sem isto, o separador Dados e uma exportação clássica
+        /// seguinte ficavam a apontar para o último dia do loop.
+        /// </summary>
+        private sealed class EstadoDeDatas
         {
-            Word.Range fim = doc.Range(doc.Content.End - 1, doc.Content.End - 1);
-            fim.InsertBreak(Word.WdBreakType.wdPageBreak);
+            private readonly DateTime diaDeEscala = Mediator.diaDeEscala;
+            private readonly string escalaDay = Mediator.escalaDay;
+            private readonly bool isItSabado = Mediator.isItSabado;
+            private readonly bool isItQuarta = Mediator.isItQuarta;
+
+            public void Repor()
+            {
+                Mediator.diaDeEscala = diaDeEscala;
+                Mediator.escalaDay = escalaDay;
+                Mediator.isItSabado = isItSabado;
+                Mediator.isItQuarta = isItQuarta;
+            }
         }
     }
 }

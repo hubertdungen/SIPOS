@@ -81,19 +81,38 @@ Current limitation: `FindAndReplace` uses `wdReplaceAll`, so every copy of a tag
 Next epic (mirrored in Asana) — `Modelar/Exportar: Motor de execução de templates multi-dia [v B-1.5.0]`:
 
 - [x] B-1.5.1 Bind the Modelar rows to a persisted program structure the exporter can read — **implemented 2026-07-09** in `ModelarPrograma.cs`.
-- [x] B-1.5.2 Engine: for each selected day, copy the fragment → paste into the final document → substitute variables only within the pasted range — **implemented 2026-07-09 on branch `feature/modelar-motor-b1.5.2`**; Windows validation pending before merge.
+- [x] B-1.5.2 Engine: for each selected day, insert the fragment into the final document → substitute variables only within that day's block — **implemented 2026-07-09, reworked in the 2026-09-28 review (blocks placed in section 101, base template's table reused for day 1) and merged in Beta 1.5.2**; Word interop still needs the Windows smoke test (B-1.5.4).
 - [x] B-1.5.3 Derive the day list from the start/end range (B-1.3.2) and the holiday engine (`Feriados.cs`) — **implemented 2026-07-09** as `PlaneadorDeDias`.
 - [ ] B-1.5.4 Windows validation against the real exemplares in `modelos_word/`.
 
-### B-1.5.2 engine implementation (2026-07-09, branch `feature/modelar-motor-b1.5.2`)
+### B-1.5.2 engine (2026-07-09, reworked 2026-09-28)
 
-- `ModelarMotorWord.Executar(programa, dias, modeloBase, destino)`: validates the program, opens the base O.S. model once, prepares headers/footers and page numbering exactly like the classic flow, then executes the expanded plan step by step. Word always closes on error (Beta-1.3.1 hardening pattern).
-- `InserirDocumento` opens the fragment read-only, copies its whole content and pastes at the end of the output document, recording the pasted range.
-- `SubstituirVariaveis` calls the new `Word_Processor.SubstituirVariaveisNoRange(range, dia)`, which replaces all escala tags (`<dataEscalados>`, ODU/CCS/SD/PD, plus OAF on Wednesdays) **only inside the last pasted block** using scoped `Range.Find` with `wdFindStop` — the key capability `wdReplaceAll` could not provide — and clears the loaded vars afterwards so the next day starts clean.
-- `LerEscalasDoDia` points the global date state at the operation's day and runs the Excel triage.
-- Opt-in wiring in `FormExport.btn_ExportWord_Click`: if `modelar_programa.json` exists beside SIPOS.exe the engine runs (day list from the B-1.3.2 range when active, otherwise `PlaneadorDeDias.DiasDeEscala`); without the file the classic flow runs untouched.
-- User guide added at `docs/GUIA-MODELAR.md` with the concept, action-type table, annotated JSON example (`docs/modelar_programa.exemplo.json`, verified to load/validate/expand with the real code), the Windows test script, and the epic status table.
-- This branch is intentionally NOT merged to `main`: the interop path cannot be exercised on Linux, so it waits for the Windows smoke test (B-1.5.4). `main` stays at Beta 1.5.1.
+- `ModelarMotorWord.Executar(programa, dias, modeloBase, destino)`: validates the program (plus: no active actions, missing fragment files, fragment equal to the base model — all before starting Word), opens the base O.S. model once, prepares headers/footers and page numbering exactly like the classic flow, then runs the plan through `ExecutorModelar`. Word always closes on error (Beta-1.3.1 hardening pattern) and the Mediator's global date state is restored afterwards.
+- **Block placement (`ExecutorModelar`, pure logic in `ModelarPrograma.cs`)**: real multi-day O.S. (`modelos_word/exemplares/2022-002-186`, `-188`) keep the "Para o dia …" blocks consecutive inside "101. PESSOAL DE SERVIÇO", before "102. AUSÊNCIAS…", with the Wednesday funerals section right after Wednesday's block. The base models already carry one unfilled block (`<dataEscalados>`), so that block serves **day 1**; the first insertion of a fragment containing `<dataEscalados>` is swapped for it, and the following days are inserted at the insertion point (start of the "102." paragraph; an optional `<fimEscalas>` paragraph overrides it; otherwise end of document, in a new paragraph). Each `SubstituirVariaveis` fills everything inserted since the previous one. With one day the result equals the classic flow.
+- `IDocumentoModelar` separates the placement algorithm from Word: `ModelarMotorWord.DocumentoWord` implements it with `Range.InsertFile` (no clipboard), `InsertBreak`, scoped `Range.Find`, and length deltas of `Content.End` to keep positions right; the test suite implements it over plain text.
+- `SubstituirVariaveis` calls `Word_Processor.SubstituirVariaveisNoRange(range, dia)`: escala tags (`<dataEscalados>`, ODU/CCS/SD/PD, OAF on Wednesdays) plus the O.S. tags (`<numOS>`, `<dataOS>`, `<dataOS_abv>`) **only inside the given range** (`Range.Find` with `wdFindStop`). The adapter loads the day's vars before and clears them after.
+- `LerEscalasDoDia` points the global date state at the operation's day, removes that day's entries already in the escalados list (e.g. from a Dados refresh) and runs the Excel triage.
+- Export wiring (`FormExport.EscolherExportacaoModelar`): without `modelar_programa.json` the classic flow runs with no questions; with it, a Sim/Não/Cancelar dialog lists the days the program will generate (with holiday names) — saving a program never silently changes the daily export; an unreadable JSON is reported and the user may continue with the classic flow. Days come from `PlaneadorDeDias.DiasParaExportacao`.
+- User guide: `docs/GUIA-MODELAR.md` (concept, action types, block placement, JSON, flow choice, UI, Windows test script, automated tests).
+
+### Review of PR #10 (2026-09-28)
+
+Findings fixed before the merge (none was reachable in the classic flow except C1):
+
+- E1 — engine left the base model's own table unfilled (raw tags) and appended the other days' tables at the end of the document, after the signatures. Fixed by the placement rules above.
+- E2 — global date state (`diaDeEscala`, `escalaDay`, `isItSabado`, `isItQuarta`) stayed on the last loop day after an export. Now restored.
+- E3 — re-reading a day already loaded by the Dados refresh duplicated its entries (with C1 fixed this would print "ADPT" twice). The day's entries are removed before the triage.
+- E4 — range mode included the O.S. day itself (`DiasDoIntervalo(inicio, fim)`), unlike the automatic rule that starts the next day; and `FormDados` is recreated on each visit with the checkbox off while `Mediator.rangeAtivo` stayed on. Range now means O.S. day → last covered day (days = start+1..end), the flag resets with the form, and "Dias de interrupção" shows end−start−1 (Friday→Monday = 2, like the Saturday rule).
+- E5 — corrupted JSON silently fell back to the classic flow although the guide promised a warning; hand-written JSON with `null` lists crashed validation. Both handled.
+- C1 (classic flow, since v A-0.10.8) — the triage stores adaptation as `"ADPT"` (commit 275479a, as real O.S. show it) but `listToVarsEscalados` still filtered `"Adaptação"`, so personnel in adaptation never reached the Word document. Both values are now accepted.
+- U1 — `FormModelar_Load` was not wired since the v B-1.2.2 Designer regeneration (`Load += FormModelar_Load` lost in db8f2e9), so **nothing in it ever ran**: no ▲▼ arrows (B-1.2.4), type ComboBox, 💾/⭯ buttons, template selector or auto-load. Wiring restored in the Designer.
+- U2 — the name box and ✓ button live inside the `pnlTextNameW` sub-panel, but the row lookups searched direct children only: saving was impossible (every row "without name"), loaded names never showed, ✓ was never read and the B-1.2.5 validation never blocked. Lookups are now recursive (not descending into CustomComboBox internals).
+- U3 — the template row was augmented only at Load, after the first row had already been cloned; now done in the constructor so every row gets the arrows and ComboBox.
+- U4 — 📄 reused `Mediator.openFile()`: cancelling filled the path with the last file picked elsewhere (e.g. an Excel). Dedicated Word-filtered dialog; path changes only on OK.
+- U5 — ⭯ Recarregar left extra rows; fully empty rows blocked saving; saving silently flattened hand-written programs; ✗ dimmed only the name box; the PROGRAMAS/FICHEIROS tabs (80% + 21% of the bar) would cover the new 💾/⭯ buttons. All fixed.
+- Row `MaximumSize` (B-1.2.7) was a no-op — cloned rows never copy it and are sized to the list width — and was removed.
+
+Verification: 0 build errors and 0 new warnings versus `main`; new `tests/SIPOS.Logic.Tests` (27 tests: program/JSON, days and holidays incl. the real exemplares' dates, and block placement over a simulated document with the real templates' structure); mutation check — reverting to "append at end", "no base-table reuse" or "range includes the O.S. day" makes the relevant tests fail.
 
 ### B-1.2.6 program-editing UI (2026-07-10, same branch)
 
@@ -104,6 +123,7 @@ FormModelar now edits `modelar_programa.json` directly:
 - The previously empty `SwitchRowActivationState` stub is implemented: the ✓/✗ button now toggles and displays the row's `Ativa` state, dimming disabled rows; the engine skips inactive actions.
 - `btnOpenWFile` (📄) switched from anchored to right-docked so it cannot be overlapped by the growing docked button stack (arrows + ComboBox).
 - Windows UI validation pending, same as the engine. `docs/GUIA-MODELAR.md` updated with the UI chapter.
+- 2026-09-28: none of this was active at runtime until the review fixes U1–U5 (see "Review of PR #10").
 
 ### B-1.2.7 form layout & menu logic (2026-07-10, same branch)
 
@@ -111,8 +131,8 @@ The previously dead selector panel (`cmbBoxTemplateName` + `btnAddtoList` + `ric
 
 - The template ComboBox lists "Programa: Exportação clássica (loop de dias)" plus one "Ação: X" entry per action type; ➕ adds the chosen program (3 preconfigured rows) or a single row of that type, reusing the first empty row and generating unique names so the B-1.2.5 validation never blocks fresh rows.
 - The hint box text switches with the active top menu: Programar shows program-editing guidance, Ficheiros shows Word-file guidance. `btnProgramas_Click`/`btnFicheiros_Click` were previously style-only.
-- Row `MaximumSize` widened from 800px to 1400px at load so the now-crowded rows (✓ ⋯ nome caminho combo 📄 ▲▼ ➖➕) can breathe in wider windows.
 - Windows UI validation pending, same as the rest of the branch. With this, every B-1.2.x item of the Modelar epic is implemented.
+- 2026-09-28: the row `MaximumSize` change originally listed here was a no-op and was removed; the tab widths now leave room for the 💾/⭯ buttons (review fix U5).
 
 ### B-1.2.3 custom ComboBox design (2026-07-10, same branch)
 
@@ -140,15 +160,15 @@ UI note: the pending `Template ComboBox` tasks (B-1.2.3/B-1.2.6) now have a clea
 
 ### Pending
 
-- [ ] `Modelar: Template ComboBox Custom Design [v B-1.2.3]`
-- [x] `Modelar: Arrows to switch order [v B-1.2.4]` — implemented 2026-07-09 (shipped in Beta-1.3.2; Windows UI validation pending).
-- [x] `Modelar: Prevent empty or similar names from moving [v B-1.2.5]` — implemented 2026-07-09 (shipped in Beta-1.3.1; Windows UI validation pending).
-- [ ] `Modelar: Template ComboBox Logic [v B-1.2.6]`
-- [ ] `Modelar: Form Layout Update & Menu Logic [v B-1.2.7]`
+- [x] `Modelar: Template ComboBox Custom Design [v B-1.2.3]` — implemented 2026-07-10, active since Beta 1.5.2 (Windows UI validation pending).
+- [x] `Modelar: Arrows to switch order [v B-1.2.4]` — implemented 2026-07-09, **active only since Beta 1.5.2** (Windows UI validation pending).
+- [x] `Modelar: Prevent empty or similar names from moving [v B-1.2.5]` — implemented 2026-07-09, **effective only since Beta 1.5.2** (Windows UI validation pending).
+- [x] `Modelar: Template ComboBox Logic [v B-1.2.6]` — implemented 2026-07-10, active since Beta 1.5.2 (Windows UI validation pending).
+- [x] `Modelar: Form Layout Update & Menu Logic [v B-1.2.7]` — implemented 2026-07-10, active since Beta 1.5.2 (Windows UI validation pending).
 
-B-1.2.5 implementation notes: `FormModelar.elli_MouseDown` now refuses to start a drag when the row's `txtNameWBox` is empty or matches another row's name (case- and whitespace-insensitive). The blocked row's name box flashes red with a tooltip explaining the reason, and the drag state never engages, so `MouseMove`/`MouseUp` ignore the gesture. Needs visual confirmation on Windows.
+B-1.2.5 implementation notes: `FormModelar.elli_MouseDown` now refuses to start a drag when the row's `txtNameWBox` is empty or matches another row's name (case- and whitespace-insensitive). The blocked row's name box flashes red with a tooltip explaining the reason, and the drag state never engages, so `MouseMove`/`MouseUp` ignore the gesture. Needs visual confirmation on Windows. (Until Beta 1.5.2 the name lookup searched only the row's direct children and never found the box, so nothing was blocked — review fix U2.)
 
-B-1.2.4 implementation notes: each document row now carries ▲/▼ buttons (created in code in `AddOrderArrowButtons`, right-docked next to the existing ➕/➖ buttons, and wired by name in `CloneControls` so cloned rows get working arrows too). Clicking moves the row one position up/down via `SetChildIndex` + `RefreshListLayout`, honoring the B-1.2.5 name validation (blocked rows flash instead of moving). Needs visual confirmation on Windows.
+B-1.2.4 implementation notes: each document row now carries ▲/▼ buttons (created in code in `AddOrderArrowButtons`, right-docked next to the existing ➕/➖ buttons, and wired by name in `CloneControls` so cloned rows get working arrows too). Clicking moves the row one position up/down via `SetChildIndex` + `RefreshListLayout`, honoring the B-1.2.5 name validation (blocked rows flash instead of moving). Needs visual confirmation on Windows. (Until Beta 1.5.2 the arrows were added in `FormModelar_Load`, which was not wired, so they never appeared — review fixes U1/U3.)
 
 ## B-1.1.0 Interpretação e FormDados epic details
 
@@ -300,6 +320,23 @@ Artifact:
 - Artifact: `SIPOS-Beta-1.5.1-win-x64-portable.zip`
 - SHA-256: `B88CCB750AC890B32415F0ED7C534F84BFBE8AFB63139B23B84B22C890516046`
 - Published in-repo under `dist/` (replaces the Beta-1.3.2 zip; Phase 4 channel decision still pending).
+
+## Release Beta-1.5.2 (2026-09-28): Modelar multi-day engine + Modelar UI, after review
+
+Merged from PR #10 after the review described in the Modelar concept section ("Review of PR #10"):
+
+- Modelar multi-day Word engine (B-1.5.2): one "Para o dia …" block per day, consecutive in section 101 like real O.S.; the base model's own table serves day 1. Opt-in per export: when `modelar_programa.json` exists, a Sim/Não/Cancelar dialog lists the days to generate; otherwise the classic flow runs unchanged.
+- Modelar UI (B-1.2.3/B-1.2.6/B-1.2.7, plus B-1.2.4/B-1.2.5 now actually active): action-type ComboBox per row, 💾 Guardar / ⭯ Recarregar, template selector, per-menu hints.
+- Classic flow fix: personnel in adaptation (ADPT) now reach the Word document (broken since v A-0.10.8).
+- Range mode (B-1.3.2) now means O.S. day → last covered day; "Dias de interrupção" consistent with the Saturday rule.
+- New `tests/SIPOS.Logic.Tests` (27 tests; `dotnet run --project tests/SIPOS.Logic.Tests`), excluded from the app build.
+- In-app version `v B-1.5.2`. Still pending: Windows smoke test of the Word interop and the Modelar UI (B-1.5.4, script in `docs/GUIA-MODELAR.md` chapter 7).
+
+Artifact:
+
+- Artifact: `SIPOS-Beta-1.5.2-win-x64-portable.zip` (self-contained win-x64 single file, .NET runtime 10.0.12)
+- SHA-256: `6A8FEFAB471EC2A0A3F5E063E2DE2EB126440300CBCFC11F5036D1BA8DECE6CA`
+- Published in-repo under `dist/` (replaces the Beta-1.5.1 zip; earlier builds stay reachable in the git history).
 
 ## Branch cleanup (2026-07-09)
 

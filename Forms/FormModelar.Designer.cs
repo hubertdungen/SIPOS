@@ -390,6 +390,7 @@
             this.Controls.Add(this.pnl_Separator);
             this.Name = "FormModelar";
             this.Text = "FormModelar";
+            this.Load += new System.EventHandler(this.FormModelar_Load);
             this.rowPanel_WordDoc.ResumeLayout(false);
             this.rowPanel_WordDoc.PerformLayout();
             this.pnlTextNameW.ResumeLayout(false);

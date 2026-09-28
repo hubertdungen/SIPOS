@@ -1,7 +1,7 @@
-# Guia do Sistema Modelar (v B-1.5.x)
+# Guia do Sistema Modelar (v B-1.5.2)
 
 Este guia explica como funciona o sistema de programação de exportações do SIPOS
-— o "Modelar" — introduzido nas versões B-1.5.x, e como o testar no Windows.
+— o "Modelar" — e como o testar no Windows.
 
 ## 1. O conceito
 
@@ -10,20 +10,19 @@ exportar** uma Ordem de Serviço. Em vez de um fluxo fixo, a exportação passa 
 ser descrita por um **programa**: uma lista ordenada de **linhas de ação**, que
 pode incluir **loops** (ex.: "por cada dia selecionado") com ações aninhadas.
 
-Exemplo do fluxo clássico descrito como programa:
+Exemplo — o fluxo clássico descrito como programa:
 
 ```text
 Loop: por cada dia selecionado
  ├── Ler escalas do dia          (consulta as folhas Excel desse dia)
- ├── Inserir documento           (copia modelo_escalas.doc e cola no doc final)
- └── Substituir variáveis        (preenche as <tags> SÓ no bloco acabado de colar)
+ ├── Inserir documento           (insere o modelo_escalas.doc no ponto 101)
+ └── Substituir variáveis        (preenche as <tags> SÓ no bloco desse dia)
 ```
 
-Com 3 dias selecionados, o SIPOS expande isto em 9 operações: lê o Excel do
-dia 1, cola uma tabela, preenche-a com os nomes do dia 1; depois repete para o
-dia 2 e para o dia 3. Cada tabela colada fica com os valores **do seu próprio
-dia** — é isto que o fluxo clássico não conseguia fazer (o `wdReplaceAll`
-punha o mesmo valor em todas as cópias).
+Com 3 dias selecionados, o SIPOS lê o Excel do dia 1 e preenche a tabela do
+dia 1; depois repete para o dia 2 e para o dia 3. Cada tabela fica com os
+valores **do seu próprio dia** — é isto que o fluxo clássico não conseguia
+fazer (o `wdReplaceAll` punha o mesmo valor em todas as cópias).
 
 ## 2. Os tipos de ação disponíveis
 
@@ -31,9 +30,9 @@ punha o mesmo valor em todas as cópias).
 | --- | --- |
 | `LoopDias` | Repete as ações em `Filhos` uma vez por cada dia selecionado. |
 | `LerEscalasDoDia` | Corre a triagem das folhas Excel para o dia atual do loop e carrega os escalados. |
-| `InserirDocumento` | Abre o ficheiro Word indicado em `Ficheiro`, copia o conteúdo todo e cola-o no fim do documento final. |
-| `SubstituirVariaveis` | Substitui as `<tags>` (ODU/CCS/SD/PD/OAF + `<dataEscalados>`) **apenas dentro do último bloco colado**, com os valores do dia atual. |
-| `QuebraDePagina` | Insere uma quebra de página no fim do documento final. |
+| `InserirDocumento` | Insere o ficheiro Word indicado em `Ficheiro` no documento final (ver capítulo 3). |
+| `SubstituirVariaveis` | Substitui as `<tags>` (ODU/CCS/SD/PD, OAF às quartas, `<dataEscalados>` e os dados da O.S.) **apenas no que foi inserido desde a última substituição**, com os valores do dia atual. |
+| `QuebraDePagina` | Insere uma quebra de página no ponto de inserção. |
 
 Cada linha de ação tem ainda: `Nome` (rótulo, não pode ser vazio nem repetido),
 `Ativa` (true/false — linhas desativadas são saltadas, como o botão ✓ da UI) e,
@@ -42,7 +41,35 @@ nos tipos com documento, `Ficheiro` (caminho do .doc).
 Novos tipos de ação (outros loops, condições, mais documentos) são acrescentados
 ao enum `TipoDeAcao` sem partir programas já gravados.
 
-## 3. O ficheiro de programa
+## 3. Onde ficam os blocos de cada dia
+
+Numa O.S. real de vários dias, os blocos "Para o dia …" ficam **seguidos dentro
+do ponto 101. PESSOAL DE SERVIÇO**, antes do "102. AUSÊNCIAS E IMPEDIMENTOS". É
+assim nos exemplares em `modelos_word/exemplares/`:
+
+- O.S. de sexta 30SET2022 (`2022-002-186`): blocos de 01, 02 e 03OUT;
+- O.S. de terça 04OUT2022 (`2022-002-188`): bloco de 05OUT (feriado) com a
+  "ASSISTÊNCIA AOS FUNERAIS" logo a seguir, e depois o bloco de 06OUT.
+
+O motor reproduz esta estrutura:
+
+1. Os modelos base (`modelo_de_semana.doc`, `modelo_de_quarta.doc`) já trazem o
+   bloco "Para o dia `<dataEscalados>`" por preencher. **Esse bloco serve o
+   primeiro dia** — no modelo de quarta, com a secção dos funerais incluída.
+2. Os blocos dos dias seguintes são inseridos **a seguir, antes do "102."**,
+   pela ordem dos dias. Só os fragmentos que contêm `<dataEscalados>` (como o
+   `modelo_escalas.doc`) contam como bloco de escala.
+3. Com **um só dia**, o documento final é igual ao do fluxo clássico.
+
+Para modelos de outras unidades, sem o título "102.": se o modelo base tiver o
+texto `<fimEscalas>` num parágrafo próprio, os blocos dos dias seguintes entram
+nesse sítio (o parágrafo do marcador é retirado). Sem título nem marcador, vão
+para o fim do documento.
+
+A inserção usa `Range.InsertFile` — não mexe na área de transferência do
+Windows.
+
+## 4. O ficheiro de programa
 
 O programa vive num JSON chamado **`modelar_programa.json` ao lado do
 `SIPOS.exe`** (regra portable, tal como o `settings.txt`). Exemplo completo —
@@ -70,85 +97,108 @@ o programa clássico:
 
 Há uma cópia deste exemplo em `docs/modelar_programa.exemplo.json` — basta
 copiá-la para junto do `SIPOS.exe`, renomear para `modelar_programa.json` e
-ajustar o caminho do `Ficheiro`.
+ajustar o caminho do `Ficheiro`. Normalmente não é preciso: o separador
+Modelar cria-o (capítulo 6).
 
-## 4. Como o SIPOS decide que fluxo usar
+## 5. Como o SIPOS decide que fluxo usar
 
 Ao clicar **Exportar Word**:
 
 1. **Sem** `modelar_programa.json` ao lado do exe → corre o **fluxo clássico**,
-   exatamente como sempre. Zero mudança de comportamento.
-2. **Com** o ficheiro → o programa é validado (nomes vazios/duplicados, docs sem
-   ficheiro, loops vazios → mensagem de erro e aborta) e o **motor Modelar**
-   executa o plano.
+   exatamente como sempre, sem perguntas.
+2. **Com** o ficheiro → o SIPOS mostra os dias que o programa vai gerar (com o
+   nome dos feriados) e pergunta:
+   - **Sim** — exportar com o programa Modelar;
+   - **Não** — exportação clássica (um dia, como sempre);
+   - **Cancelar** — não exportar.
 
-Os **dias selecionados** que alimentam o `LoopDias` vêm de:
+   Antes de abrir o Word, o programa é validado (nomes vazios/duplicados, linhas
+   "Inserir documento" sem ficheiro ou com ficheiro inexistente, loops vazios,
+   programa sem ações ativas → mensagem e não exporta).
+3. Se o ficheiro existir mas estiver **corrompido**, o SIPOS avisa e pergunta se
+   quer continuar com a exportação clássica.
 
-- checkbox **"Ativar data de início e fim" ligada** → todos os dias do intervalo
-  escolhido no calendário;
-- checkbox desligada → regra automática com feriados: a partir do dia seguinte
-  à O.S., todos os dias de descanso consecutivos (fins-de-semana **e feriados
-  nacionais**) até ao primeiro dia útil. Ex.: O.S. de sexta → sáb+dom+seg;
-  O.S. de véspera de feriado → feriado + dia útil seguinte.
+Os **dias** que alimentam o `LoopDias` vêm do separador Dados:
+
+- checkbox **"Ativar data de início e fim" desligada** → regra automática com
+  feriados: a partir do dia seguinte à O.S., todos os dias de descanso
+  consecutivos (fins-de-semana **e feriados nacionais**) até ao primeiro dia
+  útil. Ex.: O.S. de sexta → sáb+dom+seg; O.S. de véspera de feriado → feriado +
+  dia útil seguinte.
+- checkbox **ligada** → selecione **desde o dia da O.S. até ao último dia a
+  cobrir**. O primeiro dia do intervalo é o dia da O.S. (é o que dá a data da
+  O.S. e escolhe o modelo), por isso os dias gerados começam no dia seguinte:
+  sexta→segunda gera sábado, domingo e segunda. Os "Dias de interrupção"
+  mostram os dias entre os dois (sexta→segunda = 2, como a regra do sábado).
 
 O documento base continua a ser o modelo de semana/quarta configurado nas
 Propriedades; os cabeçalhos (`<numOS>`, `<dataOS>`, `<dataOS_abv>`) e a
 numeração de páginas são tratados uma vez, como no fluxo clássico.
 
-## 5. Editar o programa na própria UI (B-1.2.6)
+## 6. Editar o programa no separador Modelar
 
 O separador **Modelar** edita o programa diretamente — não é preciso escrever
 o JSON à mão para o caso comum:
 
-- Cada linha da lista tem um **ComboBox com o tipo de ação** (Inserir
-  documento, Ler escalas do dia, Substituir variáveis, Quebra de página),
-  além do nome, do caminho do ficheiro (📄), do **✓/✗** de ativação (linhas
-  desligadas ficam esbatidas e são saltadas pelo motor) e das setas ▲/▼
-  para ordenar.
-- **💾 Guardar Programa** (menu superior) valida as linhas e grava-as em
-  `modelar_programa.json` como filhos de um "Loop: por cada dia selecionado"
-  — o caso do capítulo 1. **⭯ Recarregar** volta a preencher as linhas a
-  partir do ficheiro gravado.
-- Ao abrir o Modelar, se já existir um `modelar_programa.json` ao lado do
-  exe, as linhas são preenchidas automaticamente a partir dele.
-- O **seletor de modelos** (topo da lista) permite adicionar com ➕ um
-  programa completo ("Exportação clássica") ou uma ação avulsa do tipo
-  escolhido — a primeira linha vazia é reutilizada e os nomes são gerados
-  únicos. As dicas por cima da lista mudam consoante o menu
-  Programar/Ficheiros ativo.
+- Cada linha tem um **ComboBox com o tipo de ação** (Inserir documento, Ler
+  escalas do dia, Substituir variáveis, Quebra de página), o nome, o caminho do
+  ficheiro (📄 abre um diálogo só para documentos Word; cancelar não mexe no
+  caminho), o **✓/✗** de ativação (linhas desligadas ficam esbatidas e são
+  saltadas) e as setas **▲/▼** para ordenar (também dá para arrastar pelo ⋯).
+- O **seletor de modelos** (topo da lista) adiciona com ➕ um programa completo
+  ("Exportação clássica") ou uma ação avulsa do tipo escolhido — a primeira
+  linha vazia é reutilizada e os nomes são gerados únicos. As dicas por cima da
+  lista mudam consoante o menu Programar/Ficheiros ativo.
+- **💾 Guardar Programa** valida as linhas e grava-as em `modelar_programa.json`
+  como filhos de um "Loop: por cada dia selecionado". Linhas completamente
+  vazias (sem nome nem ficheiro) são ignoradas.
+- **⭯ Recarregar** repõe a lista a partir do ficheiro gravado (fica uma linha
+  por ação). Ao abrir o separador, um programa já gravado é carregado sozinho.
 
 Programas mais avançados (vários loops, ações fora do loop) continuam a poder
-ser escritos à mão no JSON — a UI cobre o caso comum de um loop de dias.
+ser escritos à mão no JSON; se um destes estiver carregado, o 💾 avisa antes de
+o substituir pela lista.
 
-## 6. Como testar no Windows (passo a passo)
+## 7. Como testar no Windows (passo a passo)
 
-1. Extrair o zip portátil para uma pasta com permissões de escrita.
+1. Extrair o zip portátil para uma pasta nova com permissões de escrita.
 2. Configurar as Propriedades como habitualmente (Excel das escalas, modelos,
-   pasta de exportação) e gravar.
-3. Criar o programa: ou no separador Modelar (preencher as linhas e
-   💾 Guardar Programa), ou copiando `docs/modelar_programa.exemplo.json`
-   para junto do `SIPOS.exe`, renomeado para `modelar_programa.json` e com o
-   caminho do `modelo_escalas.doc` corrigido.
-4. No separador Dados, escolher um dia — para multi-dia, ligar a checkbox
-   "Ativar data de início e fim" e arrastar um intervalo de 2–3 dias no
-   calendário.
-5. Exportar Word. O resultado deve ter uma tabela de escalas por dia, cada uma
-   com os nomes do respetivo dia.
-6. Verificações úteis: sem o JSON o export volta ao clássico; um JSON com nome
-   duplicado deve mostrar a validação e abortar; o Gestor de Tarefas não deve
-   ficar com WINWORD.EXE órfãos depois de um erro.
+   pasta de exportação, pasta do inspetor) e gravar.
+3. **Fluxo clássico primeiro**: sem nenhum `modelar_programa.json`, escolher um
+   dia no Dados, "Atualizar", e Exportar Word. Deve sair como sempre — e agora
+   com os militares **em adaptação** (estado ADPT) preenchidos, que antes
+   ficavam em branco.
+4. No separador Modelar: seletor → "Programa: Exportação clássica" → ➕. Na
+   linha "Inserir tabela de escalas", 📄 → escolher o `modelo_escalas.doc`.
+   💾 Guardar Programa.
+5. No Dados, escolher uma **sexta-feira** e Exportar Word → na pergunta devem
+   aparecer sábado, domingo e segunda → **Sim**. Resultado esperado: três blocos
+   "Para o dia …" seguidos no ponto 101, cada um com os nomes do seu dia, e o
+   "102." logo a seguir ao terceiro.
+6. Repetir com uma **terça-feira** antes de um feriado à quarta (ex.:
+   04/10 com 05/10 feriado): quarta com os funerais e depois quinta.
+7. Verificações úteis: responder **Não** faz a exportação clássica; um nome
+   duplicado impede o 💾; um ficheiro inexistente impede a exportação com
+   mensagem; o Gestor de Tarefas não deve ficar com WINWORD.EXE órfãos.
 
-## 7. Estado e próximos passos
+## 8. Testes automáticos
+
+A lógica que não depende do Windows (programa, JSON, feriados, dias e a
+colocação dos blocos, sobre um documento simulado com a estrutura dos modelos
+reais) tem testes em `tests/SIPOS.Logic.Tests`. Para correr, na pasta do
+repositório:
+
+```text
+dotnet run --project tests/SIPOS.Logic.Tests
+```
+
+## 9. Estado e próximos passos
 
 | Peça | Estado |
 | --- | --- |
-| B-1.5.1 estrutura do programa + JSON | ✅ implementado e testado (17 testes) |
+| B-1.5.1 estrutura do programa + JSON | ✅ implementado e testado |
 | B-1.5.3 lista de dias (feriados/intervalo) | ✅ implementado e testado |
-| B-1.5.2 motor Word (este branch) | ⚠️ implementado, **por validar no Windows** |
-| B-1.2.6 UI: ComboBox de tipo + guardar/carregar programa (este branch) | ⚠️ implementado, **por validar no Windows** |
-| B-1.2.3 design custom do ComboBox (este branch) | ⚠️ implementado com o `CustomComboBox` do projeto, **por validar no Windows** |
-| B-1.2.7 layout & menu logic (este branch) | ⚠️ implementado (seletor de modelos com ➕, dicas por menu, linhas até 1400px), **por validar no Windows** |
-| B-1.5.4 validação com exemplares reais | ⏳ pendente (depende dos testes acima) |
-
-O formato JSON é estável e validado ao carregar (ficheiro corrompido → o
-SIPOS avisa e usa o fluxo clássico em vez de crashar).
+| B-1.5.2 motor Word | ✅ implementado; colocação dos blocos testada; interop Word **por validar no Windows** |
+| B-1.2.3 / B-1.2.6 / B-1.2.7 UI do Modelar | ✅ implementado, **por validar no Windows** |
+| B-1.5.4 validação com exemplares reais | ⏳ pendente (capítulo 7) |
+| Ação condicional "só às quartas" (funerais noutros dias do loop) | 💡 ideia para uma próxima versão |

@@ -119,16 +119,16 @@
                 string destino = Mediator.fPathOSWord + @"\" + txtBox_ExportDocName.Text + ".doc";
 
                 // B-1.5.2 (opt-in): se existir um programa Modelar gravado ao lado do
-                // SIPOS.exe, a exportação é executada pelo motor Modelar (multi-dia,
-                // substituição por bloco). Sem esse ficheiro, o fluxo clássico corre
-                // exatamente como sempre.
-                ProgramaModelar programa = ProgramaModelar.Carregar(ProgramaModelar.CaminhoPorOmissao());
+                // SIPOS.exe, o utilizador escolhe em cada exportação se usa o motor
+                // Modelar (multi-dia, substituição por bloco) ou o fluxo clássico.
+                // Sem esse ficheiro, o fluxo clássico corre exatamente como sempre.
+                if (!EscolherExportacaoModelar(out ProgramaModelar? programa, out List<DateTime> dias))
+                {
+                    return; // cancelado pelo utilizador
+                }
+
                 if (programa != null)
                 {
-                    List<DateTime> dias = Mediator.rangeAtivo
-                        ? PlaneadorDeDias.DiasDoIntervalo(Mediator.rangeInicio, Mediator.rangeFim)
-                        : PlaneadorDeDias.DiasDeEscala(Mediator.osDay);
-
                     ModelarMotorWord.Executar(programa, dias, modeloBase, destino);
                 }
                 else
@@ -147,6 +147,51 @@
             }
 
             //Word_Processor.CreateWordDocument("", "");
+        }
+
+        // B-1.5.2: decide o fluxo da exportação. Devolve false se o utilizador
+        // cancelar; programa fica null quando o fluxo é o clássico.
+        private static bool EscolherExportacaoModelar(out ProgramaModelar? programa, out List<DateTime> dias)
+        {
+            programa = null;
+            dias = new List<DateTime>();
+
+            string caminhoPrograma = ProgramaModelar.CaminhoPorOmissao();
+            if (!File.Exists(caminhoPrograma))
+            {
+                return true; // sem programa: fluxo clássico, sem perguntas
+            }
+
+            ProgramaModelar? carregado = ProgramaModelar.Carregar(caminhoPrograma);
+            if (carregado == null)
+            {
+                DialogResult ilegivel = MessageBox.Show(
+                    $"O ficheiro do programa Modelar existe mas não foi possível lê-lo (JSON inválido ou corrompido):\r\n{caminhoPrograma}\r\n\r\n" +
+                    "Continuar com a exportação clássica (um dia, como sempre)?",
+                    "PROGRAMA MODELAR ILEGÍVEL!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                return ilegivel == DialogResult.Yes;
+            }
+
+            List<DateTime> diasDoPrograma = PlaneadorDeDias.DiasParaExportacao(Mediator.osDay, Mediator.rangeAtivo, Mediator.rangeInicio, Mediator.rangeFim);
+
+            DialogResult escolha = MessageBox.Show(
+                $"Existe um programa Modelar gravado (\"{carregado.Nome}\").\r\n\r\n" +
+                $"Dias que o programa vai gerar:\r\n{PlaneadorDeDias.DescreverDias(diasDoPrograma)}\r\n\r\n" +
+                "Sim  —  exportar com o programa Modelar\r\n" +
+                "Não  —  exportação clássica (um dia, como sempre)\r\n" +
+                "Cancelar  —  não exportar",
+                "EXPORTAÇÃO: PROGRAMA MODELAR", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+
+            if (escolha == DialogResult.Cancel)
+            {
+                return false;
+            }
+            if (escolha == DialogResult.Yes)
+            {
+                programa = carregado;
+                dias = diasDoPrograma;
+            }
+            return true;
         }
         public void doesExportFilesExist()
         {

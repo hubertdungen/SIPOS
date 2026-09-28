@@ -61,7 +61,10 @@ namespace SIPOS.Forms
             InitializeComponent();
             RepositionRows();
 
-
+            // B-1.2.4/B-1.2.6: completar a linha-modelo ANTES do primeiro clone, para
+            // que todas as linhas (incluindo a primeira, e as que se clonam dela com
+            // ➕) tenham as setas ▲▼ e o ComboBox do tipo de ação.
+            PrepararLinhaModelo(rowPanel_WordDoc);
 
             Panel initialRow = CloneRow(rowPanel_WordDoc);
             // Add the cloned row to the main panel
@@ -87,22 +90,24 @@ namespace SIPOS.Forms
 
         }
 
+        // Ligado no Designer (a ligação tinha-se perdido na regeneração do Designer
+        // da v B-1.2.2, e tudo o que estava aqui nunca corria).
         private void FormModelar_Load(object sender, EventArgs e)
         {
-            // B-1.2.4/B-1.2.6: o botão 📄 estava ancorado (não docked) e podia ficar
-            // por baixo dos botões docked à direita; passa a docked como os restantes.
-            btnOpenWFile.Dock = DockStyle.Right;
-
-            // B-1.2.7: com mais controlos por linha (✓ ⋯ nome caminho combo 📄 ▲▼ ➖➕),
-            // deixar as linhas crescer além dos 800px em janelas largas.
-            rowPanel_WordDoc.MaximumSize = new Size(1400, 50);
-
-            AddOrderArrowButtons(rowPanel_WordDoc);
-            AddTipoAcaoComboBox(rowPanel_WordDoc);
             AddProgramaButtons();
             SetupTemplateSelector();
-            CarregarProgramaParaLinhas();
+            CarregarProgramaParaLinhas(false);
             RefreshListLayout();
+        }
+
+        private void PrepararLinhaModelo(Panel linha)
+        {
+            // O botão 📄 estava ancorado (não docked) e podia ficar por baixo dos
+            // botões docked à direita; passa a docked como os restantes.
+            btnOpenWFile.Dock = DockStyle.Right;
+
+            AddOrderArrowButtons(linha);
+            AddTipoAcaoComboBox(linha);
         }
 
         // ------------------------------------------------------------------
@@ -113,11 +118,12 @@ namespace SIPOS.Forms
 
         private const string hintProgramar =
             "Modelos: escolha um programa completo ou uma ação no seletor e clique ➕ para adicionar à lista. " +
-            "Ordene com ▲▼ ou arrastando ⋯, ative/desative com ✓, e grave com 💾 Guardar Programa para a exportação passar a usar o programa.";
+            "Ordene com ▲▼ ou arrastando ⋯, ative/desative com ✓, e grave com 💾 Guardar Programa. " +
+            "Ao exportar, o SIPOS pergunta se usa o programa ou a exportação clássica.";
 
         private const string hintFicheiros =
             "Ficheiros: cada linha \"Inserir documento\" aponta para um ficheiro Word (use 📄 para escolher). " +
-            "Na exportação, o conteúdo do ficheiro é copiado e colado no documento final uma vez por cada dia selecionado.";
+            "Na exportação, o ficheiro é inserido no ponto 101 uma vez por cada dia selecionado; o primeiro dia usa a tabela que o modelo base já traz.";
 
         private void SetupTemplateSelector()
         {
@@ -135,7 +141,7 @@ namespace SIPOS.Forms
             richtxtBox_ProgramaHints.Text = hintProgramar;
         }
 
-        private void BtnAddtoList_Click(object sender, EventArgs e)
+        private void BtnAddtoList_Click(object? sender, EventArgs e)
         {
             int idx = cmbBoxTemplateName.SelectedIndex;
 
@@ -252,19 +258,49 @@ namespace SIPOS.Forms
             return cmb;
         }
 
-        private SIPOS.Controls.CustomComboBox GetRowTipoCombo(Control row)
+        // Controlos de uma linha, incluindo os que estão dentro de sub-painéis: o
+        // nome (txtNameWBox) e o ✓ (btnChkWRowActive) vivem no pnlTextNameW, por
+        // isso procurar só nos filhos diretos da linha não os encontrava. Não
+        // entra nos controlos internos do CustomComboBox.
+        private static IEnumerable<Control> ControlosDaLinha(Control? row)
         {
-            return (row as Panel)?.Controls.OfType<SIPOS.Controls.CustomComboBox>().FirstOrDefault(cb => cb.Name.Contains("cmbTipoAcao"));
+            if (row == null) { yield break; }
+
+            foreach (Control c in row.Controls)
+            {
+                yield return c;
+                if (c is SIPOS.Controls.CustomComboBox) { continue; }
+                foreach (Control d in ControlosDaLinha(c))
+                {
+                    yield return d;
+                }
+            }
         }
 
-        private Button GetRowChkButton(Control row)
+        // Sobe da origem até à linha da lista (o painel filho do mainWordFlowPanel).
+        private Control? LinhaDe(Control controlo)
         {
-            return (row as Panel)?.Controls.OfType<Button>().FirstOrDefault(b => b.Name.Contains("btnChkWRowActive"));
+            Control linha = controlo;
+            while (linha.Parent != null && linha.Parent != mainWordFlowPanel && !(linha.Parent is Form))
+            {
+                linha = linha.Parent;
+            }
+            return linha;
         }
 
-        private TextBox GetRowFileTextBox(Control row)
+        private SIPOS.Controls.CustomComboBox? GetRowTipoCombo(Control row)
         {
-            return (row as Panel)?.Controls.OfType<TextBox>().FirstOrDefault(tb => tb.Name.Contains("txtDirFicheiroW"));
+            return ControlosDaLinha(row).OfType<SIPOS.Controls.CustomComboBox>().FirstOrDefault(cb => cb.Name.Contains("cmbTipoAcao"));
+        }
+
+        private Button? GetRowChkButton(Control row)
+        {
+            return ControlosDaLinha(row).OfType<Button>().FirstOrDefault(b => b.Name.Contains("btnChkWRowActive"));
+        }
+
+        private TextBox? GetRowFileTextBox(Control row)
+        {
+            return ControlosDaLinha(row).OfType<TextBox>().FirstOrDefault(tb => tb.Name.Contains("txtDirFicheiroW"));
         }
 
         private List<Panel> GetDocumentRows()
@@ -281,9 +317,13 @@ namespace SIPOS.Forms
             panelMenu.Controls.Add(btnGuardar);
 
             Button btnRecarregar = CreateMenuButton("btnRecarregarPrograma", "⭯ Recarregar", 130, Color.Gainsboro);
-            btnRecarregar.Click += (s, args) => { CarregarProgramaParaLinhas(); RefreshListLayout(); };
+            btnRecarregar.Click += (s, args) => { CarregarProgramaParaLinhas(true); RefreshListLayout(); };
             panelMenu.Controls.Add(btnRecarregar);
         }
+
+        // true quando o programa carregado tem uma estrutura que a lista não
+        // representa (escrito à mão no JSON): gravar a lista substitui-o.
+        private bool programaAvancadoCarregado = false;
 
         private Button CreateMenuButton(string name, string text, int width, Color foreColor)
         {
@@ -315,16 +355,19 @@ namespace SIPOS.Forms
             foreach (Panel row in GetDocumentRows())
             {
                 var cmb = GetRowTipoCombo(row);
-                TextBox nameBox = GetRowNameTextBox(row);
-                TextBox fileBox = GetRowFileTextBox(row);
-                Button chk = GetRowChkButton(row);
+                string nome = (GetRowNameTextBox(row)?.Text ?? "").Trim();
+                string ficheiro = (GetRowFileTextBox(row)?.Text ?? "").Trim();
+                Button? chk = GetRowChkButton(row);
+
+                // Linhas completamente vazias (sem nome nem ficheiro) não são ações
+                if (nome.Length == 0 && ficheiro.Length == 0) { continue; }
 
                 int idx = Math.Max(0, cmb?.SelectedIndex ?? 0);
                 loop.Filhos.Add(new AcaoModelar
                 {
                     Tipo = tiposDeAcaoPorIndice[Math.Min(idx, tiposDeAcaoPorIndice.Length - 1)],
-                    Nome = (nameBox?.Text ?? "").Trim(),
-                    Ficheiro = (fileBox?.Text ?? "").Trim(),
+                    Nome = nome,
+                    Ficheiro = ficheiro,
                     Ativa = chk == null || chk.Text == "✓"
                 });
             }
@@ -343,10 +386,21 @@ namespace SIPOS.Forms
                 return;
             }
 
+            if (programaAvancadoCarregado)
+            {
+                DialogResult substituir = MessageBox.Show(
+                    "O programa gravado tem uma estrutura avançada (escrita à mão no JSON) que a lista não mostra por completo.\r\n\r\n" +
+                    "Gravar a lista vai substituí-lo por um único loop \"por cada dia selecionado\". Continuar?",
+                    "SUBSTITUIR PROGRAMA AVANÇADO?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
+                if (substituir != DialogResult.Yes) { return; }
+            }
+
             try
             {
                 programa.Guardar(ProgramaModelar.CaminhoPorOmissao());
-                MessageBox.Show($"Programa gravado em:\r\n{ProgramaModelar.CaminhoPorOmissao()}\r\n\r\nA próxima exportação Word será executada por este programa. Para voltar ao fluxo clássico, apague o ficheiro.",
+                programaAvancadoCarregado = false;
+                MessageBox.Show($"Programa gravado em:\r\n{ProgramaModelar.CaminhoPorOmissao()}\r\n\r\n" +
+                    "Ao exportar Word, o SIPOS vai perguntar se usa este programa ou a exportação clássica. Para deixar de o usar, apague o ficheiro.",
                     "PROGRAMA GRAVADO", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
@@ -355,11 +409,23 @@ namespace SIPOS.Forms
             }
         }
 
-        // Preenche as linhas da lista a partir do modelar_programa.json (se existir).
-        private void CarregarProgramaParaLinhas()
+        // Preenche as linhas da lista a partir do modelar_programa.json (se existir),
+        // deixando exatamente uma linha por ação.
+        private void CarregarProgramaParaLinhas(bool avisarSeNaoExistir)
         {
-            ProgramaModelar programa = ProgramaModelar.Carregar(ProgramaModelar.CaminhoPorOmissao());
-            if (programa == null) { return; }
+            string caminho = ProgramaModelar.CaminhoPorOmissao();
+            ProgramaModelar? programa = ProgramaModelar.Carregar(caminho);
+            if (programa == null)
+            {
+                if (avisarSeNaoExistir)
+                {
+                    string motivo = File.Exists(caminho) ? "O ficheiro existe mas não foi possível lê-lo (JSON inválido ou corrompido)." : "Ainda não há nenhum programa gravado.";
+                    MessageBox.Show($"{motivo}\r\n{caminho}", "RECARREGAR PROGRAMA", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                return;
+            }
+
+            programaAvancadoCarregado = !programa.EhEditavelNaLista();
 
             // As linhas editam os filhos do primeiro LoopDias (o caso comum);
             // se não houver loop, usa as ações de topo.
@@ -374,6 +440,13 @@ namespace SIPOS.Forms
                 Panel novaLinha = CloneRow(rowPanel_WordDoc);
                 mainWordFlowPanel.Controls.Add(novaLinha);
                 rows.Add(novaLinha);
+            }
+
+            // Retirar as linhas a mais (ex.: ⭯ Recarregar depois de acrescentar linhas)
+            for (int i = rows.Count - 1; i >= acoes.Count; i--)
+            {
+                mainWordFlowPanel.Controls.Remove(rows[i]);
+                rows[i].Dispose();
             }
 
             for (int i = 0; i < acoes.Count; i++)
@@ -391,13 +464,13 @@ namespace SIPOS.Forms
                 cmb.SelectedIndex = idx >= 0 ? idx : 0;
             }
 
-            TextBox nameBox = GetRowNameTextBox(row);
+            TextBox? nameBox = GetRowNameTextBox(row);
             if (nameBox != null) { nameBox.Text = acao.Nome; }
 
-            TextBox fileBox = GetRowFileTextBox(row);
+            TextBox? fileBox = GetRowFileTextBox(row);
             if (fileBox != null) { fileBox.Text = acao.Ficheiro; }
 
-            Button chk = GetRowChkButton(row);
+            Button? chk = GetRowChkButton(row);
             if (chk != null) { SwitchRowActivationState(chk, acao.Ativa); }
         }
 
@@ -489,10 +562,17 @@ namespace SIPOS.Forms
         // Resize the menu buttons
         private void panelMenu_Resize(object sender, EventArgs e)
         {
+            // Os separadores PROGRAMAS/FICHEIROS repartem a largura que sobra depois
+            // dos botões de ação (💾 Guardar / ⭯ Recarregar), senão ficavam por cima deles
+            int larguraAcoes = panelMenu.Controls.OfType<Button>()
+                .Where(b => b != btnProgramas && b != btnFicheiros && b.Visible)
+                .Sum(b => b.Width);
+            int larguraSeparadores = Math.Max(0, panelMenu.Width - larguraAcoes);
+
             if (isProgramMenu)
             {
-                btnProgramas.Size = new Size((int)(panelMenu.Width * 0.8), btnProgramas.Height);
-                btnFicheiros.Size = new Size((int)(panelMenu.Width * 0.21), (int)(btnFicheiros.Height * 0.85));
+                btnProgramas.Size = new Size((int)(larguraSeparadores * 0.8), btnProgramas.Height);
+                btnFicheiros.Size = new Size((int)(larguraSeparadores * 0.21), (int)(btnFicheiros.Height * 0.85));
                 btnProgramas.Font = new Font(btnProgramas.Font, FontStyle.Bold | FontStyle.Italic);
                 btnFicheiros.Font = new Font(btnFicheiros.Font, FontStyle.Italic);
                 btnProgramas.BackColor = Color.DeepSkyBlue;
@@ -504,8 +584,8 @@ namespace SIPOS.Forms
             }
             else
             {
-                btnProgramas.Size = new Size((int)(panelMenu.Width * 0.21), (int)(btnProgramas.Height * 0.85));
-                btnFicheiros.Size = new Size((int)(panelMenu.Width * 0.8), btnFicheiros.Height);
+                btnProgramas.Size = new Size((int)(larguraSeparadores * 0.21), (int)(btnProgramas.Height * 0.85));
+                btnFicheiros.Size = new Size((int)(larguraSeparadores * 0.8), btnFicheiros.Height);
                 btnFicheiros.Font = new Font(btnFicheiros.Font, FontStyle.Bold | FontStyle.Italic);
                 btnProgramas.Font = new Font(btnProgramas.Font, FontStyle.Italic);
                 btnProgramas.BackColor = Color.FromArgb(40, 30, 40);
@@ -550,15 +630,15 @@ namespace SIPOS.Forms
         // B-1.2.5: VALIDAÇÃO DE NOMES ANTES DE MOVER
         // Uma linha só pode ser arrastada/reordenada se o nome do documento não
         // estiver vazio nem for igual (ignorando maiúsculas e espaços) ao de outra linha.
-        private TextBox GetRowNameTextBox(Control row)
+        private TextBox? GetRowNameTextBox(Control row)
         {
-            return (row as Panel)?.Controls.OfType<TextBox>().FirstOrDefault(tb => tb.Name.Contains("txtNameWBox"));
+            return ControlosDaLinha(row).OfType<TextBox>().FirstOrDefault(tb => tb.Name.Contains("txtNameWBox"));
         }
 
         private bool CanMoveRow(Control row, out string blockReason)
         {
             blockReason = "";
-            TextBox nameBox = GetRowNameTextBox(row);
+            TextBox? nameBox = GetRowNameTextBox(row);
             if (nameBox == null)
             {
                 return true; // linha sem caixa de nome (não é uma linha de documento): não bloquear
@@ -574,7 +654,7 @@ namespace SIPOS.Forms
             foreach (Control other in mainWordFlowPanel.Controls)
             {
                 if (other == row) { continue; }
-                TextBox otherBox = GetRowNameTextBox(other);
+                TextBox? otherBox = GetRowNameTextBox(other);
                 string otherName = (otherBox?.Text ?? "").Trim();
                 if (otherName.Length > 0 && string.Equals(name, otherName, StringComparison.OrdinalIgnoreCase))
                 {
@@ -590,7 +670,7 @@ namespace SIPOS.Forms
         {
             System.Media.SystemSounds.Beep.Play();
 
-            TextBox nameBox = GetRowNameTextBox(row);
+            TextBox? nameBox = GetRowNameTextBox(row);
             if (nameBox == null) { return; }
 
             Color originalColor = nameBox.BackColor;
@@ -1059,35 +1139,35 @@ namespace SIPOS.Forms
         }
 
         // IF OPEN FILE CLICK
+        // B-1.2.6: diálogo próprio (filtro Word) que só altera o caminho se o
+        // utilizador escolher um ficheiro. Antes usava o Mediator.openFile(), e
+        // cancelar deixava na caixa o último caminho escolhido noutro diálogo
+        // (ex.: o Excel das escalas). As linhas clonadas chamam isto com a linha
+        // como sender; o botão do Designer, com o próprio botão.
         private void btnOpenWFile_Click(object sender, EventArgs e)
         {
-            Control currentRow = ((Control)sender);
-            Control parentRow = currentRow.Parent;
-            Mediator.openFile();
+            Control? linha = sender is Button botao ? LinhaDe(botao) : sender as Control;
+            TextBox? fileBox = linha == null ? null : GetRowFileTextBox(linha);
+            if (fileBox == null) { return; }
 
-
-            Debug.WriteLine($"Current Row Type: {currentRow.GetType().Name}, CurrentRow Name: {currentRow.Name}");
-
-
-            foreach (Control control in currentRow.Controls)
+            using (var dialog = new OpenFileDialog
             {
-                Debug.WriteLine($"Control Type: {control.GetType().Name}, Control Name: {control.Name}");
-            }
-
-            foreach (Control control in currentRow.Controls)
+                Title = "Escolher o documento Word desta linha",
+                Filter = "Documentos Word (*.doc;*.docx)|*.doc;*.docx|Todos os ficheiros (*.*)|*.*",
+                RestoreDirectory = true
+            })
             {
-                if (control is TextBox txtBox)  // Check if the control is a TextBox
+                if (File.Exists(fileBox.Text))
                 {
-                    if (txtBox.Name.Contains("txtDirFicheiroW") || txtBox.PlaceholderText.Contains("Caminho para o ficheiro word"))
-                    {
-                        txtBox.Text = Mediator.filePath;
+                    dialog.InitialDirectory = Path.GetDirectoryName(fileBox.Text);
+                    dialog.FileName = Path.GetFileName(fileBox.Text);
+                }
 
-                        Debug.WriteLine("Current Row: " + currentRow.Name);
-                        Debug.WriteLine("Mediator.filePath: " + Mediator.filePath);
-                    }
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    fileBox.Text = dialog.FileName;
                 }
             }
-
         }
 
         // ACTIVE CHCK LIST BUTTON CLICK
@@ -1141,10 +1221,11 @@ namespace SIPOS.Forms
             chkButtonState.Text = isActive ? "✓" : "✗";
             chkButtonState.ForeColor = isActive ? Color.MediumSpringGreen : Color.DimGray;
 
-            Control row = chkButtonState.Parent;
+            // O ✓ vive no sub-painel do nome: esbater a linha inteira (nome, caminho e tipo)
+            Control? row = LinhaDe(chkButtonState);
             if (row == null) { return; }
 
-            foreach (TextBox txt in row.Controls.OfType<TextBox>())
+            foreach (TextBox txt in ControlosDaLinha(row).OfType<TextBox>())
             {
                 txt.ForeColor = isActive ? Color.Gainsboro : Color.DimGray;
             }
