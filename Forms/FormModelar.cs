@@ -64,7 +64,15 @@ namespace SIPOS.Forms
             // B-1.2.4/B-1.2.6: completar a linha-modelo ANTES do primeiro clone, para
             // que todas as linhas (incluindo a primeira, e as que se clonam dela com
             // ➕) tenham as setas ▲▼ e o ComboBox do tipo de ação.
-            PrepararLinhaModelo(rowPanel_WordDoc);
+            try
+            {
+                PrepararLinhaModelo(rowPanel_WordDoc);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Não foi possível preparar as linhas do separador Modelar (setas e tipo de ação):\r\n{ex.Message}",
+                    "MODELAR", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
 
             Panel initialRow = CloneRow(rowPanel_WordDoc);
             // Add the cloned row to the main panel
@@ -94,9 +102,18 @@ namespace SIPOS.Forms
         // da v B-1.2.2, e tudo o que estava aqui nunca corria).
         private void FormModelar_Load(object sender, EventArgs e)
         {
-            AddProgramaButtons();
-            SetupTemplateSelector();
-            CarregarProgramaParaLinhas(false);
+            try
+            {
+                AddProgramaButtons();
+                SetupTemplateSelector();
+                CarregarProgramaParaLinhas(false);
+            }
+            catch (Exception ex)
+            {
+                // Uma falha aqui não deve impedir o separador de abrir
+                MessageBox.Show($"Não foi possível preparar todas as funções do separador Modelar:\r\n{ex.Message}",
+                    "MODELAR", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
             RefreshListLayout();
         }
 

@@ -335,7 +335,7 @@ Merged from PR #10 after the review described in the Modelar concept section ("R
 Artifact:
 
 - Artifact: `SIPOS-Beta-1.5.2-win-x64-portable.zip` (self-contained win-x64 single file, .NET runtime 10.0.12)
-- SHA-256: `6A8FEFAB471EC2A0A3F5E063E2DE2EB126440300CBCFC11F5036D1BA8DECE6CA`
+- SHA-256: `330C0668D7A70ED1A30F1CCDE3D9DE3DBF41AAC7965491EC27B9EB212E9FE59B`
 - Published in-repo under `dist/` (replaces the Beta-1.5.1 zip; earlier builds stay reachable in the git history).
 
 ## Branch cleanup (2026-07-09)
