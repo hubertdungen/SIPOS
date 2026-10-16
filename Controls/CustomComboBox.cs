@@ -207,6 +207,14 @@ namespace SIPOS.Controls
         }
 
 
+        // A lista nativa (que dá a largura do dropdown) acompanha o tamanho do controlo;
+        // antes ficava com a largura inicial de 200px e cortava os itens mais longos.
+        protected override void OnResize(EventArgs e)
+        {
+            base.OnResize(e);
+            if (cmbList != null && lblText != null) { AdjustComboBoxDimensions(); }
+        }
+
         //Private methods
         private void AdjustComboBoxDimensions()
         {

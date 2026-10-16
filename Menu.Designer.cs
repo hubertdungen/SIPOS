@@ -985,6 +985,7 @@
             lbl_DesignioSIPOS.Size = new Size(13, 18);
             lbl_DesignioSIPOS.TabIndex = 11;
             lbl_DesignioSIPOS.Text = "/";
+            lbl_DesignioSIPOS.Visible = false;
             // 
             // basic_ToolTip
             // 

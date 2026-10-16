@@ -48,7 +48,7 @@
             this.panelWordMenuSelector = new System.Windows.Forms.Panel();
             this.richtxtBox_ProgramaHints = new System.Windows.Forms.RichTextBox();
             this.btnAddtoList = new System.Windows.Forms.Button();
-            this.cmbBoxTemplateName = new System.Windows.Forms.ComboBox();
+            this.cmbBoxTemplateName = new SIPOS.Controls.CustomComboBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.pnl_spacer = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -311,19 +311,21 @@
             this.panelWordMenuSelector.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelWordMenuSelector.Location = new System.Drawing.Point(0, 66);
             this.panelWordMenuSelector.Name = "panelWordMenuSelector";
-            this.panelWordMenuSelector.Size = new System.Drawing.Size(853, 78);
+            this.panelWordMenuSelector.Size = new System.Drawing.Size(853, 104);
             this.panelWordMenuSelector.TabIndex = 5;
             // 
             // richtxtBox_ProgramaHints
             // 
+            this.richtxtBox_ProgramaHints.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.richtxtBox_ProgramaHints.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(20)))), ((int)(((byte)(25)))));
             this.richtxtBox_ProgramaHints.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.richtxtBox_ProgramaHints.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.richtxtBox_ProgramaHints.ForeColor = System.Drawing.Color.PaleVioletRed;
-            this.richtxtBox_ProgramaHints.Location = new System.Drawing.Point(20, 12);
+            this.richtxtBox_ProgramaHints.Location = new System.Drawing.Point(20, 8);
             this.richtxtBox_ProgramaHints.Name = "richtxtBox_ProgramaHints";
             this.richtxtBox_ProgramaHints.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
-            this.richtxtBox_ProgramaHints.Size = new System.Drawing.Size(339, 58);
+            this.richtxtBox_ProgramaHints.Size = new System.Drawing.Size(359, 90);
             this.richtxtBox_ProgramaHints.TabIndex = 0;
             this.richtxtBox_ProgramaHints.Text = "Aqui encontra várias dicas sobre as partes da costumização de programas.";
             // 
@@ -334,7 +336,7 @@
             this.btnAddtoList.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAddtoList.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btnAddtoList.ForeColor = System.Drawing.Color.MediumSpringGreen;
-            this.btnAddtoList.Location = new System.Drawing.Point(769, 23);
+            this.btnAddtoList.Location = new System.Drawing.Point(769, 36);
             this.btnAddtoList.Margin = new System.Windows.Forms.Padding(3, 5, 3, 3);
             this.btnAddtoList.Name = "btnAddtoList";
             this.btnAddtoList.Size = new System.Drawing.Size(69, 32);
@@ -345,16 +347,18 @@
             // 
             // cmbBoxTemplateName
             // 
-            this.cmbBoxTemplateName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.cmbBoxTemplateName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.cmbBoxTemplateName.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(0)))), ((int)(((byte)(15)))));
-            this.cmbBoxTemplateName.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.cmbBoxTemplateName.Font = new System.Drawing.Font("Century Gothic", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.cmbBoxTemplateName.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(30)))), ((int)(((byte)(40)))));
+            this.cmbBoxTemplateName.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.cmbBoxTemplateName.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.cmbBoxTemplateName.ForeColor = System.Drawing.Color.PaleVioletRed;
-            this.cmbBoxTemplateName.FormattingEnabled = true;
-            this.cmbBoxTemplateName.Location = new System.Drawing.Point(379, 23);
+            this.cmbBoxTemplateName.IconColor = System.Drawing.Color.PaleVioletRed;
+            this.cmbBoxTemplateName.ListBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(26)))), ((int)(((byte)(45)))));
+            this.cmbBoxTemplateName.ListTextColor = System.Drawing.Color.Gainsboro;
+            this.cmbBoxTemplateName.Location = new System.Drawing.Point(399, 36);
             this.cmbBoxTemplateName.Name = "cmbBoxTemplateName";
-            this.cmbBoxTemplateName.Size = new System.Drawing.Size(374, 32);
+            this.cmbBoxTemplateName.Size = new System.Drawing.Size(360, 32);
             this.cmbBoxTemplateName.TabIndex = 0;
             this.toolTip1.SetToolTip(this.cmbBoxTemplateName, "Seleccionar lista ou inserir nome da lista.");
             // 
@@ -421,7 +425,7 @@
         private Panel panelMenu;
         private Panel panelWordMenuSelector;
         private Button btnChkWRowActive;
-        private ComboBox cmbBoxTemplateName;
+        private SIPOS.Controls.CustomComboBox cmbBoxTemplateName;
         private Button btnAddtoList;
         private Button btnFicheiros;
         private Button btnProgramas;

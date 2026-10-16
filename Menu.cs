@@ -158,10 +158,9 @@ namespace SIPOS
                 currentBtn = (IconButton)senderBtn;
                 currentBtn.BackColor = Color.FromArgb(79, 49, 79);
                 currentBtn.ForeColor = color;
-                currentBtn.TextAlign = ContentAlignment.MiddleCenter;
+                // Ícone e texto ficam alinhados à esquerda como nos itens inativos;
+                // o item ativo distingue-se pela cor, pelo fundo e pela barra lateral.
                 currentBtn.IconColor = color;
-                currentBtn.TextImageRelation = TextImageRelation.TextBeforeImage;
-                currentBtn.ImageAlign = ContentAlignment.MiddleRight;
                 //Left border button
                 leftBorderBtn.BackColor = color;
                 leftBorderBtn.Location = new Point(0, currentBtn.Location.Y);

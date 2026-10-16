@@ -1,4 +1,5 @@
 ﻿using LinqList;
+using System.Runtime.InteropServices;
 
 namespace SIPOS.Forms
 {
@@ -24,7 +25,154 @@ namespace SIPOS.Forms
             monthCalendar.SelectionStart = Mediator.osDay;
             numUpDow_diasIntp.Value = Mediator.plusDayIntrup;
             textBox_Output.Text = EscalasEngine.outputInitialText;
+            AplicarTemaEscuro();
             AddRangeSelectionCheckBox();
+        }
+
+        // ---------- TEMA ESCURO DOS CONTROLOS NATIVOS ----------
+        // MonthCalendar, ProgressBar e a barra de deslocamento da TextBox são desenhados
+        // pelo Windows (claros) e ignoravam as cores do formulário.
+        [DllImport("uxtheme.dll", CharSet = CharSet.Unicode)]
+        private static extern int SetWindowTheme(IntPtr hWnd, string? pszSubAppName, string? pszSubIdList);
+
+        [DllImport("user32.dll")]
+        private static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam);
+        private const int MCM_SETCOLOR = 0x100A;
+        private const int MCSC_BACKGROUND = 0;
+
+        private static readonly Color corPainel = Color.FromArgb(35, 26, 45);
+        private static readonly Color corContorno = Color.FromArgb(79, 49, 79);
+
+        // Aplica já e volta a aplicar se o controlo recriar o handle.
+        // tema "" = sem visual styles (o controlo passa a usar BackColor/ForeColor).
+        private static void TemaNativo(Control controlo, string tema)
+        {
+            string? lista = tema.Length == 0 ? "" : null;
+            controlo.HandleCreated += (s, e) => SetWindowTheme(controlo.Handle, tema, lista);
+            SetWindowTheme(controlo.Handle, tema, lista);
+        }
+
+        private SetasCalendario? setasCalendario;
+
+        // Sem visual styles, as setas de mudar de mês são botões cinzentos clássicos que
+        // não aceitam cores; são redesenhadas por cima, no tom do título. Só pintura:
+        // os cliques continuam a ir para o controlo nativo.
+        private sealed class SetasCalendario : NativeWindow
+        {
+            private const int WM_PAINT = 0x000F, WM_TIMER = 0x0113, WM_LBUTTONDOWN = 0x0201, WM_LBUTTONUP = 0x0202, WM_CAPTURECHANGED = 0x0215;
+            private const int MCM_GETCALENDARGRIDINFO = 0x1018, MCGIP_NEXT = 1, MCGIP_PREV = 2, MCGIF_RECT = 2;
+            private readonly MonthCalendar cal;
+
+            [StructLayout(LayoutKind.Sequential)]
+            private struct MCGRIDINFO
+            {
+                public int cbSize, dwPart, dwFlags, iCalendar, iRow, iCol, bSelected;
+                public int st0, st1, st2, st3, st4, st5, st6, st7; // stStart e stEnd (2 × SYSTEMTIME)
+                public int left, top, right, bottom;
+                public IntPtr pszName, cchName;
+            }
+
+            [DllImport("user32.dll")]
+            private static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wParam, ref MCGRIDINFO lParam);
+
+            public SetasCalendario(MonthCalendar calendario)
+            {
+                cal = calendario;
+                cal.HandleCreated += (s, e) => AssignHandle(cal.Handle);
+                cal.HandleDestroyed += (s, e) => ReleaseHandle();
+                if (cal.IsHandleCreated) { AssignHandle(cal.Handle); }
+            }
+
+            protected override void WndProc(ref Message m)
+            {
+                base.WndProc(ref m);
+                if (m.Msg is WM_PAINT or WM_TIMER or WM_LBUTTONDOWN or WM_LBUTTONUP or WM_CAPTURECHANGED) { Pintar(); }
+            }
+
+            private void Pintar()
+            {
+                using Graphics g = Graphics.FromHwnd(Handle);
+                g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+                using var fundo = new SolidBrush(cal.TitleBackColor);
+                using var seta = new SolidBrush(cal.TitleForeColor);
+                foreach (int parte in new[] { MCGIP_PREV, MCGIP_NEXT })
+                {
+                    var info = new MCGRIDINFO { cbSize = Marshal.SizeOf<MCGRIDINFO>(), dwPart = parte, dwFlags = MCGIF_RECT };
+                    if (SendMessage(Handle, MCM_GETCALENDARGRIDINFO, IntPtr.Zero, ref info) == IntPtr.Zero) { continue; }
+                    Rectangle r = Rectangle.FromLTRB(info.left, info.top, info.right, info.bottom);
+                    if (r.Width <= 0 || r.Height <= 0) { continue; }
+
+                    g.FillRectangle(fundo, Rectangle.Inflate(r, 2, 2)); // inclui o relevo 3D do botão
+                    float cx = r.Left + r.Width / 2f, cy = r.Top + r.Height / 2f;
+                    PointF[] triangulo = parte == MCGIP_PREV
+                        ? new[] { new PointF(cx + 2.5f, cy - 5f), new PointF(cx + 2.5f, cy + 5f), new PointF(cx - 3.5f, cy) }
+                        : new[] { new PointF(cx - 2.5f, cy - 5f), new PointF(cx - 2.5f, cy + 5f), new PointF(cx + 3.5f, cy) };
+                    g.FillPolygon(seta, triangulo);
+                }
+            }
+        }
+
+        // MCSC_BACKGROUND: a margem à volta do mês, que o WinForms não expõe (ficava branca).
+        private void MargemCalendario()
+        {
+            SendMessage(monthCalendar.Handle, MCM_SETCOLOR, (IntPtr)MCSC_BACKGROUND, (IntPtr)ColorTranslator.ToWin32(corPainel));
+        }
+
+        private void AplicarTemaEscuro()
+        {
+            // Calendário escuro: roxo no título, nos dias da semana e na seleção, ciano no
+            // texto do título. O retângulo azul do "hoje" (cor do sistema) destoava do tema;
+            // o rodapé "Hoje: dd/mm/aaaa" mantém-se.
+            monthCalendar.ShowTodayCircle = false;
+            TemaNativo(monthCalendar, "");
+            monthCalendar.HandleCreated += (s, e) => MargemCalendario();
+            MargemCalendario();
+            monthCalendar.BackColor = corPainel;
+            monthCalendar.ForeColor = Color.Gainsboro;
+            monthCalendar.TitleBackColor = Color.FromArgb(125, 80, 140);
+            monthCalendar.TitleForeColor = Color.Cyan;
+            monthCalendar.TrailingForeColor = Color.FromArgb(105, 90, 115);
+            setasCalendario = new SetasCalendario(monthCalendar);
+
+            // Sem visual styles o calendário fica mais alto: recalcular o tamanho e descer
+            // o REFRESH, a barra e os "Dias de interrupção" na mesma medida.
+            monthCalendar.Height += 1;
+            int deslocamento = monthCalendar.Bottom + 1 - btn_refresh.Top;
+            if (deslocamento > 0)
+            {
+                foreach (Control? c in new Control?[] { btn_refresh, prg_Bar, numUpDow_diasIntp, Controls["lbl_numUpDownDayIntrup"] })
+                {
+                    if (c != null) { c.Top += deslocamento; }
+                }
+            }
+
+            // Barra de progresso: faixa escura em repouso (era uma tira cinzenta clara),
+            // preenchimento ciano durante o processamento.
+            TemaNativo(prg_Bar, "");
+            prg_Bar.BackColor = Color.FromArgb(41, 30, 51);
+            prg_Bar.ForeColor = Color.Cyan;
+
+            // Caixa de saída: moldura discreta com margem interior em vez do contorno
+            // branco nativo, e barra de deslocamento escura.
+            var moldura = new Panel
+            {
+                Name = "pnlMolduraOutput",
+                BackColor = textBox_Output.BackColor,
+                Bounds = textBox_Output.Bounds,
+                Anchor = textBox_Output.Anchor,
+                Padding = new Padding(8, 6, 1, 1),
+            };
+            moldura.Paint += (s, e) =>
+            {
+                using var caneta = new Pen(corContorno);
+                e.Graphics.DrawRectangle(caneta, 0, 0, moldura.Width - 1, moldura.Height - 1);
+            };
+            moldura.Resize += (s, e) => moldura.Invalidate();
+            Controls.Add(moldura);
+            textBox_Output.BorderStyle = BorderStyle.None;
+            textBox_Output.Dock = DockStyle.Fill;
+            moldura.Controls.Add(textBox_Output);
+            TemaNativo(textBox_Output, "DarkMode_Explorer");
         }
 
         // B-1.3.2: criado em código para dispensar alterações no Designer.
@@ -41,8 +189,11 @@ namespace SIPOS.Forms
                 AutoSize = true,
                 Font = new Font("Century Gothic", 10F, FontStyle.Regular, GraphicsUnit.Point),
                 ForeColor = Color.Gainsboro,
-                BackColor = Color.Transparent,
-                Location = new Point(numUpDow_diasIntp.Right + 24, numUpDow_diasIntp.Top + 4),
+                // Fundo sólido igual ao do formulário (Transparent deixava uma caixa mais
+                // clara) e na coluna da esquerda, por baixo dos "Dias de interrupção"
+                // (antes ficava à direita e sobrepunha-se à caixa do pessoal escalado).
+                BackColor = this.BackColor,
+                Location = new Point(monthCalendar.Left, numUpDow_diasIntp.Bottom + 14),
                 Checked = false
             };
             chkRangeSelection.CheckedChanged += chkRangeSelection_CheckedChanged;

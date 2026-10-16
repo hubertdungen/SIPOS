@@ -94,6 +94,10 @@ namespace SIPOS.Forms
             // Register the Resize event
             this.Resize += new EventHandler(FormModelar_Resize);
 
+            // A largura do caminho em cada linha depende de que botões (+/−) estão
+            // visíveis, o que só é fiável depois de o separador ser mostrado.
+            this.VisibleChanged += (s, e) => { if (Visible) RefreshListLayout(); };
+
 
 
         }
@@ -1602,27 +1606,29 @@ namespace SIPOS.Forms
         }
 
 
+        // O caminho ocupa só o espaço livre entre o painel do nome e os controlos docked à
+        // direita (−, +, 📄, ▲▼ e tipo de ação). Antes procurava a caixa do nome nos filhos
+        // diretos da linha (ela vive no pnlTextNameW), não fazia nada, e o caminho
+        // (ancorado) ficava por cima das setas e do início do ComboBox.
         private void ResizeTextBoxesInRow(Panel row)
         {
-            TextBox txtNameWBox = row.Controls.OfType<TextBox>().FirstOrDefault(tb => tb.Name.Contains("txtNameWBox"));
-            TextBox txtDirFicheiroW = row.Controls.OfType<TextBox>().FirstOrDefault(tb => tb.Name.Contains("txtDirFicheiroW"));
+            TextBox? txtDirFicheiroW = row.Controls.OfType<TextBox>().FirstOrDefault(tb => tb.Name.Contains("txtDirFicheiroW"));
+            Panel? pnlNome = row.Controls.OfType<Panel>().FirstOrDefault(p => p.Name.Contains("pnlTextNameW"));
+            if (txtDirFicheiroW == null) { return; }
 
-            if (txtNameWBox != null && txtDirFicheiroW != null)
+            const int folgaEsquerda = 6;
+            const int folgaDireita = 10;
+
+            // Enquanto a linha não está visível, Visible é false para todos: reservar tudo.
+            int limiteDireito = row.ClientSize.Width - row.Padding.Right;
+            foreach (Control c in row.Controls)
             {
-                int totalWidth = row.ClientSize.Width;
-                int leftControlsWidth = row.Controls.Cast<Control>().Where(c => c.Dock == DockStyle.Left).Sum(c => c.Width);
-                int rightControlsWidth = row.Controls.Cast<Control>().Where(c => c.Dock == DockStyle.Right).Sum(c => c.Width);
-
-                int availableWidth = totalWidth - leftControlsWidth - rightControlsWidth - 20; // 20 for padding
-                int nameBoxWidth = Math.Min(200, availableWidth / 3);
-                int dirBoxWidth = availableWidth - nameBoxWidth;
-
-                txtNameWBox.Width = nameBoxWidth;
-                txtDirFicheiroW.Width = dirBoxWidth;
-
-                txtNameWBox.Left = leftControlsWidth + 10;
-                txtDirFicheiroW.Left = txtNameWBox.Right + 10;
+                if (c.Dock == DockStyle.Right && (c.Visible || !row.Visible)) { limiteDireito -= c.Width; }
             }
+
+            int esquerda = pnlNome != null ? pnlNome.Right + folgaEsquerda : txtDirFicheiroW.Left;
+            int largura = Math.Max(0, limiteDireito - folgaDireita - esquerda);
+            txtDirFicheiroW.SetBounds(esquerda, txtDirFicheiroW.Top, largura, txtDirFicheiroW.Height);
         }
 
         private void RefreshListLayout()
@@ -1698,6 +1704,9 @@ namespace SIPOS.Forms
                 Button minusButton = GetMinusButton(lastRow);
                 minusButton.Visible = true;
             }
+
+            // Os botões +/− mudaram de visibilidade: reajustar o caminho de cada linha.
+            foreach (Panel row in GetDocumentRows()) { ResizeTextBoxesInRow(row); }
 
             Debug.WriteLine("Number of rows (After UpdateBtnVisb): " + mainWordFlowPanel.Controls.Count);
         }
