@@ -1,4 +1,6 @@
 # SIPOS
+
+[English](docs/README.en.md) · [Português (completo)](README_PT.md)
 ## Sistema Inteligente de Processamento de Ordens de Serviço
 O SIPOS é um software que visa automatizar o processo de criação das Ordens de Serviço (O.S.) diárias para cada unidade militar, a fim de otimizar recursos humanos e reduzir a necessidade de trabalho manual repetitivo. Atualmente, as O.S. são feitas de forma manual por 1 ou 2 militares de cada unidade, que precisam juntar a informação por meio de documentos correspondidos e publicá-los na O.S. após despacho e indicação do comandante da unidade.
 

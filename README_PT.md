@@ -2,7 +2,7 @@
 
 **SIPOS** significa **Sistema Inteligente de Processamento de Ordens de Serviço**. É uma aplicação Windows Forms criada para ajudar a automatizar a preparação das Ordens de Serviço (O.S.) diárias em unidades militares.
 
-> Versão em inglês: [`README.md`](README.md)
+> Versão em inglês: [`docs/README.en.md`](docs/README.en.md)
 
 ## Estado do projecto
 
