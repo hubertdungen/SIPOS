@@ -62,3 +62,6 @@ artifacts\SIPOS-Beta-1.5.2-win-x64-portable.zip
 - Import an Excel escala file.
 - Export a Word O.S. document.
 - Confirm no Office permission prompts or COM errors block the flow.
+
+
+<p align="center"><a href="https://dlforge.dungenlabs.com"><img src="docs/branding/dlforge-logo.svg" alt="DL Forge" width="120"></a><br><a href="https://dlforge.dungenlabs.com">DL Forge</a></p>

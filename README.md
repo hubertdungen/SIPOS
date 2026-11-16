@@ -26,3 +26,6 @@ Desenvolvido em C#, o SIPOS continua a evoluir com uma interface intuitiva e ami
 ## Planos
 Futuras atualizações incluirão a integração de recursos de Machine Learning através de adaptações para Python e uso de bibliotecas como TensorFlow, visando ampliar as capacidades de análise e processamento de dados do sistema. O planeamento de release e a sincronização com Asana estão documentados em `PLANNER.md`.
 
+
+
+<p align="center"><a href="https://dlforge.dungenlabs.com"><img src="docs/branding/dlforge-logo.svg" alt="DL Forge" width="120"></a><br><a href="https://dlforge.dungenlabs.com">DL Forge</a></p>
